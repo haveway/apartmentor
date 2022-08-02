@@ -94,10 +94,7 @@ hs_err_pid*
 replay_pid*
 /.metadata/
 /Servers/
-MANIFEST.MF
-pom.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse
-apartmentor/target/m2e-wtp/web-resources/META-INF/maven/com.kh/apartmentor/pom.properties
 apartmentor/target/m2e-wtp/web-resources/META-INF/maven/com.kh/apartmentor/pom.properties
 apartmentor/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
