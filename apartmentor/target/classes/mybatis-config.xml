@@ -5,9 +5,7 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-<typeAliases>
-	<typeAlias type="com.kh.spring.member.model.vo.Member" alias="member"/>
-</typeAliases>
+
 
 
 	<mappers>

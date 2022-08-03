@@ -13,17 +13,8 @@
         }
         #header{
             background-color: rgb(0,88,155);
-            width: 1200px;
+            width: 100%;
             height: 50px;
-            display: flex;
-            flex-direction: row;
-            Align-items: center;
-            margin: auto;
-            
-        }
-        .mainWrap{
-            width: 1200px;
-            margin: auto;
         }
         #menuBar{
             height: 100%;
@@ -32,8 +23,7 @@
         .main-nav-left:hover .sub-menu{
             height: 100%;
             width: 200px;
-            overflow: hidden;
-            float: left;
+            overflow: hidden
         }
         /* SHOP - 서브메뉴 */
         .sub-menu {
@@ -60,17 +50,12 @@
         #logo{
             width: 100px;
             height: 100%;
-            margin: auto;
-            mar
+            justify-content: center;
         }
 
         #changeInfor,#logout{
             float: right;
             margin-right : 30px;
-        }
-        #menuImg{
-        	width:50px;
-        	height: 50px
         }
  
 

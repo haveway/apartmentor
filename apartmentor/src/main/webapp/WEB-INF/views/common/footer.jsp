@@ -11,33 +11,19 @@
             box-sizing : border-box;
         }
         .wrap{
-            width : 1200px;
+            width : 1000px;
             height : 80px;
             margin : auto;
         }
+        .warp > div{width : 100%;}
         
         /*footer*/
-        #footer{
-        	height: 130px;
-        	text-align: left;
-        }
-        #footer > div{
-        	height : 100%;
-        	float : left;
-        }
-        #footer1{
-        	width: 60%;
-        	margin-left: 25px;
-        }
-        #footer2{
-        	width: 20%;
-        	margin-left: 100px;
-        }
+        #footer{height: 130px; text-align: left;}
+        #footer > div{height : 100%; float : left;}
+        #footer1{width: 60%; margin-left: 25px; }
+        #footer2{ width: 20%; margin-left: 100px;}
         #footer p{font-size: 12px;}
-        #footer a{
-        	text-decoration: none;
-        	color: rgb(63, 74, 224);
-        }       
+        #footer a{text-decoration: none; color: rgb(63, 74, 224);}       
     </style>
 </head>
 <body>
@@ -49,9 +35,9 @@
 
 
                 <div id="footer1"> 
-                    <p style="font-size: 15px;">APARTMENTOR</p>
+                    <p style="font-size: 15px;">APARTMENTO</p>
                     <p>주소 : 서울시 어딘가</p>
-                    <p>대표 : Team1 APARTMENTOR</p>
+                    <p>대표 : Team1 APARTMENTO</p>
                 </div>
                 <div id="footer2"> 
                     <p style="font-size: 15px;"><a href="#">고객센터</a></p>
