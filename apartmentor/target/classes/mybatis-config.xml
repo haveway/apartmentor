@@ -5,7 +5,9 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-
+<typeAliases>
+	<typeAlias type="com.kh.apartmentor.member.model.vo.Member" alias="member"/>
+</typeAliases>
 
 
 	<mappers>
