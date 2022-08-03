@@ -36,6 +36,7 @@
         }
     </style>    
 </head>
+<jsp:include page="common/header.jsp"/>
 <body>
     <div id="mainWrap">
         <div id="imgSlide">
@@ -68,4 +69,5 @@
     
 
 </body>
+<jsp:include page="common/footer.jsp"/>
 </html>
