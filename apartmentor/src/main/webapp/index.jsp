@@ -94,7 +94,7 @@
 </head>
 <body>
     <div  class="loginWrap">
-        <h2 id="logo">APARTMENTO</h2>
+        <h2 id="logo">APARTMENTOR</h2>
         <br>
         <div class="formWrap border" align="center">
             <form action="#">
