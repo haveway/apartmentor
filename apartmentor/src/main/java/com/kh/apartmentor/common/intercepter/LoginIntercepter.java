@@ -1,4 +1,4 @@
-package com.kh.spring.common.intercepter;
+package com.kh.apartmentor.common.intercepter;
 
 import java.io.IOException;
 
