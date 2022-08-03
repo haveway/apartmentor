@@ -1,4 +1,4 @@
-package com.kh.apartmentor.study.model.vo;
+package com.kh.apartmentor.common.model.vo;
 
 import java.sql.Date;
 
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Study {
+public class Reserve {
 	
 //	RESERVE_NO	NUMBER //예약번호
 //	START_DATE	DATE //시작시간
