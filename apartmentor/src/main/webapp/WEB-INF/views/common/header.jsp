@@ -10,11 +10,20 @@
     <style>
         div{
             border: 1px solid red;
+            
         }
         #header{
             background-color: rgb(0,88,155);
-            width: 100%;
+            width: 1200px;
             height: 50px;
+            display: flex;
+            flex-direction: row;
+            margin: auto;
+        }
+        .mainWrap{
+        width: 1200px;
+        margin: auto;
+        min-height: 1000px;
         }
         #menuBar{
             height: 100%;
@@ -25,7 +34,7 @@
             width: 200px;
             overflow: hidden
         }
-        /* SHOP - 서브메뉴 */
+        /* 서브메뉴 */
         .sub-menu {
             position: fixed;
             width: 200px;
@@ -51,14 +60,13 @@
             width: 100px;
             height: 100%;
             justify-content: center;
+            margin: auto;
         }
 
         #changeInfor,#logout{
             float: right;
             margin-right : 30px;
         }
- 
-
     </style>
 </head>
 <body>
@@ -93,19 +101,6 @@
             <a href="#">회원정보수정</a>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

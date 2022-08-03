@@ -11,34 +11,30 @@
             box-sizing : border-box;
             border : 1px solid red;
         }    
-        #mainWrap{
-            width: 1500px;
-       
-        }
         #imgSlide{
-            width: 1500px;
+            width: 1200px;
             height: 400px;
         }
         div[id^=content]{
-            width: 600px;
+            width: 500px;
             height: 300px;
         }
         div[id^=contentWrap]{
-            width: 1500px;
+            width: 1200px;
             height: 300px;
             display: flex;
             flex-direction: row;
             justify-content: center;
         }
         #calendar{
-            width: 1500px;
+            width: 1200px;
             height: 300px;
         }
     </style>    
 </head>
 <jsp:include page="common/header.jsp"/>
 <body>
-    <div id="mainWrap">
+    <div class="mainWrap">
         <div id="imgSlide">
 
         </div>
