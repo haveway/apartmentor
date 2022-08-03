@@ -1,6 +1,6 @@
-package com.kh.spring.common.template;
+package com.kh.apartmentor.common.template;
 
-import com.kh.spring.common.model.vo.PageInfo;
+import com.kh.apartmentor.common.model.vo.PageInfo;
 
 public class Pagination {
 	
