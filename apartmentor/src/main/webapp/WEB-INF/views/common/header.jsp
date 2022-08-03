@@ -86,7 +86,7 @@
                             <a href="#">Best Item</a>
                         </li><hr>
                         <li>
-                            <a href="#">SALE</a>
+                            <a href="memberList.do">회원관리</a>
                         </li>
                     </ul>
                 </div>

@@ -27,7 +27,8 @@ public class MemberController {
 		
 		Member loginUser = memberService.loginMember(m);
 		return null;
-		
 	}
+	
+	
 
 }
