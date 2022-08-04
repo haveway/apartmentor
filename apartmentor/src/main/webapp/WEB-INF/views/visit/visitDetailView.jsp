@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>방문 예약</title>
+<title>방문 예약 상세페이지</title>
+</head>
+<body>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap 라이브러리 -->
@@ -26,17 +28,17 @@
     }
 
 
-    .visitEnrollContent {
+    .visitDetailContent {
         background-color: #f0eee9;
     }
     
-    #visitEnrollForm {
+    #visitDetail {
     	margin-left: 100px;
     	
     	
     }
     
-    #visitEnrollForm th {
+    #visitDetail th {
     	width: 100px;
     	text-align: center;
     }
@@ -53,22 +55,18 @@
 
 <div class="visitContent">
 
-	<h1>방문 예약하기</h1>
+	<h1>방문 예약 상세보기</h1>
 	
-	<div style="margin-left:80px;">
-	예약 승인 시, 이메일로 일정을 보내 드립니다.<br>
-	예약은 09:00부터 18:00까지, 10분 단위로만 예약 가능합니다.
-	</div>
 
 	<br>
 	<br>
 	
-	<div class="visitEnrollContent">
+	<div class="visitDetailContent">
 	
 	<br>
 	<br>
 	
-		<form id="visitEnrollForm" method="post" action="insert.visit">
+		<form id="visitDetail" method="post" action="inserStatus.visit">
 			<table>
 				<tr>
 					<th>예약 종류</th>
@@ -111,10 +109,10 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="height: 80px; text-align: right;">
-						<button type="submit" class="btn btn-info" id="submitBtn">등록</button>
+						<button type="submit" class="btn btn-info" id="submitBtn">승인</button>
 					</td>
 					<td colspan="3" style="height: 80px;">
-						&nbsp;&nbsp;&nbsp;<button type="reset" class="btn btn-outline-info" id="resetBtn">초기화</button>&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;<button type="reset" class="btn btn-outline-info" id="resetBtn">반려</button>&nbsp;&nbsp;&nbsp;
 					</td>
 				</tr>
 			</table>
@@ -129,38 +127,6 @@
 	    $("#text-contents.body-contents").html(data);
 	});
 	</script>
-		
-	<!-- The Modal -->
-	<div class="modal" id="myModal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	
-	      <!-- Modal Header -->
-	      <div class="modal-header">
-	        <h4 class="modal-title">예약 현황</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	      
-	       	1동 (유저.aptNo.sustring(2) ?) 의 예약 현황입니다<br>
-	       	아래 시간을 피해 예약해주세요.<br>
-	       	<br>
-	       	8월26일 1시 10분 ~ 1시 20분<br>
-	       	8월27일 9시 00분 ~ 9시 10분
-	       	<br>
-	       	<br>
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-outline-info" data-dismiss="modal">닫기</button>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
 	
 		<br>
 		<br>
@@ -176,8 +142,6 @@
 <br>
 
 <!-- <jsp:include page="../common/footer.jsp"/> -->
-
-
 
 </body>
 </html>
