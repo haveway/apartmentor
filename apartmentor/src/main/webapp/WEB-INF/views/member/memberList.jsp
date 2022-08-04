@@ -34,11 +34,11 @@
 		<table id="memberTable"class="table table-bordered">
 			<thead>
 				<tr>
-					<th rowspan="2" class="th1">회원번호</th>
+					<th class="th1" rowspan="2" >회원번호</th>
 					<th class="th2">이름</th>
 					<th class="th3">아이디</th>
 					<th class="th4">생년월일</th>
-					<th rowspan="2" class="th5">승인 / 정지</th>
+					<th class="th5" rowspan="2">승인 / 정지</th>
 				</tr>
 				<tr>
 					<th>세대번호</th>
