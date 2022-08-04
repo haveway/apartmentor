@@ -33,8 +33,23 @@ public class BoardController {
 		return "board/boardListView";
 	}
 	
-	
-	
+	// 게시글 상세조회
+	@RequestMapping("detail.bo")
+	public String selectBoard(int bno, Model model) {
+		
+		// 해당 게시글 조회수 증가
+		int result = boardService.increaseCount(bno);
+		
+		// 해당 게시글 상세조회
+		if(result > 0) { // 게시글 조회수 증가 성공
+			Board b = boardService.selectBoard(bno);
+			model.addAttribute("b", b);
+			return "board/boardDetailView";
+		} else { // 게시글 조회수 증가 실패
+			return "redirect:/";
+		}
+		
+	}
 	
 	
 	

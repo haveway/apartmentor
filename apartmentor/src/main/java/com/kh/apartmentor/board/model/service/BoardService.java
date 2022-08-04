@@ -29,4 +29,12 @@ public class BoardService {
 		return boardDao.selectList(sqlSession, pi);
 	}
 
+	public int increaseCount(int boadrNo) {
+		return boardDao.increaseCount(sqlSession, boadrNo);
+	}
+
+	public Board selectBoard(int boardNo) {
+		return boardDao.selectBoard(sqlSession, boardNo);
+	}
+
 }

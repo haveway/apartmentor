@@ -8,9 +8,7 @@
 <title>자유게시판</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
-	
-	
-	.content2{
+	.content-area{
 		width:1200px;
 		height:800px;
 		margin: auto;
@@ -53,7 +51,7 @@
 	<br>
 	<br>
 	
-	<div class="content2">
+	<div class="content-area">
 	
 		<div align="center" style="margin-right:600px;">
 			<h1>자유게시판</h1> 
@@ -110,34 +108,34 @@
 		</c:if>
 		
 		<div id="pagingArea">
-                <ul class="pagination">
+			<ul class="pagination">                
                 
-                    <c:choose>
-						<c:when test="${ pi.currentPage eq 1 }">
-		                    <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
-						</c:when>
-                		<c:otherwise>
-                			<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">이전</a></li>
-                		</c:otherwise>
-                    </c:choose>
-
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
-                    </c:forEach>
-                    
-                    <c:choose>
+				<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">이전</a></li>
+					</c:otherwise>
+				</c:choose>
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
+					</c:forEach>
+				<c:choose>
 					<c:when test="${ pi.currentPage eq pi.maxPage }">
-                   	 	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+					 	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
 					</c:otherwise>
-                    </c:choose>
+				</c:choose>
                     
-                </ul>
-            </div>
+			</ul>                
+		</div>
 		
 	</div>
+	
+	
 	
 	<jsp:include page="../common/footer.jsp"/>
 	
