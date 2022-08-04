@@ -40,6 +40,7 @@
 		width: 700px;
 		margin: auto;
 	}
+	
 </style>
 </head>
 <body>
@@ -52,6 +53,7 @@
 		<div align="center" style="margin-right:600px;">
 			<h1>자유게시판</h1> 
 		</div>
+		<hr>
 		<br>
 		<div class="text-area">
 			<div class="title-area boarea">
@@ -86,9 +88,9 @@
 		<div align="center" style="margin-right:600px;">
 			<h2>댓글</h2> 
 		</div>
+		<hr>
 		<div class="text-area">
-		<div>댓글</div><div>댓글</div><div>댓글</div>
-			
+			<div id="replyList"></div>
 		</div>
 		<hr>
 		<div class="reply-area">
@@ -98,12 +100,64 @@
 			</c:when>
 			<c:otherwise>
 				<textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-				<button class="btn btn-primary" onclick="addReply();">등록하기</button>
+				<button class="btn btn-primary" onclick="addReply();">댓글작성</button>
 			</c:otherwise>
        	</c:choose>
 		</div>
 	
 	</div>
+	
+	<script>
+	
+	// 스크립트 영역 도달 시 댓글 조회 기능 호출
+	$(function(){
+		selectReplyList();
+		
+	})
+	
+	// 댓글 조회 기능
+	function selectReplyList(){
+		
+		let loginUserNo = ${loginUser.userNo};
+		
+		$.ajax({
+			url : 'replyList.bo',
+			data : {bno : ${b.boardNo} },
+			success : function(list){
+				let value='';
+					for(let i in list){
+						value += "<div>"
+							   + "<span>" + list[i].replyWriter + "</span>"
+							   + "<span>" + list[i].replyContent + "</span>"
+							   + "<span>" + list[i].createDate + "</span>"
+							   if(loginUserNo == list[i].userNo) { 
+							   + "<button class='btn btn-primary'>삭제</button>" 
+							   }
+							   + "<hr>" 
+							   + "</div>"
+					}
+				$('#replyList').html(value);
+				$('#replyList span').attr('style', "margin-right:30px;");
+				$('#replyList button').attr('style', "float: right;");
+			}, error : function(){
+				console.log('비동기요청 실패!');
+			}
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
 	
 	<jsp:include page="../common/footer.jsp"/>
 	

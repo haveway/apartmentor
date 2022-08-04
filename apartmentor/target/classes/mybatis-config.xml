@@ -9,6 +9,7 @@
 	<typeAlias type="com.kh.apartmentor.member.model.vo.Member" alias="member"/>
 	<typeAlias type="com.kh.apartmentor.board.model.vo.Board" alias="board"/>
 	<typeAlias type="com.kh.apartmentor.visit.model.vo.Visit" alias="visit"/>
+	<typeAlias type="com.kh.apartmentor.board.model.vo.Reply" alias="reply"/>
 </typeAliases>
 
 

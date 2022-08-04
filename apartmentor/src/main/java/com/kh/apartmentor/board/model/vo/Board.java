@@ -23,4 +23,5 @@ public class Board {
 	private String createDate;
 	private String status;
 	private String boardCategory;
+	private int userNo;
 }

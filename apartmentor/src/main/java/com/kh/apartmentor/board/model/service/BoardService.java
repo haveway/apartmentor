@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.apartmentor.board.model.dao.BoardDao;
 import com.kh.apartmentor.board.model.vo.Board;
+import com.kh.apartmentor.board.model.vo.Reply;
 import com.kh.apartmentor.common.model.vo.PageInfo;
 
 @Service
@@ -36,5 +37,19 @@ public class BoardService {
 	public Board selectBoard(int boardNo) {
 		return boardDao.selectBoard(sqlSession, boardNo);
 	}
+
+	public ArrayList<Reply> selectReplyList(int bno) {
+		return boardDao.selectReplyList(sqlSession, bno);
+	}
+
+	public int selectSearchCount(String keyword) {
+		return boardDao.selectSearchCount(sqlSession, keyword);
+	}
+
+	public ArrayList<Board> selectSearchList(String keyword, PageInfo pi) {
+		return boardDao.selectSearchList(sqlSession, keyword, pi);
+	}
+
+	
 
 }

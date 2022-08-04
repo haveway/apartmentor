@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.apartmentor.board.model.vo.Board;
+import com.kh.apartmentor.board.model.vo.Reply;
 import com.kh.apartmentor.common.model.vo.PageInfo;
 
 @Repository
@@ -32,6 +33,24 @@ public class BoardDao {
 
 	public Board selectBoard(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
+	}
+
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int bno) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", bno);
+	}
+
+	public int selectSearchCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("boardMapper.selectSearchCount", keyword);
+	}
+
+	public ArrayList<Board> selectSearchList(SqlSessionTemplate sqlSession, String keyword, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchList", keyword, rowBounds);
 	}
 
 }

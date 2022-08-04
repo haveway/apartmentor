@@ -60,10 +60,17 @@
 		
 		<br><br>
 		<!-- 제목으로 키워드 검색 -->
-		<form id="searchForm" action="" method="get" align="center">
+		<form id="searchForm" action="search.bo" method="get" align="center">
+			<input type="hidden" name="currentPage" value="1">
 			<div id="search">
-				<input type="text" name="keyword" placeholder="제목으로 검색" id="searchText">
-				<button type="button" id="searchBtn" class="btn btn-primary">검색</button>
+				<c:if test="${empty keyword}">
+					<input type="text" name="keyword" placeholder="제목으로 검색" id="searchText">
+					<button id="searchBtn" class="btn btn-primary">검색</button>
+				</c:if>
+				<c:if test="${!empty keyword}">
+					<input type="text" name="keyword" value="${ketword}" id="searchText">
+					<button id="searchBtn" class="btn btn-primary">검색</button>
+				</c:if>
 			</div>
 		</form>
 		<br>
@@ -115,18 +122,42 @@
 						<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">이전</a></li>
+						<c:choose>
+							<c:when test="${empty keyword}">
+								<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">이전</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="search.bo?cpage=${ pi.currentPage - 1 }&keyword=${keyword}">이전</a></li>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
+				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
+						<c:choose>
+							<c:when test="${empty keyword}">
+								<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="search.bo?cpage=${p}&keyword=${keyword}">${p}</a></li>
+							</c:otherwise>
+						</c:choose>
+					
 					</c:forEach>
+					
 				<c:choose>
 					<c:when test="${ pi.currentPage eq pi.maxPage }">
 					 	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
+						<c:choose>
+							<c:when test="${empty keyword}">
+								<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="search.bo?cpage=${ pi.currentPage + 1 }&keyword=${keyword}">다음</a></li>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
                     
