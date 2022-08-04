@@ -11,4 +11,34 @@ public class SportsController {
 		
 		return "sports/golf";
 	}
+	
+	
+	@RequestMapping("miniGym.sp")
+	public String reserve2() {
+		
+		return "sports/miniGym";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
