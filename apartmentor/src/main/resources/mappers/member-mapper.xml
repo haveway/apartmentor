@@ -55,7 +55,42 @@
 		       #{phone},           
 		       #{email}       
 		       )               
-	</insert>                  
+	</insert>
+	<select id="findId" parameterType="Member" resultMap="MemberResultMap">
+		SELECT
+		       USER_ID
+		  FROM
+		       MEMBER
+		 WHERE
+		       USER_NAME = #{userName}
+		   AND    
+		       BIRTHDAY = #{birthday}    
+		   AND 
+		   	   APT_NO = #{aptNo}              		       
+		   AND 
+		       STATUS = 'Y'              		       
+	</select>
+	<select id="findPwd" parameterType="Member" resultMap="MemberResultMap">
+		SELECT
+		       USER_PWD
+		  FROM
+		       MEMBER
+		 WHERE
+		 	   USER_ID = #{userId} 
+		   AND
+		       USER_NAME = #{userName}
+		   AND    
+		       BIRTHDAY = #{birthday}    
+		   AND 
+		   	   APT_NO = #{aptNo}              		       
+		   AND 
+		       STATUS = 'Y'              		       
+	</select>     
+	<update id="updatePwd">
+		UPDATE
+		      MEMBER
+	
+	</update>                 
 	                                                    
 	
 </mapper>

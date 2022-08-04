@@ -27,5 +27,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertMember(sqlSession, m);
 	}
 
+	@Override
+	public Member findId(Member m) {
+		return memberDao.findId(sqlSession, m);
+	}
+
+	@Override
+	public Member findPwd(Member m) {
+		return memberDao.findPwd(sqlSession, m);
+	}
+
+	@Override
+	public int updatePw(String encPwd) {
+		return memberDao.updatePwd(sqlSession, encPwd);
+	}
+
 
 }

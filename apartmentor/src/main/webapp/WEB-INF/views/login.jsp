@@ -95,6 +95,8 @@
         font-size: 5px;
         color: red;
         }
+        #p2red{
+
     </style>
 </head>
 <body>
@@ -107,14 +109,9 @@
                 <br>
                 <input type="password" id="loginpwd" name="userPwd"placeholder="비밀번호">
                 <br>
-                
-                
-                <c:if test="${not empty NO}">
+                <c:if test="${not empty noLogin}">
                		<p id="p1red">아이디, 비밀번호를 확인해주세요.</p>
                 </c:if>
-                
-                
-                
                 <button id="loginbtn">LOGIN</button>
                 <br><br><br>
             </form>    
@@ -150,45 +147,43 @@
                     <div class="modal-body">
                         <b>아이디 : </b>
                         <div class="modal-input">
-                            <input type="text" class="id" name="userId" placeholder="ex)user111">
+                            <input type="text" class="id" name="userId" placeholder="ex)user111" required>
                         </div>
                         <p>영문(소문자) 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
 
                         <b>비밀번호 : </b>
                         <div class="modal-input">
-                            <input type="text" class="pwd" name="userPwd" placeholder="ex)asd123!@#">
+                            <input type="text" class="pwd" name="userPwd" placeholder="ex)asd123!@#" required>
                         </div>
                         <p>4~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.</p>
                         
                         <b>이름 : </b>
                         <div class="modal-input">
-                        <input type="text" class="name" name="userName" placeholder="ex)홍길동">
+                        	<input type="text" class="name" name="userName" placeholder="ex)홍길동" required>
                         </div>
                         <p>한글이름으로 입력하세요</p>
 
                         <b>생년월일 : </b>
                         <div class="modal-input">
-                        <input type="text" class="birthday" name="birthday" placeholder="ex)901201">
+                        	<input type="text" class="birthday" name="birthday" placeholder="ex)901201" required>
                         </div>
                         <p>6자리 숫자로 입력하세요.</p>
 
                         <b>휴대폰 : </b>
                         <div class="modal-input">
-                        <input type="text" class="phone" name="phone" placeholder="ex)01012345678">
+                        	<input type="text" class="phone" name="phone" placeholder="ex)01012345678" required>
                         </div>
                         <p>-을 제외한 11자리 숫자로 입력하세요.</p>
 
                         <b>이메일 : </b>
                         <div class="modal-input">
-                        <input type="text" class="email" name="email"
-                        placeholder="ex)apartmento@naver.com">
+                        	<input type="text" class="email" name="email" placeholder="ex)apartmento@naver.com" required>
                         </div>
                         <p>예시와 같은 형식으로 입력하세요.</p>
 
                         <b>동,호수 : </b>
                         <div class="modal-input">
-                        <input type="text" class="aptNo" name="aptNo"
-                        placeholder="ex)101동1001호">
+                        	<input type="text" class="aptNo" name="aptNo" placeholder="ex)101동1001호" required>
                         </div>
                         <p>예시와 같은 형식으로 입력하세요.</p>
                     </div>
@@ -214,36 +209,63 @@
                 </div>
 
                 <!-- Body -->
-                <form action="">
-                    <div class="modal-body">
-                        <b>이름 : </b>
-                        <div class="modal-input">
-                        <input type="text" class="name" name="userName" placeholder="ex)홍길동">
-                        </div>
-                        <p>한글이름으로 입력하세요</p>
-
-                        <b>생년월일 : </b>
-                        <div class="modal-input">
-                        <input type="text" class="birthday" name="birthday" placeholder="ex)901201">
-                        </div>
-                        <p>6자리 숫자로 입력하세요.</p>
-
-                        <b>동,호수 : </b>
-                        <div class="modal-input">
-                        <input type="text" class="aptNo" name="aptNo"
-                        placeholder="ex)101동1001호">
-                        </div>
-                        <p>예시와 같은 형식으로 입력하세요.</p>
-                    </div>
-                    
-                    <!-- Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn submit">확인</button>
-                    </div>
-                </form>
+	            <div class="modal-body">
+	                <b>이름 : </b>
+	                <div class="modal-input">
+	                	<input type="text" id="nameId"placeholder="ex)홍길동" required>
+	                </div>
+	                <p>한글이름으로 입력하세요</p>
+	
+	                <b>생년월일 : </b>
+	                <div class="modal-input">
+	                	<input type="text" id="birthdayId" placeholder="ex)901201" required>
+	                </div>
+	                <p>6자리 숫자로 입력하세요.</p>
+	
+	                <b>동,호수 : </b>
+	                <div class="modal-input">
+	                	<input type="text" id="aptNoId" placeholder="ex)101동1001호" required>
+	                </div>
+	                <p>예시와 같은 형식으로 입력하세요.</p>
+	                <br>
+	                <p id="findId"style="font-size: 25px; color: black;"></p>
+	                <br>
+	            </div>
+	            
+	            <!-- Footer -->
+	            <div class="modal-footer">
+	                <button class="btn submit" onclick="findId()">찾기</button>
+	            </div>
             </div>
         </div>
     </div>
+    
+    <script>
+    function findId() {
+    	$.ajax({
+    		url : "findId.me",
+    		data : {
+    			name : $('#nameId').val(),
+    			birthday : $('#birthdayId').val(),
+    			aptNo : $('#aptNoId').val()
+    		},
+    		success : function(result){
+    			if(result == "null"){
+					let nId = '일치하는 정보가 없습니다';
+    				$('#findId').html(nId);
+    			} 
+    			else { 
+    			
+    				let yId = '회원님의 아이디는 : ' + '<br>' + result.userId + ' 입니다.';
+    				$('#findId').html(yId);
+    			}	
+    		},
+			error:function(){
+				console.log('실패')
+			}	
+    	})
+	}
+    </script>
 
     <!-- 비밀번호 찾기 모달 -->
     <div class="modal" id="myModal3">
@@ -254,38 +276,89 @@
                     <h2>비밀번호 찾기</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
-                <!-- Body -->
-                <form action="">
-                    <div class="modal-body">
-                        <b>이름 : </b>
-                        <div class="modal-input">
-                        <input type="text" class="name" name="userName" placeholder="ex)홍길동">
-                        </div>
-                        <p>한글이름으로 입력하세요</p>
-
-                        <b>생년월일 : </b>
-                        <div class="modal-input">
-                        <input type="text" class="birthday" name="birthday" placeholder="ex)901201">
-                        </div>
-                        <p>6자리 숫자로 입력하세요.</p>
-
-                        <b>동,호수 : </b>
-                        <div class="modal-input">
-                        <input type="text" class="aptNo" name="aptNo"
-                        placeholder="ex)101동1001호">
-                        </div>
-                        <p>예시와 같은 형식으로 입력하세요.</p>
-                    </div>
-                    
-                    <!-- Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn submit">확인</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-      
+				<div id="updatePwd">
+	                <!-- Body -->
+					<div class="modal-body" id="pwdBody">
+						<b>아이디 : </b>
+						<div class="modal-input">
+							<input type="text" id="idPwd" placeholder="ex)user01" required>
+						</div>
+						<p>아이디를 입력하세요</p>
+					    <b>이름 : </b>
+					    <div class="modal-input">
+					    	<input type="text" id="namePwd" name="userName" placeholder="ex)홍길동" required>
+					    </div>
+					    <p>한글이름으로 입력하세요</p>
+					
+					    <b>생년월일 : </b>
+					    <div class="modal-input">
+					    	<input type="text" id="birthdayPwd" name="birthday" placeholder="ex)901201" required>
+					    </div>
+					    <p>6자리 숫자로 입력하세요.</p>
+					
+					    <b>동,호수 : </b>
+					    <div class="modal-input">
+					    	<input type="text" id="aptNoPwd" name="aptNo" placeholder="ex)101동1001호" required>
+					    </div>
+					    <p>예시와 같은 형식으로 입력하세요.</p>
+					</div>
+	
+					<!-- Footer -->
+					<div class="modal-footer" id="pwdFooter">
+					    <button  class="btn submit"  onclick="findPwd()">찾기</button>
+					</div>
+				</div>
+        	</div>
+    	</div>
+	</div>
+    
+    <script>
+    function findPwd() {
+    	$.ajax({
+    		url : "findPwd.me",
+    		data : {
+    			id : $('#idPwd').val(),
+    			name : $('#namePwd').val(),
+    			birthday : $('#birthdayPwd').val(),
+    			aptNo : $('#aptNoPwd').val()
+    		},
+    		success : function(result){
+    			if(result == "null"){
+					let nPwd = '일치하는 정보가 없습니다';
+    				$('#findPwd').html(nPwd);
+    			} 
+    			else { 
+    				console.log(result.userPwd)
+    				$('#updatePwd *').remove();
+    				let yPwd = '<form action="update.pw" method="post">'
+    						  + '<input type="hidden" name="userId">'
+    						  + '<div class="modal-body" id="pwdBody">'
+    						  + '<b>' + '비밀번호' +'</b>'
+    						  + '<div class="modal-input">' 
+    						  + '<input type="password" class="pwd" name="newPwd" placeholder="ex)asd123!@#" required>'
+    						  + '</div>'
+    						  + '<p>' + '4~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.' + '</p>'
+    						  + '<b>' + '비밀번호 확인' +'</b>'
+    						  + '<div class="modal-input">' 
+    						  + '<input type="password" class="pwd" name="checkPwd" placeholder="ex)asd123!@#" required>'
+    						  + '</div>'
+    						  + '<p>' + '' + '</p>'
+    						  + '</div>'
+    						  + '<div class="modal-footer" id="pwdFooter">'
+    						  + '<button type="submit" class="btn submit" >' + '변경' + '</button>'
+    					      + '</div>'
+    					      + '</form>' 
+    				$('#updatePwd').html(yPwd);
+    				
+	            
+    						 
+    			}	
+    		},
+			error:function(){
+				console.log('실패')
+			}	
+    	})
+	}
+    </script>
 </body>
 </html>

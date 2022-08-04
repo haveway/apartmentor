@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.apartmentor.member.model.service.MemberService;
 import com.kh.apartmentor.member.model.vo.Member;
 
@@ -28,16 +30,12 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m,HttpSession session,ModelAndView mv) {
-		System.out.println(m);
 		Member loginUser = memberService.loginMember(m);
-		System.out.println(loginUser);
-		System.out.println(m.getUserPwd());
-		System.out.println(loginUser.getUserId());
 		if(loginUser != null && bCryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("main");
 		} else {
-			session.setAttribute("NO", "NO");
+			session.setAttribute("noLogin", "noLogin");
 			mv.setViewName("redirect:/");
 		}
 		return mv;
@@ -62,6 +60,52 @@ public class MemberController {
 			mv.addObject("alertMsg", "다시 확인해주세요.");
 			return "NO";
 		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "findId.me", produces="application/json; charset=UTF-8")
+	public String findId(String name,String birthday, String aptNo) {
+		Member m = new Member();
+		m.setUserName(name);
+		m.setBirthday(birthday);
+		m.setAptNo(aptNo);
+		
+		System.out.println(m);
+		Member userId = memberService.findId(m);
+		return new Gson().toJson(userId);
+		
+	}
+	@ResponseBody
+	@RequestMapping(value = "findPwd.me", produces="application/json; charset=UTF-8")
+	public String findPwd(String id, String name,String birthday, String aptNo,HttpSession session) {
+		Member m = new Member();
+		m.setUserId(id);
+		m.setUserName(name);
+		m.setBirthday(birthday);
+		m.setAptNo(aptNo);
+		
+		System.out.println(m);
+		Member userPwd = memberService.findPwd(m);
+		session.setAttribute("userId", id);
+		return new Gson().toJson(userPwd);
+		
+	}
+	
+	@RequestMapping("update.pw")
+	public int updatePw(String newPwd, String checkPwd, String userId) {
+		System.out.println(userId);
+		if(newPwd.equals(checkPwd)) {
+			newPwd = checkPwd;
+			
+			String encPwd = bCryptPasswordEncoder.encode(newPwd);
+			
+			int result = memberService.updatePw(encPwd);
+			
+		} else {
+			
+			
+		}
+		
+		return 0;
 	}
 	
 
