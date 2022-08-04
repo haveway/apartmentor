@@ -96,7 +96,7 @@
 	$(function() {
 	    $('#timepicker').timepicker({
 		    timeFormat: 'HH:mm',
-		    interval: 60,
+		    interval: 120,
 		    minTime: '10',
 		    maxTime: '18',
 		    startTime: '10',
