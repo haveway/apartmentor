@@ -170,7 +170,7 @@
   		<if test="option == '정보'">
 		 ORDER
 		    BY
-	    DECODE	(BOARD_CATEGORY, '정보', 1)	   
+	    DECODE(BOARD_CATEGORY, '정보', 1)	   
 		</if>
 		
   	</select>
