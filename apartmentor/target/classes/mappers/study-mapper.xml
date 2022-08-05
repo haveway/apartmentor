@@ -11,6 +11,7 @@
 		<result column="USER_NO" property="userNo" />
 		<result column="STATUS" property="status" />
 		<result column="CREATE_DATE" property="createDate" />
+		<result column="START_DAY" property="startDay" />
 	</resultMap>
 
 	<insert id="reserveSeat" parameterType="reserve">
@@ -25,7 +26,8 @@
 		       SEAT_NUMBER,
 		       USER_NO,
 		       STATUS,
-		       CREATE_DATE
+		       CREATE_DATE,
+		       START_DAY
 		       )
 		VALUES
 		       (
@@ -36,6 +38,7 @@
 		       #{seatNo},
 		       #{userNo},
 		       #{status},
+		       SYSDATE,
 		       SYSDATE		       
 		       )
 	</insert>
@@ -49,7 +52,8 @@
 		       SEAT_NUMBER,
 		       USER_NO,
 		       STATUS,
-		       CREATE_DATE
+		       CREATE_DATE,
+		       START_DAY
 		  FROM
 		       RESERVE
 		 WHERE

@@ -2,6 +2,7 @@ package com.kh.apartmentor.board.controller;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,7 +76,26 @@ public class BoardController {
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("keyword", keyword);
+		
 		return "board/boardListView";
 	}
+	
+	
+	@RequestMapping(value="option.bo", produces="application/json; charset=UTF-8")
+	public String selectOption(@RequestParam(value="cpage", defaultValue="1") int currentPage, String option, Model model) {
+
+		// 정렬한 게시글의 총 갯수로 페이징바 다시 만들기 - 리스트의 총 갯수는 변함이 없으므로 기존에 만든 selectListCount호출
+		PageInfo pi = Pagination.getPageInfo(boardService.selectListCount(), currentPage, 10, 5);
+		
+		ArrayList<Board> oList = boardService.selectOption(option, pi);
+
+		model.addAttribute("pi", pi);
+		model.addAttribute("oList", oList);
+		model.addAttribute("option", option);
+		return "board/boardListView";
+	}
+	
+	
+	
 	
 }
