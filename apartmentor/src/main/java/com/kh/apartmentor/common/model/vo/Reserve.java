@@ -23,15 +23,21 @@ public class Reserve {
 //	CREATE_DATE	DATE //신청날짜
 	
 	private int reserveNo;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private String facility;
 	private int seatNo;
 	private int userNo;
 	private String status;
 	private Date createDate;
 	
+//	private int reserveNo;
+//	private String startDate;
+//	private String endDate;
+//	private String facility;
+//	private int seatNo;
+//	private int userNo;
+//	private String status;
+//	private String createDate;
 	
-	
-
 }

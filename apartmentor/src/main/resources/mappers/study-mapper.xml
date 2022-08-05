@@ -2,6 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="studyMapper">
 
+	<resultMap type="reserve" id="studyResultSet">
+		<result column="RESERVE_NO" property="reserveNo" />
+		<result column="START_DATE" property="startDate" />
+		<result column="END_DATE" property="endDate" />
+		<result column="FACILITY" property="facility" />
+		<result column="SEAT_NUMBER" property="seatNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="STATUS" property="status" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+
+	<insert id="reserveSeat" parameterType="reserve">
+		INSERT
+		  INTO
+		       RESERVE
+		       (
+		       RESERVE_NO,
+		       START_DATE,
+		       END_DATE,
+		       FACILITY,
+		       SEAT_NUMBER,
+		       USER_NO,
+		       STATUS,
+		       CREATE_DATE
+		       )
+		VALUES
+		       (
+		       #{reserveNo},
+		       #{startDate},
+		       #{endDate},
+		       #{facility},
+		       #{seatNo},
+		       #{userNo},
+		       #{status},
+		       SYSDATE		       
+		       )
+	</insert>
 	
-	
+	<select id="selectReserve" resultMap="studyResultSet">
+		SELECT
+		       RESERVE_NO,
+		       START_DATE,
+		       END_DATE,
+		       FACILITY,
+		       SEAT_NUMBER,
+		       USER_NO,
+		       STATUS,
+		       CREATE_DATE
+		  FROM
+		       RESERVE
+		 WHERE
+		       USER_NO = #{userNo}
+	</select>
+
 </mapper>

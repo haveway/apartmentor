@@ -11,6 +11,7 @@
 	<typeAlias type="com.kh.apartmentor.visit.model.vo.Visit" alias="visit"/>
 	<typeAlias type="com.kh.apartmentor.board.model.vo.Reply" alias="reply"/>
 	<typeAlias type="com.kh.apartmentor.parking.model.vo.Parking" alias="parking"/>
+	<typeAlias type="com.kh.apartmentor.common.model.vo.Reserve" alias="reserve"/>
 </typeAliases>
 
 
@@ -19,5 +20,6 @@
 		<mapper resource="/mappers/board-mapper.xml" />
 		<mapper resource="/mappers/visit-mapper.xml" />
 		<mapper resource="/mappers/carVisit-mapper.xml" />
+		<mapper resource="/mappers/study-mapper.xml" />
 	</mappers>
 </configuration>
