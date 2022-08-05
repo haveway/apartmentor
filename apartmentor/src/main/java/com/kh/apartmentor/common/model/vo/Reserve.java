@@ -30,14 +30,6 @@ public class Reserve {
 	private int userNo;
 	private String status;
 	private Date createDate;
-	
-//	private int reserveNo;
-//	private String startDate;
-//	private String endDate;
-//	private String facility;
-//	private int seatNo;
-//	private int userNo;
-//	private String status;
-//	private String createDate;
+	private String startDay;
 	
 }

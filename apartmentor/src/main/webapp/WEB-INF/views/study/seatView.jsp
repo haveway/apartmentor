@@ -61,7 +61,6 @@
                         <c:forEach var="i" begin="109" end="114">
                         	<tr><td data-row=${ i }></td></tr>
                         </c:forEach>
-                        
                     </table>            
                 </div><!-- seat-area-R -->
             </div><!-- seat-area-1 -->
@@ -118,12 +117,12 @@
                         <div class="modal-header">
                             <h4 class="modal-title" id="seatNo">
                                 <script>
-                                    $('td').click(function(event) {
+                                    /* $('td').click(function(event) {
                                         var rNum = $(this).attr('data-row'); // 클릭한 테이블의 번호
 
                                         var seatNo = document.getElementById('seatNo');
                                         seatNo.innerHTML = rNum + '번 좌석을 선택하셨습니다.';
-                                    });
+                                    }); */
                                     
                                 </script>
                             </h4>
@@ -137,8 +136,8 @@
                             >> 오늘 날짜 보여주기
 
                             <!-- 예약 가능한 시간 보여주기. 테이블로? 
-                                예약이 된 시간은 표시하기
-                                클릭하면 oprion startTime변경 -->
+					                                예약이 된 시간은 표시하기
+					                                클릭하면 oprion startTime변경 -->
                             <table id="timeTable" border="1" style="width:120px; height:40px">
                                 <tr>
                                     <c:forEach var="i" begin="0" end="5">
@@ -227,6 +226,13 @@
                             <button type="button" class="btn btn-primary" onclick="submit()" data-dismiss="modal">확인</button>
                         </div>
                         <script>
+	                        $('td').click(function(event) {
+	                            var rNum = $(this).attr('data-row'); // 클릭한 테이블의 번호
+	
+	                            var seatNo = document.getElementById('seatNo');
+	                            seatNo.innerHTML = rNum + '번 좌석을 선택하셨습니다.';
+	                        });
+                        
                             function submit(){
                                 $.ajax({
                                     url : 'reserveSeat.st',
@@ -248,6 +254,12 @@
                                         	 valueStartTime + ' - ' + valueEndTime + ' 예약되었습니다.', 
                                         	'success');
                                         
+                                        $('td').click(function(event) {
+                                            $(this).attr('data-row').children().css('background', 'black');
+                                        });
+                                        
+                                        
+                                        
                                     }, error : function(){
                                         console.log('안됨');
                                         swal('안됨', '외않되...', 'error');
@@ -257,10 +269,9 @@
                         </script>
                         
 
-                    </div>
+                    </div><!-- modal-content -->
                 </div>
             </div>
-        <!-- </form> -->
 
         <br>
 
