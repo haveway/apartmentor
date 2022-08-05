@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>자유게시판</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 	.content-area{
 		width:1200px;
@@ -79,12 +78,13 @@
 			<thead>
 				<tr>
 					<th>
-						<select name="condition">
-							<option value="[일반]">[일반]</option>
-							<option value="[맘]">[맘]</option>
-							<option value="[건의]">[건의]</option>
-							<option value="[판매]">[판매]</option>
-							<option value="[정보]">[정보]</option>
+						<select name="condition" id="condition">
+							<option value="전체">[전체]</option>
+							<option value="일반">[일반]</option>
+							<option value="맘">[맘]</option>
+							<option value="건의">[건의]</option>
+							<option value="판매">[판매]</option>
+							<option value="정보">[정보]</option>
 						</select>
 					</th>
 					<th>제목</th>
@@ -94,15 +94,32 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="b" items="${list}">
-					<tr onclick="location.href='detail.bo?bno=${b.boardNo}'">
-						<td>${b.boardCategory}</td>
-						<td>${b.boardTitle}</td>
-						<td>${b.boardWriter}</td>
-						<td>${b.count}</td>
-                   		<td>${b.createDate}</td>
-                   	</tr>	
-				</c:forEach>
+			<c:choose>
+				<c:when test="${ empty oList }">
+					<c:forEach var="b" items="${list}">
+						<tr onclick="location.href='detail.bo?bno=${b.boardNo}'">
+							<td>${b.boardCategory}</td>
+							<td>${b.boardTitle}</td>
+							<td>${b.boardWriter}</td>
+							<td>${b.count}</td>
+	                  		<td>${b.createDate}</td>
+	                  	</tr>	
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="o" items="${oList}">
+						<tr onclick="location.href='detail.bo?bno=${o.boardNo}'">
+							<td>${o.boardCategory}</td>
+							<td>${o.boardTitle}</td>
+							<td>${o.boardWriter}</td>
+							<td>${o.count}</td>
+	                  		<td>${o.createDate}</td>
+	                  	</tr>	
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+				
+				
 			</tbody>
 		</table>
 		<br>
@@ -126,6 +143,9 @@
 							<c:when test="${empty keyword}">
 								<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">이전</a></li>
 							</c:when>
+							<c:when test="${ not empty option }">
+								<li class="page-item"><a class="page-link" href="option.bo?cpage=${ pi.currentPage - 1 }&option=${option}">이전</a></li>
+							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="search.bo?cpage=${ pi.currentPage - 1 }&keyword=${keyword}">이전</a></li>
 							</c:otherwise>
@@ -138,11 +158,13 @@
 							<c:when test="${empty keyword}">
 								<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
 							</c:when>
+							<c:when test="${empty keyword}">
+								<li class="page-item"><a class="page-link" href="option.bo?cpage=${p}&option=${option}">${p}</a></li>
+							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="search.bo?cpage=${p}&keyword=${keyword}">${p}</a></li>
 							</c:otherwise>
 						</c:choose>
-					
 					</c:forEach>
 					
 				<c:choose>
@@ -153,6 +175,9 @@
 						<c:choose>
 							<c:when test="${empty keyword}">
 								<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
+							</c:when>
+							<c:when test="${ not empty option }">
+								<li class="page-item"><a class="page-link" href="option.bo?cpage=${ pi.currentPage + 1 }&option=${option}">다음</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="search.bo?cpage=${ pi.currentPage + 1 }&keyword=${keyword}">다음</a></li>
@@ -165,6 +190,22 @@
 		</div>
 		
 	</div>
+	
+	<script>
+		$(function(){
+			$('#condition').change(function(){
+				var opt = "";
+				opt = $('#condition option:selected').val();
+				location.href='option.bo?option=' + opt;
+				
+			})
+		})
+		$(function(){
+			var selectOpt = "";
+			$("#condition option[value=${option}]").attr("selected", true);
+			
+		})		
+	</script>
 	
 	
 	

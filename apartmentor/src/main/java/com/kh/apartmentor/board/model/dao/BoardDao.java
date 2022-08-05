@@ -53,4 +53,16 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchList", keyword, rowBounds);
 	}
 
+	public ArrayList<Board> selectOption(SqlSessionTemplate sqlSession, String option, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectOption", option, rowBounds);
+	}
+
+	
+
 }

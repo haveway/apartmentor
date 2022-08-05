@@ -134,8 +134,46 @@
 		  		'%' || #{keyword} || '%'						
   	</select>
   
-  
-  
+  	<!-- 선택한 말머리가 위에 오게 리스트 추출 -->
+  	<select id="selectOption" parameterType="string" resultMap="boardResultSet">
+  		SELECT
+  				BOARD_NO,
+				BOARD_TITLE,
+				BOARD_WRITER,
+				TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
+				BOARD_CATEGORY,
+				COUNT
+		  FROM
+		  		BOARD	
+		 WHERE
+		 		STATUS = 'Y'
+		<if test="option == '일반'">
+		 ORDER
+		    BY  	
+		DECODE	(BOARD_CATEGORY, '일반', 1)
+		</if>					
+		<if test="option == '맘'">
+		 ORDER
+		    BY
+	    DECODE	(BOARD_CATEGORY, '맘', 1)	   
+		</if>
+		<if test="option == '건의'">
+		 ORDER
+		    BY
+	    DECODE	(BOARD_CATEGORY, '건의', 1)	   
+		</if>
+		<if test="option == '판매'">
+		 ORDER
+		    BY
+	    DECODE	(BOARD_CATEGORY, '판매', 1)	   
+		</if>
+  		<if test="option == '정보'">
+		 ORDER
+		    BY
+	    DECODE	(BOARD_CATEGORY, '정보', 1)	   
+		</if>
+		
+  	</select>
   
   
   

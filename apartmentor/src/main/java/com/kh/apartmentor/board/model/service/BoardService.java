@@ -50,6 +50,12 @@ public class BoardService {
 		return boardDao.selectSearchList(sqlSession, keyword, pi);
 	}
 
+	public ArrayList<Board> selectOption(String option, PageInfo pi) {
+		return boardDao.selectOption(sqlSession, option, pi);
+	}
+
+	
+
 	
 
 }
