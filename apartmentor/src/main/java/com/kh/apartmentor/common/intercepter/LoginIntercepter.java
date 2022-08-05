@@ -30,7 +30,7 @@ public class LoginIntercepter extends HandlerInterceptorAdapter {
 		if(session.getAttribute("loginUser") != null) {
 			return true;
 		} else { // 로그인 되어있지 않은 경우 => Controller 실행 X
-			session.setAttribute("alertMsg", "로그인 후 이용가능한 서비스입니다.");
+			session.setAttribute("alertMsg1", "로그인 후 이용가능한 서비스입니다.");
 			response.sendRedirect(request.getContextPath());
 			return false;
 		}

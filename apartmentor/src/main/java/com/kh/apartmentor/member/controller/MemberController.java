@@ -92,8 +92,8 @@ public class MemberController {
 		return new Gson().toJson(userPwd);
 		
 	}
-	
-	@RequestMapping("update.pw")
+	@ResponseBody
+	@RequestMapping(value = "update.pw", produces="application/json; charset=UTF-8")
 	public String updatePw(String newPwd, String checkPwd, String pwdId,
 								HttpSession session) {
 		
@@ -126,11 +126,18 @@ public class MemberController {
 		return "login";
 		
 	}
-	@RequestMapping("checkId1.me")
 	@ResponseBody
-	public String checkId1(String userId) {
+	@RequestMapping(value = "checkId1.me" , produces="application/json; charset=UTF-8")
+	public int checkId1(String userId) {
 		
-		return"";
+		int count = memberService.checkId1(userId);
+		System.out.println(count);
+		if(count > 0) {
+			return 0 ;
+		} else {
+			return 1;
+		}
+		
 	}
 	
 

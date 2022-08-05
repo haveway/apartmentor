@@ -19,4 +19,7 @@ public interface MemberService {
 	// 비밀번호 변경
 	int updatePwd(HashMap<String, String> map);
 
+	// 아이디 중복체크
+	int checkId1(String userId);
+
 }

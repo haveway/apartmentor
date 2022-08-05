@@ -113,12 +113,35 @@
     </style>
 </head>
 <body>
-<%-- 	<c:if test="${not empty alertMsg}">
-		<script>
-			alertify.alert("${alertMsg}").set('basic', true); 
-		</script>
-		<c:remove var="alertMsg" scope="session"/>
-	</c:if>	 --%>
+	<script>
+	 function checkId1() {
+			console.log("asdasd");	
+		
+			$.ajax({
+				url : "checkId1.me",
+				data : {
+		        	//var userId = $("#addId").val();
+		        	//var idCheckRegExp = /^[a-z0-9]{4,8}$/;
+		        	
+				},
+				success : function(result) {
+					console.log(result)
+					if(result == 1){
+						
+					}
+					else {
+						
+					}
+					
+				},
+				error : function(){
+					console.log("ASD"+result)
+				}
+			})
+		} 
+	
+	</script>
+
 	<c:if test="${not empty alertMsg1}">
 		<script>
 			swal('오류', "${alertMsg1}", 'warning');
@@ -135,7 +158,7 @@
         <br>
         <div class="formWrap border" align="center">
             <form action="login.me">
-                <input type="text" id="loginid" name="userId" placeholder="아이디" oninput="checkId1()">
+                <input type="text" id="loginid" name="userId" placeholder="아이디">
                 <br>
                 <input type="password" id="loginpwd" name="userPwd"placeholder="비밀번호">
                 <br>
@@ -177,7 +200,7 @@
                     <div class="modal-body">
                         <b>아이디 : </b>
                         <div class="modal-input">
-                            <input type="text" id="addId" name="userId" placeholder="ex)user111" required>
+                            <input type="text" id="addId" name="userId" placeholder="ex)user111" onkeyup="checkId1();" required>  <!-- oninput="checkId1()" -->
                         </div>
                         <p>영문(소문자) 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
 
@@ -387,28 +410,44 @@
 			error:function(){
 				console.log('실패')
 				swal('오류', "일치하는 정보가 없습니다", 'warning');
-			}	
+			}		
     	})
+    	
 	}
    
 	/* 중복체크,유효성검사  */
-	function checkId1() {
-		$.ajax({
-			url : "checkId1.me",
-			data : {
-	        	var userId = $("#addId").val();
-	        	var idCheckRegExp = /^[a-zA-Z]+[a-zA-Z0-9]{4,8}$/;
-			},
-			success : function(result) {
-				if(result == null){
-					
-				}
-			},
-			error : function(){
-				
-			}
-		})
-	}
+
+
+	
+	/*
+	$(function(){
+        let addId = $("#addId");
+        addId.addEventListener("keyup",function(){
+        	console.log("asdasd");	
+        	
+    		$.ajax({
+    			url : "checkId1.me",
+    			data : {
+    				let userId = $("#addId").val();
+    				let idCheckRegExp = /^[a-z0-9]{4,8}$/;
+    			},
+    			success : function(result) {
+    				console.log(result)
+    				if(result == 1){
+    					
+    				}
+    				else {
+    					
+    				}
+    				
+    			},
+    			error : function(){
+    				console.log("ASD"+result)
+    			}
+    		})
+    	}
+	})
+	*/
 
 </script>
 </body>

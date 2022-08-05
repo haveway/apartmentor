@@ -94,6 +94,13 @@
 		 WHERE    
 		       USER_ID = #{pwdId}
 	</update>                 
-	                                                    
+	<select id="checkId1" parameterType="string">
+		SELECT 
+			   COUNT(*) 
+		  FROM 
+			   MEMBER
+		 WHERE 
+		       USER_ID = #{userId}
+	</select>	                                                    
 	
 </mapper>
