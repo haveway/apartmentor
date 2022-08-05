@@ -1,5 +1,7 @@
 package com.kh.apartmentor.member.model.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +40,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int updatePw(String encPwd) {
-		return memberDao.updatePwd(sqlSession, encPwd);
+	public int updatePwd(HashMap<String, String> map) {
+		return memberDao.updatePwd(sqlSession, map);
 	}
 
 

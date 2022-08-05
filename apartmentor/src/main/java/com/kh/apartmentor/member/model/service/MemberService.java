@@ -1,5 +1,7 @@
 package com.kh.apartmentor.member.model.service;
 
+import java.util.HashMap;
+
 import com.kh.apartmentor.member.model.vo.Member;
 
 public interface MemberService {
@@ -15,6 +17,6 @@ public interface MemberService {
 	// 비밀번호 확인작업
 	Member findPwd(Member m);
 	// 비밀번호 변경
-	int updatePw(String encPwd);
+	int updatePwd(HashMap<String, String> map);
 
 }

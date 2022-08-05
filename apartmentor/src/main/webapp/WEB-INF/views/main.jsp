@@ -54,7 +54,28 @@
               		  자유
             </div>
             <div id="content4">
-            		    차
+                <form action="visit.car">
+                    <h4>방문차량등록</h4>
+                    <table>
+                        <tr>
+                            <td>방문일</td>
+                            <td><input type="date" name="carDate"><br></td>
+                        </tr>
+                        <tr>
+                            <td>차량번호</td>
+                            <td><input type="text" name="carNo" placeholder="ex)12가5678"></td>
+                        </tr>
+                        <tr>
+                            <td>방문 목적</td>
+                            <td><input type="text" name="carPurpose" placeholder="ex)친척 방문"></td>
+                        </tr>
+                        <tr>
+                            <td>비상 연락처</td>
+                            <td><input type="text" name="carPhone" placeholder="ex)010-1234-5678"></td>
+                        </tr>
+                    </table>
+                    <button type="submit">방문 예약 등록</button>
+                </form>
             </div>
         </div>
 

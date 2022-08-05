@@ -1,10 +1,13 @@
 package com.kh.apartmentor.member.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,10 +57,10 @@ public class MemberController {
 		int result = memberService.insertMember(m);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 회원가입이 되었습니다.");
+			session.setAttribute("alertMsg2", "성공적으로 회원가입이 되었습니다.");
 			return "redirect:/";
 		}else { 
-			mv.addObject("alertMsg", "다시 확인해주세요.");
+			mv.addObject("alertMsg1", "다시 확인해주세요.");
 			return "NO";
 		}
 	}
@@ -85,27 +88,49 @@ public class MemberController {
 		
 		System.out.println(m);
 		Member userPwd = memberService.findPwd(m);
-		session.setAttribute("userId", id);
+		userPwd.setUserId(id);
 		return new Gson().toJson(userPwd);
 		
 	}
 	
 	@RequestMapping("update.pw")
-	public int updatePw(String newPwd, String checkPwd, String userId) {
-		System.out.println(userId);
+	public String updatePw(String newPwd, String checkPwd, String pwdId,
+								HttpSession session) {
+		
+		System.out.println(pwdId);
+		
 		if(newPwd.equals(checkPwd)) {
 			newPwd = checkPwd;
 			
 			String encPwd = bCryptPasswordEncoder.encode(newPwd);
 			
-			int result = memberService.updatePw(encPwd);
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("encPwd", encPwd);
+			map.put("pwdId", pwdId);
+			
+			int result = memberService.updatePwd(map);
+			
+			System.out.println(result);
+			
+			if(result > 0) {
+				
+				session.setAttribute("alertMsg2", "비밀번호 변경완료.");
+				
+			} else {
+				session.setAttribute("alertMsg1", "비밀번호 변경실패.");
+			}
 			
 		} else {
-			
-			
+			session.setAttribute("alertMsg1", "비밀번호가 동일하지 않습니다.");
 		}
+		return "login";
 		
-		return 0;
+	}
+	@RequestMapping("checkId1.me")
+	@ResponseBody
+	public String checkId1(String userId) {
+		
+		return"";
 	}
 	
 

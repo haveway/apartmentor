@@ -5,11 +5,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+	
    	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
         .loginWrap{
@@ -100,12 +113,29 @@
     </style>
 </head>
 <body>
+<%-- 	<c:if test="${not empty alertMsg}">
+		<script>
+			alertify.alert("${alertMsg}").set('basic', true); 
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>	 --%>
+	<c:if test="${not empty alertMsg1}">
+		<script>
+			swal('오류', "${alertMsg1}", 'warning');
+		</script>
+	</c:if>	
+	<c:if test="${not empty alertMsg2}">
+		<script>
+			swal('성공!', "${alertMsg2}", 'success');
+		</script>
+	</c:if>	
+	
     <div  class="loginWrap">
         <h2 id="logo">APARTMENTOR</h2>
         <br>
         <div class="formWrap border" align="center">
             <form action="login.me">
-                <input type="text" id="loginid" name="userId"placeholder="아이디">
+                <input type="text" id="loginid" name="userId" placeholder="아이디" oninput="checkId1()">
                 <br>
                 <input type="password" id="loginpwd" name="userPwd"placeholder="비밀번호">
                 <br>
@@ -147,43 +177,43 @@
                     <div class="modal-body">
                         <b>아이디 : </b>
                         <div class="modal-input">
-                            <input type="text" class="id" name="userId" placeholder="ex)user111" required>
+                            <input type="text" id="addId" name="userId" placeholder="ex)user111" required>
                         </div>
                         <p>영문(소문자) 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
 
                         <b>비밀번호 : </b>
                         <div class="modal-input">
-                            <input type="text" class="pwd" name="userPwd" placeholder="ex)asd123!@#" required>
+                            <input type="text" id="addPwd" name="userPwd" placeholder="ex)asd123!@#" required>
                         </div>
                         <p>4~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.</p>
                         
                         <b>이름 : </b>
                         <div class="modal-input">
-                        	<input type="text" class="name" name="userName" placeholder="ex)홍길동" required>
+                        	<input type="text" id="addName" name="userName" placeholder="ex)홍길동" required>
                         </div>
                         <p>한글이름으로 입력하세요</p>
 
                         <b>생년월일 : </b>
                         <div class="modal-input">
-                        	<input type="text" class="birthday" name="birthday" placeholder="ex)901201" required>
+                        	<input type="text" id="addBirthday" name="birthday" placeholder="ex)901201" required>
                         </div>
                         <p>6자리 숫자로 입력하세요.</p>
 
                         <b>휴대폰 : </b>
                         <div class="modal-input">
-                        	<input type="text" class="phone" name="phone" placeholder="ex)01012345678" required>
+                        	<input type="text" id="addPhone" name="phone" placeholder="ex)01012345678" required>
                         </div>
                         <p>-을 제외한 11자리 숫자로 입력하세요.</p>
 
                         <b>이메일 : </b>
                         <div class="modal-input">
-                        	<input type="text" class="email" name="email" placeholder="ex)apartmento@naver.com" required>
+                        	<input type="text" id="addEmail" name="email" placeholder="ex)apartmento@naver.com" required>
                         </div>
                         <p>예시와 같은 형식으로 입력하세요.</p>
 
                         <b>동,호수 : </b>
                         <div class="modal-input">
-                        	<input type="text" class="aptNo" name="aptNo" placeholder="ex)101동1001호" required>
+                        	<input type="text" id="addAptNo" name="aptNo" placeholder="ex)101동1001호" required>
                         </div>
                         <p>예시와 같은 형식으로 입력하세요.</p>
                     </div>
@@ -240,32 +270,7 @@
         </div>
     </div>
     
-    <script>
-    function findId() {
-    	$.ajax({
-    		url : "findId.me",
-    		data : {
-    			name : $('#nameId').val(),
-    			birthday : $('#birthdayId').val(),
-    			aptNo : $('#aptNoId').val()
-    		},
-    		success : function(result){
-    			if(result == "null"){
-					let nId = '일치하는 정보가 없습니다';
-    				$('#findId').html(nId);
-    			} 
-    			else { 
-    			
-    				let yId = '회원님의 아이디는 : ' + '<br>' + result.userId + ' 입니다.';
-    				$('#findId').html(yId);
-    			}	
-    		},
-			error:function(){
-				console.log('실패')
-			}	
-    	})
-	}
-    </script>
+
 
     <!-- 비밀번호 찾기 모달 -->
     <div class="modal" id="myModal3">
@@ -313,6 +318,32 @@
 	</div>
     
     <script>
+	/* 아이디 찾기 */
+    function findId() {
+    	$.ajax({
+    		url : "findId.me",
+    		data : {
+    			name : $('#nameId').val(),
+    			birthday : $('#birthdayId').val(),
+    			aptNo : $('#aptNoId').val()
+    		},
+    		success : function(result){
+    			if(result == null){
+					let nId = '일치하는 정보가 없습니다';
+    				$('#findId').html(nId);
+    			} 
+    			else { 
+    			
+    				let yId = '회원님의 아이디는 : ' + '<br>' + result.userId + ' 입니다.';
+    				$('#findId').html(yId);
+    			}	
+    		},
+			error:function(){
+				console.log('실패')
+			}	
+    	})
+	}
+	/* 비밀번호 찾기 */
     function findPwd() {
     	$.ajax({
     		url : "findPwd.me",
@@ -323,15 +354,16 @@
     			aptNo : $('#aptNoPwd').val()
     		},
     		success : function(result){
-    			if(result == "null"){
-					let nPwd = '일치하는 정보가 없습니다';
-    				$('#findPwd').html(nPwd);
+    			if(result == null){
+    				swal('오류', "일치하는 정보가 없습니다", 'warning');    				
     			} 
     			else { 
+    				console.log(result)
+    				console.log(result.userId)
     				console.log(result.userPwd)
     				$('#updatePwd *').remove();
     				let yPwd = '<form action="update.pw" method="post">'
-    						  + '<input type="hidden" name="userId">'
+    						  + '<input type="hidden" name="pwdId"  id="asdasd">' /* pwdId */
     						  + '<div class="modal-body" id="pwdBody">'
     						  + '<b>' + '비밀번호' +'</b>'
     						  + '<div class="modal-input">' 
@@ -347,18 +379,37 @@
     						  + '<div class="modal-footer" id="pwdFooter">'
     						  + '<button type="submit" class="btn submit" >' + '변경' + '</button>'
     					      + '</div>'
-    					      + '</form>' 
+    					      + '</form>'
     				$('#updatePwd').html(yPwd);
-    				
-	            
-    						 
+    				$('#asdasd').val(result.userId)	      
     			}	
     		},
 			error:function(){
 				console.log('실패')
+				swal('오류', "일치하는 정보가 없습니다", 'warning');
 			}	
     	})
 	}
-    </script>
+   
+	/* 중복체크,유효성검사  */
+	function checkId1() {
+		$.ajax({
+			url : "checkId1.me",
+			data : {
+	        	var userId = $("#addId").val();
+	        	var idCheckRegExp = /^[a-zA-Z]+[a-zA-Z0-9]{4,8}$/;
+			},
+			success : function(result) {
+				if(result == null){
+					
+				}
+			},
+			error : function(){
+				
+			}
+		})
+	}
+
+</script>
 </body>
 </html>
