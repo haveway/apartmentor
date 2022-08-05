@@ -1,5 +1,7 @@
 package com.kh.apartmentor.member.model.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,8 +26,9 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.findPwd",m);
 	}
 
-	public int updatePwd(SqlSessionTemplate sqlSession, String encPwd) {
-		return sqlSession.update("memberMapper.updatePwd",encPwd);
+	public int updatePwd(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		System.out.println(map);
+		return sqlSession.update("memberMapper.updatePwd",map);
 	}
 	
 	

@@ -86,10 +86,13 @@
 		   AND 
 		       STATUS = 'Y'              		       
 	</select>     
-	<update id="updatePwd">
-		UPDATE
-		      MEMBER
-	
+	<update id="updatePwd" parameterType="hashmap">
+		UPDATE 
+		       MEMBER
+		   SET 
+		       USER_PWD = #{encPwd}
+		 WHERE    
+		       USER_ID = #{pwdId}
 	</update>                 
 	                                                    
 	
