@@ -113,28 +113,24 @@ public class MemberController {
 			System.out.println(result);
 			
 			if(result > 0) {
-				
 				session.setAttribute("alertMsg2", "비밀번호 변경완료.");
-				
 			} else {
 				session.setAttribute("alertMsg1", "비밀번호 변경실패.");
 			}
-			
 		} else {
 			session.setAttribute("alertMsg1", "비밀번호가 동일하지 않습니다.");
 		}
 		return "login";
-		
 	}
 	@ResponseBody
-	@RequestMapping(value = "checkId1.me" , produces="application/json; charset=UTF-8")
+	@RequestMapping(value = "checkId.me" , produces="application/json; charset=UTF-8")
 	public int checkId1(String userId) {
-		
 		int count = memberService.checkId1(userId);
-		System.out.println(count);
 		if(count > 0) {
+			System.out.println("카운트 큼");
 			return 0 ;
 		} else {
+			System.out.println("카운트 작음");
 			return 1;
 		}
 		

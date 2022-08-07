@@ -105,40 +105,16 @@
             color: white;        
         }
         #p1red{
-        font-size: 5px;
-        color: red;
+	        font-size: 5px;
+	        color: red;
         }
-        #p2red{
 
     </style>
 </head>
 <body>
 	<script>
-	 function checkId1() {
-			console.log("asdasd");	
-		
-			$.ajax({
-				url : "checkId1.me",
-				data : {
-		        	//var userId = $("#addId").val();
-		        	//var idCheckRegExp = /^[a-z0-9]{4,8}$/;
-		        	
-				},
-				success : function(result) {
-					console.log(result)
-					if(result == 1){
-						
-					}
-					else {
-						
-					}
-					
-				},
-				error : function(){
-					console.log("ASD"+result)
-				}
-			})
-		} 
+
+	 
 	
 	</script>
 
@@ -193,58 +169,63 @@
                     <h2>회원가입</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <br>
                 
                 <!-- Body -->
                 <form action="insert.me" method="post">
                     <div class="modal-body">
                         <b>아이디 : </b>
                         <div class="modal-input">
-                            <input type="text" id="addId" name="userId" placeholder="ex)user111" onkeyup="checkId1();" required>  <!-- oninput="checkId1()" -->
+                            <input type="text" id="addId" name="userId" placeholder="ex)user111" oninput="checkId();" required>
                         </div>
-                        <p>영문(소문자) 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
+                        <p id="p1">영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
 
                         <b>비밀번호 : </b>
                         <div class="modal-input">
-                            <input type="text" id="addPwd" name="userPwd" placeholder="ex)asd123!@#" required>
+                            <input type="text" id="addPwd" name="userPwd" placeholder="ex)asd123!@#" oninput="checkPwd();" required >
                         </div>
-                        <p>4~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.</p>
+                        <p id="p2">6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.</p>
+                        
+                        <b>비밀번호 확인 : </b>
+                        <div class="modal-input">
+                            <input type="text" id="rePwd1" name="userPwd" placeholder="ex)asd123!@#" oninput="ReconfirmPwd1()" required>
+                        </div>
+                        <p id="p3">비밀번호를 일치하게 입력해주세요.</p>
                         
                         <b>이름 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addName" name="userName" placeholder="ex)홍길동" required>
+                        	<input type="text" id="addName" name="userName" placeholder="ex)홍길동" oninput="checkName()" required>
                         </div>
-                        <p>한글이름으로 입력하세요</p>
+                        <p id="p4">한글이름으로 입력하세요.</p>
 
                         <b>생년월일 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addBirthday" name="birthday" placeholder="ex)901201" required>
+                        	<input type="text" id="addBirthday" name="birthday" placeholder="ex)901201" oninput="checkBirth()" required>
                         </div>
-                        <p>6자리 숫자로 입력하세요.</p>
+                        <p id="p5">6자리 숫자로 입력하세요.</p>
 
                         <b>휴대폰 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addPhone" name="phone" placeholder="ex)01012345678" required>
+                        	<input type="text" id="addPhone" name="phone" placeholder="ex)01012345678" oninput="checkPhone()" required>
                         </div>
-                        <p>-을 제외한 11자리 숫자로 입력하세요.</p>
+                        <p id="p6">-을 제외한 11자리 숫자로 입력하세요.</p>
 
                         <b>이메일 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addEmail" name="email" placeholder="ex)apartmento@naver.com" required>
+                        	<input type="text" id="addEmail" name="email" placeholder="ex)apartmento@naver.com" oninput="checkEmail()" required>
                         </div>
-                        <p>예시와 같은 형식으로 입력하세요.</p>
+                        <p id="p7">예시와 같은 형식으로 입력하세요.</p>
 
                         <b>동,호수 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addAptNo" name="aptNo" placeholder="ex)101동1001호" required>
+                        	<input type="text" id="addAptNo" name="aptNo" placeholder="ex)101동1001호" oninput="checkAptNo()" required>
                         </div>
-                        <p>예시와 같은 형식으로 입력하세요.</p>
+                        <p id="p8">예시와 같은 형식으로 입력하세요.</p>
                     </div>
                     
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" class="btn submit">가입신청</button>
+                        <button type="submit" id="insertMember"class="btn submit" disabled>가입신청</button>
                     </div>
                 </form>
             </div>
@@ -267,7 +248,7 @@
 	                <div class="modal-input">
 	                	<input type="text" id="nameId"placeholder="ex)홍길동" required>
 	                </div>
-	                <p>한글이름으로 입력하세요</p>
+	                <p>한글이름으로 입력하세요.</p>
 	
 	                <b>생년월일 : </b>
 	                <div class="modal-input">
@@ -316,7 +297,7 @@
 					    <div class="modal-input">
 					    	<input type="text" id="namePwd" name="userName" placeholder="ex)홍길동" required>
 					    </div>
-					    <p>한글이름으로 입력하세요</p>
+					    <p>한글이름으로 입력하세요.</p>
 					
 					    <b>생년월일 : </b>
 					    <div class="modal-input">
@@ -344,7 +325,7 @@
 	/* 아이디 찾기 */
     function findId() {
     	$.ajax({
-    		url : "findId.me",
+    		url : 'findId.me',
     		data : {
     			name : $('#nameId').val(),
     			birthday : $('#birthdayId').val(),
@@ -352,13 +333,10 @@
     		},
     		success : function(result){
     			if(result == null){
-					let nId = '일치하는 정보가 없습니다';
-    				$('#findId').html(nId);
+    				swal('오류', '일치하는 정보가 없습니다', 'warning');    	
     			} 
     			else { 
-    			
-    				let yId = '회원님의 아이디는 : ' + '<br>' + result.userId + ' 입니다.';
-    				$('#findId').html(yId);
+    				swal('성공!', '회원님의 아이디는 ' + result.userId + ' 입니다.', 'success');    	
     			}	
     		},
 			error:function(){
@@ -369,7 +347,7 @@
 	/* 비밀번호 찾기 */
     function findPwd() {
     	$.ajax({
-    		url : "findPwd.me",
+    		url : 'findPwd.me',
     		data : {
     			id : $('#idPwd').val(),
     			name : $('#namePwd').val(),
@@ -378,7 +356,7 @@
     		},
     		success : function(result){
     			if(result == null){
-    				swal('오류', "일치하는 정보가 없습니다", 'warning');    				
+    				swal('오류', '일치하는 정보가 없습니다', 'warning');    				
     			} 
     			else { 
     				console.log(result)
@@ -390,14 +368,14 @@
     						  + '<div class="modal-body" id="pwdBody">'
     						  + '<b>' + '비밀번호' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="password" class="pwd" name="newPwd" placeholder="ex)asd123!@#" required>'
+    						  + '<input type="text" id="updatePwd" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
     						  + '</div>'
-    						  + '<p>' + '4~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.' + '</p>'
+    						  + '<p id="p9">' + '6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.' + '</p>'
     						  + '<b>' + '비밀번호 확인' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="password" class="pwd" name="checkPwd" placeholder="ex)asd123!@#" required>'
+    						  + '<input type="text" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2()" required>'
     						  + '</div>'
-    						  + '<p>' + '' + '</p>'
+    						  + '<p id="p10">' + '비밀번호를 일치하게 입력해주세요.' + '</p>'
     						  + '</div>'
     						  + '<div class="modal-footer" id="pwdFooter">'
     						  + '<button type="submit" class="btn submit" >' + '변경' + '</button>'
@@ -412,42 +390,185 @@
 				swal('오류', "일치하는 정보가 없습니다", 'warning');
 			}		
     	})
-    	
 	}
    
 	/* 중복체크,유효성검사  */
-
-
+	function checkId() {
+		let p1 = $('#p1');
+		let addId = $('#addId').val();
+		$.ajax({
+			url : 'checkId.me',
+			data : {
+				userId : addId
+			},
+			success : function(result) {
+				console.log(result)
+				if(result == 0){
+					p1.attr('style','color:red;');
+					p1.text('중복되는 아이디입니다');
+				}
+				else {
+					 let regExpId = /^\w{4,8}$/;
+					 if(!regExpId.test(addId)){ // 조건에 안맞음
+						 p1.attr('style','color:red;');
+						 p1.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
+					 } 
+					 else { //조건맞음
+						p1.attr('style','color:#32CD32;');
+						p1.text('멋진 아이디네요!');	 
+						var check1 = 1;
+					 }
+				}
+			},
+			error : function(result){
+				console.log('실패')
+			}
+		})
+	}
 	
-	/*
-	$(function(){
-        let addId = $("#addId");
-        addId.addEventListener("keyup",function(){
-        	console.log("asdasd");	
-        	
-    		$.ajax({
-    			url : "checkId1.me",
-    			data : {
-    				let userId = $("#addId").val();
-    				let idCheckRegExp = /^[a-z0-9]{4,8}$/;
-    			},
-    			success : function(result) {
-    				console.log(result)
-    				if(result == 1){
-    					
-    				}
-    				else {
-    					
-    				}
-    				
-    			},
-    			error : function(){
-    				console.log("ASD"+result)
-    			}
-    		})
-    	}
-	})
-	*/
+	/* 비밀번호 유효성 검사 */
+	function checkPwd() {
+		let p2 = $('#p2');
+		let addPwd = $('#addPwd').val();
+		let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
+		if(!regExpPwd.test(addPwd)){
+			 p2.attr('style','color:red;');
+			 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+		}
+		else {
+			p2.attr('style','color:#32CD32;');
+			p2.text('사용가능한 비밀번호 입니다.')
+		}
+	}
+ 	/* 비밀번호 중복 체크 */
+	function ReconfirmPwd1() {
+		let addPwd = $('#addPwd').val(); 
+		let rePwd1 = $('#rePwd1').val();
+		let p3 = $('#p3');
+		console.log(addPwd);
+		console.log(rePwd1);
+		console.log(addPwd != rePwd1)
+		if(addPwd != rePwd1){
+			p3.attr('style','color:red;');
+			p3.text('비밀번호를 일치하게 입력해주세요.')
+		}
+		else {
+			p3.attr('style','color:#32CD32;');
+			p3.text('비밀번호가 일치합니다.')
+		} 
+	}
+ 	/* 이름 체크 형식 */
+ 	function checkName() {
+		let addName = $('#addName').val(); 
+		let p4 = $('#p4');
+		let regExpName = /^[가-힣]{2,}$/;
+		console.log(addName);
+		if(!regExpName.test(addName)){
+			p4.attr('style','color:red;');
+			p4.text('올바른 형식의 이름을 입력하세요.(한글만 입력 가능)')
+		}
+		else {
+			p4.attr('style','color:#32CD32;');
+			p4.text('멋진 이름이네요!');	 
+		}
+	}
+ 	/* 생년월일 체크 형식*/
+ 	function checkBirth() {
+ 		let addBirthday = $('#addBirthday').val();
+ 		let p5 = $('#p5');
+ 		let regExpBirth = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+ 		console.log(addBirthday);
+ 		if (!regExpBirth.test(addBirthday)) {
+ 			p5.attr('style','color:red;');
+			p5.text('6자리 숫자로 입력하세요.')
+		} else {
+			p5.attr('style','color:#32CD32;');
+			p5.text('올바른  형식 입니다.');	
+		}
+	}
+ 	/* 휴대폰 체크 형식 */
+ 	function checkPhone() {
+ 		let addPhone = $('#addPhone').val();
+ 		let p6 = $('#p6');
+ 		let regExpPhone = /^[\d]{11}$/;
+ 		console.log(addPhone);
+ 		if(!regExpPhone.test(addPhone)){
+ 			p6.attr('style','color:red;');
+			p6.text('-을 제외한 11자리 숫자로 입력하세요.')
+		} 
+ 		else {
+			p6.attr('style','color:#32CD32;');
+			p6.text('올바른  형식 입니다.');	
+		}
+	}
+ 	/* 이메일 체크 형식  */
+ 	function checkEmail() {
+ 		let addEmail = $('#addEmail').val();
+ 		let p7 = $('#p7');
+ 		let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+ 		
+ 		console.log(addEmail);
+ 		if(!regExpEmail.test(addEmail)){
+ 			p7.attr('style','color:red;');
+			p7.text('올바른 형식의 이메일이 아닙니다.')
+		} 
+ 		else {
+			p7.attr('style','color:#32CD32;');
+			p7.text('올바른  형식 입니다.');	
+		}
+	}
+ 	/* 동,호수 체크 형식  ---------------미완*/
+ 	function checkAptNo() {
+ 		let addAptNo = $('#addAptNo').val();
+ 		let p8 = $('#p8');
+ 		let regExpAptNo =  /^[\d]{3,4}[동]{1}[\d]{3,4}[호]{1} $/;
+ 		console.log(addAptNo);
+ 		if(!regExpAptNo.test(addAptNo)){
+ 			p8.attr('style','color:red;');
+			p8.text('예시를 참고하여 입력해주세요.(공백 금지)')
+		} 
+ 		else {
+			p8.attr('style','color:#32CD32;');
+			p8.text('올바른  형식 입니다.');	
+		}
+	}
+ 	
+ 	
+ 	
+ 	+ '<input type="password" id="updatePwd" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2" required>'
+	  + '<input type="password" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2" required>'
+ 	
+	/* 비밀번호변경 유효성 검사 */
+	function checkPwd2() {
+		let p9 = $('#p9');
+		let updatePwd = $('#updatePwd').val();
+		let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
+		if(!regExpPwd.test(updatePwd)){
+			 p9.attr('style','color:red;');
+			 p9.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+		}
+		else {
+			p9.attr('style','color:#32CD32;');
+			p9.text('사용가능한 비밀번호 입니다.')
+		}
+	}
+ 	/* 비밀번호변경 중복 체크 */
+	function rePwd2() {
+		let updatePwd = $('#updatePwd').val(); 
+		let reUpdatePwd = $('#reUpdatePwd').val();
+		let p10 = $('#p10');
+		console.log(updatePwd);
+		console.log(reUpdatePwd);
+		if(updatePwd != reUpdatePwd){
+			p10.attr('style','color:red;');
+			p10.text('비밀번호를 일치하게 입력해주세요.')
+		}
+		else {
+			p10.attr('style','color:#32CD32;');
+			p10.text('비밀번호가 일치합니다.')
+		} 
+	}
+ 	
 
 </script>
 </body>

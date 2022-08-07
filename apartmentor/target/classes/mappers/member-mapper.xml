@@ -94,7 +94,7 @@
 		 WHERE    
 		       USER_ID = #{pwdId}
 	</update>                 
-	<select id="checkId1" parameterType="string">
+	<select id="checkId1" resultType="_int">
 		SELECT 
 			   COUNT(*) 
 		  FROM 
