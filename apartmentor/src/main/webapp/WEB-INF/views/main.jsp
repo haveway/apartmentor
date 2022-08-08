@@ -54,7 +54,8 @@
               		  자유
             </div>
             <div id="content4">
-                <form action="visit.car">
+                <form action="visit.car" method="post">
+                    <input type="hidden" name="userNo" value="${loginUser.userNo}">
                     <h4>방문차량등록</h4>
                     <table>
                         <tr>
@@ -68,6 +69,7 @@
                         <tr>
                             <td>방문 목적</td>
                             <td><input type="text" name="carPurpose" placeholder="ex)친척 방문"></td>
+                            <input type="hidden" name="carCategory" value="2">
                         </tr>
                         <tr>
                             <td>비상 연락처</td>

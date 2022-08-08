@@ -21,5 +21,6 @@
 		<mapper resource="/mappers/visit-mapper.xml" />
 		<mapper resource="/mappers/carVisit-mapper.xml" />
 		<mapper resource="/mappers/study-mapper.xml" />
+		<mapper resource="/mappers/sports-mapper.xml" />
 	</mappers>
 </configuration>

@@ -86,20 +86,17 @@
     </style>
 </head>
 <body>
-	<%-- <c:if test="${not empty alertMsg}">
-		<script>
-			alertify.alert("${alertMsg}")
-		</script>
-		<c:remove var="alertMsg" scope="session"/>
-	</c:if>	 --%>
-	
-	<c:if test="${not empty alertMsg1 or alertMsg2}">
+
+	<c:if test="${not empty alertMsg1}">
 		<script>
 			swal('오류', "${alertMsg1}", 'warning');
+		</script>
+	</c:if>	
+	<c:if test="${not empty alertMsg2}">
+		<script>
 			swal('성공!', "${alertMsg2}", 'success');
 		</script>
-		<c:remove var="alertMsg" scope="session"/>
-	</c:if>
+	</c:if>	
 
     <div id="header" style="border: solid yellow 3px;">
         <div id="menuBar">

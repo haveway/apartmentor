@@ -42,31 +42,167 @@
 		<br>
 		
 		<div class="btn-div">
-			<a href="" class="query btn btn-lg btn-secondary">실내 골프 연습장</a>
-			<a href="" class="btn btn-lg btn-outline-secondary">미니 GYM</a>
+			<a href="golf.sp" class="query btn btn-lg btn-secondary">실내 골프 연습장</a>
+			<a href="miniGym.sp" class="btn btn-lg btn-outline-secondary">미니 GYM</a>
 			<a href="" class="btn btn-lg btn-outline-secondary">이용내역</a>
 		</div>
 		
 		<br><br>
-		<div align="center" style="width: 1200px; height: 80px; border: 2px solid pink; padding: 10px;">
-			<label>예약 날짜 <input class="reserve_miniGym" id="datepicker" name="date" type="text" placeholder="날짜 선택"></label>
-			<label>예약 시간 <input class="reserve_miniGym" id="timepicker" name="time" type="text" placeholder="시간 선택"></label>
-		</div>
+			<div align="center" style="width: 1200px; height: 80px; border: 2px solid pink; padding: 10px;">
+				<label>예약 날짜 <input class="reserve_miniGym" id="datepicker" name="date" type="text" placeholder="날짜 선택"></label>
+				<label>예약 시간 <input class="reserve_miniGym" id="timepicker" name="time" type="text" placeholder="시간 선택"></label>
+				<label><button class="btn btn-primary" id="btn">검색하기</button></label>
+			</div>
+		<br><br>
+		
+		
+		<table id="golf_seat" class="table" align="center">
+			<thead>
+				<tr>
+					<th colspan="5">
+						<h1 align="center">실내 골프 연습장 좌석 안내</h1><br>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+		
+			</tbody>
+		</table>
+		
+		
+		
+		
+		
+		
+		
 
 
 
-
-
-
-
+<br><br><br><br><br><br><br><br><br>
 	</div>
 
 	
+    <script>
+    
+    	//$(function(){
+    		// 댓글조회하는 기능을 호출
+    		//selectReplyList();
+    	//})
+    	
+    	// 날짜와 시간을 조회하는 버튼 기능 
+    	window.onload = function(){
+    		var btn = document.getElementById("btn");
+    		btn.addEventListener("click",function(){
+    		
+    			$.ajax({
+    				
+    				url : "golfSeatList.sp",
+    				data : {
+    					startDay : $("#datepicker").val(),
+    					startDate : $("#timepicker").val()
+    					
+    				},
+ 					success : function(){
+ 						let value = '';
+    					value += 
+    				'<tr>'
+    					+ '<td align="center">'
+    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
+    					+ '1번자리</td>'
+    					+ '<td align="center">'
+    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
+    					+ '2번자리</td>'
+    					+ '<td align="center">'
+    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
+    					+ '3번자리</td>'
+    					+ '<td align="center">'
+    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
+    					+ '4번자리</td>'
+    					+ '<td align="center">'
+    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
+    					+ '5번자리</td>'
+    					
+   				 + '</tr>'
+					+ '<tr>'
+						+ '<td align="center">'
+							+ '<a class="btn btn-lg btn-outline-secondary" data-value="1">예약하기</a>'
+						+ '</td>'
+						+ '<td align="center">'
+							+ '<a class="btn btn-lg btn-outline-secondary" data-value="2">예약하기</a>'
+						+ '</td>'
+						+ '<td align="center">'
+							+ '<a class="btn btn-lg btn-outline-secondary" data-value="3">예약하기</a>'
+						+ '</td>'
+						+ '<td align="center">'
+							+ '<a class="btn btn-lg btn-outline-secondary" data-value="4">예약하기</a>'
+						+ '</td>'
+						+ '<td align="center">'
+							+ '<a class="btn btn-lg btn-outline-secondary" data-value="5">예약하기</a>'
+						+'</td>'
+					+ '</tr>';	
+							   
+ 				$('#golf_seat tbody').html(value);
+ 					},
+ 					error : function(){
+ 						console.log("좌석을 다시 입력해주세요.")
+ 					}
+    			})
+    			
+    			
+    		})
+    		
+    	}
+    	
+    	//function selectReplyList(){
+    		
+    		//$.ajax({
+
+    			//url : 'rlist.bo', // 전체조회가 아님! 게시글에 딸린 댓글만 조회해야한다(현재 게시글 번호만 넘겨야한다.)
+    			//data : {bno : ${ b.boardNo }},
+    			//success : function(list){
+    				
+    			//	let value = '';
+    			//	for(let i in list){
+    			//		value += '<tr>'
+				//			   + '<td>' + list[i].replyWriter + '</td>'
+				//			   + '<td>' + list[i].replyContent + '</td>'
+				//			   + '<td>' + list[i].createDate + '</td>'
+				//			   + '</tr>'
+    			//	}
+    			//	$('#replyArea tbody').html(value);
+    			//	$('#rcount').text(list.length);
+    			
+    			//},
+    			//error : function(){
+    			//	console.log('실패');
+    			//}
+    			
+    			
+    			
+    			
+    		//})
+    	//}
+    </script>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<script type="text/javascript">
-
-	 
-
 	  $( function() {
 	    $( "#datepicker" ).datepicker({
 	    	  buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
@@ -109,5 +245,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
+
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

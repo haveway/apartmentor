@@ -27,8 +27,11 @@ public class MemberDao {
 	}
 
 	public int updatePwd(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		System.out.println(map);
 		return sqlSession.update("memberMapper.updatePwd",map);
+	}
+
+	public int checkId1(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.selectOne("memberMapper.checkId1",userId);
 	}
 	
 	

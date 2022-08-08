@@ -92,8 +92,8 @@ public class MemberController {
 		return new Gson().toJson(userPwd);
 		
 	}
-	
-	@RequestMapping("update.pw")
+	@ResponseBody
+	@RequestMapping(value = "update.pw", produces="application/json; charset=UTF-8")
 	public String updatePw(String newPwd, String checkPwd, String pwdId,
 								HttpSession session) {
 		
@@ -113,24 +113,27 @@ public class MemberController {
 			System.out.println(result);
 			
 			if(result > 0) {
-				
 				session.setAttribute("alertMsg2", "비밀번호 변경완료.");
-				
 			} else {
 				session.setAttribute("alertMsg1", "비밀번호 변경실패.");
 			}
-			
 		} else {
 			session.setAttribute("alertMsg1", "비밀번호가 동일하지 않습니다.");
 		}
 		return "login";
-		
 	}
-	@RequestMapping("checkId1.me")
 	@ResponseBody
-	public String checkId1(String userId) {
+	@RequestMapping(value = "checkId.me" , produces="application/json; charset=UTF-8")
+	public int checkId1(String userId) {
+		int count = memberService.checkId1(userId);
+		if(count > 0) {
+			System.out.println("카운트 큼");
+			return 0 ;
+		} else {
+			System.out.println("카운트 작음");
+			return 1;
+		}
 		
-		return"";
 	}
 	
 

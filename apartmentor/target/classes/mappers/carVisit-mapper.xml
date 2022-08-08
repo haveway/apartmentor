@@ -2,4 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="visitCarMapper">
 
+
+	<insert id="enrollVisitCar" parameterType="parking">
+		INSERT
+		  INTO
+		  	   PARKING
+		  	   (
+		  	   CAR_NO,
+		  	   CAR_PHONE,
+		  	   STATUS,
+		  	   CAR_CATEGORY,
+		  	   CAR_DATE,
+		  	   CAR_PURPOSE,
+		  	   USER_NO
+		  	   )
+		VALUES
+				(
+				#{carNo},
+				#{carPhone},
+				'Y',
+				#{carCategory},
+				#{carDate},
+				#{carPurpose},
+				#{userNo}
+				)
+	</insert>
+
 </mapper>
