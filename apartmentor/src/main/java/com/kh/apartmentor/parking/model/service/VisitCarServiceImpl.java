@@ -23,4 +23,10 @@ public class VisitCarServiceImpl implements VisitCarService {
 		return visitCarDao.enrollVisitCar(sqlSession, p);
 	}
 
+
+	@Override
+	public int SetDayVisitCar(String today) {
+		return visitCarDao.SetDayVisitCar(sqlSession, today);
+	}
+
 }

@@ -19,8 +19,9 @@ public class Parking {
 	private String carPhone;
 	private String status;
 	private int carCategory;
-	private Date carDate;
+	private String carDate;
 	private String carPurpose;
 	private int userNo;
+	private String createDate;
 
 }

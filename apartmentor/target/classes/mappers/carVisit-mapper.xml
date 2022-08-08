@@ -14,18 +14,36 @@
 		  	   CAR_CATEGORY,
 		  	   CAR_DATE,
 		  	   CAR_PURPOSE,
+		  	   CREATE_DATE,
 		  	   USER_NO
 		  	   )
 		VALUES
 				(
 				#{carNo},
 				#{carPhone},
-				'Y',
+				<choose>
+					<when test="carDate == createDate">
+						'Y',
+					</when>
+					<otherwise>
+						'N',
+					</otherwise>
+				</choose>
 				#{carCategory},
 				#{carDate},
 				#{carPurpose},
+				#{createDate},
 				#{userNo}
 				)
 	</insert>
+	
+	<update id="SetDayVisitCar" parameterType="string">
+		UPDATE PARKING
+	  	   SET STATUS = CASE
+	   	  WHEN CAR_DATE = #{today}
+	   	  THEN 'Y'
+	   	  ELSE 'N'
+	       END
+	</update>
 
 </mapper>
