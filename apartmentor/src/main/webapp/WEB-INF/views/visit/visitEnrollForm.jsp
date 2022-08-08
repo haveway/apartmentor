@@ -69,7 +69,7 @@ h1 {
 					<tr style="height: 60px">
 						<th>예약 종류</th>
 						<td>&nbsp;&nbsp;</td>
-						<td><select name="visitCategory"
+						<td><select name="visitCategory" id="category"
 							style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
 								<c:forEach var="c" items="${ visitCategory }">
 									<option value="${c.visitCategory}">${c.visitValue}</option>
@@ -99,7 +99,7 @@ h1 {
 					</tr>
 					<tr>
 						<td colspan="4" style="height: 80px; text-align: right;">
-							<button type="submit" class="btn btn-info" id="submitBtn" disabled>등록</button>
+							<button type="submit" class="btn btn-info" id="submitBtn">등록</button>
 						</td>
 						<td colspan="3" style="height: 80px;">&nbsp;&nbsp;&nbsp;
 							<button type="reset" class="btn btn-outline-info" id="resetBtn">초기화</button>&nbsp;&nbsp;&nbsp;
@@ -200,62 +200,39 @@ h1 {
 							
 							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">가스 예약현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == '가스' && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 1 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
-								} else if (reserve[i].visitCategory == '가스' && reserve[i].visitDate == null) {
-									list += '<p style="margin:0px;">예약 시간이 모두 비워져 있습니다.</p>'
-										  + '<br><br>';
-									break;
-								}
+								} 
 							}
 							
 							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">난방 예약현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == '난방' && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 2 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
-								} else if (reserve[i].visitCategory == '난방' && reserve[i].visitDate == null) {
-									list += '<p style="margin:0px;">예약 시간이 모두 비워져 있습니다.</p>'
-										  + '<br><br>';
-									break;
 								}
 							}
 		
 							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">소독 예약현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == '소독' && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 3 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
-								} else if (reserve[i].visitCategory == '소독' && reserve[i].visitDate == null) {
-									list += '<p style="margin:0px;">예약 시간이 모두 비워져 있습니다.</p>'
-										  + '<br><br>';
-									break;
-								}
+								} 
 							}
 							
 							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">수도 예약현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == '수도' && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 4 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
-								} else if (reserve[i].visitCategory == '수도' && reserve[i].visitDate == null) {
-									list += '<p style="margin:0px;">예약 시간이 모두 비워져 있습니다.</p>'
-										  + '<br><br>';
-									break;
 								}
 							}
 							
 							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">전기 예약현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == '전기' && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 5 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
-								} else if (reserve[i].visitDate == null) {
-									list += '<p style="margin:0px;">예약 시간이 모두 비워져 있습니다.</p>'
-										  + '<br><br>';
-									break;
 								}
 							}
-		
 							
-		
-						
 							$('.modal-body').html(list);
 					},
 					error : function(){

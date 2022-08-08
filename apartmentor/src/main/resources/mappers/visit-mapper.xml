@@ -41,10 +41,16 @@
 				)
 	</insert>
 	
+	<select id="selectVisitCategory" resultMap="visitCategoryResultSet">
+		SELECT VISIT_CATEGORY, VISIT_VALUE
+		  FROM VISIT_CATEGORY
+	</select>
+	
 	<select id="selectVisitReserve" parameterType="_int" resultMap="visitResultSet"> 
-		SELECT APT_NO, VISIT_DATE, VISIT_TIME, VISIT_CATEGORY
-		  FROM VISIT V
-		  JOIN MEMBER M USING(USER_NO)
+		SELECT APT_NO, VISIT_DATE, VISIT_TIME, VISIT_CATEGORY, VISIT_VALUE
+		  FROM VISIT
+		  JOIN MEMBER USING(USER_NO)
+		  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
 		 WHERE APT_NO = (SELECT APT_NO
 		                   FROM MEMBER
 		                  WHERE USER_NO = #{vno})
@@ -52,8 +58,4 @@
 		 ORDER BY VISIT_DATE ASC
 	</select>
 	
-	<select id="selectVisitCategory" resultMap="visitCategoryResultSet">
-		SELECT VISIT_CATEGORY, VISIT_VALUE
-		  FROM VISIT_CATEGORY
-	</select>
 </mapper>
