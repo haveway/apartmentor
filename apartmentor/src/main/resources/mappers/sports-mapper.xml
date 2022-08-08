@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sportsMapper">
-
+	
+	<resultMap id="sportsResultSet" type="reserve">
+		<result column="RESERVE_NO" property="reserveNo" />
+		<result column="START_DATE" property="startDate" />
+		<result column="END_DATE" property="endDate" />
+		<result column="FACILITY" property="facility" />
+		<result column="SEAT_NUMBER" property="seatNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="STATUS" property="status" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="START_DAY" property="startDay" />
+	</resultMap>
+	
+	<insert id="insertGolfSeat" parameterType="reserve">
+		INSERT 
+		INTO
+				RESERVE
+				(
+				RESERVE_NO, 
+				START_DATE, 
+				END_DATE, 
+				FACILITY, 
+				SEAT_NUMBER, 
+				USER_NO, 
+				STATUS, 
+				START_DAY, 
+				CREATE_DATE
+				)
+		VALUES 
+				(
+				SEQ_RNO.NEXTVAL, 
+				#{startDate}, 
+				null, 
+				'GF', 
+				#{seatNo}, 
+				#{userNo}, 
+				'Y', 
+				#{startDay}, 
+				SYSDATE
+				)
+	</insert>
+	
+	
+	<select id="searchTimeAndDate" resultMap="sportsResultSet">
+		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
+		FROM RESERVE R, MEMBER M
+		WHERE R.USER_NO = M.USER_NO
+		AND R.USER_NO = 2
+		AND FACILITY = 'GF'
+		AND START_DAY = #{startDay}
+		AND START_DATE = #{startDate}
+	</select>
+	
+	
+	
+	<select id="selectGolfSeatList" resultMap="sportsResultSet" >
+		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
+		FROM RESERVE R, MEMBER M
+		WHERE R.USER_NO = M.USER_NO
+		AND FACILITY = 'GF'
+		AND START_DAY = #{startDay}
+		AND START_DATE = #{startDate}
+	</select>
+	
+	
+	
 
 </mapper>

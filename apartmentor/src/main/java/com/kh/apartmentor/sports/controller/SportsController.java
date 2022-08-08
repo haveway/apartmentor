@@ -1,11 +1,14 @@
 package com.kh.apartmentor.sports.controller;
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.apartmentor.board.model.service.BoardService;
+import com.google.gson.Gson;
 import com.kh.apartmentor.common.model.vo.Reserve;
 import com.kh.apartmentor.sports.service.SportsService;
 
@@ -20,16 +23,27 @@ public class SportsController {
 		return "sports/golf";
 	}
 	
-	
-	@RequestMapping("golfSeatList.sp")
-	public String reserve(Reserve r) {
-		//System.out.println(r.getStartDate());
+	@ResponseBody
+	@RequestMapping("reserveGolfSeat.sp")
+	public String insertGolfSeat(Reserve r) {
+		//System.out.println(r);
 		//System.out.println(r.getStartDay());
 		
-		sportsService.selectGolfSeatList(r);
-		
-		
-		return "sports/golf";
+		ArrayList<Reserve> list = sportsService.searchTimeAndDate(r);
+		if(!list.isEmpty()) {
+			return "fail";
+		} else {
+			return sportsService.insertGolfSeat(r) > 0 ? "success" : "fail";
+		}
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="golfSeatList.sp", produces="application/json; charset=UTF-8")
+	public String selectGolfSeatList(Reserve r) {
+		//System.out.println(r.getStartDate());
+		//System.out.println(r.getStartDay());
+		return new Gson().toJson(sportsService.selectGolfSeatList(r));
 	}
 	
 	

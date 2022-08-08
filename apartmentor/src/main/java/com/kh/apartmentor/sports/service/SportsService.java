@@ -1,5 +1,7 @@
 package com.kh.apartmentor.sports.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,15 @@ public class SportsService {
 	@Autowired
 	private SportsDao sportsDao;
 	
+	public int insertGolfSeat(Reserve r) {
+		return sportsDao.insertGolfSeat(sqlSession, r);
+	}
 	
-	public Reserve selectGolfSeatList(Reserve r) {
+	public ArrayList<Reserve> searchTimeAndDate(Reserve r) {
+		return sportsDao.searchTimeAndDate(sqlSession, r);
+	}
+	
+	public ArrayList<Reserve> selectGolfSeatList(Reserve r) {
 		return sportsDao.selectGolfSeatList(sqlSession, r);
 	}
 	

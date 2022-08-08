@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>미니GYM 예약</title>
-    <link href='<%=request.getContextPath()%>/resources/fullcalendar/main.css' rel='stylesheet' />
-    <script src='<%=request.getContextPath()%>/resources/fullcalendar/main.js'></script>
+    <link href='resources/fullcalendar/main.css?ver=1.0.1' rel='stylesheet' />
+    <script src='resources/fullcalendar/main.js'></script>
 <style>
     .content{
         background-color: rgb(240, 238, 233);

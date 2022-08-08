@@ -29,7 +29,7 @@
 		width: 300px;
 		height: 50px;
 	}
-
+	
 </style>
 </head>
 <body>
@@ -49,9 +49,9 @@
 		
 		<br><br>
 			<div align="center" style="width: 1200px; height: 80px; border: 2px solid pink; padding: 10px;">
-				<label>예약 날짜 <input class="reserve_miniGym" id="datepicker" name="date" type="text" placeholder="날짜 선택"></label>
-				<label>예약 시간 <input class="reserve_miniGym" id="timepicker" name="time" type="text" placeholder="시간 선택"></label>
-				<label><button class="btn btn-primary" id="btn">검색하기</button></label>
+				<label>예약 날짜 <input class="reserve_miniGym" id="datepicker" name="date" type="text" placeholder="날짜 선택" readonly></label>
+				<label>예약 시간 <input class="reserve_miniGym" id="timepicker" name="time" type="text" placeholder="시간 선택" readonly></label>
+				<label><button class="btn btn-primary" id="btn" onclick="selectGolfSeatList();">검색하기</button></label>
 			</div>
 		<br><br>
 		
@@ -64,8 +64,41 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody>
-		
+			<tbody id="reserve_golf" style="display:none;">
+   				<tr>
+    				<td align="center">
+    					<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">1번자리
+    				</td>
+    				<td align="center">
+    					<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">2번자리
+    				</td >
+    				<td align="center">
+    					<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">3번자리
+    				</td>
+    				<td align="center">
+    					<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">4번자리
+    				</td>
+    				<td align="center">
+    					<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">5번자리
+    				</td>
+   				</tr>
+   				<tr id="reserve_golf_btn">
+   					<td align="center" class="reserve_golf_btn">
+   						<button class='btn btn-lg btn-outline-secondary' value="1" id="seat_1" onclick="addReserveGolf(this.value);">예약하기</button>
+					</td>
+					<td align="center" class="reserve_golf_btn">
+						<button class='btn btn-lg btn-outline-secondary' value="2" id="seat_2" onclick="addReserveGolf(this.value);">예약하기</button>
+					</td>
+					<td align="center" class="reserve_golf_btn">
+						<button class='btn btn-lg btn-outline-secondary' value="3" id="seat_3" onclick="addReserveGolf(this.value);">예약하기</button>
+					</td>
+					<td align="center" class="reserve_golf_btn">
+						<button class='btn btn-lg btn-outline-secondary' value="4" id="seat_4" onclick="addReserveGolf(this.value);">예약하기</button>
+					</td>
+					<td align="center" class="reserve_golf_btn">
+						<button class='btn btn-lg btn-outline-secondary' value="5" id="seat_5" onclick="addReserveGolf(this.value);">예약하기</button>
+					</td>
+   	   			 <tr>
 			</tbody>
 		</table>
 		
@@ -83,105 +116,124 @@
 
 	
     <script>
-    
-    	//$(function(){
-    		// 댓글조회하는 기능을 호출
-    		//selectReplyList();
-    	//})
+    		// 버튼 속성 값 줘서 좌석 예약하게 하는 쿼리
+  	    	function addReserveGolf(click_value){
+    			//0onsole.log(click_value);
+	  			$.ajax({
+	    				url : "reserveGolfSeat.sp",
+	    				data : {
+	    					startDay : $("#datepicker").val(),
+	    					startDate : $("#timepicker").val(),
+	    					seatNo : click_value,
+	    					// 일단 유저NO을 2로 줌
+	    					userNo : 2
+	    				},
+	 					success : function(status){
+	 						if(status == "success"){
+	 							swal({
+	 								title : "예약이 완료되었습니다.",
+	 							    	icon  : "success",
+	 							    	closeOnClickOutside : false
+	 							}).then(function(){
+	 								location.reload();
+	 							});
+	 						}
+	 						else{
+	 							swal({
+	 								title : "같은 날, 같은 시간에 예약할 수 없습니다!",
+	 							    	icon  : "error",
+	 							    	closeOnClickOutside : false
+	 							})
+	 						}
+	 					},
+	 					error : function(){
+	 						console.log("예약실패");
+	 					}
+	    			}) 
+    		}
     	
-    	// 날짜와 시간을 조회하는 버튼 기능 
-    	window.onload = function(){
-    		var btn = document.getElementById("btn");
-    		btn.addEventListener("click",function(){
-    		
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	// 날짜와 시간을 조회하는 버튼 기능(검색하기 버튼 사용했을때)
+    	function selectGolfSeatList(){
     			$.ajax({
-    				
     				url : "golfSeatList.sp",
     				data : {
     					startDay : $("#datepicker").val(),
     					startDate : $("#timepicker").val()
-    					
     				},
- 					success : function(){
- 						let value = '';
-    					value += 
-    				'<tr>'
-    					+ '<td align="center">'
-    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
-    					+ '1번자리</td>'
-    					+ '<td align="center">'
-    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
-    					+ '2번자리</td>'
-    					+ '<td align="center">'
-    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
-    					+ '3번자리</td>'
-    					+ '<td align="center">'
-    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
-    					+ '4번자리</td>'
-    					+ '<td align="center">'
-    					+ '<img src="https://cdn.golfmagazinekorea.com/news/photo/202108/2530_3998_403.jpg" alt="" width="100%" height="200">'
-    					+ '5번자리</td>'
-    					
-   				 + '</tr>'
-					+ '<tr>'
-						+ '<td align="center">'
-							+ '<a class="btn btn-lg btn-outline-secondary" data-value="1">예약하기</a>'
-						+ '</td>'
-						+ '<td align="center">'
-							+ '<a class="btn btn-lg btn-outline-secondary" data-value="2">예약하기</a>'
-						+ '</td>'
-						+ '<td align="center">'
-							+ '<a class="btn btn-lg btn-outline-secondary" data-value="3">예약하기</a>'
-						+ '</td>'
-						+ '<td align="center">'
-							+ '<a class="btn btn-lg btn-outline-secondary" data-value="4">예약하기</a>'
-						+ '</td>'
-						+ '<td align="center">'
-							+ '<a class="btn btn-lg btn-outline-secondary" data-value="5">예약하기</a>'
-						+'</td>'
-					+ '</tr>';	
-							   
- 				$('#golf_seat tbody').html(value);
+ 					success : function(r){
+						// 예약버튼들을 다 보이게 display=block으로 바꿈!
+ 						var reserve_golf = document.getElementById("reserve_golf");
+ 						reserve_golf.style.display='block';
+ 						console.log('#seat_1');
+ 						
+ 						// 검색후 또 검색을 했을때를 위해 다시 예약하기 단어를 넣고, disabled 속성을 지워준다.
+ 						for(let i = 1; i <= 5; i++){
+	 						$('#seat_' + [i]).text("예약하기");
+	 						$('#seat_' + [i]).attr("disabled",false);
+	 						$('#seat_' + [i]).removeAttr("style")
+ 						}
+ 						
+   			 			// 검색하여 디비에서 받아온 데이터로 seatNo가 있으면 예약완료로 바꾸고, disabled 시킴
+   			 			for(let i in r){
+ 				 			if(r[i].seatNo == 1){
+								$('#seat_1').text("예약완료");
+								$('#seat_1').attr("disabled","true");
+								$("#seat_1").css("background-color","gray");
+								$("#seat_1").css("color","white");
+ 				 			}
+ 				 			if(r[i].seatNo == 2){
+								$('#seat_2').text("예약완료");
+								$('#seat_2').attr("disabled","true");
+								$("#seat_2").css("background-color","gray");
+								$("#seat_2").css("color","white");
+ 				 			}
+ 				 			if(r[i].seatNo == 3){
+								$('#seat_3').text("예약완료");
+								$('#seat_3').attr("disabled","true");
+								$("#seat_3").css("background-color","gray");
+								$("#seat_3").css("color","white");
+ 				 			}
+ 				 			if(r[i].seatNo == 4){
+								$('#seat_4').text("예약완료");
+								$('#seat_4').attr("disabled","true");
+								$("#seat_4").css("background-color","gray");
+								$("#seat_4").css("color","white");
+ 				 			}
+ 				 			if(r[i].seatNo == 5){
+								$('#seat_5').text("예약완료");
+								$('#seat_5').attr("disabled","true");
+								$("#seat_5").css("background-color","gray");
+								$("#seat_5").css("color","white");
+ 				 			}
+   			 			}
  					},
  					error : function(){
  						console.log("좌석을 다시 입력해주세요.")
  					}
     			})
-    			
-    			
-    		})
-    		
-    	}
+    		}
     	
-    	//function selectReplyList(){
-    		
-    		//$.ajax({
-
-    			//url : 'rlist.bo', // 전체조회가 아님! 게시글에 딸린 댓글만 조회해야한다(현재 게시글 번호만 넘겨야한다.)
-    			//data : {bno : ${ b.boardNo }},
-    			//success : function(list){
-    				
-    			//	let value = '';
-    			//	for(let i in list){
-    			//		value += '<tr>'
-				//			   + '<td>' + list[i].replyWriter + '</td>'
-				//			   + '<td>' + list[i].replyContent + '</td>'
-				//			   + '<td>' + list[i].createDate + '</td>'
-				//			   + '</tr>'
-    			//	}
-    			//	$('#replyArea tbody').html(value);
-    			//	$('#rcount').text(list.length);
-    			
-    			//},
-    			//error : function(){
-    			//	console.log('실패');
-    			//}
-    			
-    			
-    			
-    			
-    		//})
-    	//}
+    	
+    	
+    	
+    	
     </script>	
 	
 	
