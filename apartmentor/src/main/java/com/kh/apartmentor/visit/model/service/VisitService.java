@@ -15,4 +15,7 @@ public interface VisitService {
 	
 	// 예약 날짜 / 시간 가져오기 (select)
 	ArrayList<Visit> selectVisitReserve(int vno);
+	
+	// 예약 가능 (select)
+	Visit checkVisitReserve(Visit v); 
 }

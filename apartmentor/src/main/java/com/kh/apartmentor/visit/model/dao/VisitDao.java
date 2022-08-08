@@ -23,4 +23,8 @@ public class VisitDao {
 		return (ArrayList)sqlSession.selectList("visitMapper.selectVisitCategory");
 	}
 
+	public Visit checkVisitReserve(SqlSessionTemplate sqlSession, Visit v) {
+		return sqlSession.selectOne("visitMapper.checkVisitReserve", v);
+	}
+
 }

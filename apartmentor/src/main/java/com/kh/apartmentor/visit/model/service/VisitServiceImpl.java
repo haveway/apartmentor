@@ -34,6 +34,11 @@ public class VisitServiceImpl implements VisitService {
 		return visitDao.selectVisitCategory(sqlSession);
 	}
 
+	@Override
+	public Visit checkVisitReserve(Visit v) {
+		return visitDao.checkVisitReserve(sqlSession, v);
+	}
+
 	
 	
 

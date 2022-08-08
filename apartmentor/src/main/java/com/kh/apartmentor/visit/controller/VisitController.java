@@ -60,6 +60,12 @@ public class VisitController {
 		return new Gson().toJson(visitService.selectVisitReserve(vno));
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="check.visit", produces="application/json; charset=UTF-8")
+	public String ajaxCheckVisitReserve(Visit v) {
+		return new Gson().toJson(visitService.checkVisitReserve(v));
+	}
+	
 	/**
 	 * 예약 목록 페이지로 이동하는 메소드
 	 */

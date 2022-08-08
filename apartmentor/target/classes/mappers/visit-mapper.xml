@@ -58,4 +58,18 @@
 		 ORDER BY VISIT_DATE ASC
 	</select>
 	
+	<select id="checkVisitReserve" parameterType="visit" resultMap="visitResultSet">
+		SELECT VISIT_CATEGORY, VISIT_DATE, VISIT_TIME
+		  FROM VISIT
+		  JOIN MEMBER USING(USER_NO)
+		 WHERE APT_NO = (SELECT APT_NO
+		                   FROM MEMBER
+		                  WHERE USER_NO = #{userNo})
+		   AND VISIT_STATUS = 'W'
+		   AND VISIT_CATEGORY = #{visitCategory}
+		   AND VISIT_DATE = #{visitDate}
+		   AND VISIT_TIME = #{visitTime}
+	
+	</select>
+	
 </mapper>

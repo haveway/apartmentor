@@ -54,7 +54,7 @@ h1 {
 
 		<div style="margin-left: 80px;">
 			예약 승인 시, 이메일로 일정을 보내 드립니다.<br> 예약은 09:00부터 18:00까지, 10분 단위로만 예약
-			가능합니다.
+			가능합니다. <br> 시간 확인을 통해 가능한 시간대인지 꼭 확인해주세요.
 		</div>
 
 		<br> <br>
@@ -79,15 +79,20 @@ h1 {
 					<tr style="height: 40px">
 						<th>예약 날짜</th>
 						<td>&nbsp;&nbsp;</td>
-						<td><input type="text" id="datepicker" name="visitDate" /></td>
+						<td><input type="text" id="datepicker" name="visitDate" required /></td>
+						<td>
+							<button type="button" class="btn btn-outline-info"
+								data-toggle="modal" data-target="#myModal" style="width: 100px;">예약 현황</button>
+						</td>
 					</tr>
 					<tr style="height: 60px">
 						<th>예약 시간</th>
 						<td>&nbsp;&nbsp;</td>
-						<td style="width: 220px"><input type="text" id="timepicker" name="visitTime" /></td>
+						<td style="width: 220px"><input type="text" id="timepicker" name="visitTime" required /></td>
 						<td>
-							<button type="button" class="btn btn-outline-info"
-								data-toggle="modal" data-target="#myModal" style="width: 100px;">예약 현황</button>
+							<button type="button" class="btn btn-info" style="width: 100px;" onclick="check()">
+								시간 확인
+							</button>
 						</td>
 					</tr>
 					<tr>
@@ -99,7 +104,7 @@ h1 {
 					</tr>
 					<tr>
 						<td colspan="4" style="height: 80px; text-align: right;">
-							<button type="submit" class="btn btn-info" id="submitBtn">등록</button>
+							<button type="submit" class="btn btn-info" id="submitBtn" disabled>등록</button>
 						</td>
 						<td colspan="3" style="height: 80px;">&nbsp;&nbsp;&nbsp;
 							<button type="reset" class="btn btn-outline-info" id="resetBtn">초기화</button>&nbsp;&nbsp;&nbsp;
@@ -147,7 +152,7 @@ h1 {
 					    minTime: '9', // 시작 시간
 					    maxTime: '6:00pm', // 끝나는 시간
 					    startTime: '9:00', // 시작 시간
-					    dynamic: false, // 선택 한 뒤 항목 정렬 
+					    dynamic: true, // 선택 한 뒤 항목 정렬 
 					    dropdown: true, // 밑으로 보여지게
 					    scrollbar: true // 스크롤바
 					});
@@ -185,6 +190,9 @@ h1 {
 			<br><br>
 
 		<script>
+			
+			
+		
 			$(function(){
 				// 예약된 날짜와 시간 호출
 				selectVisitReserve()
@@ -240,6 +248,43 @@ h1 {
 					}
 				});
 			}
+			
+			
+			function check(){
+				$.ajax({
+					url : 'check.visit',
+					data : {
+							userNo : ${loginUser.userNo},
+							visitDate : $("#datepicker").val(),
+						    visitTime : $("#timepicker").val(),
+							visitCategory : $("#category").val()
+							},
+					success : function(result){
+							if(result != null) {
+								$("#submitBtn").attr("disabled", true);
+								swal({
+	 									title : "예약이 이미 찼습니다.",
+	 							    	icon  : "error",
+	 							    	closeOnClickOutside : false
+	 							})
+							} else {
+								$("#submitBtn").attr("disabled", false);
+								swal({
+ 									title : "예약이 가능합니다.",
+ 							    	icon  : "success",
+ 							    	closeOnClickOutside : false
+ 							})
+							}
+					},
+					error : function(){
+						console.log("예약 가능 조회 실패");
+					}
+				});		
+						
+						
+			}
+			
+				
 			
 		</script>
 
