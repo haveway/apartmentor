@@ -47,7 +47,7 @@
 		WHERE
 				STATUS = 'Y'
 		ORDER
-		   BY	BOARD_NO				
+		   BY	BOARD_NO DESC				
 	</select>  
   
 	<!-- 해당 게시글 조회수 증가 쿼리문 --> 
@@ -147,34 +147,115 @@
 		  		BOARD	
 		 WHERE
 		 		STATUS = 'Y'
-		<if test="option == '일반'">
+		<if test="option == 'general'">
 		 ORDER
 		    BY  	
-		DECODE	(BOARD_CATEGORY, '일반', 1)
+		DECODE	(BOARD_CATEGORY, '[일반]', 1)
 		</if>					
-		<if test="option == '맘'">
+		<if test="option == 'mom'">
 		 ORDER
 		    BY
-	    DECODE	(BOARD_CATEGORY, '맘', 1)	   
+	    DECODE	(BOARD_CATEGORY, '[맘]', 1)	   
 		</if>
-		<if test="option == '건의'">
+		<if test="option == 'suggest'">
 		 ORDER
 		    BY
-	    DECODE	(BOARD_CATEGORY, '건의', 1)	   
+	    DECODE	(BOARD_CATEGORY, '[건의]', 1)	   
 		</if>
-		<if test="option == '판매'">
+		<if test="option == 'sell'">
 		 ORDER
 		    BY
-	    DECODE	(BOARD_CATEGORY, '판매', 1)	   
+	    DECODE	(BOARD_CATEGORY, '[판매]', 1)	   
 		</if>
-  		<if test="option == '정보'">
+  		<if test="option == 'infor'">
 		 ORDER
 		    BY
-	    DECODE	(BOARD_CATEGORY, '정보', 1)	   
+	    DECODE	(BOARD_CATEGORY, '[정보]', 1)	   
 		</if>
-		
   	</select>
   
+  	<!-- 댓글 작성 쿼리문 -->
+  	<insert id="insertReply" parameterType="reply">
+  		INSERT
+  		  INTO
+  		  		REPLY
+  		  		(
+  		  		REPLY_NO,
+		  		REPLY_CONTENT,
+		  		REPLY_WRITER,
+		  		REF_BNO,
+		  		USER_NO
+  		  		)
+  		VALUES	
+  				(
+  				SEQ_BRNO.NEXTVAL,
+  				#{replyContent},
+  				#{replyWriter},
+  				#{refBno},
+  				#{userNo}
+  				)	
+  	</insert>
   
+  	<!-- 댓글 삭제 쿼리문 -->
+  	<update id="deleteReply" parameterType="_int">
+  		UPDATE
+  				REPLY
+  		   SET
+  		   		STATUS = 'N'
+  		 WHERE
+  		 		REPLY_NO = #{replyNo} 				
+  	</update>
+  	
+  	<!-- 게시글 작성 쿼리문 -->
+  	<insert id="insertBoard" parameterType="board">
+  		INSERT
+  		  INTO
+  		  		BOARD
+  		  		(
+  		  		BOARD_NO,
+  		  		BOARD_TITLE,
+  		  		BOARD_CONTENT,
+  		  		BOARD_WRITER,
+  		  		ORIGIN_NAME,
+  		  		CHANGE_NAME,
+  		  		BOARD_CATEGORY,
+  		  		USER_NO
+  		  		)
+  		VALUES
+  				(
+  				SEQ_BNO.NEXTVAL,
+  				#{boardTitle},
+  				#{boardContent},
+  				#{boardWriter},
+  				#{originName},
+  				#{changeName},
+  				<if test="boardCategory == 'general'">
+				'[일반]',  
+				</if>
+  				<if test="boardCategory == 'mom'">
+		   		'[맘]',
+				</if>
+				<if test="boardCategory == 'suggest'">
+				'[건의]',  
+				</if>
+				<if test="boardCategory == 'sell'">
+				'[판매]',   
+				</if>
+		  		<if test="boardCategory == 'infor'">
+				'[정보]',  
+				</if>
+  				#{userNo}
+  				)  		
+  	</insert>
+  	
+  	<!-- 게시글 삭제 쿼리문 -->
+  	<update id="deleteBoard" parameterType="_int">
+  		UPDATE
+  				BOARD
+  		   SET
+  		   		STATUS = 'N'
+  		 WHERE
+  		 		BOARD_NO = #{boardNo} 
+  	</update>
   
 </mapper>

@@ -1,14 +1,20 @@
 package com.kh.apartmentor.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import org.json.simple.JSONArray;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.apartmentor.board.model.service.BoardService;
@@ -36,6 +42,91 @@ public class BoardController {
 		
 		return "board/boardListView";
 	}
+	
+	// 게시글 작성 페이지로 포워딩
+	@RequestMapping("enrollForm.bo")
+	public String enrollForm() {
+		return "board/boardEnrollForm";
+	}
+	
+	// 게시글 작성
+	@RequestMapping("insert.bo")
+	public String insertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
+		
+		// 전달된 파일이 있을 경우 => 파일명 수정 후 서버 업로드 => 원본명, 서버 업로드된 경로를 b에 담기(파일이 있을 때만)
+		if( !upfile.getOriginalFilename().equals("") ) { // getOriginalFilename() == filename 필드값을 반환해줌
+			
+			String changeName = saveFile(upfile, session);
+			
+			// Board b에 originName과 ChangeName을 set해주기
+			b.setOriginName(upfile.getOriginalFilename());
+			b.setChangeName("/resources/uploadFiles/" + changeName);
+		}
+
+		int result = boardService.insertBoard(b);
+		
+		if(result > 0) { // 성공=> 게시글 리스트 페이지(boardListView.jsp)
+			session.setAttribute("alertMsg2", "게시글 작성 성공!!");
+			return "redirect:list.bo";
+		}else {
+			session.setAttribute("alertMsg1", "게시글 작성 실패!");
+			return "board/boardListView";
+		}
+	}
+	
+	// 실제 넘어온 파일의 이름을 변경해서 서버에 업로드
+		public String saveFile(MultipartFile upfile, HttpSession session) {
+			String originName = upfile.getOriginalFilename();
+			
+			// 날짜
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			
+			// 5자리 랜덤값
+			int ranNum = (int)(Math.random() * 90000) + 10000; 
+			
+			// 확장자
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			// 수정된 첨부파일 명
+			String changeName = currentTime + ranNum + ext;
+			
+			// 첨부파일 저장할 폴더의 물리적인 경로 
+			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+			
+			// 
+			try {
+				upfile.transferTo(new File(savePath + changeName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			return changeName;
+			
+		}
+	
+	
+	// 게시글 삭제
+	@RequestMapping("delete.bo")
+	public String deleteBoard(int bno, String filePath, HttpSession session) {
+		
+		int result = boardService.deleteBoard(bno);
+		
+		if(result > 0) {
+			// 첨부파일이 있는 게시글인 경우 해당 첨부파일도 삭제
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			// 게시판 리스트 리다이렉트
+			session.setAttribute("alertMsg2", "게시글 삭제 성공!");
+			return "redirect:list.bo";
+		}else {
+			session.setAttribute("alertMsg1", "게시글 삭제 실패!");
+			return "board/boardListView";
+		}
+	}
+	
+	
+	
 	
 	// 게시글 상세조회
 	@RequestMapping("detail.bo")
@@ -80,8 +171,8 @@ public class BoardController {
 		return "board/boardListView";
 	}
 	
-	
-	@RequestMapping(value="option.bo", produces="application/json; charset=UTF-8")
+	// 정렬 리스트 조회 
+	@RequestMapping("option.bo")
 	public String selectOption(@RequestParam(value="cpage", defaultValue="1") int currentPage, String option, Model model) {
 
 		// 정렬한 게시글의 총 갯수로 페이징바 다시 만들기 - 리스트의 총 갯수는 변함이 없으므로 기존에 만든 selectListCount호출
@@ -95,7 +186,19 @@ public class BoardController {
 		return "board/boardListView";
 	}
 	
+	// 댓글 작성
+	@ResponseBody
+	@RequestMapping("replyInsert.bo")
+	public String insertReply(Reply r) {
+		return boardService.insertReply(r) > 0 ? "success" : "fail";
+	}
 	
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping("replyDelete.bo")
+	public String deleteReply(int replyNo) {
+		return boardService.deleteReply(replyNo) > 0 ? "success" : "fail";
+	}
 	
 	
 }

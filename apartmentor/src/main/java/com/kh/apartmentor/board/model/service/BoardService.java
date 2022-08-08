@@ -54,6 +54,22 @@ public class BoardService {
 		return boardDao.selectOption(sqlSession, option, pi);
 	}
 
+	public int insertReply(Reply r) {
+		return boardDao.insertReply(sqlSession, r);
+	}
+
+	public int deleteReply(int replyNo) {
+		return boardDao.deleteReply(sqlSession, replyNo);
+	}
+
+	public int insertBoard(Board b) {
+		return boardDao.insertBoard(sqlSession,b);
+	}
+
+	public int deleteBoard(int bno) {
+		return boardDao.deleteBoard(sqlSession, bno);
+	}
+
 	
 
 	

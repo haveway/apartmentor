@@ -67,7 +67,7 @@
 					<button id="searchBtn" class="btn btn-primary">검색</button>
 				</c:if>
 				<c:if test="${!empty keyword}">
-					<input type="text" name="keyword" value="${ketword}" id="searchText">
+					<input type="text" name="keyword" value="${keyword}" id="searchText">
 					<button id="searchBtn" class="btn btn-primary">검색</button>
 				</c:if>
 			</div>
@@ -79,12 +79,12 @@
 				<tr>
 					<th>
 						<select name="condition" id="condition">
-							<option value="전체">[전체]</option>
-							<option value="일반">[일반]</option>
-							<option value="맘">[맘]</option>
-							<option value="건의">[건의]</option>
-							<option value="판매">[판매]</option>
-							<option value="정보">[정보]</option>
+							<option value="all">[전체]</option>
+							<option value="general">[일반]</option>
+							<option value="mom">[맘]</option>
+							<option value="suggest">[건의]</option>
+							<option value="sell">[판매]</option>
+							<option value="infor">[정보]</option>
 						</select>
 					</th>
 					<th>제목</th>
@@ -127,7 +127,7 @@
 		
 		<c:if test="${ not empty loginUser }">
 			<div align="center" style="margin-left:650px;">
-				<button type="button" class="btn btn-primary">글쓰기</button>
+				<button type="button" class="btn btn-primary" onclick="location.href='enrollForm.bo'">글쓰기</button>
 			</div>
 		</c:if>
 		
@@ -140,10 +140,10 @@
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${empty keyword}">
+							<c:when test="${empty keyword and empty option}">
 								<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">이전</a></li>
 							</c:when>
-							<c:when test="${ not empty option }">
+							<c:when test="${empty keyword and not empty option}">
 								<li class="page-item"><a class="page-link" href="option.bo?cpage=${ pi.currentPage - 1 }&option=${option}">이전</a></li>
 							</c:when>
 							<c:otherwise>
@@ -155,10 +155,10 @@
 				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${empty keyword}">
+							<c:when test="${empty keyword and empty option}">
 								<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
 							</c:when>
-							<c:when test="${empty keyword}">
+							<c:when test="${empty keyword and not empty option}">
 								<li class="page-item"><a class="page-link" href="option.bo?cpage=${p}&option=${option}">${p}</a></li>
 							</c:when>
 							<c:otherwise>
@@ -173,10 +173,10 @@
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${empty keyword}">
+							<c:when test="${empty keyword and empty option}">
 								<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
 							</c:when>
-							<c:when test="${ not empty option }">
+							<c:when test="${empty keyword and not empty option}">
 								<li class="page-item"><a class="page-link" href="option.bo?cpage=${ pi.currentPage + 1 }&option=${option}">다음</a></li>
 							</c:when>
 							<c:otherwise>
@@ -190,21 +190,23 @@
 		</div>
 		
 	</div>
+	<c:if test="${not empty option}">
+		<script>
+			$(function(){
+				$('option[value=${option}]').attr('selected',true);
+			})
+		</script>
+	</c:if>
 	
 	<script>
 		$(function(){
+			
 			$('#condition').change(function(){
-				var opt = "";
-				opt = $('#condition option:selected').val();
-				location.href='option.bo?option=' + opt;
-				
+				var option = $("#condition option:selected").val();
+				location.href='option.bo?currentPage=1&option=' + option;
 			})
 		})
-		$(function(){
-			var selectOpt = "";
-			$("#condition option[value=${option}]").attr("selected", true);
 			
-		})		
 	</script>
 	
 	
