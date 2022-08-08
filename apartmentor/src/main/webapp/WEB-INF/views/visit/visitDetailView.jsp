@@ -7,14 +7,6 @@
 <title>방문 예약 상세페이지</title>
 </head>
 <body>
-<!-- jQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- Bootstrap 라이브러리 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 	.visitContent {
 		width: 1200px;
@@ -82,17 +74,21 @@
 						</select>
 					</td>
 				</tr>
+				<tr style="height: 40px">
+					<th>예약 날짜</th>
+					<td>&nbsp;&nbsp;</td>
+					<td>
+						<!-- 더미데이터 -->
+						2022-08-05
+					</td>
+				</tr>
 				<tr style="height: 60px">
 					<th>예약 시간</th>
 					<td>&nbsp;&nbsp;</td>
-					<td>
-						<input id="date" type="datetime-local" name="visitStartDate" required />
+					<td style="width: 220px">
+						<!-- 더미데이터 -->
+						09:00
 					</td>
-					<td>~&nbsp;&nbsp;&nbsp;</td>
-					<td>
-						<input type="datetime-local" name="visitEndDate" required />
-					</td>
-					<td>&nbsp;</td>
 					<td>
 						<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal" style="width:100px;">
 						  예약 현황

@@ -18,8 +18,8 @@ public class Visit {
 	private int visitNo; //VISIT_NO	NUMBER
 	private String visitCategory; //VISIT_CATEGORY	VARCHAR2(50 BYTE)
 	private int userNo; //USER_NO	NUMBER
-	private Date visitStartDate; //VISIT_START_DATE	DATE
-	private Date visitEndDate; //VISIT_END_DATE	DATE
+	private String visitDate; //VISIT_DATE	VARCHAR2(150 BYTE)
+	private String visitTime; //VISIT_TIME	VARCHAR2(150 BYTE)
 	private String visitStatus; //VISIT_STATUS	VARCHAR2(1 BYTE)
 	private String visitContent; //VISIT_CONTENT	VARCHAR2(3000 BYTE)
 	private Date CreateDate; //CREATE_DATE	DATE

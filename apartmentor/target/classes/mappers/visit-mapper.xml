@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="visitMapper">
+	
+	<resultMap id="visitResultSet" type="visit">
+		<result column="VISIT_NO" property="visitNo" />
+		<result column="VISIT_CATEGORY" property="visitCategory" />
+		<result column="USER_NO" property="userNo" />
+		<result column="VISIT_DATE" property="visitDate" />
+		<result column="VISIT_STATUS" property="visitStatus" />
+		<result column="VISIT_CONTENT" property="visitContent" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="VISIT_TIME" property="visitTime" />
+	</resultMap>
+	
+	<resultMap id="visitCategoryResultSet" type="visitCategory">
+		<result column="VISIT_CATEGORY" property="visitCategory" />
+		<result column="VISIT_VALUE" property="visitValue" />
+	</resultMap>
 
-
+	<insert id="insertVisitReserve" parameterType="visit">
+		INSERT
+		  INTO
+		  		VISIT
+		  		(
+		  		VISIT_NO,
+		  		USER_NO,
+		  		VISIT_CATEGORY,
+		  		VISIT_DATE,
+		  		VISIT_TIME,
+		  		VISIT_CONTENT
+		  		)
+		VALUES
+				(
+				SEQ_VNO.NEXTVAL,
+				#{userNo},
+				#{visitCategory},
+				#{visitDate},
+				#{visitTime},
+				#{visitContent}				
+				)
+	</insert>
+	
+	<select id="selectVisitReserve" parameterType="_int" resultMap="visitResultSet"> 
+		SELECT APT_NO, VISIT_DATE, VISIT_TIME, VISIT_CATEGORY
+		  FROM VISIT V
+		  JOIN MEMBER M USING(USER_NO)
+		 WHERE APT_NO = (SELECT APT_NO
+		                   FROM MEMBER
+		                  WHERE USER_NO = #{vno})
+		   AND VISIT_STATUS = 'W'
+		 ORDER BY VISIT_DATE ASC
+	</select>
+	
+	<select id="selectVisitCategory" resultMap="visitCategoryResultSet">
+		SELECT VISIT_CATEGORY, VISIT_VALUE
+		  FROM VISIT_CATEGORY
+	</select>
 </mapper>

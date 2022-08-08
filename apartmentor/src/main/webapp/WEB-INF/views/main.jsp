@@ -82,7 +82,7 @@
         </div>
 
         <div id="calendar">
-          		  캘
+          		  <a href="enrollForm.visit">임시로</a>
         </div>
     </div>
     
