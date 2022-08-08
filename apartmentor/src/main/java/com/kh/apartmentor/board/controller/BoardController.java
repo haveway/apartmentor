@@ -51,7 +51,7 @@ public class BoardController {
 	
 	// 게시글 작성
 	@RequestMapping("insert.bo")
-	public String insertBoard(Board b, MultipartFile upfile, HttpSession session, Model model) {
+	public String insertBoard(Board b, MultipartFile upfile, HttpSession session) {
 		
 		// 전달된 파일이 있을 경우 => 파일명 수정 후 서버 업로드 => 원본명, 서버 업로드된 경로를 b에 담기(파일이 있을 때만)
 		if( !upfile.getOriginalFilename().equals("") ) { // getOriginalFilename() == filename 필드값을 반환해줌
@@ -60,7 +60,7 @@ public class BoardController {
 			
 			// Board b에 originName과 ChangeName을 set해주기
 			b.setOriginName(upfile.getOriginalFilename());
-			b.setChangeName("/resources/uploadFiles/" + changeName);
+			b.setChangeName("/apartmentor/resources/uploadFiles/" + changeName);
 		}
 
 		int result = boardService.insertBoard(b);

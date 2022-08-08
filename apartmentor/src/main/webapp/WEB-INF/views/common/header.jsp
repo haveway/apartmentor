@@ -91,11 +91,13 @@
 		<script>
 			swal('오류', "${alertMsg1}", 'warning');
 		</script>
+		<c:remove var="alertMsg1"/>
 	</c:if>	
 	<c:if test="${not empty alertMsg2}">
 		<script>
 			swal('성공!', "${alertMsg2}", 'success');
-		</script>
+		</script>	
+		<c:remove var="alertMsg2"/>
 	</c:if>	
 
     <div id="header" style="border: solid yellow 3px;">
