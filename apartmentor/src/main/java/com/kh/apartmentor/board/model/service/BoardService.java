@@ -70,6 +70,10 @@ public class BoardService {
 		return boardDao.deleteBoard(sqlSession, bno);
 	}
 
+	public int updateBoard(Board b) {
+		return boardDao.updateBoard(sqlSession, b);
+	}
+
 	
 
 	

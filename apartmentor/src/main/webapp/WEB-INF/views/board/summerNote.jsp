@@ -19,7 +19,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
 <body>
-	<textarea id="summernote" name="boardContent" required></textarea>
+	<textarea id="summernote" name="boardContent" required>${ b.boardContent }</textarea>
     
     <script>
 	    $(document).ready(function() {

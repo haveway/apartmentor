@@ -103,7 +103,50 @@ public class BoardController {
 			return changeName;
 			
 		}
+		
+	// 게시글 수정 페이지로 포워딩
+	@RequestMapping("updateForm.bo")
+	public String updateBoard(int bno, Model model) {
+		// DB에 있는 해당 게시글을 model에 담아 포워딩하기
+		Board b = boardService.selectBoard(bno);
+		model.addAttribute("b", b);
+		return "board/boardUpdateForm";
+	}
 	
+	// 게시글 수정
+	@RequestMapping("update.bo")
+	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session) {
+		
+		// 새로 첨부파일이 넘어온 경우
+		if(!reupfile.getOriginalFilename().equals("")) {
+			//기존 첨부파일 삭제
+			if(b.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getChangeName())).delete();
+			}
+			// 새로 넘어온 첨부파일을 서버에 업로드 시키기
+			// saveFile()을 호출해서 현재 넘어온 첨부파일을 서버에 저장 (session필요)
+			String changeName = saveFile(reupfile, session);
+			
+			// b라는 Board객체에 새로운 정보(원본명, 저장경로) 담기
+			b.setOriginName(reupfile.getOriginalFilename());
+			b.setChangeName("/apartmentor/resources/uploadFiles/" + changeName);
+		}
+		
+		// 수정 한 결과 result에 담기
+		int result = boardService.updateBoard(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg2", "게시글 수정 성공!");
+			return "redirect:detail.bo?bno=" + b.getBoardNo();
+		} else {
+			session.setAttribute("alertMsg2", "게시글 수정 실패");
+			return "";
+		}
+		
+		
+	}
+	
+		
 	
 	// 게시글 삭제
 	@RequestMapping("delete.bo")
