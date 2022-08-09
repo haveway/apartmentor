@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.apartmentor.board.model.vo.Board;
 import com.kh.apartmentor.main.model.dao.MainDao;
-import com.kh.apartmentor.notice.vo.Notice;
+import com.kh.apartmentor.notice.model.vo.Notice;
 
 @Service
 public class MainServiceImpl implements MainService{
@@ -18,6 +18,7 @@ public class MainServiceImpl implements MainService{
 	
 	@Autowired
 	private MainDao mainDao;
+	
 	@Override
 	public ArrayList<Board> boardList() {
 		return mainDao.boardList(sqlSession);

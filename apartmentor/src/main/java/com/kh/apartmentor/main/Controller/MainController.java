@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.apartmentor.board.model.vo.Board;
 import com.kh.apartmentor.main.model.Service.MainService;
-import com.kh.apartmentor.notice.vo.Notice;
+import com.kh.apartmentor.notice.model.vo.Notice;
 
 @Controller
 public class MainController {

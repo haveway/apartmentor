@@ -3,7 +3,7 @@ package com.kh.apartmentor.main.model.Service;
 import java.util.ArrayList;
 
 import com.kh.apartmentor.board.model.vo.Board;
-import com.kh.apartmentor.notice.vo.Notice;
+import com.kh.apartmentor.notice.model.vo.Notice;
 
 public interface MainService {
 	

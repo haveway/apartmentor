@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.apartmentor.board.model.vo.Board;
-import com.kh.apartmentor.notice.vo.Notice;
+import com.kh.apartmentor.notice.model.vo.Notice;
 @Repository
 public class MainDao {
 

@@ -15,8 +15,6 @@
 		<result column="NOTICE_NO" property="noticeNo"/>
 	</resultMap>
 	
-	
-	
 	<select id="boardList" resultMap="boardResultSet">
 		SELECT 
 			   BOARD_TITLE,
@@ -41,6 +39,5 @@
 			   STATUS = 'Y'
 		 ORDER 
 		    BY	NOTICE_NO DESC	
-			
 	</select>
 </mapper>

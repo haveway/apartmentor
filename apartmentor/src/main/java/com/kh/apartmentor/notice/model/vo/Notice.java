@@ -1,4 +1,4 @@
-package com.kh.apartmentor.notice.vo;
+package com.kh.apartmentor.notice.model.vo;
 
 import java.sql.Date;
 
