@@ -74,10 +74,7 @@
         #modalbtn button:hover{
             color: black;
         }
-        #hr1{
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
+
         .modal-body input{
             margin-top: 7.5px;
             height: 20px;
@@ -110,6 +107,7 @@
         }
 
     </style>
+    <link >
 </head>
 <body>
 	<c:if test="${not empty alertMsg1}">
@@ -171,6 +169,7 @@
                     <div class="modal-body">
                         <b>아이디 : </b>
                         <div class="modal-input">
+                        	<input type="hidden" value="" id="xxxx">
                             <input type="text" id="addId" name="userId" placeholder="ex)user111" oninput="checkId();" required>
                         </div>
                         <p id="p1">영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
@@ -226,7 +225,7 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember"class="btn submit" disabled="disabled">가입신청</button>
+                        <button type="submit" id="insertMember" class="btn submit" onchange="okBtn()" disabled>가입신청</button>
                     </div>
                 </form>
             </div>
@@ -414,17 +413,19 @@
 				if(result == 0){
 					p1.attr('style','color:red;');
 					p1.text('중복되는 아이디입니다');
+					$('#insertMember').attr('disabled',true);
 				}
 				else {
 					 let regExpId = /^\w{4,8}$/;
 					 if(!regExpId.test(addId)){ // 조건에 안맞음
 						 p1.attr('style','color:red;');
 						 p1.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
+						 $('#insertMember').attr('disabled',true);
 					 } 
 					 else { //조건맞음
 						p1.attr('style','color:#32CD32;');
-						p1.text('멋진 아이디네요!');	 
-						checkId11Btn = 'Y';
+						p1.text('멋진 아이디네요!');
+						$('#insertMember').attr('disabled',false);
 					 }
 				}
 			},
@@ -561,20 +562,14 @@
 			checkAptNo2Btn = 'Y';
 		}
 	}
-
  	
-	 
-	 console.log(checkIdBtn);
-	 console.log(checkPwd1Btn);
-	 console.log(ReconfirmPwd1Btn);
-	 console.log(checkNameBtn);
-	 console.log(checkBirthBtn);
-	 console.log(checkPhoneBtn);
-	 console.log(checkEmailBtn);
-	 console.log(checkAptNo1Btn);
-	 console.log(checkAptNo2Btn);
- 	
-	
+ 	function okBtn() {
+		let id = $('#xxxx').val();
+		console.log(id);
+		if(id = 'Y'){
+			$('#insertMember').attr('disabled','false');
+		}
+	}
  	
  	var updatePwd111
 	/* 비밀번호변경 유효성 검사 */

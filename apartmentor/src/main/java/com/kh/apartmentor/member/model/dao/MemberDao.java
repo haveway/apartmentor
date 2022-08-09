@@ -33,6 +33,11 @@ public class MemberDao {
 	public int checkId1(SqlSessionTemplate sqlSession, String userId) {
 		return sqlSession.selectOne("memberMapper.checkId1",userId);
 	}
+
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		System.out.println(m);
+		return sqlSession.update("memberMapper.updateMember",m);
+	}
 	
 	
 

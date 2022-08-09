@@ -22,4 +22,7 @@ public interface MemberService {
 	// 아이디 중복체크
 	int checkId1(String userId);
 
+	// 회원정보변경
+	int updateMember(Member m);
+
 }

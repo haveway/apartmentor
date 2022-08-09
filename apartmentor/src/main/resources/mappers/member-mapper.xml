@@ -101,6 +101,17 @@
 			   MEMBER
 		 WHERE 
 		       USER_ID = #{userId}
-	</select>	                                                    
+	</select>	     
+	<update id="updateMember">
+		UPDATE
+		   	   MEMBER
+		   SET 
+		   	   USER_PWD = #{userPwd},
+		   	   BIRTHDAY = #{birthday},
+		       PHONE = #{phone},
+		       EMAIL = #{email}
+		 WHERE 
+		       USER_ID = #{userId}     
+	</update>                                              
 	
 </mapper>
