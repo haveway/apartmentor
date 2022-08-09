@@ -60,6 +60,9 @@ public class VisitController {
 		return new Gson().toJson(visitService.selectVisitReserve(vno));
 	}
 	
+	/**
+	 * 예약 가능 여부 체크 메소드
+	 */
 	@ResponseBody
 	@RequestMapping(value="check.visit", produces="application/json; charset=UTF-8")
 	public String ajaxCheckVisitReserve(Visit v) {
