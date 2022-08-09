@@ -13,9 +13,9 @@ public class VisitCarDao {
 		return sqlSession.insert("visitCarMapper.enrollVisitCar", p);
 	}
 
-	public int SetDayVisitCar(SqlSessionTemplate sqlSession, String today) {
+	public int SetDayVisitCar(SqlSessionTemplate sqlSession) {
 		
-		return sqlSession.update("visitCarMapper.SetDayVisitCar", today);
+		return sqlSession.update("visitCarMapper.SetDayVisitCar");
 	}
 
 }

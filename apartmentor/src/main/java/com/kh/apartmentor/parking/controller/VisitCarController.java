@@ -26,35 +26,27 @@ public class VisitCarController {
 	@RequestMapping("visit.car")
 	public ModelAndView enrollVisitCar(Parking p, ModelAndView mv, HttpSession session) {
         
-		// 오늘날짜 String타입으로 createDate필드에 넣어준다.
-        p.setCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        
-        System.out.println(p);
 		int result = visitCarService.enrollVisitCar(p);
-		
-		
+		SetDayVisitCar();
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg2", "방문차량 등록완료");
+			session.setAttribute("alertMsg2", "방문차량  등록완료"); 
+											  
 			mv.setViewName("main");
 		} else {
 			session.setAttribute("alertMsg1", "방문차량 등록실패. 관리자에게 문의해주세요.");
 			mv.setViewName("main");
 		}
 		return mv;
-
 	}
 	
-	@Scheduled(cron="1 0 00 * * ?")
+	
+	@Scheduled(cron="1 00 00 * * ?")
 	public void SetDayVisitCar() {
+
+		int result = visitCarService.SetDayVisitCar();
 		
-		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-		
-		System.out.println(today);
-		
-		int result = visitCarService.SetDayVisitCar(today);
-		
-		System.out.println("방문차량 업데이트 결과 :" + result);
+		System.out.println("방문차량 업데이트 결과 :" + result + "대의 차량을 업데이트 하였습니다.");
 	}
 	
 

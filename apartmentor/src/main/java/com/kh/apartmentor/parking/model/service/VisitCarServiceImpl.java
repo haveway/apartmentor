@@ -25,8 +25,8 @@ public class VisitCarServiceImpl implements VisitCarService {
 
 
 	@Override
-	public int SetDayVisitCar(String today) {
-		return visitCarDao.SetDayVisitCar(sqlSession, today);
+	public int SetDayVisitCar() {
+		return visitCarDao.SetDayVisitCar(sqlSession);
 	}
 
 }
