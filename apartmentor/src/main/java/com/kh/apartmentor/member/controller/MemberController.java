@@ -45,7 +45,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("insert.me")
-	public String insertMember(Member m,ModelAndView mv, HttpSession session) {
+	public String insertMember(Member m,ModelAndView mv, HttpSession session, String aptNo1, String aptNo2) {
+		System.out.println(m);
+		System.out.println(aptNo1);
+		System.out.println(aptNo2);
+		String aptNo = aptNo1 + "동" + aptNo2 + "호";
+		m.setAptNo(aptNo);
+		System.out.println(m);
 		System.out.println("평문" + m.getUserPwd());
 		
 		String encPwd = bCryptPasswordEncoder.encode(m.getUserPwd());
@@ -66,8 +72,11 @@ public class MemberController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "findId.me", produces="application/json; charset=UTF-8")
-	public String findId(String name,String birthday, String aptNo) {
+	public String findId(String name,String birthday, String aptNo1, String aptNo2) {
+		System.out.println(aptNo1);
+		System.out.println(aptNo2);
 		Member m = new Member();
+		String aptNo = aptNo1 + "동" + aptNo2 + "호";
 		m.setUserName(name);
 		m.setBirthday(birthday);
 		m.setAptNo(aptNo);
@@ -79,7 +88,8 @@ public class MemberController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "findPwd.me", produces="application/json; charset=UTF-8")
-	public String findPwd(String id, String name,String birthday, String aptNo,HttpSession session) {
+	public String findPwd(String id, String name,String birthday, String aptNo1, String aptNo2,HttpSession session) {
+		String aptNo = aptNo1 + "동" + aptNo2 + "호";
 		Member m = new Member();
 		m.setUserId(id);
 		m.setUserName(name);
@@ -89,13 +99,12 @@ public class MemberController {
 		System.out.println(m);
 		Member userPwd = memberService.findPwd(m);
 		userPwd.setUserId(id);
+		
 		return new Gson().toJson(userPwd);
 		
 	}
-	@ResponseBody
-	@RequestMapping(value = "update.pw", produces="application/json; charset=UTF-8")
-	public String updatePw(String newPwd, String checkPwd, String pwdId,
-								HttpSession session) {
+	@RequestMapping(value = "update.pw")
+	public String updatePw(String newPwd, String checkPwd, String pwdId, HttpSession session) {
 		
 		System.out.println(pwdId);
 		

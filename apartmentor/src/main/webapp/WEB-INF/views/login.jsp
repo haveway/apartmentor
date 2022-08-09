@@ -112,28 +112,24 @@
     </style>
 </head>
 <body>
-	<script>
-
-	 
-	
-	</script>
-
 	<c:if test="${not empty alertMsg1}">
 		<script>
 			swal('오류', "${alertMsg1}", 'warning');
 		</script>
+		<c:remove var="alertMsg1"/>
 	</c:if>	
 	<c:if test="${not empty alertMsg2}">
 		<script>
 			swal('성공!', "${alertMsg2}", 'success');
-		</script>
+		</script>	
+		<c:remove var="alertMsg2"/>
 	</c:if>	
 	
     <div  class="loginWrap">
         <h2 id="logo">APARTMENTOR</h2>
         <br>
         <div class="formWrap border" align="center">
-            <form action="login.me">
+            <form action="login.me" method="post">
                 <input type="text" id="loginid" name="userId" placeholder="아이디">
                 <br>
                 <input type="password" id="loginpwd" name="userPwd"placeholder="비밀번호">
@@ -181,13 +177,13 @@
 
                         <b>비밀번호 : </b>
                         <div class="modal-input">
-                            <input type="text" id="addPwd" name="userPwd" placeholder="ex)asd123!@#" oninput="checkPwd();" required >
+                            <input type="password" id="addPwd" name="userPwd" placeholder="ex)asd123!@#" oninput="checkPwd();" required >
                         </div>
                         <p id="p2">6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.</p>
                         
                         <b>비밀번호 확인 : </b>
                         <div class="modal-input">
-                            <input type="text" id="rePwd1" name="userPwd" placeholder="ex)asd123!@#" oninput="ReconfirmPwd1()" required>
+                            <input type="password" id="rePwd1" placeholder="ex)asd123!@#" oninput="ReconfirmPwd1()" required>
                         </div>
                         <p id="p3">비밀번호를 일치하게 입력해주세요.</p>
                         
@@ -214,18 +210,23 @@
                         	<input type="text" id="addEmail" name="email" placeholder="ex)apartmento@naver.com" oninput="checkEmail()" required>
                         </div>
                         <p id="p7">예시와 같은 형식으로 입력하세요.</p>
-
-                        <b>동,호수 : </b>
+                        
+                        <b>동 </b>
                         <div class="modal-input">
-                        	<input type="text" id="addAptNo" name="aptNo" placeholder="ex)101동1001호" oninput="checkAptNo()" required>
+                        	<input type="text" id="addAptNo1" name="aptNo1" placeholder="ex)101" oninput="checkAptNo1()" required>
                         </div>
-                        <p id="p8">예시와 같은 형식으로 입력하세요.</p>
+                        <p id="p8-1">숫자만 입력해 주세요.</p>
+                        <b>호수 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addAptNo2" name="aptNo2" placeholder="ex)1001" oninput="checkAptNo2()" required>
+                        </div>
+                        <p id="p8-2">숫자만 입력해 주세요.</p>
                     </div>
                     
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember"class="btn submit" disabled>가입신청</button>
+                        <button type="submit" id="insertMember"class="btn submit" disabled="disabled">가입신청</button>
                     </div>
                 </form>
             </div>
@@ -246,7 +247,7 @@
 	            <div class="modal-body">
 	                <b>이름 : </b>
 	                <div class="modal-input">
-	                	<input type="text" id="nameId"placeholder="ex)홍길동" required>
+	                	<input type="text" id="nameId" placeholder="ex)홍길동" required>
 	                </div>
 	                <p>한글이름으로 입력하세요.</p>
 	
@@ -256,14 +257,17 @@
 	                </div>
 	                <p>6자리 숫자로 입력하세요.</p>
 	
-	                <b>동,호수 : </b>
-	                <div class="modal-input">
-	                	<input type="text" id="aptNoId" placeholder="ex)101동1001호" required>
-	                </div>
-	                <p>예시와 같은 형식으로 입력하세요.</p>
-	                <br>
-	                <p id="findId"style="font-size: 25px; color: black;"></p>
-	                <br>
+                   <b>동 </b>
+                   <div class="modal-input">
+                 		<input type="text" id="idAptNo1" name="aptNo1" placeholder="ex)101" required>
+                   </div>
+                   <p id="p8-1">숫자만 입력해 주세요.</p>
+                   <b>호수 : </b>
+                   <div class="modal-input">
+                   		<input type="text" id="idAptNo2" name="aptNo2" placeholder="ex)1001" required>
+                   </div>
+                   <p id="p8-2">숫자만 입력해 주세요.</p>
+	               <br>
 	            </div>
 	            
 	            <!-- Footer -->
@@ -295,21 +299,26 @@
 						<p>아이디를 입력하세요</p>
 					    <b>이름 : </b>
 					    <div class="modal-input">
-					    	<input type="text" id="namePwd" name="userName" placeholder="ex)홍길동" required>
+					    	<input type="text" id="namePwd" placeholder="ex)홍길동" required>
 					    </div>
 					    <p>한글이름으로 입력하세요.</p>
 					
 					    <b>생년월일 : </b>
 					    <div class="modal-input">
-					    	<input type="text" id="birthdayPwd" name="birthday" placeholder="ex)901201" required>
+					    	<input type="text" id="birthdayPwd"placeholder="ex)901201" required>
 					    </div>
 					    <p>6자리 숫자로 입력하세요.</p>
 					
-					    <b>동,호수 : </b>
-					    <div class="modal-input">
-					    	<input type="text" id="aptNoPwd" name="aptNo" placeholder="ex)101동1001호" required>
-					    </div>
-					    <p>예시와 같은 형식으로 입력하세요.</p>
+					    <b>동 </b>
+                        <div class="modal-input">
+                        	<input type="text" id="pwdAptNo1" placeholder="ex)101"  required>
+                        </div>
+                        <p id="p8-1">숫자만 입력해 주세요.</p>
+                        <b>호수 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="pwdAptNo2" placeholder="ex)1001" required>
+                        </div>
+                        <p id="p8-2">숫자만 입력해 주세요.</p>
 					</div>
 	
 					<!-- Footer -->
@@ -329,7 +338,8 @@
     		data : {
     			name : $('#nameId').val(),
     			birthday : $('#birthdayId').val(),
-    			aptNo : $('#aptNoId').val()
+    			aptNo1 : $('#idAptNo1').val(),
+    			aptNo2 : $('#idAptNo2').val()
     		},
     		success : function(result){
     			if(result == null){
@@ -352,23 +362,21 @@
     			id : $('#idPwd').val(),
     			name : $('#namePwd').val(),
     			birthday : $('#birthdayPwd').val(),
-    			aptNo : $('#aptNoPwd').val()
+    			aptNo1 : $('#pwdAptNo1').val(),
+    			aptNo2 : $('#pwdAptNo2').val()
     		},
     		success : function(result){
     			if(result == null){
     				swal('오류', '일치하는 정보가 없습니다', 'warning');    				
     			} 
     			else { 
-    				console.log(result)
-    				console.log(result.userId)
-    				console.log(result.userPwd)
     				$('#updatePwd *').remove();
     				let yPwd = '<form action="update.pw" method="post">'
     						  + '<input type="hidden" name="pwdId"  id="asdasd">' /* pwdId */
     						  + '<div class="modal-body" id="pwdBody">'
     						  + '<b>' + '비밀번호' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="text" id="updatePwd" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
+    						  + '<input type="text" id="updatePwd1" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
     						  + '</div>'
     						  + '<p id="p9">' + '6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.' + '</p>'
     						  + '<b>' + '비밀번호 확인' +'</b>'
@@ -378,7 +386,7 @@
     						  + '<p id="p10">' + '비밀번호를 일치하게 입력해주세요.' + '</p>'
     						  + '</div>'
     						  + '<div class="modal-footer" id="pwdFooter">'
-    						  + '<button type="submit" class="btn submit" >' + '변경' + '</button>'
+    						  + '<button type="submit" class="btn submit" id="btn1">' + '변경' + '</button>'
     					      + '</div>'
     					      + '</form>'
     				$('#updatePwd').html(yPwd);
@@ -393,6 +401,7 @@
 	}
    
 	/* 중복체크,유효성검사  */
+	var checkIdBtn
 	function checkId() {
 		let p1 = $('#p1');
 		let addId = $('#addId').val();
@@ -402,7 +411,6 @@
 				userId : addId
 			},
 			success : function(result) {
-				console.log(result)
 				if(result == 0){
 					p1.attr('style','color:red;');
 					p1.text('중복되는 아이디입니다');
@@ -416,7 +424,7 @@
 					 else { //조건맞음
 						p1.attr('style','color:#32CD32;');
 						p1.text('멋진 아이디네요!');	 
-						var check1 = 1;
+						checkId11Btn = 'Y';
 					 }
 				}
 			},
@@ -427,6 +435,7 @@
 	}
 	
 	/* 비밀번호 유효성 검사 */
+	var checkPwd1Btn
 	function checkPwd() {
 		let p2 = $('#p2');
 		let addPwd = $('#addPwd').val();
@@ -438,16 +447,15 @@
 		else {
 			p2.attr('style','color:#32CD32;');
 			p2.text('사용가능한 비밀번호 입니다.')
+			checkPwdBtn = 'Y'
 		}
 	}
  	/* 비밀번호 중복 체크 */
+ 	var ReconfirmPwd1Btn
 	function ReconfirmPwd1() {
 		let addPwd = $('#addPwd').val(); 
 		let rePwd1 = $('#rePwd1').val();
 		let p3 = $('#p3');
-		console.log(addPwd);
-		console.log(rePwd1);
-		console.log(addPwd != rePwd1)
 		if(addPwd != rePwd1){
 			p3.attr('style','color:red;');
 			p3.text('비밀번호를 일치하게 입력해주세요.')
@@ -455,14 +463,15 @@
 		else {
 			p3.attr('style','color:#32CD32;');
 			p3.text('비밀번호가 일치합니다.')
+			ReconfirmPwd1Btn = 'Y'
 		} 
 	}
  	/* 이름 체크 형식 */
+ 	var checkNameBtn
  	function checkName() {
 		let addName = $('#addName').val(); 
 		let p4 = $('#p4');
 		let regExpName = /^[가-힣]{2,}$/;
-		console.log(addName);
 		if(!regExpName.test(addName)){
 			p4.attr('style','color:red;');
 			p4.text('올바른 형식의 이름을 입력하세요.(한글만 입력 가능)')
@@ -470,28 +479,30 @@
 		else {
 			p4.attr('style','color:#32CD32;');
 			p4.text('멋진 이름이네요!');	 
+			checkNameBtn = 'Y';
 		}
 	}
  	/* 생년월일 체크 형식*/
+ 	var checkBirthBtn
  	function checkBirth() {
  		let addBirthday = $('#addBirthday').val();
  		let p5 = $('#p5');
  		let regExpBirth = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
- 		console.log(addBirthday);
  		if (!regExpBirth.test(addBirthday)) {
  			p5.attr('style','color:red;');
 			p5.text('6자리 숫자로 입력하세요.')
 		} else {
 			p5.attr('style','color:#32CD32;');
 			p5.text('올바른  형식 입니다.');	
+			checkBirthBtn = 'Y';
 		}
 	}
  	/* 휴대폰 체크 형식 */
+ 	var checkPhoneBtn
  	function checkPhone() {
  		let addPhone = $('#addPhone').val();
  		let p6 = $('#p6');
  		let regExpPhone = /^[\d]{11}$/;
- 		console.log(addPhone);
  		if(!regExpPhone.test(addPhone)){
  			p6.attr('style','color:red;');
 			p6.text('-을 제외한 11자리 숫자로 입력하세요.')
@@ -499,15 +510,16 @@
  		else {
 			p6.attr('style','color:#32CD32;');
 			p6.text('올바른  형식 입니다.');	
+			checkPhoneBtn = 'Y';
 		}
 	}
  	/* 이메일 체크 형식  */
+ 	var checkEmailBtn
  	function checkEmail() {
  		let addEmail = $('#addEmail').val();
  		let p7 = $('#p7');
  		let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
  		
- 		console.log(addEmail);
  		if(!regExpEmail.test(addEmail)){
  			p7.attr('style','color:red;');
 			p7.text('올바른 형식의 이메일이 아닙니다.')
@@ -515,33 +527,60 @@
  		else {
 			p7.attr('style','color:#32CD32;');
 			p7.text('올바른  형식 입니다.');	
+			checkEmailBtn = 'Y';
 		}
 	}
- 	/* 동,호수 체크 형식  ---------------미완*/
- 	function checkAptNo() {
- 		let addAptNo = $('#addAptNo').val();
- 		let p8 = $('#p8');
- 		let regExpAptNo =  /^[\d]{3,4}[동]{1}[\d]{3,4}[호]{1} $/;
- 		console.log(addAptNo);
- 		if(!regExpAptNo.test(addAptNo)){
+ 	/* 동,호수 체크 형식  */
+ 	var checkAptNo1Btn
+ 	function checkAptNo1() {
+ 		let addAptNo1 = $('#addAptNo1').val();
+ 		let p8 = $('#p8-1');
+ 		let regExpAptNo =  /^\d{3,4}$/;
+ 		if(!regExpAptNo.test(addAptNo1)){
  			p8.attr('style','color:red;');
 			p8.text('예시를 참고하여 입력해주세요.(공백 금지)')
 		} 
  		else {
 			p8.attr('style','color:#32CD32;');
 			p8.text('올바른  형식 입니다.');	
+			checkAptNo1Btn = 'Y';
 		}
 	}
+ 	var checkAptNo2Btn 
+ 	function checkAptNo2() {
+ 		let addAptNo2 = $('#addAptNo2').val();
+ 		let p8 = $('#p8-2');
+ 		let regExpAptNo =  /^\d{3,4}$/;
+ 		if(!regExpAptNo.test(addAptNo2)){
+ 			p8.attr('style','color:red;');
+			p8.text('예시를 참고하여 입력해주세요.(공백 금지)')
+		} 
+ 		else {
+			p8.attr('style','color:#32CD32;');
+			p8.text('올바른  형식 입니다.');	
+			checkAptNo2Btn = 'Y';
+		}
+	}
+
  	
+	 
+	 console.log(checkIdBtn);
+	 console.log(checkPwd1Btn);
+	 console.log(ReconfirmPwd1Btn);
+	 console.log(checkNameBtn);
+	 console.log(checkBirthBtn);
+	 console.log(checkPhoneBtn);
+	 console.log(checkEmailBtn);
+	 console.log(checkAptNo1Btn);
+	 console.log(checkAptNo2Btn);
  	
+	
  	
- 	+ '<input type="password" id="updatePwd" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2" required>'
-	  + '<input type="password" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2" required>'
- 	
+ 	var updatePwd111
 	/* 비밀번호변경 유효성 검사 */
 	function checkPwd2() {
 		let p9 = $('#p9');
-		let updatePwd = $('#updatePwd').val();
+		let updatePwd = $('#updatePwd1').val();
 		let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
 		if(!regExpPwd.test(updatePwd)){
 			 p9.attr('style','color:red;');
@@ -550,15 +589,15 @@
 		else {
 			p9.attr('style','color:#32CD32;');
 			p9.text('사용가능한 비밀번호 입니다.')
+			 updatePwd111 = "Y"
 		}
 	}
+	var reUpdatePwd111
  	/* 비밀번호변경 중복 체크 */
 	function rePwd2() {
-		let updatePwd = $('#updatePwd').val(); 
+		let updatePwd = $('#updatePwd1').val(); 
 		let reUpdatePwd = $('#reUpdatePwd').val();
 		let p10 = $('#p10');
-		console.log(updatePwd);
-		console.log(reUpdatePwd);
 		if(updatePwd != reUpdatePwd){
 			p10.attr('style','color:red;');
 			p10.text('비밀번호를 일치하게 입력해주세요.')
@@ -566,10 +605,18 @@
 		else {
 			p10.attr('style','color:#32CD32;');
 			p10.text('비밀번호가 일치합니다.')
+			reUpdatePwd111 = "Y"
 		} 
 	}
- 	
+ 	console.log(reUpdatePwd111);
+ 	  /* if(updatePwd111 = Y && reUpdatePwd111 = Y){
+ 		$('#btn1').removeAttr("disabled")
+ 	}   */
+ 	if(updatePwd111 = "Y"){
+ 		$('#btn1').removeAttr("disabled")
+ 	}
 
 </script>
+
 </body>
 </html>
