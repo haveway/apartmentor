@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mainMapper">
+	<resultMap type="board" id="boardResultSet">
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="BOARD_CATEGORY" property="boardCategory"/>
+	</resultMap>
+	
+	<resultMap type="notice" id="noticeResultSet">
+		<result column="NOTICE_TITLE" property="noticeTitle"/>
+		<result column="NOTICE_CATEGORY" property="noticeCategory"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="NOTICE_NO" property="noticeNo"/>
+	</resultMap>
+	
+	
+	
+	<select id="boardList" resultMap="boardResultSet">
+		SELECT 
+			   BOARD_TITLE,
+			   CREATE_DATE,
+			   BOARD_CATEGORY
+		  FROM 
+		       BOARD
+		 WHERE      	   
+			   STATUS = 'Y'
+		 ORDER 
+		    BY	BOARD_NO DESC			
+	</select>
+	
+	<select id="noticeList" resultMap="noticeResultSet">
+		SELECT 
+			   NOTICE_TITLE,
+			   NOTICE_CATEGORY,
+			   CREATE_DATE
+		  FROM 
+		       NOTICE
+		 WHERE      	   
+			   STATUS = 'Y'
+		 ORDER 
+		    BY	NOTICE_NO DESC	
+			
+	</select>
+</mapper>

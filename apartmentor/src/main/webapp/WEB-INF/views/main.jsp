@@ -30,6 +30,19 @@
             width: 1200px;
             height: 300px;
         }
+        .table{
+        text-align: center;
+        font-size: 12px;
+        }
+        .a1{
+        	margin-top: 3px;
+        	margin-right: 5px;
+        	float: right;
+        	border: solid 1px gray;
+        	border-radius: 60%; 
+        	padding: 5px;
+        	text-decoration: none; 
+        }
     </style>    
 </head>
 <jsp:include page="common/header.jsp"/>
@@ -43,7 +56,30 @@
 
         <div id="contentWrap1">
             <div id="content1">
-               		 공지
+            	<a class="a1" href="#">더보기 + </a>
+	           	<table class="table">
+	           		<tr>
+	           			<th>카테고리</th>
+	           			<th>제목</th>
+	           			<th>게시일</th>
+	           		</tr>
+	           		<c:choose>
+	           			<c:when test="${empty nList}">
+	           				<tr>
+	           					<td colspan="3">게시물이 존재하지 않습니다!</td>
+	           				</tr>
+	           			</c:when>
+	           			<c:otherwise>
+	           				<c:forEach var="n" items="${nList}">
+			           			<tr>
+			           				<td>${n.noticeCategory}</td>
+			           				<td>${n.noticeTitle}</td>
+			           				<td>${n.createDate}</td>
+			           			</tr>
+		           			</c:forEach>
+	           			</c:otherwise>
+	           		</c:choose>
+	           	</table>
             </div>
             <div id="content2">
                		날씨
@@ -51,7 +87,30 @@
         </div>
         <div id="contentWrap2">
             <div id="content3">
-              		  자유
+            	<a class="a1" href="#">더보기 + </a>
+	           	<table class="table">
+	           		<tr>
+	           			<th>카테고리</th>
+	           			<th>제목</th>
+	           			<th>게시일</th>
+	           		</tr>
+	           		<c:choose>
+	           			<c:when test="${empty bList}">
+	           				<tr>
+	           					<td colspan="3">게시물이 존재하지 않습니다!</td>
+	           				</tr>
+	           			</c:when>
+	           			<c:otherwise>
+	           				<c:forEach var="b" items="${bList}">
+			           			<tr>
+			           				<td>${b.boardCategory}</td>
+			           				<td>${b.boardTitle}</td>
+			           				<td>${b.createDate}</td>
+			           			</tr>
+		           			</c:forEach>
+	           			</c:otherwise>
+	           		</c:choose>
+	           	</table>
             </div>
             <div id="content4">
                 <form action="visit.car" method="post">
