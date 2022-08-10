@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -30,8 +31,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member findId(Member m) {
-		return memberDao.findId(sqlSession, m);
+	public Member selectId(Member m) {
+		return memberDao.selectId(sqlSession, m);
 	}
 
 	@Override
@@ -47,6 +48,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int checkId1(String userId) {
 		return  memberDao.checkId1(sqlSession, userId);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		return memberDao.updateMember(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Member> memberList() {
+		return memberDao.memberList(sqlSession);
 	}
 
 

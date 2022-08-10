@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.apartmentor.member.model.vo.Member;
@@ -13,7 +14,7 @@ public interface MemberService {
 	int insertMember(Member m);
 	
 	// 아이디 찾기
-	Member findId(Member m);
+	Member selectId(Member m);
 	// 비밀번호 확인작업
 	Member findPwd(Member m);
 	// 비밀번호 변경
@@ -21,5 +22,10 @@ public interface MemberService {
 
 	// 아이디 중복체크
 	int checkId1(String userId);
+
+	// 회원정보변경
+	int updateMember(Member m);
+	// 회원조회
+	ArrayList<Member> memberList();
 
 }

@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -7,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,9 +26,11 @@ public class MemberController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder; 
 	
 	@RequestMapping("memberList.do")
-	public String memeberList() {
-		
-		return "member/memberList";
+	public ModelAndView memeberList(ModelAndView mv) {
+		ArrayList<Member> mList = memberService.memberList();
+		mv.addObject("mList",mList).setViewName("member/memberList");
+		System.out.println(mList);
+		return mv;
 	}
 	
 	@RequestMapping("login.me")
@@ -46,12 +48,10 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public String insertMember(Member m,ModelAndView mv, HttpSession session, String aptNo1, String aptNo2) {
-		System.out.println(m);
-		System.out.println(aptNo1);
-		System.out.println(aptNo2);
+		System.out.println("1         "+m);
 		String aptNo = aptNo1 + "동" + aptNo2 + "호";
 		m.setAptNo(aptNo);
-		System.out.println(m);
+		System.out.println("2           "+m);
 		System.out.println("평문" + m.getUserPwd());
 		
 		String encPwd = bCryptPasswordEncoder.encode(m.getUserPwd());
@@ -71,18 +71,18 @@ public class MemberController {
 		}
 	}
 	@ResponseBody
-	@RequestMapping(value = "findId.me", produces="application/json; charset=UTF-8")
-	public String findId(String name,String birthday, String aptNo1, String aptNo2) {
-		System.out.println(aptNo1);
-		System.out.println(aptNo2);
+	@RequestMapping(value = "selectId.me", produces="application/json; charset=UTF-8")
+	public String findId(String name,String birthday,String email, String aptNo1, String aptNo2) {
+
 		Member m = new Member();
 		String aptNo = aptNo1 + "동" + aptNo2 + "호";
 		m.setUserName(name);
+		m.setEmail(email);
 		m.setBirthday(birthday);
 		m.setAptNo(aptNo);
 		
 		System.out.println(m);
-		Member userId = memberService.findId(m);
+		Member userId = memberService.selectId(m);
 		return new Gson().toJson(userId);
 		
 	}
@@ -136,14 +136,32 @@ public class MemberController {
 	public int checkId1(String userId) {
 		int count = memberService.checkId1(userId);
 		if(count > 0) {
-			System.out.println("카운트 큼");
 			return 0 ;
 		} else {
-			System.out.println("카운트 작음");
 			return 1;
 		}
 		
 	}
-	
+	@RequestMapping("logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
+	@RequestMapping("update.me")
+	public String updateMember(Member m, HttpSession session) {
+		System.out.println(m);
+		
+		String encPwd = bCryptPasswordEncoder.encode(m.getUserPwd());
+		m.setUserPwd(encPwd);
+		
+		int result = memberService.updateMember(m);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg2", "회원정보 변경성공!");
+		} else {
+			session.setAttribute("alertMsg1", "회원정보 변경실패!");
+		}
+		return "main";
+	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
 </head>
 <body>
 
-<!-- <jsp:include page="../common/header.jsp"/> -->
+<jsp:include page="../common/header.jsp"/>
 
 <br>
 <br>
@@ -58,63 +59,114 @@
 	<br>
 	<br>
 	
-		<form id="visitDetail" method="post" action="inserStatus.visit">
-			<table>
-				<tr>
-					<th>예약 종류</th>
-					<td>&nbsp;&nbsp;</td>
-					<td>
-						<select name="visitCategory" style="width:70px; height:30px; text-align:center; font-weight:bolder;">
-							<option value="전체">전체</option>
-							<option value="가스">가스</option>
-							<option value="난방">난방</option>
-							<option value="소독">소독</option>
-							<option value="수도">수도</option>
-							<option value="전기">전기</option>
-						</select>
-					</td>
-				</tr>
-				<tr style="height: 40px">
-					<th>예약 날짜</th>
-					<td>&nbsp;&nbsp;</td>
-					<td>
-						<!-- 더미데이터 -->
-						2022-08-05
-					</td>
-				</tr>
-				<tr style="height: 60px">
-					<th>예약 시간</th>
-					<td>&nbsp;&nbsp;</td>
-					<td style="width: 220px">
-						<!-- 더미데이터 -->
-						09:00
-					</td>
-					<td>
-						<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal" style="width:100px;">
+	<form id="visitStatus" action="" method="post">
+		<input type="hidden" name="vno" value="${v.visitNo}">
+		<input type="hidden" name="visitEmail" value="${v.visitEmail}">
+		<input type="hidden" name="aptNo" value="${v.aptNo}">
+		<input type="hidden" name="visitValue" value="${v.visitValue}">
+		<input type="hidden" name="visitDate" value="${v.visitDate}">
+		<input type="hidden" name="visitTime" value="${v.visitTime}">
+		<table id="visitDetail">
+			<tr>
+				<th>예약 종류</th>
+				<td>&nbsp;&nbsp;</td>
+				<td>${v.visitValue}</td>
+			</tr>
+			<tr style="height: 40px">
+				<th>신청 날짜</th>
+				<td>&nbsp;&nbsp;</td>
+				<td>${v.createDate}</td>
+			</tr>
+			<tr style="height: 40px">
+				<th>신청 호수</th>
+				<td>&nbsp;&nbsp;</td>
+				<td>${v.aptNo}</td>
+			</tr>
+			<tr style="height: 40px">
+				<th>예약 날짜</th>
+				<td>&nbsp;&nbsp;</td>
+				<td>${v.visitDate}</td>
+			</tr>
+			<tr style="height: 60px">
+				<th>예약 시간</th>
+				<td>&nbsp;&nbsp;</td>
+				<td>${v.visitTime}</td>
+				<td>
+					<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal" style="width:100px;">
 						  예약 현황
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<th>참고 사항</th>
-					<td>&nbsp;&nbsp;</td>
-					<td colspan="6">
-						<textarea name="content" rows="20" cols="80" required style="resize:none;" placeholder="참고사항을 입력해주세요">
-						</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4" style="height: 80px; text-align: right;">
-						<button type="submit" class="btn btn-info" id="submitBtn">승인</button>
-					</td>
-					<td colspan="3" style="height: 80px;">
-						&nbsp;&nbsp;&nbsp;<button type="reset" class="btn btn-outline-info" id="resetBtn">반려</button>&nbsp;&nbsp;&nbsp;
-					</td>
-				</tr>
-			</table>
+					</button>
+				</td>
+			</tr>
+			<tr>
+				<th>참고 사항</th>
+				<td>&nbsp;&nbsp;</td>
+				<td colspan="6">
+						${v.visitContent}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="height: 80px; text-align: right;">
+					<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
+				</td>
+				<td colspan="2" style="height: 80px; text-align: right;">
+					<button type="button" class="btn btn-info" id="okBtn" onclick="ok()">승인</button>
+				</td>
+				<td colspan="3" style="height: 80px;">
+					&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" id="noBtn" onclick="no()">반려</button>&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>
+	</form>	
+	
+	<script>
+		$(function(){
+			var ok = $('#okBtn');
+			var no = $('#noBtn');
 			
+			ok.click(function(){
+				const form = $('#visitStatus');
+				form.attr('action', 'okReserve.visit');
+				form.submit();
+			})
 			
-		</form>
+			no.click(function(){
+				const form = $('#visitStatus');
+				form.attr('action', 'noReserve.visit');
+				form.submit();
+			})
+			
+		})
+	</script>
+			
+		<!-- The Modal -->
+			<div class="modal" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">예약 현황</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+
+
+						</div>
+
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-info"
+								data-dismiss="modal">닫기</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<br><br>
+
 		
 	<script>
 	$(".btn btn-outline-info").click(function(){
@@ -122,6 +174,61 @@
 	    $("#contents.body-contents").val(data);
 	    $("#text-contents.body-contents").html(data);
 	});
+	
+	$(function(){
+		// 예약된 날짜와 시간 호출
+		selectAllVisitReserve()
+	})
+	
+	function selectAllVisitReserve(){
+		$.ajax({
+			url : 'selectAll.visit',
+			success : function(Allreserve){
+					let list = '';
+					
+					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">가스 예약 현황</p>';
+					for(let i in Allreserve) {
+						if(Allreserve[i].visitCategory == 1 && Allreserve[i].visitDate != null) {
+							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
+						} 
+					}
+					
+					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">난방 예약 현황</p>';
+					for(let i in Allreserve) {
+						if(Allreserve[i].visitCategory == 2 && Allreserve[i].visitDate != null) {
+							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
+						} 
+					}
+					
+					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">소독 예약 현황</p>';
+					for(let i in Allreserve) {
+						if(Allreserve[i].visitCategory == 3 && Allreserve[i].visitDate != null) {
+							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
+						} 
+					}
+					
+					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">수도 예약 현황</p>';
+					for(let i in Allreserve) {
+						if(Allreserve[i].visitCategory == 4 && Allreserve[i].visitDate != null) {
+							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
+						} 
+					}
+					
+					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">전기 예약 현황</p>';
+					for(let i in Allreserve) {
+						if(Allreserve[i].visitCategory == 5 && Allreserve[i].visitDate != null) {
+							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
+						} 
+					}
+					
+					$('.modal-body').html(list);
+			},
+			error : function(){
+				console.log('예약 시간 조회 실패');
+			}
+		});
+	}
+	
 	</script>
 	
 		<br>
@@ -137,7 +244,7 @@
 <br>
 <br>
 
-<!-- <jsp:include page="../common/footer.jsp"/> -->
+<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

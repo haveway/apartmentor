@@ -6,8 +6,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>우리아파트 주변지도</title>
-	<!-- jQuery 라이브러리 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<style>
 		.wrap {
 			width: 1200px;
@@ -35,6 +33,7 @@
 			
 			$(function(){
 				bike();
+				pharm()
 				loadBus();
 				setInterval(loadBus, 5000);
 			})
@@ -86,32 +85,28 @@
 								var marker = new kakao.maps.Marker({
 									position: markerPosition,
 									image: markerImage, // 마커이미지 설정
+									clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 								});
 									
 								// 마커가 지도 위에 표시되도록 설정합니다
 								marker.setMap(map);
 								
-								// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+								// 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:200px;height:80px;">' + plainNo + '<br>' + '혼잡도 : ' + congetion + '<br>' + 
 												'정류소도착여부 : ' + stopFlag + '</div>' // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+									iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
 								// 인포윈도우를 생성합니다
 								var infowindow = new kakao.maps.InfoWindow({
 								    content : iwContent,
+									removable : iwRemoveable
 								});
 
-								// 마커에 마우스오버 이벤트를 등록합니다
-								kakao.maps.event.addListener(marker, 'mouseover', function() {
-								// 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-									infowindow.open(map, marker);
-								});
-
-								// 마커에 마우스아웃 이벤트를 등록합니다
-								kakao.maps.event.addListener(marker, 'mouseout', function() {
-									// 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-									infowindow.close();
-								});
-								
+								// 마커에 클릭이벤트를 등록합니다
+							kakao.maps.event.addListener(marker, 'click', function() {
+								// 마커 위에 인포윈도우를 표시합니다
+								infowindow.open(map, marker);  
+							});
 								// 4.995초뒤에 마커삭제
 								setTimeout(function(){
 									marker.setMap(null);
@@ -128,7 +123,6 @@
 					success: function (data) {
 						if (data) {
 							$(data).find('itemList').each(function () {
-								
 
 								var tmX = $(this).find("tmX").text();
 								var tmY = $(this).find("tmY").text();
@@ -165,32 +159,28 @@
 								var marker = new kakao.maps.Marker({
 									position: markerPosition,
 									image: markerImage, // 마커이미지 설정
+									clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 								});
 									
 								// 마커가 지도 위에 표시되도록 설정합니다
 								marker.setMap(map);
 								
-								// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+								// 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:200px;height:80px;">' + plainNo + '<br>' + '혼잡도 : ' + congetion + '<br>' + 
 												'정류소도착여부 : ' + stopFlag + '</div>' // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+									iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
 								// 인포윈도우를 생성합니다
 								var infowindow = new kakao.maps.InfoWindow({
 								    content : iwContent,
+									removable : iwRemoveable
 								});
 
-								// 마커에 마우스오버 이벤트를 등록합니다
-								kakao.maps.event.addListener(marker, 'mouseover', function() {
-								// 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-									infowindow.open(map, marker);
-								});
-
-								// 마커에 마우스아웃 이벤트를 등록합니다
-								kakao.maps.event.addListener(marker, 'mouseout', function() {
-									// 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-									infowindow.close();
-								});
-								
+								// 마커에 클릭이벤트를 등록합니다
+							kakao.maps.event.addListener(marker, 'click', function() {
+								// 마커 위에 인포윈도우를 표시합니다
+								infowindow.open(map, marker);  
+							});
 								// 4.995초뒤에 마커삭제
 								setTimeout(function(){
 									marker.setMap(null);
@@ -199,6 +189,8 @@
 						}
 					}
 				});
+
+				
 
 
 				
@@ -212,12 +204,12 @@
 					url: "http://openapi.seoul.go.kr:8088/6d7657696e6861763739414950794f/json/bikeList/1/1000/",
 					data: {},
 					success: function(data){
-						let bikeList = data["rentBikeStatus"]["row"]
-						for(let i = 0; i < bikeList.length; i++){
-							let stationName = bikeList[i]["stationName"]
-							let parkingBikeTotCnt = bikeList[i]["parkingBikeTotCnt"]
-							let stationLatitude = bikeList[i]["stationLatitude"]
-							let stationLongitude = bikeList[i]["stationLongitude"]
+						var bikeList = data["rentBikeStatus"]["row"]
+						for(var i = 0; i < bikeList.length; i++){
+							var stationName = bikeList[i]["stationName"]
+							var parkingBikeTotCnt = bikeList[i]["parkingBikeTotCnt"]
+							var stationLatitude = bikeList[i]["stationLatitude"]
+							var stationLongitude = bikeList[i]["stationLongitude"]
 
 							positions.push({content:'<div style="padding:5px;width:280px;height:60px;">' + stationName + '<br>' + '거치 대수 : ' + parkingBikeTotCnt + '</div>',
 											latlng: new kakao.maps.LatLng(stationLatitude, stationLongitude)}) 
@@ -235,19 +227,19 @@
 							var marker = new kakao.maps.Marker({
 								map: map, // 마커를 표시할 지도
 								position: positions[i].latlng, // 마커의 위치
-								image: markerImage
+								image: markerImage,
+								clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 							});
 
 							// 마커에 표시할 인포윈도우를 생성합니다 
 							var infowindow = new kakao.maps.InfoWindow({
-								content: positions[i].content // 인포윈도우에 표시할 내용
+								content: positions[i].content, // 인포윈도우에 표시할 내용
+								removable: true
 							});
 
-							// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
 							// 이벤트 리스너로는 클로저를 만들어 등록합니다 
 							// for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-							kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-							kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+							kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
 						}
 
 							// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
@@ -270,9 +262,154 @@
 				})
 			}
 
-							
+			function pharm(){
+				
+				var today = new Date();
+				var locdate = [];
+				var yyyymmdd = getFullToday();
+				var currTime = today.getHours().toString() + today.getMinutes().toString();
+				var yoil = today.getDay();
+			
+				
+				function getFullToday(){
+									var date = new Date();
+									var year = date.getFullYear();
+									var month = ("0" + (1 + date.getMonth())).slice(-2);
+									var day = ("0" + date.getDate()).slice(-2);
 
-							
+									return year + month + day;
+								}
+				
+					$.ajax({
+						type: "GET",
+						url: "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?serviceKey=3vbFSNBucTjUmlz76x3t%2FXHUxbPw4FBSuJfqY2xhH5n6sriEAxlGGP%2Fdqlhf2FiOxzA4PbMcX7GpGC%2FowflUrQ%3D%3D&numOfRows=100&_type=json&solYear=" + today.getFullYear(),
+						data: {},
+						success : function (data){
+							var restDayList = data["response"]["body"]["items"]["item"]
+							for(var i = 0; i < restDayList.length; i++){
+								locdate.push(restDayList[i]["locdate"]);
+							}
+
+							for(var i = 0; i < locdate.length; i++){
+									if(locdate[i] == yyyymmdd){
+									yoil = 8;
+									}
+							}
+						}
+					})
+				
+
+				$.ajax({
+					type: "GET",
+					url: "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=3vbFSNBucTjUmlz76x3t%2FXHUxbPw4FBSuJfqY2xhH5n6sriEAxlGGP%2Fdqlhf2FiOxzA4PbMcX7GpGC%2FowflUrQ%3D%3D&Q0=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&Q1=%EC%96%91%EC%B2%9C%EA%B5%AC&ORD=NAME&pageNo=1&numOfRows=300",
+					data: "text",
+					success: function (data) {
+						if (data) {
+							$(data).find('item').each(function () {
+								var tmY = $(this).find("wgs84Lat").text();
+								var tmX = $(this).find("wgs84Lon").text();
+								var dutyName = $(this).find("dutyName").text();
+								var dutyTel1 = $(this).find("dutyTel1").text();
+								var dutyAddr = $(this).find("dutyAddr").text();
+								var dutyTime1c = $(this).find("dutyTime1c").text();
+								var dutyTime1s = $(this).find("dutyTime1s").text();
+								var dutyTime2c = $(this).find("dutyTime2c").text();
+								var dutyTime2s = $(this).find("dutyTime2s").text();
+								var dutyTime3c = $(this).find("dutyTime3c").text();
+								var dutyTime3s = $(this).find("dutyTime3s").text();
+								var dutyTime4c = $(this).find("dutyTime4c").text();
+								var dutyTime4s = $(this).find("dutyTime4s").text();
+								var dutyTime5c = $(this).find("dutyTime5s").text();
+								var dutyTime5s = $(this).find("dutyTime5s").text();
+								var dutyTime6c = $(this).find("dutyTime3s").text();
+								var dutyTime6s = $(this).find("dutyTime6s").text();
+								
+								var dutyTime7c;
+								if($(this).find("dutyTime7c").text() !== ""){
+									dutyTime7c = $(this).find("dutyTime7c").text();
+								} else {
+									dutyTime7c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+								}
+
+								var dutyTime7s;
+								if($(this).find("dutyTime7s").text() !== ""){
+									var dutyTime7s = $(this).find("dutyTime7s").text();
+								} else {
+									dutyTime7s = "휴무";
+								}
+
+								var dutyTime8c;
+								if($(this).find("dutyTime8c").text() !== ""){
+									var dutyTime8c = $(this).find("dutyTime8c").text();
+								} else {
+									dutyTime8c = "";
+								}
+
+								var dutyTime8s;
+								if($(this).find("dutyTime8s").text() !== ""){
+									var dutyTime8s = $(this).find("dutyTime8s").text();
+								} else {
+									dutyTime8s = "휴무";
+								}
+
+								for(var i = 1; i < 9; i++){
+									if(yoil == i){
+										if(eval('dutyTime' + i + 's') < currTime && currTime < eval('dutyTime' + i + 'c')){
+											var imageSrc = 'http://drive.google.com/uc?export=view&id=1zzt3UCNDqkjVbE2JggHTj9qk4Y6MPGn6', // 마커이미지의 주소입니다    
+											imageSize = new kakao.maps.Size(35, 35) // 마커이미지의 크기입니다
+										} else {
+											var imageSrc = 'http://drive.google.com/uc?export=view&id=1Ppck2GSKy6W8wHI3psyN46GDoEzigrot', // 마커이미지의 주소입니다    
+											imageSize = new kakao.maps.Size(35, 35) // 마커이미지의 크기입니다
+										}
+									}	
+								}
+
+								// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+								var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+									markerPosition = new kakao.maps.LatLng(tmY, tmX); // 마커가 표시될 위치입니다
+
+								// 마커를 생성합니다
+								var marker = new kakao.maps.Marker({
+									position: markerPosition,
+									image: markerImage, // 마커이미지 설정
+									clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+								});
+									
+								// 마커가 지도 위에 표시되도록 설정합니다
+								marker.setMap(map);
+								
+								// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+								var iwContent = '<div style="padding:5px;width:400px;"><b>' + dutyName + '</b><br>' 
+											  + '대표전화 : ' + dutyTel1 + '<br>'
+											  + '주소 : ' + dutyAddr + '<br><hr>'
+											  + '<b>월요일 : </b>' + dutyTime1s + ' ~ ' + dutyTime1c
+											  + '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;화요일 : </b>' + dutyTime2s + ' ~ ' + dutyTime2c + '<br>'
+											  + '<b>수요일 : </b>' + dutyTime3s + ' ~ ' + dutyTime3c
+											  + '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목요일 : </b>' + dutyTime4s + ' ~ ' + dutyTime4c + '<br>'
+											  + '<b>금요일 : </b>' + dutyTime5s + ' ~ ' + dutyTime5c
+											  + '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;토요일 : </b>' + dutyTime6s + ' ~ ' + dutyTime6c + '<br>'
+											  + '<b>일요일 : </b>' + dutyTime7s + ' ~ ' + dutyTime7c
+											  + '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;공휴일 : </b>' + dutyTime8s + ' ~ ' + dutyTime8c + '</div>'
+
+								// 인포윈도우를 생성합니다
+								var infowindow = new kakao.maps.InfoWindow({
+								    content : iwContent,
+									removable : true
+								});
+
+								// 마커에 마우스오버 이벤트를 등록합니다
+								kakao.maps.event.addListener(marker, 'click', function() {
+								// 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+									infowindow.open(map, marker);
+								});
+
+
+							});
+						}
+					}
+				});
+			}
+
 
 
 

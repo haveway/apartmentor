@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>메인</title>
     <style>
-        div{
-            box-sizing : border-box;
-            border : 1px solid red;
-        }    
         #imgSlide{
             width: 1200px;
             height: 400px;
@@ -34,15 +31,39 @@
         text-align: center;
         font-size: 12px;
         }
-        .a1{
+        .a1 {
         	margin-top: 3px;
         	margin-right: 5px;
         	float: right;
-        	border: solid 1px gray;
-        	border-radius: 60%; 
         	padding: 5px;
-        	text-decoration: none; 
+        	font-weight: bold;
         }
+        .a1 a {
+            text-decoration: none;
+        	color: gray; 
+        }
+        .a1 a:hover {
+            text-decoration: none;
+            color:rgb(0,88,155);
+        }
+        .td1{ width: 100px}
+        .td2{ width: 300px}
+        .td3{ width: 100px}
+        .title{
+        	float: left; 
+        	text-align:center;
+        	margin-left: 5px; 
+        	margin-top: 3px;
+        	font-size: 25px;
+        }
+        #boardTr:hover, #noticeTr:hover{
+        cursor:pointer;
+        background-color: #E2E2E2;
+        }
+        #content1, #content3{margin-right: 35px;}
+        #content2, #content4{margin-left: 35px;}
+        
+        
     </style>    
 </head>
 <jsp:include page="common/header.jsp"/>
@@ -56,7 +77,12 @@
 
         <div id="contentWrap1">
             <div id="content1">
-            	<a class="a1" href="#">더보기 + </a>
+            	<div class="title">
+            	공지사항
+            	</div>
+            	<div class="a1">
+            	<a href="#">더보기 + </a>
+            	</div>
 	           	<table class="table">
 	           		<tr>
 	           			<th>카테고리</th>
@@ -70,11 +96,11 @@
 	           				</tr>
 	           			</c:when>
 	           			<c:otherwise>
-	           				<c:forEach var="n" items="${nList}">
-			           			<tr>
-			           				<td>${n.noticeCategory}</td>
-			           				<td>${n.noticeTitle}</td>
-			           				<td>${n.createDate}</td>
+	           				<c:forEach var="n" items="${nList}" begin="0" end="4">
+			           			<tr onclick="location.href='#'" class="td" id="noticeTr">
+			           				<td class="td1">${n.noticeCategory}</td>
+			           				<td class="td2">${n.noticeTitle}</td>
+			           				<td class="td3">${n.createDate}</td>
 			           			</tr>
 		           			</c:forEach>
 	           			</c:otherwise>
@@ -85,9 +111,15 @@
                		날씨
             </div>
         </div>
+        <br>
         <div id="contentWrap2">
             <div id="content3">
-            	<a class="a1" href="#">더보기 + </a>
+	        	<div class="title">
+	            	자유 게시판
+	           	</div>
+	           	<div class="a1">
+            		<a href="list.bo">더보기 + </a>
+            	</div>
 	           	<table class="table">
 	           		<tr>
 	           			<th>카테고리</th>
@@ -101,11 +133,11 @@
 	           				</tr>
 	           			</c:when>
 	           			<c:otherwise>
-	           				<c:forEach var="b" items="${bList}">
-			           			<tr>
-			           				<td>${b.boardCategory}</td>
-			           				<td>${b.boardTitle}</td>
-			           				<td>${b.createDate}</td>
+	           				<c:forEach var="b" items="${bList}" begin="0" end="4">
+			           			<tr onclick="location.href='detail.bo?bno=${b.boardNo}'" class="td" id="boardTr">			           			
+			           				<td class="td1">${b.boardCategory}</td>
+			           				<td class="td2">${b.boardTitle}</td>
+			           				<td class="td3">${fn:substring(b.createDate,0,10)}</td>
 			           			</tr>
 		           			</c:forEach>
 	           			</c:otherwise>
@@ -141,9 +173,11 @@
         </div>
 
         <div id="calendar">
-          		  <a href="enrollForm.visit">임시로</a>
+  			<a href="enrollForm.visit">임시로</a>
         </div>
     </div>
+    
+    
     
 
 </body>

@@ -11,7 +11,7 @@
             box-sizing : border-box;
         }
         .wrap{
-            width : 1000px;
+            width : 1200px;
             height : 80px;
             margin : auto;
         }

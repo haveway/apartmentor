@@ -65,16 +65,19 @@ h1 {
 
 			<form id="visitEnrollForm" method="post" action="insert.visit">
 				<input type="hidden" name="userNo" value="${ loginUser.userNo }">
+				<input type="hidden" name="userNo" value="${ loginUser.email }">
 				<table>
 					<tr style="height: 60px">
 						<th>예약 종류</th>
 						<td>&nbsp;&nbsp;</td>
-						<td><select name="visitCategory" id="category"
-							style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
-								<c:forEach var="c" items="${ visitCategory }">
-									<option value="${c.visitCategory}">${c.visitValue}</option>
-								</c:forEach>
-						</select></td>
+						<td>
+							<select name="visitCategory" id="category"
+								style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
+									<c:forEach var="c" items="${ visitCategory }">
+										<option value="${c.visitCategory}">${c.visitValue}</option>
+									</c:forEach>
+							</select>
+						</td>
 					</tr>
 					<tr style="height: 40px">
 						<th>예약 날짜</th>
@@ -206,35 +209,35 @@ h1 {
 					success : function(reserve){
 							let list = '';
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">가스 예약현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">가스 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 1 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								} 
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">난방 예약현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">난방 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 2 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								}
 							}
 		
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">소독 예약현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">소독 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 3 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								} 
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">수도 예약현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">수도 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 4 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								}
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px">전기 예약현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">전기 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 5 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';

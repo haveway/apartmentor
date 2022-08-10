@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,11 +26,11 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
-        div{
+    	div{
             border: 1px solid red;
             
-        }
-        #header{
+        } 
+        #header{       
             background-color: rgb(0,88,155);
             width: 1200px;
             height: 50px;
@@ -72,17 +74,68 @@
             line-height: 1rem;
             margin-left: 20px;
         }
-        #logo{
-            width: 100px;
+         #logo{
+            width: 230px;
             height: 100%;
             justify-content: center;
+            font-weight :bold;
+            font-size: 30px;
             margin: auto;
         }
-
-        #changeInfor,#logout{
-            float: right;
-            margin-right : 30px;
+        #logo a{
+            margin-left: 30px;
+        	color: white;
+        	text-decoration: none;
         }
+		#memberInfo{
+			float: right;
+			width: 90px;
+		}
+		#memberInfo p{ margin: auto;}
+        #changeInfor,#logout,#memberInfo{
+            float: right;
+            margin-right : 7px;
+            margin-top: 3px;        	
+        	padding: 10px;
+        	text-decoration: none;
+			padding-right: 0px;
+			padding-left: 0px;        	
+        }
+        #changeInfor button,#logout a, #memberInfo p{        	
+        	color: white;
+        	text-decoration: none;
+        } 
+		#changeInfor button{
+			background: none;
+			border: none;
+			padding-top: 0px
+		}
+		.modal-body input{
+            margin-top: 7.5px;
+            height: 20px;
+            width: 100%;
+            font-size: 20px;
+            border: none;
+        }
+        .modal-body input:focus {outline:none;}
+        .modal-body b{
+            font-size: 20px;
+            margin-bottom: 30px;
+            margin-top: 30px;
+        }
+        .modal-body p{
+            font-size: 7px;
+            color: grey;
+        }
+        .modal-input{
+            height: 40px; 
+            border: solid gray 2px;
+        }
+        .submit{
+            background-color: rgb(0,88,155);    
+            color: white;        
+        }
+        
     </style>
 </head>
 <body>
@@ -100,37 +153,213 @@
 		<c:remove var="alertMsg2"/>
 	</c:if>	
 
-    <div id="header" style="border: solid yellow 3px;">
+    <div id="header">
         <div id="menuBar">
             <div class = main-nav-left> 
                 <div id="menuImg">asd</div>
                 <div class = "sub-menu">
                     <ul class = "sub-menu-list">
                         <li>
-                            <a href="#">New</a>
+                            <a href="map.api">지도</a>
                         </li><hr>
                         <li>
-                            <a href="#">Basic</a>
+                            <a href="list.bo">자유게시판</a>
                         </li><hr>
                         <li>
-                            <a href="#">Best Item</a>
+                            <a href="seatView.st">독서실</a>
                         </li><hr>
                         <li>
-                            <a href="memberList.do">회원관리</a>
-                        </li>
+                            <a href="golf.sp">실내골프연습장</a>
+                        </li><hr>
+                        <li>
+                            <a href="miniGym.sp">미니 GYM</a>
+                        </li><hr>
+                        <c:choose>
+                        	<c:when test="${loginUser.userId eq 'admin'}">
+		                        <li>
+		                            <a href="list.visit">방문예약 목록페이지</a>
+                        		</li><hr>
+	                        </c:when>
+	                        <c:otherwise>
+		                        <li>
+		                            <a href="enrollForm.visit">방문예약 페이지</a>
+		                        </li><hr>
+	                        </c:otherwise>
+                        </c:choose>
+                        <c:if test="${loginUser.userId eq 'admin'}">
+	                        <li>
+	                            <a href="memberList.do">회원관리</a>
+	                        </li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
         </div>
-        <div id="logo">로고 자리
+        <div id="logo">
+        	<a href="main.do" id="logo">APARTMENTOR</a>
         </div>
-        <div id="logout">
-            <a href="#">로그아웃</a>
-        </div>
-        <div id="changeInfor">
-            <a href="#">회원정보수정</a>
+        <div style="width: 290px;">
+	        <div id="logout">
+	            <a href="logout.do">로그아웃</a>
+	        </div>
+	        <div id="changeInfor">
+		        <button data-toggle="modal" data-target="#myModal4" class="modal1">
+		           	 회원정보수정
+		        </button> 
+	        </div>
+	        <div id="memberInfo">
+	        	<p>${loginUser.userName} 님</p>
+	        </div>
+    	</div>
+    </div>
+    
+    
+    
+    
+    <!-- 회원가입 모달 -->
+    <div class="modal" id="myModal4">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Head -->
+                <div class="modal-header">
+                    <h2>회원가입</h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Body -->
+                <form action="update.me" method="post">
+                    <div class="modal-body">
+                        <b>아이디 : </b>
+                        <div class="modal-input">
+                            <input type="text" id="addId" name="userId" oninput="checkId();" required readonly  value="${loginUser.userId}">
+                        </div>
+                        <p id="p1">영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
+
+                        <b>비밀번호 : </b>
+                        <div class="modal-input">
+                            <input type="password" id="addPwd" name="userPwd" oninput="checkPwd();" required >
+                        </div>
+                        <p id="p2">6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.</p>
+                        
+                        <b>비밀번호 확인 : </b>
+                        <div class="modal-input">
+                            <input type="password" id="rePwd1" oninput="ReconfirmPwd1()" required>
+                        </div>
+                        <p id="p3">비밀번호를 일치하게 입력해주세요.</p>
+                        
+                        <b>이름 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addName" name="userName"  oninput="checkName()" required readonly value="${loginUser.userName}">
+                        </div>
+                        <p id="p4">한글이름으로 입력하세요.</p>
+
+                        <b>생년월일 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addBirthday" name="birthday"  oninput="checkBirth()" required readonly value="${loginUser.birthday}">
+                        </div>
+                        <p id="p5">6자리 숫자로 입력하세요.</p>
+
+                        <b>휴대폰 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required value="${loginUser.phone}">
+                        </div>
+                        <p id="p6">-을 제외한 11자리 숫자로 입력하세요.</p>
+
+                        <b>이메일 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required value="${loginUser.email}">
+                        </div>
+                        <p id="p7">예시와 같은 형식으로 입력하세요.</p>
+                        
+                        <b>동 </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addAptNo1" name="aptNo1" oninput="checkAptNo1()" required readonly value="${loginUser.aptNo}">
+                        </div>
+                        <p id="p8-1">주소변경시 관리사무소에 문의해주세요.</p>
+                        <b>호수 : </b>
+                        <div class="modal-input">
+                        	<input type="text" id="addAptNo2" name="aptNo2" oninput="checkAptNo2()" required readonly value="${loginUser.aptNo}">
+                        </div>
+                        <p id="p8-2">주소변경시 관리사무소에 문의해주세요.</p>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                       <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
+                        <button type="submit" id="insertMember"class="btn submit" disabled>가입신청</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
+	<script>
+		/* 비밀번호 유효성 검사 */
+		function checkPwd() {
+			let p2 = $('#p2');
+			let addPwd = $('#addPwd').val();
+			let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
+			if(!regExpPwd.test(addPwd)){
+				 p2.attr('style','color:red;');
+				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+				 $('#insertMember').attr('disabled',true);
+			}
+			else {
+				p2.attr('style','color:#32CD32;');
+				p2.text('사용가능한 비밀번호 입니다.')
+				$('#insertMember').attr('disabled',false);
+			}
+		}
+		
+	 	/* 비밀번호 중복 체크 */
+		function ReconfirmPwd1() {
+			let addPwd = $('#addPwd').val(); 
+			let rePwd1 = $('#rePwd1').val();
+			let p3 = $('#p3');
+			if(addPwd != rePwd1){
+				p3.attr('style','color:red;');
+				p3.text('비밀번호를 일치하게 입력해주세요.')
+				$('#insertMember').attr('disabled',true);
+			}
+			else {
+				p3.attr('style','color:#32CD32;');
+				p3.text('비밀번호가 일치합니다.')
+				$('#insertMember').attr('disabled',false);
+			} 
+		}
+		/* 휴대폰 체크 형식 */
+	 	function checkPhone() {
+	 		let addPhone = $('#addPhone').val();
+	 		let p6 = $('#p6');
+	 		let regExpPhone = /^[\d]{11}$/;
+	 		if(!regExpPhone.test(addPhone)){
+	 			p6.attr('style','color:red;');
+				p6.text('-을 제외한 11자리 숫자로 입력하세요.')
+				$('#insertMember').attr('disabled',true);
+			} 
+	 		else {
+				p6.attr('style','color:#32CD32;');
+				p6.text('올바른  형식 입니다.');	
+				$('#insertMember').attr('disabled',false);
+			}
+		}
+	 	
+	 	/* 이메일 체크 형식  */
+	 	function checkEmail() {
+	 		let addEmail = $('#addEmail').val();
+	 		let p7 = $('#p7');
+	 		let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	 		
+	 		if(!regExpEmail.test(addEmail)){
+	 			p7.attr('style','color:red;');
+				p7.text('올바른 형식의 이메일이 아닙니다.')
+				$('#insertMember').attr('disabled',true);
+			} 
+	 		else {
+				p7.attr('style','color:#32CD32;');
+				p7.text('올바른  형식 입니다.');	
+				$('#insertMember').attr('disabled',false);
+			}
+		}
+	</script>
 </body>
 </html>
