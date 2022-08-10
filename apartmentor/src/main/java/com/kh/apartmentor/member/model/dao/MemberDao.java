@@ -18,8 +18,8 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember",m);	
 	}
 
-	public Member findId(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.selectOne("memberMapper.findId",m);					
+	public Member selectId(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.selectId",m);					
 	}
 
 	public Member findPwd(SqlSessionTemplate sqlSession, Member m) {

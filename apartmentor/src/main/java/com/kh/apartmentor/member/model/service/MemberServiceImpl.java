@@ -30,8 +30,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member findId(Member m) {
-		return memberDao.findId(sqlSession, m);
+	public Member selectId(Member m) {
+		return memberDao.selectId(sqlSession, m);
 	}
 
 	@Override

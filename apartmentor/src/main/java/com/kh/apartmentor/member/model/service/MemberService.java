@@ -13,7 +13,7 @@ public interface MemberService {
 	int insertMember(Member m);
 	
 	// 아이디 찾기
-	Member findId(Member m);
+	Member selectId(Member m);
 	// 비밀번호 확인작업
 	Member findPwd(Member m);
 	// 비밀번호 변경

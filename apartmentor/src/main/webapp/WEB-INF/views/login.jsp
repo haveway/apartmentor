@@ -225,7 +225,7 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember" class="btn submit" onchange="okBtn()" disabled>가입신청</button>
+                        <button type="submit" id="insertMember" class="btn submit" disabled>가입신청</button>
                     </div>
                 </form>
             </div>
@@ -246,38 +246,42 @@
 	            <div class="modal-body">
 	                <b>이름 : </b>
 	                <div class="modal-input">
-	                	<input type="text" id="nameId" placeholder="ex)홍길동" required>
+	                	<input type="text" id="nameId" placeholder="ex)홍길동" required oninput="findId1()">
 	                </div>
-	                <p>한글이름으로 입력하세요.</p>
+	                <p id="p11">한글이름으로 입력하세요.</p>
+	                
+                    <b>이메일 : </b>
+                    <div class="modal-input">
+                    	<input type="text" id="emailId" placeholder="ex)apartmento@naver.com" required oninput="findId2()" >
+                    </div>
+                    <p id="p12">예시와 같은 형식으로 입력하세요.</p>
 	
 	                <b>생년월일 : </b>
 	                <div class="modal-input">
-	                	<input type="text" id="birthdayId" placeholder="ex)901201" required>
+	                	<input type="text" id="birthdayId" placeholder="ex)901201" required oninput="findId3()">
 	                </div>
-	                <p>6자리 숫자로 입력하세요.</p>
+	                <p id="p13">6자리 숫자로 입력하세요.</p>
 	
                    <b>동 </b>
                    <div class="modal-input">
-                 		<input type="text" id="idAptNo1" name="aptNo1" placeholder="ex)101" required>
+                 		<input type="text" id="aptNo1Id" name="aptNo1" placeholder="ex)101" required oninput="findId4_1()">
                    </div>
-                   <p id="p8-1">숫자만 입력해 주세요.</p>
+                   <p id="p14-1">숫자만 입력해 주세요.</p>
                    <b>호수 : </b>
                    <div class="modal-input">
-                   		<input type="text" id="idAptNo2" name="aptNo2" placeholder="ex)1001" required>
+                   		<input type="text" id="aptNo2Id" name="aptNo2" placeholder="ex)1001" required oninput="findId4_2()">
                    </div>
-                   <p id="p8-2">숫자만 입력해 주세요.</p>
+                   <p id="p14-2">숫자만 입력해 주세요.</p>
 	               <br>
 	            </div>
 	            
 	            <!-- Footer -->
 	            <div class="modal-footer">
-	                <button class="btn submit" onclick="findId()">찾기</button>
+	                <button class="btn submit" id="selectId"onclick="selectId()">찾기</button>
 	            </div>
             </div>
         </div>
     </div>
-    
-
 
     <!-- 비밀번호 찾기 모달 -->
     <div class="modal" id="myModal3">
@@ -330,15 +334,278 @@
 	</div>
     
     <script>
+
+	
+	   
+	/* 회원 가입 */
+	
+	/* 중복체크,유효성검사  */
+	function checkId() {
+		let p1 = $('#p1');
+		let addId = $('#addId').val();
+		$.ajax({
+			url : 'checkId.me',
+			data : {
+				userId : addId
+			},
+			success : function(result) {
+				if(result == 0){
+					p1.attr('style','color:red;');
+					p1.text('중복되는 아이디입니다');
+					$('#insertMember').attr('disabled',true);
+				}
+				else {
+					 let regExpId = /^\w{4,8}$/;
+					 if(!regExpId.test(addId)){ // 조건에 안맞음
+						 p1.attr('style','color:red;');
+						 p1.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
+						 $('#insertMember').attr('disabled',true);
+					 } 
+					 else { //조건맞음
+						p1.attr('style','color:#32CD32;');
+						p1.text('멋진 아이디네요!');
+						$('#insertMember').attr('disabled',false);
+					 }
+				}
+			},
+			error : function(result){
+				console.log('실패')
+			}
+		})
+	}
+	
+	/* 비밀번호 유효성 검사 */
+	function checkPwd() {
+		let p2 = $('#p2');
+		let addPwd = $('#addPwd').val();
+		let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
+		if(!regExpPwd.test(addPwd)){
+			 p2.attr('style','color:red;');
+			 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+			 $('#insertMember').attr('disabled',true);
+		}
+		else {
+			p2.attr('style','color:#32CD32;');
+			p2.text('사용가능한 비밀번호 입니다.')
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+	
+ 	/* 비밀번호 중복 체크 */
+	function ReconfirmPwd1() {
+		let addPwd = $('#addPwd').val(); 
+		let rePwd1 = $('#rePwd1').val();
+		let p3 = $('#p3');
+		if(addPwd != rePwd1){
+			p3.attr('style','color:red;');
+			p3.text('비밀번호를 일치하게 입력해주세요.')
+			$('#insertMember').attr('disabled',true);
+		}
+		else {
+			p3.attr('style','color:#32CD32;');
+			p3.text('비밀번호가 일치합니다.')
+			$('#insertMember').attr('disabled',false);
+		} 
+	}
+ 	
+ 	/* 이름 체크 형식 */
+ 	function checkName() {
+		let addName = $('#addName').val(); 
+		let p4 = $('#p4');
+		let regExpName = /^[가-힣]{2,}$/;
+		if(!regExpName.test(addName)){
+			p4.attr('style','color:red;');
+			p4.text('올바른 형식의 이름을 입력하세요.(한글만 입력 가능)')
+			$('#insertMember').attr('disabled',true);
+		}
+		else {
+			p4.attr('style','color:#32CD32;');
+			p4.text('멋진 이름이네요!');	 
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+ 	
+ 	/* 생년월일 체크 형식*/
+ 	function checkBirth() {
+ 		let addBirthday = $('#addBirthday').val();
+ 		let p5 = $('#p5');
+ 		let regExpBirth = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+ 		if (!regExpBirth.test(addBirthday)) {
+ 			p5.attr('style','color:red;');
+			p5.text('6자리 숫자로 입력하세요.')
+			$('#insertMember').attr('disabled',true);
+		} else {
+			p5.attr('style','color:#32CD32;');
+			p5.text('올바른  형식 입니다.');	
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+ 	
+ 	/* 휴대폰 체크 형식 */
+ 	function checkPhone() {
+ 		let addPhone = $('#addPhone').val();
+ 		let p6 = $('#p6');
+ 		let regExpPhone = /^[\d]{11}$/;
+ 		if(!regExpPhone.test(addPhone)){
+ 			p6.attr('style','color:red;');
+			p6.text('-을 제외한 11자리 숫자로 입력하세요.')
+			$('#insertMember').attr('disabled',true);
+		} 
+ 		else {
+			p6.attr('style','color:#32CD32;');
+			p6.text('올바른  형식 입니다.');	
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+ 	
+ 	/* 이메일 체크 형식  */
+ 	function checkEmail() {
+ 		let addEmail = $('#addEmail').val();
+ 		let p7 = $('#p7');
+ 		let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+ 		
+ 		if(!regExpEmail.test(addEmail)){
+ 			p7.attr('style','color:red;');
+			p7.text('올바른 형식의 이메일이 아닙니다.')
+			$('#insertMember').attr('disabled',true);
+		} 
+ 		else {
+			p7.attr('style','color:#32CD32;');
+			p7.text('올바른  형식 입니다.');	
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+ 	
+ 	/* 동,호수 체크 형식  */
+ 	function checkAptNo1() {
+ 		let addAptNo1 = $('#addAptNo1').val();
+ 		let p8 = $('#p8-1');
+ 		let regExpAptNo =  /^\d{3,4}$/;
+ 		if(!regExpAptNo.test(addAptNo1)){
+ 			p8.attr('style','color:red;');
+			p8.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
+			$('#insertMember').attr('disabled',true);
+		} 
+ 		else {
+			p8.attr('style','color:#32CD32;');
+			p8.text('올바른  형식 입니다.');	
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+ 	function checkAptNo2() {
+ 		let addAptNo2 = $('#addAptNo2').val();
+ 		let p8 = $('#p8-2');
+ 		let regExpAptNo =  /^\d{3,4}$/;
+ 		if(!regExpAptNo.test(addAptNo2)){
+ 			p8.attr('style','color:red;');
+			p8.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
+			$('#insertMember').attr('disabled',true);
+		} 
+ 		else {
+			p8.attr('style','color:#32CD32;');
+			p8.text('올바른  형식 입니다.');	
+			$('#insertMember').attr('disabled',false);
+		}
+	}
+ 	
+ 	
 	/* 아이디 찾기 */
-    function findId() {
+
+    /* 아이디 찾기 이름  */
+    function findId1() {
+ 		let nameId = $('#nameId').val();
+ 		let p11 = $('#p11');
+ 		let regExpName = /^[가-힣]{2,}$/;
+
+ 		if (!regExpName.test(nameId)) {
+ 			p11.attr('style','color:red;');
+ 			p11.text('한글이름으로 입력하세요.')
+			$('#selectId').attr('disabled',true);
+		} else {
+			p11.attr('style','color:#32CD32;');
+			p11.text('올바른  형식 입니다.');	
+			$('#selectId').attr('disabled',false);
+		}
+	}
+	
+    /* 아이디 찾기 이메일  */
+    function findId2() {
+    	let emailId = $('#emailId').val();
+    	let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    	let p12 = $('#p12');
+    	
+    	if (!regExpEmail.test(emailId)) {
+ 			p12.attr('style','color:red;');
+ 			p12.text('예시와 같은 형식으로 입력하세요.')
+			$('#selectId').attr('disabled',true);
+		} else {
+			p12.attr('style','color:#32CD32;');
+			p12.text('올바른  형식 입니다.');	
+			$('#selectId').attr('disabled',false);
+		}
+    }
+    
+    /* 아이디 찾기 생년월일  */
+    function findId3() {
+    	let birthdayId = $('#birthdayId').val();
+    	let p13 = $('#p13');
+    	let regExpBirth = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    	
+ 		if (!regExpBirth.test(birthdayId)) {
+ 			p13.attr('style','color:red;');
+ 			 p13.text('6자리 숫자로 입력하세요.') 
+			$('#selectId').attr('disabled',true);
+		} else {
+			p13.attr('style','color:#32CD32;');
+			p13.text('올바른  형식 입니다.');	
+			$('#selectId').attr('disabled',false);
+		}
+    }
+    
+    /* 아이디 찾기 동  */
+    function findId4_1() {
+    	let aptNo1Id = $('#aptNo1Id').val();
+ 		let p141 = $('#p14-1');
+ 		let regExpAptNo =  /^\d{3,4}$/;
+ 		
+ 		if (!regExpAptNo.test(aptNo1Id)) {
+ 			p141.attr('style','color:red;');
+ 			p141.text('숫자만 입력해 주세요.')
+			$('#selectId').attr('disabled',true);
+		} else {
+			p141.attr('style','color:#32CD32;');
+			p141.text('올바른  형식 입니다.');	
+			$('#selectId').attr('disabled',false);
+		}
+    }
+    
+    /* 아이디 찾기 호  */
+    function findId4_2() {
+ 		let aptNo2Id = $('#aptNo2Id').val();
+ 		let p142 = $('#p14-2');
+ 		let regExpAptNo =  /^\d{3,4}$/;;
+ 		
+ 		if (!regExpAptNo.test(aptNo2Id)) {
+ 			p142.attr('style','color:red;');
+ 			p142.text('숫자만 입력해 주세요.')
+			$('#selectId').attr('disabled',true);
+		} else {
+			p142.attr('style','color:#32CD32;');
+			p142.text('올바른  형식 입니다.');	
+			$('#selectId').attr('disabled',false);
+		}
+    }
+    
+ 	/* 아이디 찾기 버튼 ajax */
+    function selectId() {
     	$.ajax({
-    		url : 'findId.me',
+    		url : 'selectId.me',
     		data : {
     			name : $('#nameId').val(),
+    			email : $('#emailId').val(),
     			birthday : $('#birthdayId').val(),
-    			aptNo1 : $('#idAptNo1').val(),
-    			aptNo2 : $('#idAptNo2').val()
+    			aptNo1 : $('#aptNo1Id').val(),
+    			aptNo2 : $('#aptNo2Id').val()
     		},
     		success : function(result){
     			if(result == null){
@@ -353,7 +620,11 @@
 			}	
     	})
 	}
-	/* 비밀번호 찾기 */
+ 	
+    /* 비밀번호 찾기 */
+    
+    
+    /* 비밀번호 변경 모달 */
     function findPwd() {
     	$.ajax({
     		url : 'findPwd.me',
@@ -398,180 +669,7 @@
 			}		
     	})
 	}
-   
-	/* 중복체크,유효성검사  */
-	var checkIdBtn
-	function checkId() {
-		let p1 = $('#p1');
-		let addId = $('#addId').val();
-		$.ajax({
-			url : 'checkId.me',
-			data : {
-				userId : addId
-			},
-			success : function(result) {
-				if(result == 0){
-					p1.attr('style','color:red;');
-					p1.text('중복되는 아이디입니다');
-					$('#insertMember').attr('disabled',true);
-				}
-				else {
-					 let regExpId = /^\w{4,8}$/;
-					 if(!regExpId.test(addId)){ // 조건에 안맞음
-						 p1.attr('style','color:red;');
-						 p1.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
-						 $('#insertMember').attr('disabled',true);
-					 } 
-					 else { //조건맞음
-						p1.attr('style','color:#32CD32;');
-						p1.text('멋진 아이디네요!');
-						$('#insertMember').attr('disabled',false);
-					 }
-				}
-			},
-			error : function(result){
-				console.log('실패')
-			}
-		})
-	}
-	
-	/* 비밀번호 유효성 검사 */
-	var checkPwd1Btn
-	function checkPwd() {
-		let p2 = $('#p2');
-		let addPwd = $('#addPwd').val();
-		let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
-		if(!regExpPwd.test(addPwd)){
-			 p2.attr('style','color:red;');
-			 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
-		}
-		else {
-			p2.attr('style','color:#32CD32;');
-			p2.text('사용가능한 비밀번호 입니다.')
-			checkPwdBtn = 'Y'
-		}
-	}
- 	/* 비밀번호 중복 체크 */
- 	var ReconfirmPwd1Btn
-	function ReconfirmPwd1() {
-		let addPwd = $('#addPwd').val(); 
-		let rePwd1 = $('#rePwd1').val();
-		let p3 = $('#p3');
-		if(addPwd != rePwd1){
-			p3.attr('style','color:red;');
-			p3.text('비밀번호를 일치하게 입력해주세요.')
-		}
-		else {
-			p3.attr('style','color:#32CD32;');
-			p3.text('비밀번호가 일치합니다.')
-			ReconfirmPwd1Btn = 'Y'
-		} 
-	}
- 	/* 이름 체크 형식 */
- 	var checkNameBtn
- 	function checkName() {
-		let addName = $('#addName').val(); 
-		let p4 = $('#p4');
-		let regExpName = /^[가-힣]{2,}$/;
-		if(!regExpName.test(addName)){
-			p4.attr('style','color:red;');
-			p4.text('올바른 형식의 이름을 입력하세요.(한글만 입력 가능)')
-		}
-		else {
-			p4.attr('style','color:#32CD32;');
-			p4.text('멋진 이름이네요!');	 
-			checkNameBtn = 'Y';
-		}
-	}
- 	/* 생년월일 체크 형식*/
- 	var checkBirthBtn
- 	function checkBirth() {
- 		let addBirthday = $('#addBirthday').val();
- 		let p5 = $('#p5');
- 		let regExpBirth = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
- 		if (!regExpBirth.test(addBirthday)) {
- 			p5.attr('style','color:red;');
-			p5.text('6자리 숫자로 입력하세요.')
-		} else {
-			p5.attr('style','color:#32CD32;');
-			p5.text('올바른  형식 입니다.');	
-			checkBirthBtn = 'Y';
-		}
-	}
- 	/* 휴대폰 체크 형식 */
- 	var checkPhoneBtn
- 	function checkPhone() {
- 		let addPhone = $('#addPhone').val();
- 		let p6 = $('#p6');
- 		let regExpPhone = /^[\d]{11}$/;
- 		if(!regExpPhone.test(addPhone)){
- 			p6.attr('style','color:red;');
-			p6.text('-을 제외한 11자리 숫자로 입력하세요.')
-		} 
- 		else {
-			p6.attr('style','color:#32CD32;');
-			p6.text('올바른  형식 입니다.');	
-			checkPhoneBtn = 'Y';
-		}
-	}
- 	/* 이메일 체크 형식  */
- 	var checkEmailBtn
- 	function checkEmail() {
- 		let addEmail = $('#addEmail').val();
- 		let p7 = $('#p7');
- 		let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
- 		
- 		if(!regExpEmail.test(addEmail)){
- 			p7.attr('style','color:red;');
-			p7.text('올바른 형식의 이메일이 아닙니다.')
-		} 
- 		else {
-			p7.attr('style','color:#32CD32;');
-			p7.text('올바른  형식 입니다.');	
-			checkEmailBtn = 'Y';
-		}
-	}
- 	/* 동,호수 체크 형식  */
- 	var checkAptNo1Btn
- 	function checkAptNo1() {
- 		let addAptNo1 = $('#addAptNo1').val();
- 		let p8 = $('#p8-1');
- 		let regExpAptNo =  /^\d{3,4}$/;
- 		if(!regExpAptNo.test(addAptNo1)){
- 			p8.attr('style','color:red;');
-			p8.text('예시를 참고하여 입력해주세요.(공백 금지)')
-		} 
- 		else {
-			p8.attr('style','color:#32CD32;');
-			p8.text('올바른  형식 입니다.');	
-			checkAptNo1Btn = 'Y';
-		}
-	}
- 	var checkAptNo2Btn 
- 	function checkAptNo2() {
- 		let addAptNo2 = $('#addAptNo2').val();
- 		let p8 = $('#p8-2');
- 		let regExpAptNo =  /^\d{3,4}$/;
- 		if(!regExpAptNo.test(addAptNo2)){
- 			p8.attr('style','color:red;');
-			p8.text('예시를 참고하여 입력해주세요.(공백 금지)')
-		} 
- 		else {
-			p8.attr('style','color:#32CD32;');
-			p8.text('올바른  형식 입니다.');	
-			checkAptNo2Btn = 'Y';
-		}
-	}
  	
- 	function okBtn() {
-		let id = $('#xxxx').val();
-		console.log(id);
-		if(id = 'Y'){
-			$('#insertMember').attr('disabled','false');
-		}
-	}
- 	
- 	var updatePwd111
 	/* 비밀번호변경 유효성 검사 */
 	function checkPwd2() {
 		let p9 = $('#p9');
@@ -584,10 +682,8 @@
 		else {
 			p9.attr('style','color:#32CD32;');
 			p9.text('사용가능한 비밀번호 입니다.')
-			 updatePwd111 = "Y"
 		}
 	}
-	var reUpdatePwd111
  	/* 비밀번호변경 중복 체크 */
 	function rePwd2() {
 		let updatePwd = $('#updatePwd1').val(); 
@@ -600,16 +696,11 @@
 		else {
 			p10.attr('style','color:#32CD32;');
 			p10.text('비밀번호가 일치합니다.')
-			reUpdatePwd111 = "Y"
 		} 
 	}
- 	console.log(reUpdatePwd111);
- 	  /* if(updatePwd111 = Y && reUpdatePwd111 = Y){
- 		$('#btn1').removeAttr("disabled")
- 	}   */
- 	if(updatePwd111 = "Y"){
- 		$('#btn1').removeAttr("disabled")
- 	}
+
+ 	
+ 	
 
 </script>
 

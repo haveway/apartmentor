@@ -68,17 +68,18 @@ public class MemberController {
 		}
 	}
 	@ResponseBody
-	@RequestMapping(value = "findId.me", produces="application/json; charset=UTF-8")
-	public String findId(String name,String birthday, String aptNo1, String aptNo2) {
+	@RequestMapping(value = "selectId.me", produces="application/json; charset=UTF-8")
+	public String findId(String name,String birthday,String email, String aptNo1, String aptNo2) {
 
 		Member m = new Member();
 		String aptNo = aptNo1 + "동" + aptNo2 + "호";
 		m.setUserName(name);
+		m.setEmail(email);
 		m.setBirthday(birthday);
 		m.setAptNo(aptNo);
 		
 		System.out.println(m);
-		Member userId = memberService.findId(m);
+		Member userId = memberService.selectId(m);
 		return new Gson().toJson(userId);
 		
 	}
