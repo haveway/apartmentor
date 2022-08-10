@@ -31,5 +31,6 @@ public class Reserve {
 	private String status;
 	private Date createDate;
 	private String startDay;
+	private String userName;
 	
 }

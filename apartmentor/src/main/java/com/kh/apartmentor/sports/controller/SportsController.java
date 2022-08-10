@@ -18,11 +18,13 @@ public class SportsController {
 	@Autowired
 	private SportsService sportsService;
 
+	// 골프 예약하는 페이지 띄우기
 	@RequestMapping("golf.sp")
-	public String reserveGolf() {
+	public String Golf() {
 		return "sports/golf";
 	}
 	
+	// 예약하기 버튼을 누르기전에 같은시간, 같은날짜에 예약이 있으면 예약 안되구 없으면 예약하게 하는 코드
 	@ResponseBody
 	@RequestMapping("reserveGolfSeat.sp")
 	public String insertGolfSeat(Reserve r) {
@@ -37,12 +39,10 @@ public class SportsController {
 		}
 	}
 	
-	
+	// 골프 검색하기 눌렀을때 예약할 수 있는지 없는지 버튼으로 확인 하는 코드
 	@ResponseBody
 	@RequestMapping(value="golfSeatList.sp", produces="application/json; charset=UTF-8")
 	public String selectGolfSeatList(Reserve r) {
-		//System.out.println(r.getStartDate());
-		//System.out.println(r.getStartDay());
 		return new Gson().toJson(sportsService.selectGolfSeatList(r));
 	}
 	
@@ -53,19 +53,32 @@ public class SportsController {
 	
 	
 	
-	
+	// 미니짐 화면 띄우기
 	@RequestMapping("miniGym.sp")
-	public String reserve2() {
-		
+	public String MiniGym() {
 		return "sports/miniGym";
 	}
 	
 	
+	// 미니짐 시간(예약 완료, 예약가능) 띄워주는 코드
+	@ResponseBody
+	@RequestMapping(value="miniGymTimeList.sp", produces="application/json; charset=UTF-8")
+	public String selectMiniGymTimeList(Reserve r) {
+		return new Gson().toJson(sportsService.selectMiniGymTimeList(r));
+	}
 	
-	
-	
-	
-	
+	// 예약하기 버튼을 누르기전에 같은시간, 같은날짜에 예약이 있으면 예약 안되구 없으면 예약하게 하는 코드
+	@ResponseBody
+	@RequestMapping("reserveMiniGym.sp")
+	public String insertMiniGym(Reserve r) {
+		//System.out.println(r);
+		ArrayList<Reserve> list = sportsService.searchDate(r);
+		if(!list.isEmpty()) {
+			return "fail";
+		} else {
+			return sportsService.insertMiniGym(r) > 0 ? "success" : "fail";
+		}
+	}
 	
 	
 	

@@ -19,15 +19,22 @@
 		margin-top: 30px;
     }
     
-   	.btn-div a{
-		margin: 0 90px;
+   	.btn-div{
+		display : flex;
+		flex-direction: row;
+		justify-content: space-around;
 	}
 	
-	.reserve_miniGym{
+	.reserve_golf{
 		text-align: center;
 		font-size: 22px;
 		width: 300px;
 		height: 50px;
+	}
+	
+	#golf-img{
+		display : flex;
+		justify-content: center;
 	}
 	
 </style>
@@ -37,7 +44,9 @@
 	<jsp:include page="../common/header.jsp" />
 	<div class="content">
 	
-		<div>사진 1, 사진2</div>
+		<div id="golf-img">
+			<label><img width="790px" height="300px" src="resources/img/sports/golf.png"></label>
+		</div>
 	
 		<br>
 		
@@ -48,11 +57,11 @@
 		</div>
 		
 		<br><br>
-			<div align="center" style="width: 1200px; height: 80px; border: 2px solid pink; padding: 10px;">
-				<label>예약 날짜 <input class="reserve_miniGym" id="datepicker" name="date" type="text" placeholder="날짜 선택" readonly></label>
-				<label>예약 시간 <input class="reserve_miniGym" id="timepicker" name="time" type="text" placeholder="시간 선택" readonly></label>
-				<label><button class="btn btn-primary" id="btn" onclick="selectGolfSeatList();">검색하기</button></label>
-			</div>
+		<div align="center" style="width: 1200px; height: 80px; border: 2px solid pink; padding: 10px;">
+			<label>예약 날짜 <input class="reserve_golf" id="datepicker" name="date" type="text" placeholder="날짜 선택" readonly required></label>
+			<label>예약 시간 <input class="reserve_golf" id="timepicker" name="time" type="text" placeholder="시간 선택" readonly required></label>
+			<label><button class="btn btn-primary" id="btn" onclick="selectGolfSeatList();">검색하기</button></label>
+		</div>
 		<br><br>
 		
 		
@@ -101,19 +110,9 @@
    	   			 <tr>
 			</tbody>
 		</table>
-		
-		
-		
-		
-		
-		
-		
-
-
 
 <br><br><br><br><br><br><br><br><br>
 	</div>
-
 	
     <script>
     		// 버튼 속성 값 줘서 좌석 예약하게 하는 쿼리
@@ -125,8 +124,7 @@
 	    					startDay : $("#datepicker").val(),
 	    					startDate : $("#timepicker").val(),
 	    					seatNo : click_value,
-	    					// 일단 유저NO을 2로 줌
-	    					userNo : 2
+	    					userNo : ${loginUser.userNo}
 	    				},
 	 					success : function(status){
 	 						if(status == "success"){
@@ -147,111 +145,89 @@
 	 						}
 	 					},
 	 					error : function(){
-	 						console.log("예약실패");
+	 						swal({
+ 								title : "예약실패했습니다.",
+ 							    	icon  : "error",
+ 							    	closeOnClickOutside : false
+ 							})
 	 					}
 	    			}) 
     		}
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	// 날짜와 시간을 조회하는 버튼 기능(검색하기 버튼 사용했을때)
     	function selectGolfSeatList(){
-    			$.ajax({
-    				url : "golfSeatList.sp",
-    				data : {
-    					startDay : $("#datepicker").val(),
-    					startDate : $("#timepicker").val()
-    				},
- 					success : function(r){
-						// 예약버튼들을 다 보이게 display=block으로 바꿈!
- 						var reserve_golf = document.getElementById("reserve_golf");
- 						reserve_golf.style.display='block';
- 						console.log('#seat_1');
- 						
- 						// 검색후 또 검색을 했을때를 위해 다시 예약하기 단어를 넣고, disabled 속성을 지워준다.
- 						for(let i = 1; i <= 5; i++){
-	 						$('#seat_' + [i]).text("예약하기");
-	 						$('#seat_' + [i]).attr("disabled",false);
-	 						$('#seat_' + [i]).removeAttr("style")
- 						}
- 						
-   			 			// 검색하여 디비에서 받아온 데이터로 seatNo가 있으면 예약완료로 바꾸고, disabled 시킴
-   			 			for(let i in r){
- 				 			if(r[i].seatNo == 1){
-								$('#seat_1').text("예약완료");
-								$('#seat_1').attr("disabled","true");
-								$("#seat_1").css("background-color","gray");
-								$("#seat_1").css("color","white");
- 				 			}
- 				 			if(r[i].seatNo == 2){
-								$('#seat_2').text("예약완료");
-								$('#seat_2').attr("disabled","true");
-								$("#seat_2").css("background-color","gray");
-								$("#seat_2").css("color","white");
- 				 			}
- 				 			if(r[i].seatNo == 3){
-								$('#seat_3').text("예약완료");
-								$('#seat_3').attr("disabled","true");
-								$("#seat_3").css("background-color","gray");
-								$("#seat_3").css("color","white");
- 				 			}
- 				 			if(r[i].seatNo == 4){
-								$('#seat_4').text("예약완료");
-								$('#seat_4').attr("disabled","true");
-								$("#seat_4").css("background-color","gray");
-								$("#seat_4").css("color","white");
- 				 			}
- 				 			if(r[i].seatNo == 5){
-								$('#seat_5').text("예약완료");
-								$('#seat_5').attr("disabled","true");
-								$("#seat_5").css("background-color","gray");
-								$("#seat_5").css("color","white");
- 				 			}
-   			 			}
- 					},
- 					error : function(){
- 						console.log("좌석을 다시 입력해주세요.")
- 					}
-    			})
-    		}
-    	
-    	
-    	
-    	
-    	
+    		
+				if($("#datepicker").val() == "" || $("#timepicker").val() == ""){
+					swal({
+						title : "날짜랑, 시간을 정해주세요!",
+					    	icon  : "error",
+					    	closeOnClickOutside : false
+					})
+				}
+				else{
+	    			$.ajax({
+	    				url : "golfSeatList.sp",
+	    				data : {
+	    					startDay : $("#datepicker").val(),
+	    					startDate : $("#timepicker").val()
+	    				},
+	 					success : function(r){
+							// 예약버튼들을 다 보이게 display=block으로 바꿈!
+	 						var reserve_golf = document.getElementById("reserve_golf");
+	 						reserve_golf.style.display='block';
+	 						
+	 						// 검색후 또 검색을 했을때를 위해 다시 예약하기 단어를 넣고, disabled 속성을 지워준다.
+	 						for(let i = 1; i <= 5; i++){
+		 						$('#seat_' + [i]).text("예약하기");
+		 						$('#seat_' + [i]).attr("disabled",false);
+		 						$('#seat_' + [i]).removeAttr("style")
+	 						}
+	 						
+	   			 			// 검색하여 디비에서 받아온 데이터로 seatNo가 있으면 예약완료로 바꾸고, disabled 시킴
+	   			 			for(let i in r){
+	 				 			if(r[i].seatNo == 1){
+									$('#seat_1').text("예약완료");
+									$('#seat_1').attr("disabled","true");
+									$("#seat_1").css("background-color","gray");
+									$("#seat_1").css("color","white");
+	 				 			}
+	 				 			if(r[i].seatNo == 2){
+									$('#seat_2').text("예약완료");
+									$('#seat_2').attr("disabled","true");
+									$("#seat_2").css("background-color","gray");
+									$("#seat_2").css("color","white");
+	 				 			}
+	 				 			if(r[i].seatNo == 3){
+									$('#seat_3').text("예약완료");
+									$('#seat_3').attr("disabled","true");
+									$("#seat_3").css("background-color","gray");
+									$("#seat_3").css("color","white");
+	 				 			}
+	 				 			if(r[i].seatNo == 4){
+									$('#seat_4').text("예약완료");
+									$('#seat_4').attr("disabled","true");
+									$("#seat_4").css("background-color","gray");
+									$("#seat_4").css("color","white");
+	 				 			}
+	 				 			if(r[i].seatNo == 5){
+									$('#seat_5').text("예약완료");
+									$('#seat_5').attr("disabled","true");
+									$("#seat_5").css("background-color","gray");
+									$("#seat_5").css("color","white");
+	 				 			}
+	   			 			}
+	 					},
+	 					error : function(){
+	 						swal({
+									title : "오류입니다. 관리자에게 문의하세요",
+								    	icon  : "error",
+								    	closeOnClickOutside : false
+								})
+	 					}
+	    			})
+	    		}
+  			}
     </script>	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	<script type="text/javascript">
@@ -277,10 +253,6 @@
 	    });
 	  });
 	
-	
-	
-	
-	
 	$(function() {
 	    $('#timepicker').timepicker({
 		    timeFormat: 'HH:mm',
@@ -294,8 +266,9 @@
 	    });
 	});
 	</script>
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 

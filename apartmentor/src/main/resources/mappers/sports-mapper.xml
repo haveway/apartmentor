@@ -12,7 +12,29 @@
 		<result column="STATUS" property="status" />
 		<result column="CREATE_DATE" property="createDate" />
 		<result column="START_DAY" property="startDay" />
+		<result column="USER_NAME" property="userName" />
 	</resultMap>
+	
+	<!-- ************************************golf************************************** -->
+	
+	<select id="selectGolfSeatList" resultMap="sportsResultSet" >
+		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
+		FROM RESERVE R, MEMBER M
+		WHERE R.USER_NO = M.USER_NO
+		AND FACILITY = 'GF'
+		AND START_DAY = #{startDay}
+		AND START_DATE = #{startDate}
+	</select>
+	
+	<select id="searchTimeAndDate" resultMap="sportsResultSet">
+		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
+		FROM RESERVE R, MEMBER M
+		WHERE R.USER_NO = M.USER_NO
+		AND R.USER_NO = #{userNo}
+		AND FACILITY = 'GF'
+		AND START_DAY = #{startDay}
+		AND START_DATE = #{startDate}
+	</select>
 	
 	<insert id="insertGolfSeat" parameterType="reserve">
 		INSERT 
@@ -44,28 +66,42 @@
 	</insert>
 	
 	
-	<select id="searchTimeAndDate" resultMap="sportsResultSet">
+	<!-- ************************************MiniGym************************************** -->
+	
+	<select id="selectMiniGymTimeList" resultMap="sportsResultSet">
 		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
 		FROM RESERVE R, MEMBER M
 		WHERE R.USER_NO = M.USER_NO
-		AND R.USER_NO = 2
-		AND FACILITY = 'GF'
+		AND FACILITY = 'MG'
 		AND START_DAY = #{startDay}
-		AND START_DATE = #{startDate}
 	</select>
 	
-	
-	
-	<select id="selectGolfSeatList" resultMap="sportsResultSet" >
-		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
+	<select id="searchDate" resultMap="sportsResultSet">
+		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
 		FROM RESERVE R, MEMBER M
 		WHERE R.USER_NO = M.USER_NO
-		AND FACILITY = 'GF'
+		AND R.USER_NO = #{userNo}
+		AND FACILITY = 'MG'
 		AND START_DAY = #{startDay}
-		AND START_DATE = #{startDate}
 	</select>
 	
-	
-	
+	<insert id="insertMiniGym" parameterType="reserve">
+		INSERT INTO RESERVE
+		VALUES (SEQ_RNO.NEXTVAL, #{startDate}, null, 'MG', null, #{userNo}, 'Y', #{startDay}, SYSDATE)
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>
