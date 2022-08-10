@@ -25,5 +25,6 @@
 		<mapper resource="/mappers/study-mapper.xml" />
 		<mapper resource="/mappers/sports-mapper.xml" />
 		<mapper resource="/mappers/main-mapper.xml" />
+		<mapper resource="/mappers/notice-mapper.xml" />
 	</mappers>
 </configuration>
