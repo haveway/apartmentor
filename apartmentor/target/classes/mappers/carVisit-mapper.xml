@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="visitCarMapper">
 
+	
+	<select id="selectVisitCar" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM PARKING 
+		 WHERE CAR_NO = #{carNo}
+	</select>
 
 	<insert id="enrollVisitCar" parameterType="parking">
 		INSERT
@@ -28,7 +34,21 @@
 				)
 	</insert>
 	
-	<update id="SetDayVisitCar">
+	<update id="updateVisitCar" parameterType="parking">
+		UPDATE 
+			   PARKING
+  		   SET 
+  		       CAR_PHONE = #{carPhone},
+     	       STATUS = 'N',
+  	           CAR_CATEGORY = #{carCategory},
+  	           CAR_DATE = #{carDate},
+   		       CAR_PURPOSE = #{carPurpose},
+   		       USER_NO = #{userNo}
+		 WHERE 
+		       CAR_NO = #{carNo}
+	</update>
+	
+	<update id="setDayVisitCar">
 		UPDATE PARKING
 	  	   SET STATUS = CASE
 	   	  WHEN CAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')

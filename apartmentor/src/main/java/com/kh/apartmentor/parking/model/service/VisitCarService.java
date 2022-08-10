@@ -7,6 +7,10 @@ public interface VisitCarService {
 	// 방문차량등록(insert)
 	int enrollVisitCar(Parking p);
 
-	int SetDayVisitCar();
+	int setDayVisitCar();
+
+	int selectVisitCar(Parking p);
+
+	int updateVisitCar(Parking p);
 
 }

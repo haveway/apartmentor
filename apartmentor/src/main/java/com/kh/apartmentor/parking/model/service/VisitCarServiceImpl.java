@@ -19,14 +19,25 @@ public class VisitCarServiceImpl implements VisitCarService {
 
 	@Override
 	public int enrollVisitCar(Parking p) {
-		
 		return visitCarDao.enrollVisitCar(sqlSession, p);
 	}
 
 
 	@Override
-	public int SetDayVisitCar() {
-		return visitCarDao.SetDayVisitCar(sqlSession);
+	public int setDayVisitCar() {
+		return visitCarDao.setDayVisitCar(sqlSession);
 	}
 
+
+	@Override
+	public int selectVisitCar(Parking p) {
+		return visitCarDao.selectVisitCar(sqlSession, p);
+	}
+
+
+	@Override
+	public int updateVisitCar(Parking p) {
+		return visitCarDao.updateVisitCar(sqlSession, p);
+	}
+	
 }
