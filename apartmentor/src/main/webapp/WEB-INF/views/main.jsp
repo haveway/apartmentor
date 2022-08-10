@@ -134,7 +134,7 @@
 	           			</c:when>
 	           			<c:otherwise>
 	           				<c:forEach var="b" items="${bList}" begin="0" end="4">
-			           			<tr onclick="location.href='detail.bo?bno=${b.boardNo}'" class="td" id="boardTr">			           			
+			           			<tr onclick="location.href='detail.bo?bno=${b.boardNo}'" class="td" id="boardTr">
 			           				<td class="td1">${b.boardCategory}</td>
 			           				<td class="td2">${b.boardTitle}</td>
 			           				<td class="td3">${fn:substring(b.createDate,0,10)}</td>

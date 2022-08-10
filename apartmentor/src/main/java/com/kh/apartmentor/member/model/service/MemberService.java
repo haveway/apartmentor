@@ -3,6 +3,8 @@ package com.kh.apartmentor.member.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.apartmentor.board.model.vo.Board;
+import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.member.model.vo.Member;
 
 public interface MemberService {
@@ -26,6 +28,18 @@ public interface MemberService {
 	// 회원정보변경
 	int updateMember(Member m);
 	// 회원조회
-	ArrayList<Member> memberList();
+	int selectListCount();
+	
+	ArrayList<Member> memberList(PageInfo pi);
+	
+	// 검색조회
+	int selectSearchCount(String keyword);
+
+	ArrayList<Member> memberSearchList(String keyword, PageInfo pi);
+
+	// 회원 승인
+	int approvalMember(String userNo);
+	// 회원 정지
+	int suspensionMember(String userNo);
 
 }

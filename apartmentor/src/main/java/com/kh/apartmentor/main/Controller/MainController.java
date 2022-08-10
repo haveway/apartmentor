@@ -22,7 +22,6 @@ public class MainController {
 		
 		ArrayList<Board> bList = mainService.boardList();
 		ArrayList<Notice> nList = mainService.noticeList();
-		
 		m.addAttribute("bList",bList);
 		m.addAttribute("nList",nList);
 		return "main";

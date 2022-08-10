@@ -188,7 +188,7 @@
                         </c:choose>
                         <c:if test="${loginUser.userId eq 'admin'}">
 	                        <li>
-	                            <a href="memberList.do">회원관리</a>
+	                            <a href="list.me">회원관리</a>
 	                        </li>
                         </c:if>
                     </ul>

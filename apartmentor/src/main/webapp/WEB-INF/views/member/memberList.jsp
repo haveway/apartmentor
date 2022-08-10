@@ -41,7 +41,18 @@
 	}
 	.height50{height: 40%}
 	.b1{font-size: 20px}
-
+	#pagingArea {
+		width:fit-content; 
+		margin:auto;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	#search{
+		float:right;
+		margin-right: 199px;
+	}	
+	#condition{height: 30px;}
 </style>
 <jsp:include page="../common/header.jsp"/>
 </head>
@@ -50,8 +61,29 @@
 	<div align="center" style="margin-right:632px;">
 			<h1>회원 관리</h1> 
 	</div>
-	<br>
+	<br><br><br>
+	
+	
 	<div class="mainWrap">		
+	<form id="searchForm" action="search.me" method="get" >
+		<input type="hidden" name="currentPage" value="1">
+		<div id="search">
+			<select name="condition" id="condition">
+				<option value="A">[전체]</option>
+				<option value="Y">[일반 회원]</option>
+				<option value="W">[승인 대기]</option>
+			</select>
+			<c:if test="${empty keyword}">
+				<input type="text" name="keyword" placeholder="이름으로 검색" id="searchText">
+				<button id="searchBtn" class="btn btn-primary">검색</button>
+			</c:if>
+			<c:if test="${!empty keyword}">
+				<input type="text" name="keyword" value="${keyword}" id="searchText">
+				<button id="searchBtn" class="btn btn-primary">검색</button>
+			</c:if>
+		</div>
+	</form>
+	<br><br>
 		<table id="memberTable"class="table table-bordered">
 			<thead>
 				<tr>
@@ -69,44 +101,170 @@
 			</thead>
 			<tbody>
 			<c:choose>
-				<c:when test="${empty mList}">
+				<c:when test="${empty mList and empty sList}">
 					<tr> 
 						<th colspan="5">등록된 회원이 없습니다! </th>
 					</tr> 
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="m" items="${mList}">
-						<tr>
-							<td rowspan="2"><br>${m.userNo}</td>
-							<td>${m.userName}</td>
-							<td>${m.userId}</td>
-							<td>${m.birthday}</td>
-							<td rowspan="2">
-								<c:choose>
-									<c:when test="${m.status eq 'W'}">
-										<button class="btn btn-dark btn1">
-											<b class="b1">승인</b>
-										</button>
-									</c:when>
-									<c:otherwise>
-										<button class="btn btn-dark btn1">
-											<b class="b1">정지</b>
-										</button>
-									</c:otherwise>
-								</c:choose>
-							</td>
-						</tr>
-						<tr>
-							<td>${m.aptNo}</td>
-							<td>${m.phone}</td>
-							<td>${m.email}</td>					
-						</tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${empty sList}">
+							<c:forEach var="m" items="${mList}">
+								<tr>
+									<td rowspan="2"><br>${m.userNo}</td>
+									<td>${m.userName}</td>
+									<td>${m.userId}</td>
+									<td>${m.birthday}</td>
+									<td rowspan="2">
+										<c:choose>
+											<c:when test="${m.status eq 'W'}">
+												<button class="btn btn-primary btn1 modal1" data-toggle="modal" data-target="#myModal5" data-id="${m.userNo}">
+											  		<b class="b1">승인</b>
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button class="btn btn-danger btn1 modal2" data-toggle="modal" data-target="#myModal6" data-id="${m.userNo}">
+											  		<b class="b1">정지</b>
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</tr>
+								<tr>
+									<td>${m.aptNo}</td>
+									<td>${m.phone}</td>
+									<td>${m.email}</td>					
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="s" items="${sList}">
+									<tr>
+										<td rowspan="2"><br>${s.userNo}</td>
+										<td>${s.userName}</td>
+										<td>${s.userId}</td>
+										<td>${s.birthday}</td>
+										<td rowspan="2">
+											<c:choose>
+												<c:when test="${s.status eq 'W'}">
+												<button type="button" class="btn btn-primary btn1 modal1" data-toggle="modal" data-target="#myModal5" data-id="${m.userNo}">
+												  <b class="b1">승인</b>
+												</button>
+												</c:when>
+												<c:otherwise>
+												<button type="button" class="btn btn-danger btn1 modal2" data-toggle="modal" data-target="#myModal6" data-id="${m.userNo}">
+												  <b class="b1">정지</b>
+												</button>
+												</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+									<tr>
+										<td>${s.aptNo}</td>
+										<td>${s.phone}</td>
+										<td>${s.email}</td>					
+									</tr>
+								</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>	
 			</tbody>
 		</table>
+		<br>
+		<div id="pagingArea">
+		<c:choose>
+			<c:when test="${ pi.currentPage eq 1 }">
+				<div class="page-item disabled"><a class="page-link" href="#">이전</a></div>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${empty keyword}">
+						<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
+					</c:when>
+					<c:otherwise>
+						<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage - 1 }&keyword=${keyword}">이전</a></div>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			<c:choose>
+				<c:when test="${empty keyword}">
+					<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
+				</c:when>
+				<c:otherwise>
+					<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&keyword=${keyword}">${p}</a></div>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:choose>
+			<c:when test="${ pi.currentPage eq pi.maxPage }">
+			 	<div class="page-item disabled"><a class="page-link" href="#">다음</a></div>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${empty keyword}">
+						<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
+					</c:when>
+					<c:otherwise>
+						<div class="page-item"><a class="page-link" href="search.bo?cpage=${ pi.currentPage + 1 }&keyword=${keyword}">다음</a></div>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+		</div>
 	</div>
+
+	<!-- 회원 승인 모달 -->
+	<div class="modal" id="myModal5">
+		<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-footer">
+	      			<div style="width: 100%; margin-bottom: 30px;" >
+	      				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      			</div>
+	      			<h4 style="margin-left: 70px; width: 100%; margin-bottom: 30px;">해당 회원을 승인 하시겠습니까?</h4>
+	      			<form action="approval.me" method="post">
+		      			<input type="hidden" id="userNo1" name="userNo">
+				        <button type="submit" class="btn btn-primary">승인</button>
+	    		    </form>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	
+	<!-- 회원 정지 모달 -->
+	<div class="modal" id="myModal6">
+		<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-footer">
+	      			<div style="width: 100%; margin-bottom: 30px;" >
+	      				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      			</div>
+	      			<h4 style="margin-left: 70px; width: 100%; margin-bottom: 30px;">해당 회원을 정지 하시겠습니까?</h4>
+	      			<form action="suspension.me" method="post">
+		      			<input type="hidden" id="userNo2" name="userNo">
+				        <button type="submit" class="btn btn-danger">정지</button>
+	    		    </form>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	
+	<script>
+	$(".modal1").click(function(){
+		var data = $(this).data('id');
+		$("#userNo1").val(data);
+		console.log("asdasd");
+	});
+	$(".modal2").click(function(){
+		var data = $(this).data('id');
+		$("#userNo2").val(data);
+		console.log("12312313");
+	});
+	</script>
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>

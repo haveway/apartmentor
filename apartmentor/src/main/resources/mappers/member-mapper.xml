@@ -135,4 +135,71 @@
 		 ORDER   
             BY USER_NO DESC      	  		            
 	</select>
+	
+	<select id="selectListCount" resultType="_int">
+	    SELECT 
+	    	   COUNT(*)
+		  FROM 
+		       MEMBER
+		 WHERE 
+		       NOT STATUS = 'N'      
+	</select>
+	
+	<select id="selectSearchCount" resultType="_int">
+	    SELECT   
+	           COUNT(*)
+		  FROM 
+		  	   MEMBER
+		 WHERE 
+		 	   NOT STATUS = 'N'
+		   AND 
+		   	   USER_NAME 
+		  LIKE 
+		       '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="memberSearchList" resultMap="MemberResultMap">
+		SELECT 
+			   USER_NO,	
+		       APT_NO,
+		       USER_ID,
+		       USER_NAME,
+		       BIRTHDAY,
+		       PHONE,
+		       EMAIL,
+		       STATUS
+		  FROM 
+		       MEMBER
+		 WHERE 
+		       NOT STATUS ='N'
+		   AND
+		       NOT USER_NO = 1
+		   AND 
+		   	   USER_NAME 
+		  LIKE 
+		       '%' || #{keyword} || '%'    
+		 ORDER   
+            BY USER_NO DESC     
+	</select>
+	
+	<update id="approvalMember" parameterType="string">
+		UPDATE 
+			   MEMBER
+		   SET 
+		       STATUS = 'Y'
+		 WHERE 
+		       USER_NO = #{userNo}    	   
+		  
+	</update>
+	
+	
+	<update id="suspensionMember" parameterType="string">
+				UPDATE 
+			   MEMBER
+		   SET 
+		       STATUS = 'N'
+		 WHERE 
+		       USER_NO = #{userNo}    
+	</update>
+	
 </mapper>

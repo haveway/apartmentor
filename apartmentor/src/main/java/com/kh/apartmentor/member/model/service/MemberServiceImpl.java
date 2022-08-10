@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.apartmentor.board.model.vo.Board;
+import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.member.model.dao.MemberDao;
 import com.kh.apartmentor.member.model.vo.Member;
 
@@ -56,8 +58,33 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<Member> memberList() {
-		return memberDao.memberList(sqlSession);
+	public ArrayList<Member> memberList(PageInfo pi) {
+		return memberDao.memberList(sqlSession,pi);
+	}
+
+	@Override
+	public int selectListCount() {
+		return memberDao.selectListCount(sqlSession);
+	}
+
+	@Override
+	public int selectSearchCount(String keyword) {
+		return memberDao.selectSearchCount(sqlSession,keyword);
+	}
+
+	@Override
+	public ArrayList<Member> memberSearchList(String keyword, PageInfo pi) {
+		return memberDao.memberSearchList(sqlSession, keyword, pi);
+	}
+
+	@Override
+	public int approvalMember(String userNo) {
+		return memberDao.approvalMember(sqlSession, userNo);
+	}
+
+	@Override
+	public int suspensionMember(String userNo) {
+		return memberDao.suspensionMember(sqlSession, userNo);
 	}
 
 

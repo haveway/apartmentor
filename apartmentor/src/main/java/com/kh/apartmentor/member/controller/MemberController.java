@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.apartmentor.common.model.vo.PageInfo;
+import com.kh.apartmentor.common.template.Pagination;
 import com.kh.apartmentor.member.model.service.MemberService;
 import com.kh.apartmentor.member.model.vo.Member;
 
@@ -25,11 +28,31 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; 
 	
-	@RequestMapping("memberList.do")
-	public ModelAndView memeberList(ModelAndView mv) {
-		ArrayList<Member> mList = memberService.memberList();
-		mv.addObject("mList",mList).setViewName("member/memberList");
-		System.out.println(mList);
+	@RequestMapping("list.me")
+	public ModelAndView memeberList(@RequestParam(value="cpage", defaultValue="1") int currentPage,ModelAndView mv) {
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectListCount(), currentPage, 5, 10);
+		
+		ArrayList<Member> mList = memberService.memberList(pi);
+		
+		mv.addObject("mList",mList)
+		  .addObject("pi", pi)
+		  .setViewName("member/memberList");
+		
+		return mv;
+	}
+	
+	@RequestMapping("search.me")
+	public ModelAndView searchMember(@RequestParam(value="cpage", defaultValue="1")  int currentPage, String keyword, ModelAndView mv) {
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectSearchCount(keyword), currentPage, 5, 10);
+		System.out.println(pi);
+		ArrayList<Member> sList = memberService.memberSearchList(keyword, pi);
+		System.out.println(sList);
+		mv.addObject("sList", sList)
+		  .addObject("pi", pi)
+		  .addObject("keyword", keyword)
+		  .setViewName("member/memberList");
 		return mv;
 	}
 	
@@ -43,6 +66,37 @@ public class MemberController {
 			session.setAttribute("noLogin", "noLogin");
 			mv.setViewName("redirect:/");
 		}
+		return mv;
+	}
+	
+	@RequestMapping("approval.me")
+	public ModelAndView approvalMember(String userNo, ModelAndView mv) {
+		
+		System.out.println(userNo);
+		
+		int result = memberService.approvalMember(userNo);
+		
+		if(result > 0) {
+			mv.addObject("alertMsg2",userNo + " 번 회원이 승인 되었습니다.");
+		} else {
+			mv.addObject("alertMsg1",userNo + " 번 회원이 승인에 실패 하였습니다.");
+		}
+		mv.setViewName("member/memberList");
+		return mv;
+	}
+	@RequestMapping("suspension.me")
+	public ModelAndView suspensionMember(String userNo, ModelAndView mv) {
+		
+		System.out.println(userNo);
+		
+		int result = memberService.suspensionMember(userNo);
+		
+		if(result > 0) {
+			mv.addObject("alertMsg2",userNo + " 번 회원이 정지 되었습니다.");
+		} else {
+			mv.addObject("alertMsg1",userNo + " 번 회원 정지에 실패 하였습니다.");
+		}
+		mv.setViewName("member/memberList");
 		return mv;
 	}
 	
@@ -149,7 +203,7 @@ public class MemberController {
 	}
 	@RequestMapping("update.me")
 	public String updateMember(Member m, HttpSession session) {
-		System.out.println(m);
+		
 		
 		String encPwd = bCryptPasswordEncoder.encode(m.getUserPwd());
 		m.setUserPwd(encPwd);
@@ -163,5 +217,5 @@ public class MemberController {
 		}
 		return "main";
 	}
-
+	
 }

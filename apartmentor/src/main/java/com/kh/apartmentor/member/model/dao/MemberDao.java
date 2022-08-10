@@ -3,9 +3,12 @@ package com.kh.apartmentor.member.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.apartmentor.board.model.vo.Board;
+import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.member.model.vo.Member;
 
 @Repository
@@ -39,8 +42,40 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember",m);
 	}
 
-	public ArrayList<Member> memberList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("memberMapper.memberList");
+	public ArrayList<Member> memberList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.memberList", null, rowBounds);
+	}
+
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.selectListCount");
+	}
+
+	public int selectSearchCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("memberMapper.selectSearchCount",keyword);
+	}
+
+	public ArrayList<Member> memberSearchList(SqlSessionTemplate sqlSession, String keyword, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.memberSearchList", keyword, rowBounds);
+	}
+
+	public int approvalMember(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.update("memberMapper.approvalMember",userNo);
+	}
+	
+	public int suspensionMember(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.update("memberMapper.suspensionMember",userNo);
 	}
 	
 	
