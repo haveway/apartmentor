@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.visit.model.dao.VisitDao;
 import com.kh.apartmentor.visit.model.vo.Visit;
 import com.kh.apartmentor.visit.model.vo.VisitCategory;
@@ -38,6 +39,47 @@ public class VisitServiceImpl implements VisitService {
 	public Visit checkVisitReserve(Visit v) {
 		return visitDao.checkVisitReserve(sqlSession, v);
 	}
+
+	@Override
+	public ArrayList<Visit> selectVisitAllReserve() {
+		return visitDao.selectVisitAllReserve(sqlSession);
+	}
+
+	@Override
+	public int selectListCount() {
+		return visitDao.selectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Visit> selectList(PageInfo pi) {
+		return visitDao.selectList(sqlSession, pi);
+	}
+	
+	@Override
+	public int selectCategoryListCount(String category) {
+		return visitDao.selectCategoryListCount(sqlSession, category);
+	}
+
+	@Override
+	public ArrayList<Visit> selectCategoryList(String category, PageInfo pi) {
+		return visitDao.selectCategoryList(sqlSession, category, pi);
+	}
+
+	@Override
+	public Visit selectVisit(int visitVo) {
+		return visitDao.selectVisit(sqlSession, visitVo);
+	}
+
+	@Override
+	public int okReserveStatus(int visitVo) {
+		return visitDao.okReserveStatus(sqlSession, visitVo);
+	}
+
+	@Override
+	public int noReserveStatus(int visitVo) {
+		return visitDao.noReserveStatus(sqlSession, visitVo);
+	}
+
 
 	
 	

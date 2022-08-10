@@ -23,5 +23,11 @@ public class Visit {
 	private String visitStatus; //VISIT_STATUS	VARCHAR2(1 BYTE)
 	private String visitContent; //VISIT_CONTENT	VARCHAR2(3000 BYTE)
 	private Date CreateDate; //CREATE_DATE	DATE
-
+	
+	private String visitValue;
+	private String aptNo;
+	private String visitEmail;
+	private String visitStatusValue;
+	
+	
 }
