@@ -55,6 +55,11 @@ h1 {
 	cursor: pointer;
 }
 
+#search {
+	text-align: right;
+	padding-right: 210px;
+}
+
 #pagingArea {
 	width: fit-content;
 	margin: auto;
