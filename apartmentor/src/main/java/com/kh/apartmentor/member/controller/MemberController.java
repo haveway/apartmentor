@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +26,11 @@ public class MemberController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder; 
 	
 	@RequestMapping("memberList.do")
-	public String memeberList() {
-		
-		return "member/memberList";
+	public ModelAndView memeberList(ModelAndView mv) {
+		ArrayList<Member> mList = memberService.memberList();
+		mv.addObject("mList",mList).setViewName("member/memberList");
+		System.out.println(mList);
+		return mv;
 	}
 	
 	@RequestMapping("login.me")

@@ -116,4 +116,23 @@
 		       USER_ID = #{userId}     
 	</update>                                              
 	
+	<select id="memberList" resultMap="MemberResultMap">
+		SELECT 
+			   USER_NO,	
+		       APT_NO,
+		       USER_ID,
+		       USER_NAME,
+		       BIRTHDAY,
+		       PHONE,
+		       EMAIL,
+		       STATUS
+		  FROM 
+		       MEMBER
+		 WHERE 
+		       NOT STATUS ='N'
+		   AND
+		       NOT USER_NO = 1
+		 ORDER   
+            BY USER_NO DESC      	  		            
+	</select>
 </mapper>

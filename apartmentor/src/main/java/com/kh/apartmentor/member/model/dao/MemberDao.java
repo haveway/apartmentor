@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -35,8 +36,11 @@ public class MemberDao {
 	}
 
 	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
-		System.out.println(m);
 		return sqlSession.update("memberMapper.updateMember",m);
+	}
+
+	public ArrayList<Member> memberList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.memberList");
 	}
 	
 	

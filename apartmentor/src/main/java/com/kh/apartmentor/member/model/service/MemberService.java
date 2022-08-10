@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.apartmentor.member.model.vo.Member;
@@ -24,5 +25,7 @@ public interface MemberService {
 
 	// 회원정보변경
 	int updateMember(Member m);
+	// 회원조회
+	ArrayList<Member> memberList();
 
 }

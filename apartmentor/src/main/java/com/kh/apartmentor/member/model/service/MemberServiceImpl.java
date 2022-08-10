@@ -1,5 +1,6 @@
 package com.kh.apartmentor.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -52,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMember(Member m) {
 		return memberDao.updateMember(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Member> memberList() {
+		return memberDao.memberList(sqlSession);
 	}
 
 

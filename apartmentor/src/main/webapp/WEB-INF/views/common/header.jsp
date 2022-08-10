@@ -160,17 +160,37 @@
                 <div class = "sub-menu">
                     <ul class = "sub-menu-list">
                         <li>
-                            <a href="#">New</a>
+                            <a href="map.api">지도</a>
                         </li><hr>
                         <li>
-                            <a href="#">Basic</a>
+                            <a href="list.bo">자유게시판</a>
                         </li><hr>
                         <li>
-                            <a href="#">Best Item</a>
+                            <a href="seatView.st">독서실</a>
                         </li><hr>
                         <li>
-                            <a href="memberList.do">회원관리</a>
-                        </li>
+                            <a href="golf.sp">실내골프연습장</a>
+                        </li><hr>
+                        <li>
+                            <a href="miniGym.sp">미니 GYM</a>
+                        </li><hr>
+                        <c:choose>
+                        	<c:when test="${loginUser.userId eq 'admin'}">
+		                        <li>
+		                            <a href="list.visit">방문예약 목록페이지</a>
+                        		</li><hr>
+	                        </c:when>
+	                        <c:otherwise>
+		                        <li>
+		                            <a href="enrollForm.visit">방문예약 페이지</a>
+		                        </li><hr>
+	                        </c:otherwise>
+                        </c:choose>
+                        <c:if test="${loginUser.userId eq 'admin'}">
+	                        <li>
+	                            <a href="memberList.do">회원관리</a>
+	                        </li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -266,12 +286,80 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember"class="btn submit" >가입신청</button>
+                        <button type="submit" id="insertMember"class="btn submit" disabled>가입신청</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
+	<script>
+		/* 비밀번호 유효성 검사 */
+		function checkPwd() {
+			let p2 = $('#p2');
+			let addPwd = $('#addPwd').val();
+			let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
+			if(!regExpPwd.test(addPwd)){
+				 p2.attr('style','color:red;');
+				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+				 $('#insertMember').attr('disabled',true);
+			}
+			else {
+				p2.attr('style','color:#32CD32;');
+				p2.text('사용가능한 비밀번호 입니다.')
+				$('#insertMember').attr('disabled',false);
+			}
+		}
+		
+	 	/* 비밀번호 중복 체크 */
+		function ReconfirmPwd1() {
+			let addPwd = $('#addPwd').val(); 
+			let rePwd1 = $('#rePwd1').val();
+			let p3 = $('#p3');
+			if(addPwd != rePwd1){
+				p3.attr('style','color:red;');
+				p3.text('비밀번호를 일치하게 입력해주세요.')
+				$('#insertMember').attr('disabled',true);
+			}
+			else {
+				p3.attr('style','color:#32CD32;');
+				p3.text('비밀번호가 일치합니다.')
+				$('#insertMember').attr('disabled',false);
+			} 
+		}
+		/* 휴대폰 체크 형식 */
+	 	function checkPhone() {
+	 		let addPhone = $('#addPhone').val();
+	 		let p6 = $('#p6');
+	 		let regExpPhone = /^[\d]{11}$/;
+	 		if(!regExpPhone.test(addPhone)){
+	 			p6.attr('style','color:red;');
+				p6.text('-을 제외한 11자리 숫자로 입력하세요.')
+				$('#insertMember').attr('disabled',true);
+			} 
+	 		else {
+				p6.attr('style','color:#32CD32;');
+				p6.text('올바른  형식 입니다.');	
+				$('#insertMember').attr('disabled',false);
+			}
+		}
+	 	
+	 	/* 이메일 체크 형식  */
+	 	function checkEmail() {
+	 		let addEmail = $('#addEmail').val();
+	 		let p7 = $('#p7');
+	 		let regExpEmail =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	 		
+	 		if(!regExpEmail.test(addEmail)){
+	 			p7.attr('style','color:red;');
+				p7.text('올바른 형식의 이메일이 아닙니다.')
+				$('#insertMember').attr('disabled',true);
+			} 
+	 		else {
+				p7.attr('style','color:#32CD32;');
+				p7.text('올바른  형식 입니다.');	
+				$('#insertMember').attr('disabled',false);
+			}
+		}
+	</script>
 </body>
 </html>
