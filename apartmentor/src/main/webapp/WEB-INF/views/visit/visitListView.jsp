@@ -122,7 +122,7 @@ h1 {
 				</c:otherwise>
 			</c:choose>
 		</tbody>
-	</table>\
+	</table>
 	
 	<c:if test="${ not empty category }">
 		<script>
