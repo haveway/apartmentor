@@ -56,18 +56,18 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectListCount");
 	}
 
-	public int selectSearchCount(SqlSessionTemplate sqlSession, String keyword) {
-		return sqlSession.selectOne("memberMapper.selectSearchCount",keyword);
+	public int selectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("memberMapper.selectSearchCount",map);
 	}
 
-	public ArrayList<Member> memberSearchList(SqlSessionTemplate sqlSession, String keyword, PageInfo pi) {
+	public ArrayList<Member> memberSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.memberSearchList", keyword, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.memberSearchList", map, rowBounds);
 	}
 
 	public int approvalMember(SqlSessionTemplate sqlSession, String userNo) {

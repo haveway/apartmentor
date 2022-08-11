@@ -147,12 +147,12 @@
 										<td rowspan="2">
 											<c:choose>
 												<c:when test="${s.status eq 'W'}">
-												<button type="button" class="btn btn-primary btn1 modal1" data-toggle="modal" data-target="#myModal5" data-id="${m.userNo}">
+												<button type="button" class="btn btn-primary btn1 modal1" data-toggle="modal" data-target="#myModal5" data-id="${s.userNo}">
 												  <b class="b1">승인</b>
 												</button>
 												</c:when>
 												<c:otherwise>
-												<button type="button" class="btn btn-danger btn1 modal2" data-toggle="modal" data-target="#myModal6" data-id="${m.userNo}">
+												<button type="button" class="btn btn-danger btn1 modal2" data-toggle="modal" data-target="#myModal6" data-id="${s.userNo}">
 												  <b class="b1">정지</b>
 												</button>
 												</c:otherwise>
@@ -173,47 +173,94 @@
 		</table>
 		<br>
 		<div id="pagingArea">
-		<c:choose>
-			<c:when test="${ pi.currentPage eq 1 }">
-				<div class="page-item disabled"><a class="page-link" href="#">이전</a></div>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${empty keyword}">
-						<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
-					</c:when>
-					<c:otherwise>
-						<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage - 1 }&keyword=${keyword}">이전</a></div>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
-		
-		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 			<c:choose>
 				<c:when test="${empty keyword}">
-					<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
+					<c:choose>
+						<c:when test="${ pi.currentPage eq 1 }">
+							<div class="page-item disabled"><a class="page-link" href="#">이전</a></div>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${empty keyword}">
+									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
+								</c:when>
+								<c:otherwise>
+									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage - 1 }&keyword=${keyword}">이전</a></div>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:choose>
+							<c:when test="${!empty keyword}">
+								<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
+							</c:when>
+							<c:otherwise>
+								<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&keyword=${keyword}">${p}</a></div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+						 	<div class="page-item disabled"><a class="page-link" href="#">다음</a></div>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${empty keyword}">
+									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
+								</c:when>
+								<c:otherwise>
+									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage + 1 }&keyword=${keyword}">다음</a></div>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&keyword=${keyword}">${p}</a></div>
+					<c:choose>
+						<c:when test="${ pi.currentPage eq 1 }">
+							<div class="page-item disabled"><a class="page-link" href="#">이전</a></div>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${empty keyword}">
+									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
+								</c:when>
+								<c:otherwise>
+									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage - 1 }&condition=${condition}&keyword=${keyword}">이전</a></div>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:choose>
+							<c:when test="${empty keyword}">
+								<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
+							</c:when>
+							<c:otherwise>
+								<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${ pi.currentPage eq pi.maxPage }">
+						 	<div class="page-item disabled"><a class="page-link" href="#">다음</a></div>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${empty keyword}">
+									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
+								</c:when>
+								<c:otherwise>
+									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage + 1 }&condition=${condition}&keyword=${keyword}">다음</a></div>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
-		</c:forEach>
-		<c:choose>
-			<c:when test="${ pi.currentPage eq pi.maxPage }">
-			 	<div class="page-item disabled"><a class="page-link" href="#">다음</a></div>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test="${empty keyword}">
-						<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
-					</c:when>
-					<c:otherwise>
-						<div class="page-item"><a class="page-link" href="search.bo?cpage=${ pi.currentPage + 1 }&keyword=${keyword}">다음</a></div>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
 		</div>
 	</div>
 
@@ -262,6 +309,7 @@
 	$(".modal2").click(function(){
 		var data = $(this).data('id');
 		$("#userNo2").val(data);
+		console.log(data)
 		console.log("12312313");
 	});
 	</script>

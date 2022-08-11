@@ -33,9 +33,9 @@ public interface MemberService {
 	ArrayList<Member> memberList(PageInfo pi);
 	
 	// 검색조회
-	int selectSearchCount(String keyword);
+	int selectSearchCount(HashMap<String, String> map);
 
-	ArrayList<Member> memberSearchList(String keyword, PageInfo pi);
+	ArrayList<Member> memberSearchList(HashMap<String, String> map, PageInfo pi);
 
 	// 회원 승인
 	int approvalMember(String userNo);
