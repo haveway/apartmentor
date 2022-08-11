@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.common.model.vo.Reserve;
 import com.kh.apartmentor.sports.dao.SportsDao;
 
@@ -48,9 +49,26 @@ public class SportsService {
 	}
 	
 	
+	//-------------------- 이용내역 ----------------------------
 	
+	/*
+	 * public int selectListCount() { return sportsDao.selectListCount(sqlSession);
+	 * }
+	 * 
+	 * public ArrayList<Reserve> selectList(PageInfo pi){ return
+	 * sportsDao.selectList(sqlSession, pi);
+	 * 
+	 * }
+	 */
+	 
+	public int selectOptionListCount(String category) {
+		return sportsDao.selectOptionListCount(sqlSession, category);
+	}
 	
-	
+	public ArrayList<Reserve> selectOptionList(String category, PageInfo pi){
+		return sportsDao.selectOptionList(sqlSession, category, pi);
+
+	}
 	
 	
 	

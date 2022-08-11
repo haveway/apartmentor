@@ -107,7 +107,7 @@
 		<div class="btn-div">
 			<a href="golf.sp" class="btn btn-lg btn-outline-secondary">실내 골프 연습장</a>
 			<a href="miniGym.sp" class="query btn btn-lg btn-secondary">미니 GYM</a>
-			<a href="" class="btn btn-lg btn-outline-secondary">이용내역</a>
+			<a href="sportsOptionView.sp?currentPage=1&category=ALL" class="btn btn-lg btn-outline-secondary">이용내역</a>
 		</div>
 		             
 		<br><br>
@@ -119,7 +119,7 @@
 				<label><button class="btn btn-lg btn-primary" id="btn" onclick="selectMiniGymTimeList();">검색하기</button></label>
 			</div>
 			<div class="reserve-div__outer" style="border: 1px solid black;">
-				<div id="reserve-info"><h1>시간안내</h1></div>
+				<div id="reserve-info"><h1>예약시간</h1></div>
 				<div class="reserve-div__time" id="reserve_miniGym" style="display:none;" >
 					<button class="btn2 btn-lg btn-outline-dark" id="time_1" value="08:00" onclick="addReserveMiniGym(this.value);">08:00 ~ 11:00</button>
 					<button class="btn2 btn-lg btn-outline-dark" id="time_2" value="11:00" onclick="addReserveMiniGym(this.value);">11:00 ~ 14:00</button>
@@ -129,19 +129,6 @@
 			</div>
 		</div>
       
-      
-      
-      
-      
-      
-   		
-   
-   
-   
-   
-   
-   
-   
    
    
    		<script type="text/javascript">
@@ -183,16 +170,6 @@
  					}
     			   })
 			}	
-   		
-   		
-   		
-   		
-   		
-   		
-   		
-   			
-   		
-   		
    		
    			// 날짜를 검색하여 시간안내 버튼들이 나오게 하는 코드
    			function selectMiniGymTimeList(){
@@ -264,9 +241,6 @@
    			}
    		</script>
    
-   
-
-
   
 		<script type="text/javascript">
 		// datepicker 부트스트랩 스크립트
