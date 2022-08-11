@@ -27,6 +27,9 @@ public class Notice {
 	private	String noticeEndDate;
 	private	Date createDate;	
 	private	Date modifyDate;	
-	private	String status;		
+	private	String status;
+	
+	private String userName;
+	private String noticeCategoryValue;
     
 }      

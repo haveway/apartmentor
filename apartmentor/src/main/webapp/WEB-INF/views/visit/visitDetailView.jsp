@@ -48,7 +48,7 @@
 
 <div class="visitContent">
 
-	<h1>방문 예약 상세보기</h1>
+	<h1>방문 예약 관리</h1>
 	
 
 	<br>
@@ -104,19 +104,13 @@
 						${v.visitContent}
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" style="height: 80px; text-align: right;">
-					<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
-				</td>
-				<td colspan="2" style="height: 80px; text-align: right;">
-					<button type="button" class="btn btn-info" id="okBtn" onclick="ok()">승인</button>
-				</td>
-				<td colspan="3" style="height: 80px;">
-					&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" id="noBtn" onclick="no()">반려</button>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
 		</table>
 	</form>	
+		<div style="margin-left: 150px; margin-top: 20px;">
+			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
+			<button type="button" class="btn btn-info" id="okBtn" onclick="ok()">승인</button>
+			<button type="button" class="btn btn-outline-info" id="noBtn" onclick="no()">반려</button>&nbsp;&nbsp;&nbsp;
+		</div>
 	
 	<script>
 		$(function(){

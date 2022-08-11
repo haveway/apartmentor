@@ -68,13 +68,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int selectSearchCount(String keyword) {
-		return memberDao.selectSearchCount(sqlSession,keyword);
+	public int selectSearchCount(HashMap<String, String> map) {
+		return memberDao.selectSearchCount(sqlSession,map);
 	}
 
 	@Override
-	public ArrayList<Member> memberSearchList(String keyword, PageInfo pi) {
-		return memberDao.memberSearchList(sqlSession, keyword, pi);
+	public ArrayList<Member> memberSearchList(HashMap<String, String> map, PageInfo pi) {
+		return memberDao.memberSearchList(sqlSession, map, pi);
 	}
 
 	@Override

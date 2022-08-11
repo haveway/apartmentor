@@ -30,7 +30,6 @@ public class MemberController {
 	
 	@RequestMapping("list.me")
 	public ModelAndView memeberList(@RequestParam(value="cpage", defaultValue="1") int currentPage,ModelAndView mv) {
-		
 		PageInfo pi = Pagination.getPageInfo(memberService.selectListCount(), currentPage, 5, 10);
 		
 		ArrayList<Member> mList = memberService.memberList(pi);
@@ -43,13 +42,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping("search.me")
-	public ModelAndView searchMember(@RequestParam(value="cpage", defaultValue="1")  int currentPage, String keyword, ModelAndView mv) {
+	public ModelAndView searchMember(@RequestParam(value="cpage", defaultValue="1")  int currentPage, String keyword, ModelAndView mv,String condition) {
 		
-		PageInfo pi = Pagination.getPageInfo(memberService.selectSearchCount(keyword), currentPage, 5, 10);
-		System.out.println(pi);
-		ArrayList<Member> sList = memberService.memberSearchList(keyword, pi);
-		System.out.println(sList);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		
+		System.out.println(map);
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectSearchCount(map), currentPage, 5, 10);
+		
+		ArrayList<Member> sList = memberService.memberSearchList(map, pi);
+		
 		mv.addObject("sList", sList)
+		  .addObject("condition",condition)
 		  .addObject("pi", pi)
 		  .addObject("keyword", keyword)
 		  .setViewName("member/memberList");
@@ -58,7 +64,9 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m,HttpSession session,ModelAndView mv) {
+		
 		Member loginUser = memberService.loginMember(m);
+		
 		if(loginUser != null && bCryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("main");
@@ -66,13 +74,12 @@ public class MemberController {
 			session.setAttribute("noLogin", "noLogin");
 			mv.setViewName("redirect:/");
 		}
+		
 		return mv;
 	}
 	
 	@RequestMapping("approval.me")
 	public ModelAndView approvalMember(String userNo, ModelAndView mv) {
-		
-		System.out.println(userNo);
 		
 		int result = memberService.approvalMember(userNo);
 		
@@ -81,13 +88,12 @@ public class MemberController {
 		} else {
 			mv.addObject("alertMsg1",userNo + " 번 회원이 승인에 실패 하였습니다.");
 		}
-		mv.setViewName("member/memberList");
+		mv.setViewName("redirect:list.me");
+		
 		return mv;
 	}
 	@RequestMapping("suspension.me")
 	public ModelAndView suspensionMember(String userNo, ModelAndView mv) {
-		
-		System.out.println(userNo);
 		
 		int result = memberService.suspensionMember(userNo);
 		
@@ -96,7 +102,8 @@ public class MemberController {
 		} else {
 			mv.addObject("alertMsg1",userNo + " 번 회원 정지에 실패 하였습니다.");
 		}
-		mv.setViewName("member/memberList");
+		mv.setViewName("redirect:list.me");
+		
 		return mv;
 	}
 	

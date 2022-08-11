@@ -145,20 +145,28 @@
 		       NOT STATUS = 'N'      
 	</select>
 	
-	<select id="selectSearchCount" resultType="_int">
+	<select id="selectSearchCount" resultType="_int" parameterType="hashmap">
 	    SELECT   
 	           COUNT(*)
 		  FROM 
 		  	   MEMBER
 		 WHERE 
-		 	   NOT STATUS = 'N'
+			   <if test='condition == "A"'>
+			   		NOT STATUS = 'N'
+			   </if>
+			   <if test='condition == "Y"'>
+			   		STATUS = 'Y' 
+			   </if>
+			   <if test='condition == "W"'>
+			   		STATUS = 'W'
+			   </if>
 		   AND 
 		   	   USER_NAME 
 		  LIKE 
 		       '%' || #{keyword} || '%'
 	</select>
 	
-	<select id="memberSearchList" resultMap="MemberResultMap">
+	<select id="memberSearchList" resultMap="MemberResultMap" parameterType="hashmap">
 		SELECT 
 			   USER_NO,	
 		       APT_NO,
@@ -171,7 +179,15 @@
 		  FROM 
 		       MEMBER
 		 WHERE 
-		       NOT STATUS ='N'
+			   <if test='condition == "A"'>
+			   		NOT STATUS = 'N'
+			   </if>
+			   <if test='condition == "Y"'>
+			   		STATUS = 'Y' 
+			   </if>
+			   <if test='condition == "W"'>
+			   		STATUS = 'W'
+			   </if>
 		   AND
 		       NOT USER_NO = 1
 		   AND 

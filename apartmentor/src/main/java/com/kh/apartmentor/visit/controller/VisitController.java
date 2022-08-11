@@ -57,7 +57,7 @@ public class VisitController {
 			session.setAttribute("alertMsg2", "예약에 성공하셨습니다");
 			return "main";
 		} else { // 실패 => 작성 페이지 다시 보여주기
-			model.addAttribute("alertMsg1", "게시글 작성에 실패하셨습니다");
+			model.addAttribute("alertMsg1", "예약에 실패하셨습니다");
 			return "redirect:enrollForm.visit";
 		}
 	}
@@ -110,10 +110,10 @@ public class VisitController {
 		
 		PageInfo pi = Pagination.getPageInfo(visitService.selectCategoryListCount(category), currentPage, 5, 10);
 		
-		ArrayList<Visit> cList = visitService.selectCategoryList(category, pi);
+		ArrayList<Visit> list = visitService.selectCategoryList(category, pi);
 		
 		model.addAttribute("pi", pi);
-		model.addAttribute("cList", cList);
+		model.addAttribute("list", list);
 		model.addAttribute("category", category);
 		
 		
@@ -142,7 +142,7 @@ public class VisitController {
 		
 		int result = visitService.okReserveStatus(vno);
 		
-		if(result > 0) {
+		if(result > 0) { // 예약 승인시 메일 전송하고 목록페이지로
 			
 			String ip = request.getRemoteAddr();
 			
@@ -157,7 +157,7 @@ public class VisitController {
 			
 			session.setAttribute("alertMsg2", "예약이 승인 되었습니다");
 			return "redirect:list.visit";
-		} else {
+		} else { 
 			session.setAttribute("alertMsg1", "예약 승인 오류");
 			return "redirect:detail.visit?vno=" + vno;
 		}
@@ -173,7 +173,7 @@ public class VisitController {
 		
 		int result = visitService.noReserveStatus(vno);
 		
-		if(result > 0) {
+		if(result > 0) { // 예약 거절시 메일 보내고 목록페이지로
 			
 			String ip = request.getRemoteAddr();
 			

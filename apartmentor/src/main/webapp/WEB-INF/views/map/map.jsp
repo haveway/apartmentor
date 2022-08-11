@@ -218,7 +218,7 @@
 						for (var i = 0; i < positions.length; i ++) {
 
 							var imageSrc = 'http://drive.google.com/uc?export=view&id=1btfKJNyY1UEqieXMyEf6PWr-y9VL2Uh6', // 마커이미지의 주소입니다    
-									imageSize = new kakao.maps.Size(35, 35) // 마커이미지의 크기입니다
+									imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 
 								// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 								var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -265,10 +265,30 @@
 			function pharm(){
 				
 				var today = new Date();
-				var locdate = [];
-				var yyyymmdd = getFullToday();
-				var currTime = today.getHours().toString() + today.getMinutes().toString();
-				var yoil = today.getDay();
+				var locdate = []; // 올해의 공휴일들을 yyyymmdd형태로 담을 배열.
+				var yyyymmdd = getFullToday();	// 오늘날짜를 yyyymmdd형태로 담는다.(공휴일인지 확인하기 위하여)
+				var hours = today.getHours().toString();
+				console.log(hours);
+				if(hours == '0'){
+					hours = '24';
+				} else if(hours == '1'){
+					console.log("hours == 1 if문들어옴");
+					hours = '25';
+				} // 약국 운영시간이 익일 새벽1시나 새벽2시까지의 경우 25,26시로 표기되기 때문에 현재시간이 00시일경우 24시, 01시일경우 25시로 바꿔준다.
+				
+
+				var minutes = today.getMinutes().toString();
+				console.log("minutes : " + minutes);
+				for(var i = 0; i < 10; i++){
+					if(minutes == i){
+						minutes = '0' + today.getMinutes().toString();
+					}
+				}	// minutes가 0분 ~ 9분까지일경우 앞에 0을붙여준다(01~09의 형태로 변환)
+
+				var currTime = hours + minutes;	// 현재시간 hhmm 형식의 String으로 담긴다.
+				console.log(currTime);
+				// currTime = '2200';
+				var yoil = today.getDay();	// 현재 요일
 			
 				
 				function getFullToday(){
@@ -280,7 +300,7 @@
 									return year + month + day;
 								}
 				
-					$.ajax({
+					$.ajax({	// 올해의 공휴일을 공공데이터에서 가져오는 ajax
 						type: "GET",
 						url: "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?serviceKey=3vbFSNBucTjUmlz76x3t%2FXHUxbPw4FBSuJfqY2xhH5n6sriEAxlGGP%2Fdqlhf2FiOxzA4PbMcX7GpGC%2FowflUrQ%3D%3D&numOfRows=100&_type=json&solYear=" + today.getFullYear(),
 						data: {},
@@ -299,7 +319,7 @@
 					})
 				
 
-				$.ajax({
+				$.ajax({	// 약국을 지도에 뿌려주는 ajax
 					type: "GET",
 					url: "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=3vbFSNBucTjUmlz76x3t%2FXHUxbPw4FBSuJfqY2xhH5n6sriEAxlGGP%2Fdqlhf2FiOxzA4PbMcX7GpGC%2FowflUrQ%3D%3D&Q0=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&Q1=%EC%96%91%EC%B2%9C%EA%B5%AC&ORD=NAME&pageNo=1&numOfRows=300",
 					data: "text",
@@ -311,55 +331,65 @@
 								var dutyName = $(this).find("dutyName").text();
 								var dutyTel1 = $(this).find("dutyTel1").text();
 								var dutyAddr = $(this).find("dutyAddr").text();
-								var dutyTime1c = $(this).find("dutyTime1c").text();
-								var dutyTime1s = $(this).find("dutyTime1s").text();
-								var dutyTime2c = $(this).find("dutyTime2c").text();
-								var dutyTime2s = $(this).find("dutyTime2s").text();
-								var dutyTime3c = $(this).find("dutyTime3c").text();
-								var dutyTime3s = $(this).find("dutyTime3s").text();
-								var dutyTime4c = $(this).find("dutyTime4c").text();
-								var dutyTime4s = $(this).find("dutyTime4s").text();
-								var dutyTime5c = $(this).find("dutyTime5s").text();
-								var dutyTime5s = $(this).find("dutyTime5s").text();
-								var dutyTime6c = $(this).find("dutyTime3s").text();
-								var dutyTime6s = $(this).find("dutyTime6s").text();
+
+								var dutyTime1c;
+								if($(this).find("dutyTime1c").text() !== "" ? dutyTime1c = $(this).find("dutyTime1c").text() : dutyTime1c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 								
+								var dutyTime1s;
+								if($(this).find("dutyTime1s").text() !== "" ? dutyTime1s = $(this).find("dutyTime1s").text() : dutyTime1c = "휴무");
+								
+								var dutyTime2c;
+								if($(this).find("dutyTime2c").text() !== "" ? dutyTime2c = $(this).find("dutyTime2c").text() : dutyTime2c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
+								var dutyTime2s;
+								if($(this).find("dutyTime2s").text() !== "" ? dutyTime2s = $(this).find("dutyTime2s").text() : dutyTime2c = "휴무");
+								
+								var dutyTime3c;
+								if($(this).find("dutyTime3c").text() !== "" ? dutyTime3c = $(this).find("dutyTime3c").text() : dutyTime3c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
+								var dutyTime3s;
+								if($(this).find("dutyTime3s").text() !== "" ? dutyTime3s = $(this).find("dutyTime3s").text() : dutyTime3c = "휴무");
+
+								var dutyTime4c;
+								if($(this).find("dutyTime4c").text() !== "" ? dutyTime4c = $(this).find("dutyTime4c").text() : dutyTime4c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
+								var dutyTime4s;
+								if($(this).find("dutyTime4s").text() !== "" ? dutyTime4s = $(this).find("dutyTime4s").text() : dutyTime4c = "휴무");
+
+								var dutyTime5c;
+								if($(this).find("dutyTime5c").text() !== "" ? dutyTime5c = $(this).find("dutyTime5c").text() : dutyTime5c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
+								var dutyTime5s;
+								if($(this).find("dutyTime5s").text() !== "" ? dutyTime5s = $(this).find("dutyTime5s").text() : dutyTime5c = "휴무");
+
+								var dutyTime6c;
+								if($(this).find("dutyTime6c").text() !== "" ? dutyTime6c = $(this).find("dutyTime6c").text() : dutyTime6c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
+								var dutyTime6s;
+								if($(this).find("dutyTime6s").text() !== "" ? dutyTime6s = $(this).find("dutyTime6s").text() : dutyTime6s = "휴무");
+
 								var dutyTime7c;
-								if($(this).find("dutyTime7c").text() !== ""){
-									dutyTime7c = $(this).find("dutyTime7c").text();
-								} else {
-									dutyTime7c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-								}
+								if($(this).find("dutyTime7c").text() !== "" ? dutyTime7c = $(this).find("dutyTime7c").text() : dutyTime7c = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 
 								var dutyTime7s;
-								if($(this).find("dutyTime7s").text() !== ""){
-									var dutyTime7s = $(this).find("dutyTime7s").text();
-								} else {
-									dutyTime7s = "휴무";
-								}
+								if($(this).find("dutyTime7s").text() !== "" ? dutyTime7s = $(this).find("dutyTime7s").text() : dutyTime7s = "휴무");
 
 								var dutyTime8c;
-								if($(this).find("dutyTime8c").text() !== ""){
-									var dutyTime8c = $(this).find("dutyTime8c").text();
-								} else {
-									dutyTime8c = "";
-								}
+								if($(this).find("dutyTime8c").text() !== "" ? dutyTime8c = $(this).find("dutyTime8c").text() : dutyTime8c = "");
 
 								var dutyTime8s;
-								if($(this).find("dutyTime8s").text() !== ""){
-									var dutyTime8s = $(this).find("dutyTime8s").text();
-								} else {
-									dutyTime8s = "휴무";
-								}
+								if($(this).find("dutyTime8s").text() !== "" ? dutyTime8s = $(this).find("dutyTime8s").text() : dutyTime8s = "휴무");
+
+								
 
 								for(var i = 1; i < 9; i++){
 									if(yoil == i){
 										if(eval('dutyTime' + i + 's') < currTime && currTime < eval('dutyTime' + i + 'c')){
 											var imageSrc = 'http://drive.google.com/uc?export=view&id=1zzt3UCNDqkjVbE2JggHTj9qk4Y6MPGn6', // 마커이미지의 주소입니다    
-											imageSize = new kakao.maps.Size(35, 35) // 마커이미지의 크기입니다
+											imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 										} else {
 											var imageSrc = 'http://drive.google.com/uc?export=view&id=1Ppck2GSKy6W8wHI3psyN46GDoEzigrot', // 마커이미지의 주소입니다    
-											imageSize = new kakao.maps.Size(35, 35) // 마커이미지의 크기입니다
+											imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 										}
 									}	
 								}
@@ -380,7 +410,7 @@
 								
 								// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:400px;"><b>' + dutyName + '</b><br>' 
-											  + '대표전화 : ' + dutyTel1 + '<br>'
+											  + '전화 : ' + dutyTel1 + '<br>'
 											  + '주소 : ' + dutyAddr + '<br><hr>'
 											  + '<b>월요일 : </b>' + dutyTime1s + ' ~ ' + dutyTime1c
 											  + '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;화요일 : </b>' + dutyTime2s + ' ~ ' + dutyTime2c + '<br>'

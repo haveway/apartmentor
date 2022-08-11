@@ -3,6 +3,117 @@
 <mapper namespace="noticeMapper">
 
 	<resultMap id="noticeResultSet" type="notice">
+		<result column="NOTICE_NO" property="noticeNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="NOTICE_CATEGORY" property="noticeCategory" />
+		<result column="NOTICE_CONTENT" property="noticeContent" />
+		<result column="NOTICE_TITLE" property="noticeTitle" />
+		<result column="NOTICE_CALENDER" property="noticeCalender" />
+		<result column="NOTICE_START_DATE" property="noticeStartDate" />
+		<result column="NOTICE_END_DATE" property="noticeEndDate" />
+		<result column="ORIGIN_NAME" property="noticeEndDate" />
+		<result column="CHANGE_NAME" property="noticeEndDate" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="STATUS" property="status" />
+		<result column="USER_NAME" property="userName" />
+		<result column="NOTICE_CATEGORY_VALUE" property="noticeCategoryValue" />
 	</resultMap>
 	
+	<insert id="insertNotice" parameterType="notice">
+		INSERT
+		  INTO
+		  		NOTICE
+		  		(
+		  		NOTICE_NO,
+		  		USER_NO,
+		  		NOTICE_CATEGORY,
+		  		NOTICE_TITLE,
+		  		NOTICE_CALENDER,
+		  		NOTICE_START_DATE,
+		  		NOTICE_END_DATE,
+		  		ORIGIN_NAME,
+		  		CHANGE_NAME,
+		  		NOTICE_CONTENT
+		  		)
+	   VALUES
+	   			(
+	   			SEQ_NNO.NEXTVAL,
+	   			#{userNo},
+	   			#{noticeCategory},
+	   			#{noticeTitle},
+	   			#{noticeCalender},
+	   			#{noticeStartDate},
+	   			#{noticeEndDate},
+	   			#{originName},
+	   			#{changeName},
+	   			#{noticeContent}
+	   			)
+	</insert>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM NOTICE
+	</select>
+	
+	<select id="selectList" resultMap="noticeResultSet">
+		SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]', '알림', '[알림]', '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
+		  FROM NOTICE
+		  JOIN MEMBER USING(USER_NO)
+         ORDER BY CREATE_DATE DESC  
+	</select>
+	
+	<select id="selectCategoryListCount" resultType="_int">
+		<if test="category == '공지'">
+			   SELECT COUNT(*)
+			     FROM NOTICE
+				WHERE NOTICE_CATEGORY = '공지'
+		</if>
+		<if test="category == '알림'">
+			   SELECT COUNT(*)
+			     FROM NOTICE
+				WHERE NOTICE_CATEGORY = '알림'
+		</if>
+		<if test="category == '행사'">
+			   SELECT COUNT(*)
+			     FROM NOTICE
+				WHERE NOTICE_CATEGORY = '행사'
+		</if>
+		<if test="category == '전체'">
+			   SELECT COUNT(*)
+			     FROM NOTICE
+		</if>
+	</select>
+	
+	<select id="selectCategoryList" resultMap="noticeResultSet">
+		<choose>
+			<when test="category == '공지'">
+				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
+				  FROM NOTICE
+				  JOIN MEMBER USING(USER_NO)
+				 WHERE NOTICE_CATEGORY = '공지'
+		         ORDER BY CREATE_DATE DESC  
+			</when>
+			<when test="category == '알림'">
+				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '알림', '[알림]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
+				  FROM NOTICE
+				  JOIN MEMBER USING(USER_NO)
+				 WHERE NOTICE_CATEGORY = '알림'
+		         ORDER BY CREATE_DATE DESC  
+			</when>
+			<when test="category == '행사'">
+				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
+				  FROM NOTICE
+				  JOIN MEMBER USING(USER_NO)
+				 WHERE NOTICE_CATEGORY = '행사'
+		         ORDER BY CREATE_DATE DESC  
+			</when>
+			<when test="category == '전체'">
+				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]', '알림', '[알림]', '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
+				  FROM NOTICE
+				  JOIN MEMBER USING(USER_NO)
+		         ORDER BY CREATE_DATE DESC  
+			</when>
+		</choose>
+	</select>
 </mapper>

@@ -105,16 +105,13 @@ h1 {
 								cols="80" style="resize: none;" placeholder="참고사항을 입력해주세요"></textarea>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="4" style="height: 80px; text-align: right;">
-							<button type="submit" class="btn btn-info" id="submitBtn" disabled>등록</button>
-						</td>
-						<td colspan="3" style="height: 80px;">&nbsp;&nbsp;&nbsp;
-							<button type="reset" class="btn btn-outline-info" id="resetBtn">초기화</button>&nbsp;&nbsp;&nbsp;
-						</td>
-					</tr>
 				</table>
 
+				<div style="margin-left: 300px; margin-top: 20px;">
+							<button type="button" class="btn btn-outline-info" id="backBtn" onclick="location.href='main.do'">돌아가기</button>
+							<button type="submit" class="btn btn-info" id="submitBtn" disabled>등록</button>
+							<button type="reset" class="btn btn-outline-info" id="resetBtn">초기화</button>
+				</div>
 
 			</form>
 
