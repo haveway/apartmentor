@@ -98,7 +98,7 @@
 	           			<c:otherwise>
 	           				<c:forEach var="n" items="${nList}" begin="0" end="4">
 			           			<tr onclick="location.href='#'" class="td" id="noticeTr">
-			           				<td class="td1">${n.noticeCategory}</td>
+			           				<td class="td1">${n.noticeCategoryValue}</td>
 			           				<td class="td2">${n.noticeTitle}</td>
 			           				<td class="td3">${n.createDate}</td>
 			           			</tr>
@@ -173,7 +173,7 @@
         </div>
 
         <div id="calendar">
-  			<a href="enrollForm.visit">임시로</a>
+  			<a href="list.notice">임시</a>
         </div>
     </div>
     

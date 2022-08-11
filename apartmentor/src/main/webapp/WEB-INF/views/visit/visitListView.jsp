@@ -99,8 +99,6 @@ h1 {
 				</tr>
 		</thead>
 		<tbody>
-			<c:choose>
-				<c:when test="${ empty cList }">
 					<c:forEach var="v" items="${list}">
 						 <tr onclick="location.href='detail.visit?vno=${v.visitNo}'">
 							<td>${v.visitValue}</td>
@@ -109,18 +107,6 @@ h1 {
 							<td>${v.createDate}</td>
 						</tr>
 					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="cv" items="${cList}">
-						<tr onclick="location.href='detail.visit?vno=${cv.visitNo}'">
-							<td>${cv.visitValue}</td>
-							<td>${cv.aptNo}</td>
-							<td>${cv.visitStatusValue}</td>
-							<td>${cv.createDate}</td>
-						</tr>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
 		</tbody>
 	</table>
 	
