@@ -32,6 +32,9 @@
 	<!-- 핸들러 등록 -->
 	<websocket:handlers>
 		<websocket:mapping handler="groupServer" path="gp"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
 	<context:component-scan base-package="com.kh.apartmentor" />

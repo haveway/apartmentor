@@ -49,7 +49,7 @@
 	<div class="content-area">
 	
 		<div align="center" style="margin-right:600px;">
-			<h1>채팅+ ${loginUser.userName} </h1> 
+			<h1>채팅</h1> 
 		</div>
 		<br><br><br>
 		
@@ -60,7 +60,13 @@
 		  </div>
 		<br><br>
 		<div class="chat-area">
-		
+		<c:if test="${not empty chatList }">
+			<c:forEach var="c" items="${chatList}">
+				<div>${c.chatWriter}</div>
+				<div>${c.chatContent}</div>
+				<div>${c.chatSendTime}</div>
+			</c:forEach>
+		</c:if>
 		
 		</div>
 		
@@ -83,11 +89,9 @@
 	
 		// 전역변수
 		var socket;
-		var userName = '${loginUser.userName}';
 		
 		// 주민단체채팅방전용 웹소켓 접속 함수
 		function connectGroup(){
-			console.log(userName);
 			
 			var uri = "ws://localhost:8015/apartmentor/gp";
 			socket = new WebSocket(uri);
@@ -96,17 +100,19 @@
  			socket.onopen = function(){
  				console.log("서버와 연결되었습니다.");
  			}
+			
  			socket.onclose = function(){
  				console.log("서버와 연결이 종료되었습니다.");
  			}
+ 			
  			socket.onerror = function(e){
  				console.log("오타 ㄴㄴ");
  			}
+ 			
  			socket.onmessage = function(e){
  				console.log("메세지가 도착하였습니다.");
  				var div = $('<div style="width:100px;"></div>');
  				div.text(e.data);
- 				$('.chat-area').append(userName);
  				$('.chat-area').append(div);
  				
  				

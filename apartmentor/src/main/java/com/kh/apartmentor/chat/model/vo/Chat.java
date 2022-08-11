@@ -17,6 +17,6 @@ public class Chat {
 	private String chatContent;
 	private String chatSendTime;
 	private int chatCode;
-	private String userName;
+	private String chatWriter;
 	
 }
