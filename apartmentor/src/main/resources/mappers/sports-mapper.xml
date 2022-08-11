@@ -90,80 +90,9 @@
 		VALUES (SEQ_RNO.NEXTVAL, #{startDate}, null, 'MG', null, #{userNo}, 'Y', #{startDay}, SYSDATE)
 	</insert>
 
-	<!-- ************************************이용내역************************************** -->
-<!-- 	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM
-				RESERVE
-		WHERE	
-				STATUS = 'Y'
-	</select>
-	
-	
-	<select id="selectList" resultMap="sportsResultSet">
-		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
-		FROM RESERVE R, MEMBER M
-		WHERE R.USER_NO = M.USER_NO
-		AND R.STATUS = 'Y'
-		ORDER BY START_DAY, START_DATE ASC
-	</select>  -->
-	
-	<select id="selectOptionListCount" resultType="_int">
-		<if test="category == 'ALL'">
-			SELECT COUNT(*)
-			FROM
-					RESERVE
-			WHERE	
-					STATUS = 'Y'
-		</if>
-		<if test="category == 'GF'">
-			SELECT COUNT(*)
-			FROM
-					RESERVE
-			WHERE	
-					STATUS = 'Y'
-			AND
-					FACILITY = 'GF'
-		</if>
-		<if test="category == 'MG'">
-			SELECT COUNT(*)
-			FROM
-					RESERVE
-			WHERE	
-					STATUS = 'Y'
-			AND
-					FACILITY = 'MG'
-		</if>
-	</select>
-	
 
-	<select id="selectOptionList" resultMap="sportsResultSet">
-		<choose>
-			<when test="category == 'ALL'">
-				SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
-				FROM RESERVE R, MEMBER M
-				WHERE R.USER_NO = M.USER_NO
-				AND R.STATUS = 'Y'
-				ORDER BY START_DAY, START_DATE ASC
-			</when>
-			<when test="category == 'GF'">
-				SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
-				FROM RESERVE R, MEMBER M
-				WHERE R.USER_NO = M.USER_NO
-				AND R.STATUS = 'Y'
-				AND FACILITY = 'GF'
-				ORDER BY START_DAY, START_DATE ASC
-			</when>
-			<when test="category == 'MG'">
-				SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
-				FROM RESERVE R, MEMBER M
-				WHERE R.USER_NO = M.USER_NO
-				AND R.STATUS = 'Y'
-				AND FACILITY = 'MG'
-				ORDER BY START_DAY, START_DATE ASC
-			</when>
-		</choose>
-	</select>
+
+
 
 
 

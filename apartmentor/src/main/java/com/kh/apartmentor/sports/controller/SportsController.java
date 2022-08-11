@@ -6,14 +6,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.common.model.vo.Reserve;
-import com.kh.apartmentor.common.template.Pagination;
 import com.kh.apartmentor.sports.service.SportsService;
 
 @Controller
@@ -22,7 +18,6 @@ public class SportsController {
 	@Autowired
 	private SportsService sportsService;
 
-	//------------------------- golf ------------------------------------------
 	// 골프 예약하는 페이지 띄우기
 	@RequestMapping("golf.sp")
 	public String Golf() {
@@ -51,12 +46,19 @@ public class SportsController {
 		return new Gson().toJson(sportsService.selectGolfSeatList(r));
 	}
 	
-	//------------------------------ miniGym -----------------------------------
+	
+	
+	
+	
+	
+	
+	
 	// 미니짐 화면 띄우기
 	@RequestMapping("miniGym.sp")
 	public String MiniGym() {
 		return "sports/miniGym";
 	}
+	
 	
 	// 미니짐 시간(예약 완료, 예약가능) 띄워주는 코드
 	@ResponseBody
@@ -79,41 +81,13 @@ public class SportsController {
 	}
 	
 	
-	//---------------------------------------- 이용내역 -------------------------------------------
-	// 미니짐 화면 띄우기
-//	@RequestMapping("sportsListView.sp")
-//	public String sportsList() {
-//		return "sports/sportsListView";
-//	}
 	
-	/*
-	 * // 리스트 띄우기
-	 * 
-	 * @RequestMapping("sportsList.sp") public ModelAndView
-	 * selectList(@RequestParam(value="cpage", defaultValue = "1") int currentPage,
-	 * ModelAndView mv) {
-	 * 
-	 * PageInfo pi = Pagination.getPageInfo(sportsService.selectListCount(),
-	 * currentPage, 10, 5);
-	 * 
-	 * mv.addObject("pi", pi) .addObject("list", sportsService.selectList(pi))
-	 * .setViewName("sports/sportsListView");
-	 * 
-	 * return mv; }
-	 */
 	
-	// 카테고리 리스트 띄우기
-	@RequestMapping("sportsOptionView.sp")
-	public ModelAndView selectOptionList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, String category, ModelAndView mv) {
-		PageInfo pi = Pagination.getPageInfo(sportsService.selectOptionListCount(category), currentPage, 10, 5);
-		
-		mv.addObject("pi", pi)
-		  .addObject("category", category)
-		  .addObject("list", sportsService.selectOptionList(category, pi))
-		  .setViewName("sports/sportsListView");
-		
-		return mv;
-	}
+	
+	
+	
+	
+	
 	
 	
 	
