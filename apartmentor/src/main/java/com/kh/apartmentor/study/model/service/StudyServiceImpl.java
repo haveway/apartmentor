@@ -1,5 +1,7 @@
 package com.kh.apartmentor.study.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +26,10 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public Reserve selectReserve(int userNo) {
 		return studyDao.selectReserve(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Reserve> selectList() {
+		return studyDao.selectList(sqlSession);
 	}
 }

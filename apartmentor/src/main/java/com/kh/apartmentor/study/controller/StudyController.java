@@ -1,9 +1,12 @@
 package com.kh.apartmentor.study.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.apartmentor.common.model.vo.Reserve;
 import com.kh.apartmentor.study.model.service.StudyService;
@@ -15,8 +18,16 @@ public class StudyController {
 	private StudyService studyService;
 	
 	@RequestMapping("seatView.st")
-	public String seatView() {
-		return "study/seatView";
+	public ModelAndView seatView(ModelAndView mv) {
+		// 보내야 할 것 	1."study/seatView"	2. select SeatList
+		
+		ArrayList<Reserve> list = studyService.selectList();
+		System.out.println(list);
+		
+		mv.addObject("list", studyService.selectList())
+		  .setViewName("study/seatView");
+		
+		return mv;
 	}
 	
 	@ResponseBody
@@ -29,13 +40,13 @@ public class StudyController {
 		
 //		Reserve r = new Reserve(9999, startTime, endTime, "st", seatNo, 2, "Y", "2022-08-05");
 		Reserve r = new Reserve();
-		r.setReserveNo(999);
-		r.setStartDate(startTime);
-		r.setEndDate(endTime);
-		r.setFacility("st");
-		r.setSeatNo(seatNo);
-		r.setUserNo(2);
-		r.setStatus("Y");
+		r.setReserveNo(997); //예약번호 : 나중에 시퀀스로 할 것
+		r.setStartDate(startTime); //전달받음
+		r.setEndDate(endTime); //전달받음
+		r.setFacility("st"); 
+		r.setSeatNo(seatNo); //전달받음
+		r.setUserNo(4); //로그인하면 됨
+		r.setStatus("Y"); //디폴트인가..?
 //		System.out.println(r);
 		
 		int result = studyService.reserveSeat(r);

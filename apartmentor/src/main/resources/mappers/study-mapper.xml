@@ -59,5 +59,22 @@
 		 WHERE
 		       USER_NO = #{userNo}
 	</select>
+	
+	<select id="selectList" resultMap="studyResultSet">
+		SELECT
+		       RESERVE_NO,
+		       START_DATE,
+		       END_DATE,
+		       FACILITY,
+		       SEAT_NUMBER,
+		       USER_NO,
+		       STATUS,
+		       CREATE_DATE,
+		       START_DAY
+		  FROM
+		       RESERVE
+		 WHERE
+		       STATUS = 'Y'
+	</select>
 
 </mapper>
