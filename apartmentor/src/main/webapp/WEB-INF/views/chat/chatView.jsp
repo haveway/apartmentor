@@ -49,12 +49,12 @@
 	<div class="content-area">
 	
 		<div align="center" style="margin-right:600px;">
-			<h1>채팅</h1> 
+			<h1>채팅+ ${loginUser.userName} </h1> 
 		</div>
 		<br><br><br>
 		
 		<div class="btn-group btn-group-lg" id="chatTitleBtn">
-		    <button type="button" class="btn">주민채팅방</button>
+		    <button type="button" class="btn btn-primary" onclick="connectGroup();">주민채팅방</button>
 		    <button type="button" class="btn">경비실 채팅방</button>
 		    <button type="button" class="btn">관리소 채팅방</button>
 		  </div>
@@ -69,23 +69,71 @@
 		</div>
 		<div>
 			<input type="text" id="chatInput" name="chatContent">
-			<button class="btn btn-primary" id="chatBtn">전송</button>
+			<button class="btn btn-primary" id="chatBtn" onclick="send();">전송</button>
 		</div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	</div>	
+	
+	<script>
+		// 채팅페이지로 오자마자 주민단체채팅방전용 웹소켓 접속 시키기
+		$(function(){
+			connectGroup();
+		})
+	
+		// 전역변수
+		var socket;
+		var userName = '${loginUser.userName}';
+		
+		// 주민단체채팅방전용 웹소켓 접속 함수
+		function connectGroup(){
+			console.log(userName);
+			
+			var uri = "ws://localhost:8015/apartmentor/gp";
+			socket = new WebSocket(uri);
+			
+			// 연결이 성공했는지 아닌지 확인할 수 있도록 예약작업(콜백)을 설정
+ 			socket.onopen = function(){
+ 				console.log("서버와 연결되었습니다.");
+ 			}
+ 			socket.onclose = function(){
+ 				console.log("서버와 연결이 종료되었습니다.");
+ 			}
+ 			socket.onerror = function(e){
+ 				console.log("오타 ㄴㄴ");
+ 			}
+ 			socket.onmessage = function(e){
+ 				console.log("메세지가 도착하였습니다.");
+ 				var div = $('<div style="width:100px;"></div>');
+ 				div.text(e.data);
+ 				$('.chat-area').append(userName);
+ 				$('.chat-area').append(div);
+ 				
+ 				
+ 			}
+		}
+	
+		// 메시지 전송함수 : 입력한 글자를 불러와서 서버에 전송
+ 		function send(){
+ 			var text = $('#chatInput').val();
+ 			if(!text){
+ 				return;
+ 			}
+ 			socket.send(text);
+ 			$('#chatInput').val('');
+ 		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
 
 	<jsp:include page="../common/footer.jsp"/>
 

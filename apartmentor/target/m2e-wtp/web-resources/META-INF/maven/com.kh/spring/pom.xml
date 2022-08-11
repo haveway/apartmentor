@@ -265,6 +265,12 @@
 		    <version>1.6.2</version>
 		</dependency>
 		
+		<!-- 7. 채팅 관련 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 		       
 	</dependencies>
 	
