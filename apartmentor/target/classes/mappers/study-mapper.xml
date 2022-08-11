@@ -31,7 +31,7 @@
 		       )
 		VALUES
 		       (
-		       #{reserveNo},
+		       SEQ_RNO.NEXTVAL,
 		       #{startDate},
 		       #{endDate},
 		       #{facility},

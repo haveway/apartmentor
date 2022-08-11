@@ -32,21 +32,21 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping("reserveSeat.st")
-	public Reserve reserveSeat(String startTime, String endTime, int seatNo) {
+	public Reserve reserveSeat(String startTime, String endTime, int seatNo, int userNo, String startDay) {
 		
 		//System.out.println(startTime);
 		//System.out.println(endTime);
 		//System.out.println(seatNo);
 		
-//		Reserve r = new Reserve(9999, startTime, endTime, "st", seatNo, 2, "Y", "2022-08-05");
+//		Reserve r = new Reserve(9999, startTime, endTime, "st", seatNo, 2, "Y", "2022-08-05", "2022-08-05");
 		Reserve r = new Reserve();
-		r.setReserveNo(997); //예약번호 : 나중에 시퀀스로 할 것
 		r.setStartDate(startTime); //전달받음
 		r.setEndDate(endTime); //전달받음
 		r.setFacility("st"); 
 		r.setSeatNo(seatNo); //전달받음
-		r.setUserNo(4); //로그인하면 됨
+		r.setUserNo(userNo); //전달받음
 		r.setStatus("Y"); //디폴트인가..?
+		r.setStartDay(startDay); //전달받음
 //		System.out.println(r);
 		
 		int result = studyService.reserveSeat(r);
