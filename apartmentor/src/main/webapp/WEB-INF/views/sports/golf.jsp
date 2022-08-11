@@ -53,7 +53,7 @@
 		<div class="btn-div">
 			<a href="golf.sp" class="query btn btn-lg btn-secondary">실내 골프 연습장</a>
 			<a href="miniGym.sp" class="btn btn-lg btn-outline-secondary">미니 GYM</a>
-			<a href="" class="btn btn-lg btn-outline-secondary">이용내역</a>
+			<a href="sportsOptionView.sp?currentPage=1&category=ALL" class="btn btn-lg btn-outline-secondary">이용내역</a>
 		</div>
 		
 		<br><br>
