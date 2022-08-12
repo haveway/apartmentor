@@ -11,10 +11,9 @@
 		<result column="NOTICE_CALENDER" property="noticeCalender" />
 		<result column="NOTICE_START_DATE" property="noticeStartDate" />
 		<result column="NOTICE_END_DATE" property="noticeEndDate" />
-		<result column="ORIGIN_NAME" property="noticeEndDate" />
-		<result column="CHANGE_NAME" property="noticeEndDate" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
 		<result column="CREATE_DATE" property="createDate" />
-		<result column="MODIFY_DATE" property="modifyDate" />
 		<result column="STATUS" property="status" />
 		<result column="USER_NAME" property="userName" />
 		<result column="NOTICE_CATEGORY_VALUE" property="noticeCategoryValue" />
@@ -155,6 +154,23 @@
          ORDER BY CREATE_DATE DESC  
 	</select> 
 	
-	
+	<select id="selectNotice" resultMap="noticeResultSet">
+		SELECT
+			   NOTICE_NO,
+			   DECODE(NOTICE_CATEGORY, '공지', '[공지]', '알림', '[알림]', '행사', '[행사]') NOTICE_CATEGORY_VALUE,
+			   NOTICE_TITLE,
+			   NOTICE_CALENDER,
+			   TO_CHAR(NOTICE_START_DATE, 'YYYY-MM-DD') as "NOTICE_START_DATE",
+			   TO_CHAR(NOTICE_END_DATE, 'YYYY-MM-DD') as "NOTICE_END_DATE",
+			   CHANGE_NAME,
+			   ORIGIN_NAME,
+			   NOTICE_CONTENT
+		 FROM
+		 	   NOTICE
+	    WHERE
+	    	   NOTICE_NO = #{noticeNo}
+	      AND
+	      	   STATUS = 'Y'
+	</select>
 	
 </mapper>

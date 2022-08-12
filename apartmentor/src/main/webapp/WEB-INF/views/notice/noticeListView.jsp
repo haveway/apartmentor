@@ -149,7 +149,7 @@ h1 {
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${empty category}">
+							<c:when test="${empty condition and empty category}">
 								<li class="page-item"><a class="page-link" href="list.notice?cpage=${ pi.currentPage - 1 }">이전</a></li>
 							</c:when>
 							<c:when test="${not empty condition}">
@@ -164,10 +164,10 @@ h1 {
 				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${empty category}">
+							<c:when test="${empty condition and empty category}">
 								<li class="page-item"><a class="page-link" href="list.notice?cpage=${p}">${p}</a></li>
 							</c:when>
-							<c:when test="${empty category and not empty condition}">
+							<c:when test="${not empty condition}">
 								<li class="page-item"><a class="page-link" href="search.notice?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
 							</c:when>
 							<c:otherwise>
@@ -182,7 +182,7 @@ h1 {
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${empty category}">
+							<c:when test="${empty condition and empty category}">
 								<li class="page-item"><a class="page-link" href="list.notice?cpage=${ pi.currentPage + 1 }">다음</a></li>
 							</c:when>
 							<c:when test="${not empty condition}">

@@ -95,7 +95,7 @@ h1 {
                     </tr>
 					<tr>
 						<th>내용 입력</th>
-						<td colspan="6"><textarea name="noticeContent" rows="20"
+						<td colspan="6"><textarea name="noticeContent" a wrap="hard" rows="20" 
 								cols="80" style="resize: none;" placeholder="내용을 입력해주세요"></textarea>
 						</td>
 					</tr>

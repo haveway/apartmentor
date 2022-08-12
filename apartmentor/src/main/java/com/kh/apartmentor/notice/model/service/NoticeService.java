@@ -29,5 +29,7 @@ public interface NoticeService {
 	// 공지사항 검색 별 게시글 조회
 	ArrayList<Notice> searchList(HashMap map, PageInfo pi);
 	
+	// 공지사항 상세 페이지
+	Notice selectNotice(int noticeNo);	
 
 }

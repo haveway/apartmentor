@@ -44,7 +44,7 @@ h1 {
 	<!-- timepicker 라이브러리 -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
+	
 	<br>
 	<br>
 
@@ -93,7 +93,7 @@ h1 {
 						<td>&nbsp;&nbsp;</td>
 						<td style="width: 220px"><input type="text" id="timepicker" name="visitTime" required /></td>
 						<td>
-							<button type="button" class="btn btn-info" style="width: 100px;" onclick="check()" disabled>
+							<button type="button" class="btn btn-info" style="width: 100px;" onclick="check()">
 								시간 확인
 							</button>
 						</td>
@@ -101,7 +101,7 @@ h1 {
 					<tr>
 						<th>참고 사항</th>
 						<td>&nbsp;&nbsp;</td>
-						<td colspan="6"><textarea name="visitContent" rows="20"
+						<td colspan="6"><textarea name="visitContent" a wrap="hard" rows="20" 
 								cols="80" style="resize: none;" placeholder="참고사항을 입력해주세요"></textarea>
 						</td>
 					</tr>
@@ -209,35 +209,35 @@ h1 {
 					success : function(reserve){
 							let list = '';
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">가스 예약 현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">가스 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 1 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								} 
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">난방 예약 현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">난방 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 2 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								}
 							}
 		
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">소독 예약 현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">소독 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 3 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								} 
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">수도 예약 현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">수도 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 4 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								}
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">전기 예약 현황</p>';
+							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">전기 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 5 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
@@ -283,7 +283,6 @@ h1 {
 						console.log("예약 가능 조회 실패");
 					}
 				});		
-						
 						
 			}
 			

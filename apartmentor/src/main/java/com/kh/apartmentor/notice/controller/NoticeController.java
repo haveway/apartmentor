@@ -153,6 +153,19 @@ public class NoticeController {
 		return "notice/noticeEnrollForm";
 	}
 
+	/**
+	 * 공지사항 상세 페이지로 이동하는 메소드
+	 */
+	@RequestMapping("detail.notice")
+	public ModelAndView detailVist(ModelAndView mv, int nno) {
+		
+		Notice n = noticeService.selectNotice(nno);
+		
+		mv.addObject("n", n).setViewName("notice/noticeDetailView");
+		
+		return mv;
+	}
+	
 	
 		
 }

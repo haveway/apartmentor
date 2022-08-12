@@ -55,4 +55,9 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.searchList(sqlSession, map, pi);
 	}
 
+	@Override
+	public Notice selectNotice(int noticeNo) {
+		return noticeDao.selectNotice(sqlSession, noticeNo);
+	}
+
 }

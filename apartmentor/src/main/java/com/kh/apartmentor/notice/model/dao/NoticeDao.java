@@ -56,4 +56,8 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.searchList", map, rowBounds);
 	}
 
+	public Notice selectNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
+	}
+
 }

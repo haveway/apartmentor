@@ -42,6 +42,9 @@
 <body>
 
 <jsp:include page="../common/header.jsp"/>
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 <br>
 <br>
@@ -98,10 +101,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th>참고 사항</th>
+				<th style="vertical-align: top;">참고 사항</th>
 				<td>&nbsp;&nbsp;</td>
 				<td colspan="6">
-						${v.visitContent}
+					<p style="white-space: pre-line;">${v.visitContent}</p>
 				</td>
 			</tr>
 		</table>
@@ -180,35 +183,35 @@
 			success : function(Allreserve){
 					let list = '';
 					
-					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">가스 예약 현황</p>';
+					list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">가스 예약 현황</p>';
 					for(let i in Allreserve) {
 						if(Allreserve[i].visitCategory == 1 && Allreserve[i].visitDate != null) {
 							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
 						} 
 					}
 					
-					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">난방 예약 현황</p>';
+					list + '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">난방 예약 현황</p>';
 					for(let i in Allreserve) {
 						if(Allreserve[i].visitCategory == 2 && Allreserve[i].visitDate != null) {
 							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
 						} 
 					}
 					
-					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">소독 예약 현황</p>';
+					list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">소독 예약 현황</p>';
 					for(let i in Allreserve) {
 						if(Allreserve[i].visitCategory == 3 && Allreserve[i].visitDate != null) {
 							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
 						} 
 					}
 					
-					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">수도 예약 현황</p>';
+					list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">수도 예약 현황</p>';
 					for(let i in Allreserve) {
 						if(Allreserve[i].visitCategory == 4 && Allreserve[i].visitDate != null) {
 							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
 						} 
 					}
 					
-					list += '<p style="font-weight:bolder; font-size:18px; margin:0px; color:#00589b">전기 예약 현황</p>';
+					list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">전기 예약 현황</p>';
 					for(let i in Allreserve) {
 						if(Allreserve[i].visitCategory == 5 && Allreserve[i].visitDate != null) {
 							list += Allreserve[i].aptNo + ' : ' + Allreserve[i].visitDate + '&nbsp;' + Allreserve[i].visitTime + '<br>';
