@@ -64,7 +64,7 @@ INSERT INTO MEMBER
 VALUES (SEQ_UNO.NEXTVAL,'1동401호', 'user04', '$2a$10$yxpMzwgyqOk3KquCDZVYo.NcJjNvU0PkI5R1x/eM38V.w6H/lGH0.', '서영재', '881115', '01098987676', 'user04@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
-VALUES (SEQ_UNO.NEXTVAL,'1동501호', 'user05', '$2aa$10$fQ5NqXtxTfUQqipDKm3fB.v6Af10NW39qR4lpOpsED6k6GQDhK6RK', '손동환', '970514', '01079796868', 'user05@kh.or.kr', 'Y');
+VALUES (SEQ_UNO.NEXTVAL,'1동501호', 'user05', '$2a$10$0pcWEqUUdBtVMNWpw2OTq.LoBIeudVWoyzfx7rUuUwYROAsTNCWYa', '손동환', '970514', '01079796868', 'user05@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동601호', 'user06', '$2a$10$dYQrw7ER9qmwB.mTO2zA9O5vhaIERyuERHgCpdqAJshtq2udvRg3a', '임유리', '990107', '01029293838', 'user06@kh.or.kr', 'Y');
