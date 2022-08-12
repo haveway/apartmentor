@@ -22,4 +22,8 @@ public class ChatService {
 		return chatDao.selectChatList(sqlSession);
 	}
 
+	public int insertChat(Chat c) {
+		return chatDao.insertChat(sqlSession, c);
+	}
+
 }

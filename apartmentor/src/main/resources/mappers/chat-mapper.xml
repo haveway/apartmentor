@@ -25,5 +25,21 @@
  		 WHERE
  		 		CHAT_CODE = 1 				
  	</select>
+ 	
+ 	<!-- 주민채팅방 채팅 작성 쿼리문 -->
+ 	<insert id="insertChat" parameterType="chat">
+ 		INSERT 
+ 		  INTO	
+ 		  		CHAT
+ 		VALUES	
+ 				(
+ 				SEQ_CHNO.NEXTVAL,
+ 				#{chatContent}, 
+ 				SYSDATE, 
+ 				#{chatCode}, 
+ 				#{chatWriter}, 
+ 				#{userNo}
+ 				)
+ 	</insert>
  
 </mapper>

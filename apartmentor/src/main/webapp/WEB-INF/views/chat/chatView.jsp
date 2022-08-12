@@ -20,16 +20,20 @@
 		height:600px; 
 		margin-left:230px;
 		float:left;
+		overflow:auto;
+		border:1px solid black;
+		padding:5px;
 	}
 	.onlineCheck{
 		width: 200px;
 		float:left;
 		height:600px; 
-		margin:auto;
+		margin-left:10px;
 	}
 	#chatInput{
 		width: 500px;
 		margin-left:230px;
+		margin-top:10px;
 		height:50px; 
 	}
 	#chatBtn{
@@ -54,7 +58,7 @@
 		<br><br><br>
 		
 		<div class="btn-group btn-group-lg" id="chatTitleBtn">
-		    <button type="button" class="btn btn-primary" onclick="connectGroup();">주민채팅방</button>
+		    <button type="button" class="btn btn-primary" disabled>주민채팅방</button>
 		    <button type="button" class="btn">경비실 채팅방</button>
 		    <button type="button" class="btn">관리소 채팅방</button>
 		  </div>
@@ -111,10 +115,13 @@
  			
  			socket.onmessage = function(e){
  				console.log("메세지가 도착하였습니다.");
+ 				
+ 				
  				var div = $('<div style="width:100px;"></div>');
  				div.text(e.data);
  				$('.chat-area').append(div);
- 				
+ 				// 스크롤바 하단
+	 			$('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
  				
  			}
 		}
@@ -125,18 +132,30 @@
  			if(!text){
  				return;
  			}
- 			socket.send(text);
- 			$('#chatInput').val('');
+ 		// DB에 채팅내역을 저장 후 메세지 전송하기 위한 ajax실행
+			$.ajax({
+				url : 'insertChat.ch',
+				data : {
+						userNo : ${loginUser.userNo},
+						chatWriter : "${loginUser.userName}",
+						chatCode : 1,
+						chatContent : text
+						},
+				success : function(result){
+					if(result == 'success'){
+						// 입력한 글자 전송
+						socket.send(text);
+			 			$('#chatInput').val('');
+			 			
+					}else{
+						swal('오잉?',"다시 작성해주세요!", 'warning');
+					}
+				}, error : function(){
+					swal('에러!', "채팅내역 insert 비동기 요청 실패!", 'warning');
+				}
+			});
+ 			
  		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	</script>

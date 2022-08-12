@@ -3,16 +3,11 @@ package com.kh.apartmentor.chat.controller;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.kh.apartmentor.chat.model.service.ChatService;
 import com.kh.apartmentor.member.model.vo.Member;
 
 
@@ -21,12 +16,9 @@ import com.kh.apartmentor.member.model.vo.Member;
  * 
  */
 
-@Controller
+
 public class WebSocketGroupServer extends TextWebSocketHandler {
 	
-	// 채팅내역 저장
-	@Autowired
-	private ChatService chatService;
 
 	private Set<WebSocketSession> users = new CopyOnWriteArraySet<WebSocketSession>();
 
@@ -45,6 +37,8 @@ public class WebSocketGroupServer extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
+		
+		// 인터셉터를 통해 HttpSession의 정보를 WebSocketSession에 담아왔기 때문에 접근해 사용 가능.
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
 		
 		TextMessage newMessage = new TextMessage(loginUser.getUserName() + " : " + message.getPayload());
