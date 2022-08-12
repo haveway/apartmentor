@@ -63,20 +63,12 @@
         #content1, #content3{margin-right: 35px;}
         #content2, #content4{margin-left: 35px;}
         
-        /* 이미지 슬라이드 */
-        #imageslide{
-        position: relative;
-        width: 1200px;
-        height: 400px;
-        text-align: center;
-        margin: auto;
-        margin-top: 20px;
-    }
 
-    .imgSlide{
-        width : 1200px; 
-        height : 400px;     
-    }
+	    .mainImg{
+	        width : 1200px; 
+	        height : 400px;     
+	    }
+
         
         
     </style>    
@@ -84,33 +76,10 @@
 <jsp:include page="common/header.jsp"/>
 <body>
     <div class="mainWrap">
-        <div id="imageslide">
-	        <div><img class="imgSlide" id="slide2" src="./resources/img/main/aptm1.jpg"></div>
-	        <div><img class="imgSlide" id="slide3" src="./resources/img/main/aptm2.jpg"></div>
+        <div class="mainImg">
+	        <img class="mainImg" src="./resources/img/main/aptm2.jpg">
     	</div>
-    	<script>
-        // 자동 이미지 슬라이드
-        var slideIndex = 0;
-        var imgSlide = document.getElementsByClassName("imgSlide");
-        slide();
 
-        function slide() {
-            
-            var i;
-
-            for(i = 0; i < imgSlide.length; i++) {
-                imgSlide[i].style.display = "none";
-            }
-
-            slideIndex++;
-
-            if(slideIndex > imgSlide.length) {slideIndex = 1}
-
-            imgSlide[slideIndex-1].style.display = "block";
-            
-            setTimeout(slide, 3000); 
-        }
-   		</script>
         <hr>
 
         <div id="contentWrap1">
