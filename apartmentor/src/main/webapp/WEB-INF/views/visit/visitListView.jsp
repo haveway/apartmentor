@@ -99,6 +99,8 @@ h1 {
 				</tr>
 		</thead>
 		<tbody>
+			<c:choose>
+				<c:when test="${not empty list}">
 					<c:forEach var="v" items="${list}">
 						 <tr onclick="location.href='detail.visit?vno=${v.visitNo}'">
 							<td>${v.visitValue}</td>
@@ -107,10 +109,15 @@ h1 {
 							<td>${v.createDate}</td>
 						</tr>
 					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<td colspan="4">예약 내역이 없습니다</td>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 	
-	<c:if test="${ not empty category }">
+	<c:if test="${not empty category}">
 		<script>
 			$(function(){
 				$("#visitList option[value=${category}]").attr("selected", true);  
@@ -131,7 +138,6 @@ h1 {
 	
 	<div id="pagingArea">
 		<ul class="pagination">
-		
 			<c:choose>
 					<c:when test="${ pi.currentPage eq 1 }">
 						<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>

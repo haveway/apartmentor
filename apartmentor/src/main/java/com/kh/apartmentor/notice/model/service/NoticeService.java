@@ -1,10 +1,10 @@
 package com.kh.apartmentor.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.notice.model.vo.Notice;
-import com.kh.apartmentor.visit.model.vo.Visit;
 
 public interface NoticeService {
 	
@@ -22,6 +22,12 @@ public interface NoticeService {
 	
 	// 공지사항 말머리 별 게시글 조회
 	ArrayList<Notice> selectCategoryList(String category, PageInfo pi);
+	
+	// 공지사항 검색 별 게시글 수
+	int searchListCount(HashMap map);
+	
+	// 공지사항 검색 별 게시글 조회
+	ArrayList<Notice> searchList(HashMap map, PageInfo pi);
 	
 
 }

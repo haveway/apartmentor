@@ -93,7 +93,7 @@ h1 {
 						<td>&nbsp;&nbsp;</td>
 						<td style="width: 220px"><input type="text" id="timepicker" name="visitTime" required /></td>
 						<td>
-							<button type="button" class="btn btn-info" style="width: 100px;" onclick="check()">
+							<button type="button" class="btn btn-info" style="width: 100px;" onclick="check()" disabled>
 								시간 확인
 							</button>
 						</td>
@@ -122,6 +122,8 @@ h1 {
 				    $("#contents.body-contents").val(data);
 				    $("#text-contents.body-contents").html(data);
 				});
+				
+				
 				
 				// datepicker 관련
 				$(function(){
@@ -157,6 +159,7 @@ h1 {
 					    scrollbar: true // 스크롤바
 					});
 				})
+				
 			</script>
 
 

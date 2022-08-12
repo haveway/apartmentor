@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -92,7 +93,7 @@ public class NoticeController {
 	@RequestMapping("list.notice")
 	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
-		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(), currentPage, 5, 10);
+		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(), currentPage, 10, 5);
 		
 		mv.addObject("pi", pi)
 		  .addObject("list",noticeService.selectList(pi))
@@ -107,7 +108,7 @@ public class NoticeController {
 	@RequestMapping("categoryList.notice")
 	public String selectCategoryList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String category, Model model) {
 		
-		PageInfo pi = Pagination.getPageInfo(noticeService.selectCategoryListCount(category), currentPage, 5, 10);
+		PageInfo pi = Pagination.getPageInfo(noticeService.selectCategoryListCount(category), currentPage, 10, 5);
 		
 		ArrayList<Notice> list = noticeService.selectCategoryList(category, pi);
 		
@@ -120,6 +121,29 @@ public class NoticeController {
 		
 	}
 	
+	/**
+	 * 공지사항 목록 페이지 - 검색
+	 */
+	@RequestMapping("search.notice")
+	public String searchList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String condition, String keyword, Model model) {
+			
+		HashMap<String, String> map = new HashMap();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(noticeService.searchListCount(map), currentPage, 10, 5);
+			
+		ArrayList<Notice> list = noticeService.searchList(map, pi);
+			
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+			
+		return "notice/noticeListView";
+		
+	}
 
 	/**
 	 * 공지사항 작성 페이지로 이동하는 메소드

@@ -80,10 +80,11 @@ h1 {
 	<br>
 	
 	<c:if test="${loginUser.userName eq '관리자'}">
-		<div align="right"style="margin-right:200px;">
+		<div align="right" style="margin-right:200px; margin-bottom: 10px;">
 			<button type="button" class="btn btn-info" onclick="location.href='enrollForm.notice'">글쓰기</button>
 		</div>
 	</c:if>
+	
 	
 	<table id="noticeList" class="table table-hover" align="center" >			
 		<thead>
@@ -102,18 +103,27 @@ h1 {
 				</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="n" items="${list}">
-				<tr onclick="location.href='detail.notice?nno=${n.noticeNo}'">
-					<td>${n.noticeCategoryValue}</td>
-					<td>${n.noticeTitle}</td>
-					<td>${n.userName}</td>
-					<td>${n.createDate}</td>
-				</tr>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${not empty list}">
+					<c:forEach var="n" items="${list}">
+						<tr onclick="location.href='detail.notice?nno=${n.noticeNo}'">
+							<td>${n.noticeCategoryValue}</td>
+							<td>${n.noticeTitle}</td>
+							<td>${n.userName}</td>
+							<td>${n.createDate}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4">공지사항이 없습니다</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 
-		<c:if test="${ not empty category }">
+		<c:if test="${not empty category}">
 		<script>
 			$(function(){
 				$("#noticeList option[value=${category}]").attr("selected", true);  
@@ -132,9 +142,82 @@ h1 {
 
 
 	<div id="pagingArea">
-
+		<ul class="pagination">
+			<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<c:when test="${empty category}">
+								<li class="page-item"><a class="page-link" href="list.notice?cpage=${ pi.currentPage - 1 }">이전</a></li>
+							</c:when>
+							<c:when test="${not empty condition}">
+								<li class="page-item"><a class="page-link" href="search.notice?cpage=${ pi.currentPage - 1 }&condition=${condition}&keyword=${keyword}">이전</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="categoryList.notice?cpage=${ pi.currentPage - 1 }&category=${category}">이전</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:otherwise>
+				</c:choose>
+				
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:choose>
+							<c:when test="${empty category}">
+								<li class="page-item"><a class="page-link" href="list.notice?cpage=${p}">${p}</a></li>
+							</c:when>
+							<c:when test="${empty category and not empty condition}">
+								<li class="page-item"><a class="page-link" href="search.notice?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="categoryList.notice?cpage=${p}&category=${category}">${p}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+					 	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<c:when test="${empty category}">
+								<li class="page-item"><a class="page-link" href="list.notice?cpage=${ pi.currentPage + 1 }">다음</a></li>
+							</c:when>
+							<c:when test="${not empty condition}">
+								<li class="page-item"><a class="page-link" href="search.notice?cpage=${ pi.currentPage + 1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="categoryList.notice?cpage=${ pi.currentPage + 1 }&category=${category}">다음</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:otherwise>
+				</c:choose>
+    	</ul>	
 	</div>
 	
+	 <div id="search-area" align= "center">
+     	<form action="search.notice" method="get">
+        	<input type="hidden" name="currentPage" value="1">
+                <select name="condition">
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                </select>
+           <input type="text" name="keyword" value="${ keyword }">
+           <button type="submit" class="btn btn-info">검색</button>
+        </form>
+    </div>
+    
+            
+    <c:if test="${ not empty condition }">
+	    <script>
+	    	$(function(){
+				$("#search-area option[value=${condition}]").attr("selected", true);        		
+	        })
+		</script>
+	</c:if>
+
 <jsp:include page="../common/footer.jsp"/>
 
 </body>
