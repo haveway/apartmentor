@@ -40,7 +40,7 @@
                     <p>대표 : Team1 APARTMENTO</p>
                 </div>
                 <div id="footer2"> 
-                    <p style="font-size: 15px;"><a href="#">고객센터</a></p>
+                    <p style="font-size: 15px;">고객센터</p>
                     <p>이용약관</p>
                     <p>개인정보처리방침</p>
                 </div>

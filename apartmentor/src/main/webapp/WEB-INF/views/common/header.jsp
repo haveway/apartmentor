@@ -296,7 +296,7 @@
             <div class="modal-content">
                 <!-- Head -->
                 <div class="modal-header">
-                    <h2>회원가입</h2>
+                    <h2>회원정보수정</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
