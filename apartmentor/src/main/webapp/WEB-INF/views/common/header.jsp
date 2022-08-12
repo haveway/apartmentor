@@ -11,7 +11,7 @@
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	
 	<!-- CSS -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<!-- Default theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme -->
@@ -26,13 +26,13 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
-    	div{
+    	/* div{
             border: 1px solid red;
             
-        } 
+        }  */
         #header{       
             background-color: rgb(0,88,155);
-            width: 1200px;
+            width: 100%;
             height: 50px;
             display: flex;
             flex-direction: row;
@@ -83,7 +83,7 @@
             margin: auto;
         }
         #logo a{
-            margin-left: 30px;
+            margin-left: 110px;
         	color: white;
         	text-decoration: none;
         }
@@ -110,20 +110,20 @@
 			border: none;
 			padding-top: 0px
 		}
-		.modal-body input{
+		.mb input{
             margin-top: 7.5px;
             height: 20px;
             width: 100%;
             font-size: 20px;
             border: none;
         }
-        .modal-body input:focus {outline:none;}
-        .modal-body b{
+        .mb input:focus {outline:none;}
+        .mb b{
             font-size: 20px;
             margin-bottom: 30px;
             margin-top: 30px;
         }
-        .modal-body p{
+        .mb p{
             font-size: 7px;
             color: grey;
         }
@@ -136,6 +136,30 @@
             color: white;        
         }
         
+        
+        
+        
+        
+    /* 메뉴바 */    
+    input[id="menuicon"] {display:none;}
+    input[id="menuicon"] + label {display:block;margin:0px;width:45px; height:35px; position:relative; cursor: pointer; margin-top:5px; margin-left:5px;}
+    input[id="menuicon"] + label span {display:block; position:absolute;width:100%;height:5px;  border-radius: 30px; background: #fff; transition:all .35s;}
+    input[id="menuicon"] + label span:nth-child(1) {top:0;}
+    input[id="menuicon"] + label span:nth-child(2) {top: 50%; transform:translatey(-50%);}
+    input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+    input[id="menuicon"]:checked + label {z-index:2;}
+    input[id="menuicon"]:checked + label span {background:#fff;}
+    input[id="menuicon"]:checked + label span:nth-child(1) {top: 50%; transform:translateY(-50%) rotate(45deg);}
+    input[id="menuicon"]:checked + label span:nth-child(2) {opacity: 0;}
+    input[id="menuicon"]:checked + label span:nth-child(3) {bottom: 50%; transform:translateY(50%) rotate(-45deg);}
+    div[class="sidebar"] {width:13%; height: 100%; background: #f0eee9; position: fixed; top: 0; left: -13%; z-index: 1; transition:all .35s;}
+    input[id="menuicon"]:checked + label + div {left:0;}
+    .accordion-body{padding: 0;}
+    .accordion-content{width: 100%; height: 50px; border-bottom: 1px solid gray; background: #f0eee9}
+    .accordion-button{border-bottom: 1px solid gray; background: #f0eee9}
+    .accordion-content:hover {background:  rgb(202,194,176); cursor: pointer;}
+    .accordion-content {padding-top: 10px;}
+    .hr1{margin-bottom: 0; margin-top: 0; height: 1px;}
     </style>
 </head>
 <body>
@@ -154,47 +178,87 @@
 	</c:if>	
 
     <div id="header">
-        <div id="menuBar">
-            <div class = main-nav-left> 
-                <div id="menuImg">asd</div>
-                <div class = "sub-menu">
-                    <ul class = "sub-menu-list">
-                        <li>
-                            <a href="map.api">지도</a>
-                        </li><hr>
-                        <li>
-                            <a href="list.bo">자유게시판</a>
-                        </li><hr>
-                        <li>
-                            <a href="seatView.st">독서실</a>
-                        </li><hr>
-                        <li>
-                            <a href="golf.sp">실내골프연습장</a>
-                        </li><hr>
-                        <li>
-                            <a href="miniGym.sp">미니 GYM</a>
-                        </li><hr>
-                        <c:choose>
+	    <input type="checkbox" id="menuicon">
+	    <label for="menuicon">
+	        <span></span>
+	        <span></span>
+	        <span></span>
+	    </label>
+	    <div class="sidebar">
+	    	<div style="height: 50px;"></div>
+	    	<div class="accordion accordion-flush" id="accordionFlushExample">
+	        	<div class="accordion-item">
+	          		<h2 class="accordion-header" id="flush-headingOne">
+	            		<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+	              			주민 커뮤니티
+	            		</button>
+	          		</h2>
+	          		<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+	            		<div class="accordion-body">
+	            			<div class="accordion-content" onclick="location.href='list.notice'">
+			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;공지사항<p>
+			            	</div>
+			            	<div class="accordion-content" onclick="location.href='list.bo'">
+			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</p>
+			            	</div>
+			            	<div class="accordion-content" onclick="location.href='#'">
+			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;투표</p>
+			            	</div>
+			            	<div class="accordion-content" onclick="location.href='#'">
+			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;채팅</p>
+			            	</div>
+	            		</div>
+	          		</div>
+	        	</div>
+	       	<div class="accordion-item">
+	          	<h2 class="accordion-header" id="flush-headingTwo">
+	            	<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+	             		예약
+	            	</button>
+	          	</h2>
+	          	<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+	            	<div class="accordion-body">
+            			<div class="accordion-content" onclick="location.href='seatView.st'">
+		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;독서실<p>
+		            	</div>
+		            	<div class="accordion-content"onclick="location.href='miniGym.sp'">
+		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;미니 GYM</p>
+		            	</div>
+		            	<div class="accordion-content"onclick="location.href='golf.sp'">
+		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;실내골프연습장</p>
+		            	</div>
+		            	<c:choose>
                         	<c:when test="${loginUser.userId eq 'admin'}">
-		                        <li>
-		                            <a href="list.visit">방문예약 목록페이지</a>
-                        		</li><hr>
-	                        </c:when>
-	                        <c:otherwise>
-		                        <li>
-		                            <a href="enrollForm.visit">방문예약 페이지</a>
-		                        </li><hr>
-	                        </c:otherwise>
-                        </c:choose>
-                        <c:if test="${loginUser.userId eq 'admin'}">
-	                        <li>
-	                            <a href="list.me">회원관리</a>
-	                        </li>
-                        </c:if>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                        		
+				            	<div class="accordion-content" onclick="location.href='list.visit'">
+				            		<p>&nbsp;&nbsp;&nbsp;&nbsp;방문예약 목록페이지</p>
+			            		</div>
+			            	</c:when>
+			            	<c:otherwise>
+				            	<div class="accordion-content" onclick="location.href='enrollForm.visit'">
+				            		<p>&nbsp;&nbsp;&nbsp;&nbsp;방문예약 페이지</p>
+			            		</div>
+			            	</c:otherwise>
+			            </c:choose>		
+					</div>
+	          	</div>
+	          	<div class="accordion-body">
+           			<div class="accordion-content" onclick="location.href='#'">
+	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;관리비/차량등록<p>
+	            	</div>
+	            	<div class="accordion-content" onclick="location.href='map.api'">
+	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;우리 동네 지도</p>
+	            	</div>
+	            	<c:if test="${loginUser.userId eq 'admin'}">
+		            	<div class="accordion-content" onclick="location.href='list.me'">
+		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;회원관리</p>
+	            		</div>
+            		</c:if>
+				</div>
+	        </div>
+
+      	</div>
+	    </div>
         <div id="logo">
         	<a href="main.do" id="logo">APARTMENTOR</a>
         </div>
@@ -228,7 +292,7 @@
                 
                 <!-- Body -->
                 <form action="update.me" method="post">
-                    <div class="modal-body">
+                    <div class="modal-body mb">
                         <b>아이디 : </b>
                         <div class="modal-input">
                             <input type="text" id="addId" name="userId" oninput="checkId();" required readonly  value="${loginUser.userId}">
@@ -361,5 +425,7 @@
 			}
 		}
 	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	
 </body>
 </html>

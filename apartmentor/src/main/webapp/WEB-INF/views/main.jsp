@@ -66,7 +66,7 @@
         
     </style>    
 </head>
-<jsp:include page="common/header_test.jsp"/>
+<jsp:include page="common/header.jsp"/>
 <body>
     <div class="mainWrap">
         <div id="imgSlide">

@@ -32,7 +32,7 @@
         } 
         #header{       
             background-color: rgb(0,88,155);
-            width: 100%;
+            width: 1200px;
             height: 50px;
             display: flex;
             flex-direction: row;
@@ -136,25 +136,6 @@
             color: white;        
         }
         
-        
-        
-        
-        
-    /* 메뉴바 */    
-    input[id="menuicon"] {display:none;}
-    input[id="menuicon"] + label {display:block;margin:0px;width:50px; height:40px; position:relative; cursor: pointer;}
-    input[id="menuicon"] + label span {display:block; position:absolute;width:100%;height:5px;  border-radius: 30px; background: #000; transition:all .35s;}
-    input[id="menuicon"] + label span:nth-child(1) {top:0;}
-    input[id="menuicon"] + label span:nth-child(2) {top: 50%; transform:translatey(-50%);}
-    input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
-    input[id="menuicon"]:checked + label {z-index:2;}
-    input[id="menuicon"]:checked + label span {background:#fff;}
-    input[id="menuicon"]:checked + label span:nth-child(1) {top: 50%; transform:translateY(-50%) rotate(45deg);}
-    input[id="menuicon"]:checked + label span:nth-child(2) {opacity: 0;}
-    input[id="menuicon"]:checked + label span:nth-child(3) {bottom: 50%; transform:translateY(50%) rotate(-45deg);}
-    div[class="sidebar"] {width:300px; height: 100%; background:rgb(0,88,155); position: fixed; top: 0; left: -300px; z-index: 1; transition:all .35s;}
-    input[id="menuicon"]:checked + label + div {left:0;}
-        
     </style>
 </head>
 <body>
@@ -173,7 +154,7 @@
 	</c:if>	
 
     <div id="header">
-<%--         <div id="menuBar">
+        <div id="menuBar">
             <div class = main-nav-left> 
                 <div id="menuImg">asd</div>
                 <div class = "sub-menu">
@@ -213,16 +194,7 @@
                     </ul>
                 </div>
             </div>
-        </div> --%>
-	    <input type="checkbox" id="menuicon">
-	    <label for="menuicon">
-	        <span></span>
-	        <span></span>
-	        <span></span>
-	    </label>
-	    <div class="sidebar">
-	    	
-	    </div>
+        </div>
         <div id="logo">
         	<a href="main.do" id="logo">APARTMENTOR</a>
         </div>
