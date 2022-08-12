@@ -22,7 +22,7 @@ public class StudyController {
 		// 보내야 할 것 	1."study/seatView"	2. select SeatList
 		
 		ArrayList<Reserve> list = studyService.selectList();
-		System.out.println(list);
+//		System.out.println(list);
 		
 		mv.addObject("list", studyService.selectList())
 		  .setViewName("study/seatView");
@@ -32,7 +32,7 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping("reserveSeat.st")
-	public Reserve reserveSeat(String startTime, String endTime, int seatNo, int userNo, String startDay) {
+	public ModelAndView reserveSeat(ModelAndView mv, String startTime, String endTime, int seatNo, int userNo, String startDay) {
 		
 		//System.out.println(startTime);
 		//System.out.println(endTime);
@@ -52,13 +52,16 @@ public class StudyController {
 		int result = studyService.reserveSeat(r);
 //		System.out.println(result);
 		
-		Reserve rInfo = null;
+		Reserve reserveInfo = null;
 		if(result > 0) {
-			rInfo = studyService.selectReserve(r.getUserNo());
-//			System.out.println(rInfo);
+			reserveInfo = studyService.selectReserve(r.getUserNo());
+			System.out.println(reserveInfo);
 		}
 		
-		return rInfo;
+		mv.addObject("reserveInfo", studyService.selectReserve(userNo))
+		  .setViewName("study/seatView");
+		
+		return mv;
 	}
 
 }
