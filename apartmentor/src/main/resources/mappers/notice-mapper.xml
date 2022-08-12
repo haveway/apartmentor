@@ -54,12 +54,14 @@
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		  FROM NOTICE
+		 WHERE STATUS = 'Y'
 	</select>
 	
 	<select id="selectList" resultMap="noticeResultSet">
 		SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]', '알림', '[알림]', '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
-		  FROM NOTICE
+		  FROM NOTICE N
 		  JOIN MEMBER USING(USER_NO)
+		 WHERE N.STATUS = 'Y'		  
          ORDER BY CREATE_DATE DESC  
 	</select>
 	
@@ -68,20 +70,24 @@
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '공지'
+				  AND STATUS = 'Y'
 		</if>
 		<if test="category == '알림'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '알림'
+			   	  AND STATUS = 'Y'
 		</if>
 		<if test="category == '행사'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '행사'
+				  AND STATUS = 'Y'
 		</if>
 		<if test="category == '전체'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
+			    WHERE STATUS = 'Y'
 		</if>
 	</select>
 	
@@ -89,31 +95,66 @@
 		<choose>
 			<when test="category == '공지'">
 				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
-				  FROM NOTICE
+				  FROM NOTICE N
 				  JOIN MEMBER USING(USER_NO)
 				 WHERE NOTICE_CATEGORY = '공지'
+				   AND N.STATUS = 'Y'
 		         ORDER BY CREATE_DATE DESC  
 			</when>
 			<when test="category == '알림'">
 				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '알림', '[알림]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
-				  FROM NOTICE
+				  FROM NOTICE N
 				  JOIN MEMBER USING(USER_NO)
 				 WHERE NOTICE_CATEGORY = '알림'
+				   AND N.STATUS = 'Y'
 		         ORDER BY CREATE_DATE DESC  
 			</when>
 			<when test="category == '행사'">
 				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
-				  FROM NOTICE
+				  FROM NOTICE N
 				  JOIN MEMBER USING(USER_NO)
 				 WHERE NOTICE_CATEGORY = '행사'
+				   AND N.STATUS = 'Y'
 		         ORDER BY CREATE_DATE DESC  
 			</when>
 			<when test="category == '전체'">
 				SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]', '알림', '[알림]', '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
-				  FROM NOTICE
+				  FROM NOTICE N
 				  JOIN MEMBER USING(USER_NO)
+				 WHERE N.STATUS = 'Y'
 		         ORDER BY CREATE_DATE DESC  
 			</when>
 		</choose>
 	</select>
+	
+	<select id="searchListCount" resultType="_int" parameterType="hashmap">
+		SELECT COUNT(*)
+		  FROM NOTICE
+		 WHERE STATUS = 'Y'
+		<if test="condition == 'title'">
+		  		AND NOTICE_TITLE 
+		 </if>
+		 <if test="condition == 'content'">
+		  		AND NOTICE_CONTENT
+		 </if> 
+		  LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="searchList" resultMap="noticeResultSet" parameterType="hashmap">
+		SELECT NOTICE_NO, DECODE(NOTICE_CATEGORY, '공지', '[공지]', '알림', '[알림]', '행사', '[행사]') NOTICE_CATEGORY_VALUE, NOTICE_TITLE, USER_NAME, CREATE_DATE
+		  FROM NOTICE N
+		  JOIN MEMBER USING(USER_NO)
+		 WHERE N.STATUS = 'Y'
+		 <if test="condition == 'title'">
+		  		AND NOTICE_TITLE 
+		 </if>
+		 <if test="condition == 'content'">
+		  		AND NOTICE_CONTENT
+		 </if>
+		  LIKE '%' || #{keyword} || '%' 		  
+         ORDER BY CREATE_DATE DESC  
+	</select> 
+	
+	
+	
 </mapper>

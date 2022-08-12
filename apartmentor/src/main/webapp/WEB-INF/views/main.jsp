@@ -63,16 +63,23 @@
         #content1, #content3{margin-right: 35px;}
         #content2, #content4{margin-left: 35px;}
         
+
+	    .mainImg{
+	        width : 1200px; 
+	        height : 400px;     
+	    }
+
+        
         
     </style>    
 </head>
 <jsp:include page="common/header.jsp"/>
 <body>
     <div class="mainWrap">
-        <div id="imgSlide">
+        <div class="mainImg">
+	        <img class="mainImg" src="./resources/img/main/aptm2.jpg">
+    	</div>
 
-        </div>
-        <br>
         <hr>
 
         <div id="contentWrap1">
@@ -81,7 +88,7 @@
             	공지사항
             	</div>
             	<div class="a1">
-            	<a href="#">더보기 + </a>
+            	<a href="list.notice">더보기 + </a>
             	</div>
 	           	<table class="table">
 	           		<tr>
@@ -171,7 +178,7 @@
                 </form>
             </div>
         </div>
-
+		<br>
         <div id="calendar">
   			<a href="list.notice">임시</a>
         </div>

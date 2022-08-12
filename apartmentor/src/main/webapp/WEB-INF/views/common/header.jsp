@@ -26,11 +26,21 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
-    	/* div{
-            border: 1px solid red;
+    
+    	@font-face {
+		    font-family: 'InfinitySans-RegularA1';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+    
+    	div{
+            /* border: 1px solid red; */
+            font-family: 'InfinitySans-RegularA1';
             
-        }  */
-        #header{       
+        }
+        
+        #header{  
             background-color: rgb(0,88,155);
             width: 100%;
             height: 50px;
@@ -286,7 +296,7 @@
             <div class="modal-content">
                 <!-- Head -->
                 <div class="modal-header">
-                    <h2>회원가입</h2>
+                    <h2>회원정보수정</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
@@ -350,7 +360,7 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember"class="btn submit" disabled>가입신청</button>
+                        <button type="submit" id="insertMember" class="btn submit" disabled>가입신청</button>
                     </div>
                 </form>
             </div>

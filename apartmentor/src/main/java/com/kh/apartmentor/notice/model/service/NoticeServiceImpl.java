@@ -1,6 +1,7 @@
 package com.kh.apartmentor.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,16 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<Notice> selectCategoryList(String category, PageInfo pi) {
 		return noticeDao.selectCategoryList(sqlSession, category, pi);
+	}
+
+	@Override
+	public int searchListCount(HashMap map) {
+		return noticeDao.searchListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Notice> searchList(HashMap map, PageInfo pi) {
+		return noticeDao.searchList(sqlSession, map, pi);
 	}
 
 }
