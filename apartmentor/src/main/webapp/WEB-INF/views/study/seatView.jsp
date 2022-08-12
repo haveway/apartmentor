@@ -13,14 +13,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- sweetalter 관련 -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 </head>
 <style>
     /* Skydiver : rgb(0,88,155)	/ Cloud Dander : rgb(240, 238, 233) */
     
     #h1 {
-    	font-family: 'NanumSquareExtraBold';
     	width: 1200px;
     	height: 60px;
     	text-align: center;
@@ -28,8 +25,6 @@
     }
 /* ---------- 좌석 선택 영역 관련 CSS ---------- */ 
     .content {
-    	font-family: 'NanumSquareExtraBold';
-    	
         background-color:rgb(240, 238, 233); /* Cloud Dancer */
         box-shadow: 1px 1px 5px lightgrey; /* x y blur color */
         
@@ -193,22 +188,22 @@
         </div><!-- seatTable -->
 <!-- 지금 시간 기준으로 이용중, 이용불가 표시 -->        
         <div id="waiting">
-				<table>
-					<tr width="50px">
-						<td>이용중</td>
-						<td><button style="background: rgb(0,88,155);" disabled /></td>
-					</tr>
-					<tr>
-						<td>임박</td>
-						<td><button style="background: lightyellow;" disabled /></td>
-					</tr>
-					<tr>
-						<td>이용가능</td>
-						<td><button style="background: Cloud Dander : rgb(240, 238, 233);" disabled /></td>
-					</tr>
-				</table>
-			</div>
-<!-- 모달 영역 시작 -->        
+			<table>
+				<tr width="50px">
+					<td>이용중</td>
+					<td><button style="background: rgb(0,88,155);" disabled /></td>
+				</tr>
+				<tr>
+					<td>임박</td>
+					<td><button style="background: lightyellow;" disabled /></td>
+				</tr>
+				<tr>
+					<td>이용가능</td>
+					<td><button style="background: Cloud Dander : rgb(240, 238, 233);" disabled /></td>
+				</tr>
+			</table>
+		</div>
+<!-- 모달  시작 -->        
         <!-- The Modal -->
             <div class="modal" id="myModal">
                 <div class="modal-dialog modal-dialog-centered"> <!-- modal-dialog-centered 모달창 중앙으로 -->
@@ -229,16 +224,13 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                 
-                
                         <!-- Modal body -->
                         <div class="modal-body" id="modal-body">
                             <script>
 	                            var date = new Date();
-	
 	                            var year = date.getFullYear();
 	                            var month = date.getMonth() + 1;
 	                            var day = date.getDate();
-	                            
 	                            var hours = date.getHours();
 	                            var minutes = date.getMinutes();
 	                            
@@ -278,7 +270,7 @@
 					                                        
 															var hour = new Date().getHours();
 															
-															if(${i} <= hour){
+															if(${i} <= hour){ // i : 0,1,2,3,4,5
 																for(var i = 0; i <= hour; i++){
 																	$('#'+i).css('text-decoration', 'line-through');
 																}
@@ -287,7 +279,7 @@
 					                                        // 예약 시작시간과 종료시간 사이일 경우 회색
 					                                        if(rNum == ${s.seatNo}){ // 클릭한 좌석 번호 == 예약된 좌석 번호(DB)
 					                                        	if(${s.startDate} <= ${i} && ${i} <= ${s.endDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'grey');
 																	}
 																}
@@ -343,14 +335,14 @@
 					                                        
 					                                        if(rNum == ${s.seatNo}){ // 클릭한 좌석 번호 == 예약된 좌석 번호(DB)
 					                                        	if(${s.startDate} <= ${i} && ${i} <= ${s.endDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'grey');
 																	}
 																}
 					                                        }
 					                                        else if(rNum != ${s.seatNo}){
 					                                        	if(${i} == ${s.startDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'white');
 																	}
 																}
@@ -392,14 +384,14 @@
 					                                        
 					                                        if(rNum == ${s.seatNo}){ // 클릭한 좌석 번호 == 예약된 좌석 번호(DB)
 					                                        	if(${s.startDate} <= ${i} && ${i} <= ${s.endDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'grey');
 																	}
 																}
 					                                        }
 					                                        else if(rNum != ${s.seatNo}){
 					                                        	if(${i} == ${s.startDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'white');
 																	}
 																}
@@ -441,14 +433,14 @@
 					                                        
 					                                        if(rNum == ${s.seatNo}){ // 클릭한 좌석 번호 == 예약된 좌석 번호(DB)
 					                                        	if(${s.startDate} <= ${i} && ${i} <= ${s.endDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'grey');
 																	}
 																}
 					                                        }
 					                                        else if(rNum != ${s.seatNo}){
 					                                        	if(${i} == ${s.startDate}){ // 0~5시 == 예약된 시작 시간(DB)
-																	for(var j = ${s.startDate}; j <= ${s.endDate}; j++){
+																	for(var j = ${s.startDate}; j < ${s.endDate}; j++){
 																		$('#'+j).css('background', 'white');
 																	}
 																}
@@ -470,7 +462,12 @@
                             </label>
                             
                             <script type="text/javascript">
-	                        	$(function() {
+                            
+	                            $(function() {
+	                            	
+	                            	var date = new Date();
+	                            	var hours = date.getHours();
+	                            	
 	                        	    $('#timepickerStartTime').timepicker({
 	                        	    	timeFormat: 'HH:mm p',
 	                        	        interval: 60,
@@ -483,40 +480,59 @@
 	                        	        scrollbar: true    
 	                        	    });
 	                        	    
-	                        	    $('#timepickerEndTime').timepicker({
-	                        	    	timeFormat: 'HH:mm p',
-	                        	        interval: 60,
-	                        	        minTime: '00',
-	                        	        maxTime: '23:00',
-	                        	        defaultTime: '00',
-	                        	        startTime: '00:00',
-	                        	        dynamic: false,
-	                        	        dropdown: true,
-	                        	        scrollbar: true    
-	                        	    });
+	                        	    $('#timepickerEndTime').click(function(event){
+
+	                            		var tpStartTime = $('#timepickerStartTime').val();
+	                            		var tpStartHour = parseInt($('#timepickerStartTime').val().substr(0,2));
+	                            		console.log(tpStartTime);
+	                            		
+	                            		$('#timepickerEndTime').timepicker({
+		                        	    	timeFormat: 'HH:mm p',
+		                        	        interval: 60,
+		                        	        minTime: '00',
+		                        	        defaultTime: tpStartTime,
+		                        	        startTime: tpStartTime,
+		                        	        maxHour: tpStartHour + 3,
+		                        	        dynamic: false,
+		                        	        dropdown: true,
+		                        	        scrollbar: true    
+		                        	    });
+	                            	})
 	                        	});
-	                        	
+                            	
+                            	
+                            	
 	                        </script>
 <%-- 타임피커 조회 버튼 --%>	                        	
                             <button class="btn btn-outline-secondary" onclick="selectTime()">조회</button>
 							
                             <script>
 	                            function selectTime(){
+	                            	
 	                                var startTime = parseInt($('#timepickerStartTime').val().substr(0,2));  
 	                                var endTime = parseInt($('#timepickerEndTime').val().substr(0,2)); 
 	                                
-	                                var modalBody = document.getElementById('modal-body');
+	                                <%-- 현재 시간부터 예약 가능, 이전 시간 선택시 예약 불가 알럿 --%>
+	                                var date = new Date();
+		                            var hours = date.getHours();
+		                            var minutes = date.getMinutes();
 	                                
-	                                if((endTime-startTime) > 3){
-	                                    modalBody.innerHTML += '<br> 3시간 이상 예약이 불가';
-	                                }
-	                                else if(endTime == startTime || startTime > endTime){
-	                                    modalBody.innerHTML += '<br> 시간 선택이 잘못되었습니다.';
+	                                if((hours > startTime) || // 지금시간 > 선택한 시간
+	                                   (startTime > endTime) || // 시작시간 > 종료시간
+	                                   ((endTime - startTime) > 3) || // 3시간이상 예약 불가
+	                                   (startTime == endTime) // 시작시간 == 종료시간
+	                                ){ 
+	                                	swal('시간 선택 다시 해~','똑바로 읽어도 거꾸로 읽어도 우영우','warning');
+	                                	$('#timepickerStartTime').val(''); // input값 초기화
+	                                	$('#timepickerEndTime').val('');
 	                                }
 	                                else{
-	                                    modalBody.innerHTML += '<br>' + startTime + ':00 - ' + endTime + ':00 으로 예약하시겠습니까?';
+	                                	swal('제대로 선택했으~!', '기러기 토마토 스위스 인도인 별똥별 우영우', 'success');
+	                                	$('#timepickerStartTime').val('');
+	                                	$('#timepickerEndTime').val('');
 	                                }
 	                                
+	                                <!-- ajax 필요 없을듯 -->
 	                                $.ajax({
 	                                	url: 'seatView.st',
 	                                	data: {
@@ -550,7 +566,6 @@
                         
                         	function reload(){
                         		location.reload();
-                        	
                         	}
                         	
                             function submit(){
@@ -566,10 +581,6 @@
                                     success : function(r){
                                     	console.log(r.userNo);
 
-                                    	/* swal(r.createDate, r.seatNo + '번 좌석' + 
-                                        		r.startDate + ' - ' + r.endDate + ' 예약되었습니다.', 
-                                        	'success'); */
-                                    	
                                     	swal({
                             				title : r.createDate,
                             				text : r.seatNo + '번 좌석' + 
@@ -577,11 +588,13 @@
                             				icon : 'success',
                             				closeOnClickOutside : false, //알럿창 제외하고 클릭시 창 닫히지 않도록
                             				closeOnEsc : false,
-                            				
                             			})
                                     	
                                     	var tdDivColor = '#' + r.seatNo + 'a';
-                                        $(tdDivColor).css('background', 'deeppink').css('height', '70').text('♥');
+                                        $(tdDivColor).css('background', 'deeppink').css('height', '70').css('padding-top', '20px').text('♥');
+                                        
+                                        //location.reload();
+                                        $('#myModal').modal('hide');
                                         
                                     }, error : function(){
                                         console.log('안됨');
@@ -594,9 +607,9 @@
                 </div><!-- modal-dialog -->
             </div>
     	</div><!-- content -->
-        <br>
-   </c:when>
-    <c:otherwise>
+    	<br>
+	</c:when>
+	<c:otherwise>
     	<script>
 			swal({
 				title : '로그인을 해야 합니다.',
@@ -621,11 +634,20 @@
 	</c:choose>
 	
 	<%--
+	
+		완 - 모달 내부 타임테이블 css 수정
+		
 		- 좌석 예약 수정
-		- 로그인 게정 하나당 3시간까지만 예약 가능. 확인(submit버튼 클릭 시 alert띄우기)
+		
+		- 로그인 계정 하나당 3시간까지만 예약 가능. 확인(submit버튼 클릭 시 alert띄우기)
 			그럼 2시간 / 1시간은? => 10:00 - 12:00 && 15:00 ~ 16:00
-	
-	
+			내가 2시간을 먼저 예약하면 2를 DB에 저장하고
+			귀찮은데... 수정 기능 만들고 다시 돌아올게
+			
+		- 모달 타임피커에서 시간 선택을 잘못하면 바로 다시 예약할 수 있도록? 어떠케...?
+		
+		어쩔티비 - 모달 타임피커 시작시간 클릭 시 종료시간 드롭다운 설정 - 뭔가 되긴 했는데 왜 선택한 시간 이전 시간이 다시 뜨는지..?
+		
 	 --%>
 	
 	
