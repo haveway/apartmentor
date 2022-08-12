@@ -15,6 +15,11 @@
 		margin-top: 30px;
     }
     
+    #reserveList-img{
+		display : flex;
+		justify-content: center;
+	}
+    
     .btn-div{
 		display : flex;
 		flex-direction: row;
@@ -33,8 +38,8 @@
 
 	<div class="content">
 	 
-		<div id="">
-			<label><img width="790px" height="300px" src="resources/img/sports/miniGym.png"></label>
+		<div id="reserveList-img">
+			<label><img width="790px" height="300px" src="resources/img/main/aptm2.jpg"></label>
 		</div>
 		 
 		<br>
@@ -42,7 +47,7 @@
 		<div class="btn-div">
 			<a href="golf.sp" class="btn btn-lg btn-outline-secondary">실내 골프 연습장</a>
 			<a href="miniGym.sp" class="btn btn-lg btn-outline-secondary">미니 GYM</a>
-			<a href="sportsOptionView.sp?currentPage=1&category=ALL" class="query btn btn-lg btn-secondary">이용내역</a>
+			<a href="sportsOptionView.sp?currentPage=1&category=ALL&userNo=${loginUser.getUserNo()}" class="query btn btn-lg btn-secondary">이용내역</a>
 		</div>
 		             
 		<br><br>
@@ -66,35 +71,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                	<c:forEach var="s" items="${list}">
-                		<tr style="width: 70px; height: 30px; text-align: center;">
-                			<td>
-                				<c:choose>
-	                				<c:when test="${s.facility == 'MG' }">
-	                					미니짐
-	                				</c:when>
-									<c:otherwise>
-										골프
-									</c:otherwise>                				
-                				</c:choose>
-                			</td>
-                			<td>${s.reserveNo }</td>
-                			<td>${s.userName }</td>
-                			<td>${s.startDay }</td>
-                			<td>${s.startDate }</td>
-                			<td>
-                				<c:choose>
-                					<c:when test="${s.seatNo == 0}">
-                						없음
-                					</c:when>
-                					<c:otherwise>
-                						${s.seatNo }번
-                					</c:otherwise>
-                				</c:choose>
-                			</td>
-                			<td><button>취소</button></td>
-                		</tr>
-                	</c:forEach>
+                	<c:if test="${ loginUser != null }">
+	                	<c:forEach var="s" items="${list}">
+	                		<tr style="width: 70px; height: 30px; text-align: center;">
+	                			<td>
+	                				<c:choose>
+		                				<c:when test="${s.facility == 'MG' }">
+		                					미니짐
+		                				</c:when>
+										<c:otherwise>
+											골프
+										</c:otherwise>                				
+	                				</c:choose>
+	                			</td>
+	                			<td>${s.reserveNo }</td>
+	                			<td>${s.userName }</td>
+	                			<td>${s.startDay }</td>
+	                			<td>${s.startDate }</td>
+	                			<td>
+	                				<c:choose>
+	                					<c:when test="${s.seatNo == 0}">
+	                						없음
+	                					</c:when>
+	                					<c:otherwise>
+	                						${s.seatNo }번
+	                					</c:otherwise>
+	                				</c:choose>
+	                			</td>
+	                			<td><button value="${s.reserveNo }" onclick="deleteReserveSports(this.value);" >취소</button></td>
+	                		</tr>
+	                	</c:forEach>
+                	</c:if>
                 </tbody>
             </table>
 
@@ -107,10 +114,46 @@
 	</c:if>
 	
 	<script>
-			function selectCategory(){
-				var category = $("#category option:selected").val();
-				location.href='sportsOptionView.sp?currentPage=1&category=' + category;
+		// 카테고리별 정렬해주는 스크립트
+		function selectCategory(){
+			var category = $("#category option:selected").val();
+			var userNo = ${loginUser.getUserNo()};
+			location.href='sportsOptionView.sp?currentPage=1&category=' + category + '&userNo=' + userNo;
 		}
+			
+		// 취소버튼 누르면 삭제해주는 스크립트
+		function deleteReserveSports(click_value){
+			swal({
+				  title: "예약취소",
+				  text: "예약을 취소하실건가요?",
+				  icon: "warning",
+				  dangerMode: true,
+				  buttons: true,
+				})
+				.then(function(willDelete){
+				  if (willDelete) {
+					  $.ajax({
+						  url : "deleteReserveSports.sp",
+						  data : {
+							  	reserveNo : click_value
+						  },
+						  success : function(){
+							  swal("예약이 취소되었습니다!", {
+							      icon: "success",
+							    }).then(function(){
+							    	location.href="sportsOptionView.sp?currentPage=1&category=ALL&userNo=${loginUser.getUserNo()}";
+									});
+						  },
+						  error : function(){
+							  console.log("실패");
+						  }
+					})
+				  } 
+				});
+		}
+		
+			
+			
 			
 	</script>
 
@@ -127,7 +170,7 @@
 							<li class="page-item"><a class="page-link" href="sportsList.sp?cpage=${ pi.currentPage - 1 }">이전</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${ pi.currentPage - 1 }&category=${category}">이전</a></li>
+							<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${ pi.currentPage - 1 }&category=${category}&userNo=${loginUser.getUserNo()}">이전</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>                	
@@ -139,7 +182,7 @@
 						<li class="page-item"><a class="page-link" href="sportsList.sp?cpage=${p}">${p}</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${p}&category=${category}">${p}</a></li>
+						<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${p}&category=${category}&userNo=${loginUser.getUserNo()}">${p}</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -154,7 +197,7 @@
 							<li class="page-item"><a class="page-link" href="sportsList.sp?cpage=${ pi.currentPage + 1 }">다음</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${ pi.currentPage + 1 }&category=${category}">다음</a></li>
+							<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${ pi.currentPage + 1 }&category=${category}&userNo=${loginUser.getUserNo()}">다음</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

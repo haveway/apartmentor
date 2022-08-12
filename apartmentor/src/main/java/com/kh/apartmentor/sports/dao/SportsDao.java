@@ -1,6 +1,7 @@
 package com.kh.apartmentor.sports.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -59,20 +60,23 @@ public class SportsDao {
 	 * null,rowBounds); }
 	 */
 	 
-	public int selectOptionListCount(SqlSessionTemplate sqlSession, String category) {
-		return sqlSession.selectOne("sportsMapper.selectOptionListCount", category);
+	public int selectOptionListCount(SqlSessionTemplate sqlSession, HashMap<String,String> map) {
+		return sqlSession.selectOne("sportsMapper.selectOptionListCount", map);
 	}
 	
-	public ArrayList<Reserve> selectOptionList(SqlSessionTemplate sqlSession, String category, PageInfo pi){
+	public ArrayList<Reserve> selectOptionList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi){
 		
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("sportsMapper.selectOptionList", category, rowBounds);
+		return (ArrayList)sqlSession.selectList("sportsMapper.selectOptionList", map, rowBounds);
 	}
 	
+	public int deleteReserveSports(SqlSessionTemplate sqlSession, int reserveNo) {
+		return sqlSession.delete("sportsMapper.deleteReserveSports", reserveNo);
+	}
 	
 	
 	

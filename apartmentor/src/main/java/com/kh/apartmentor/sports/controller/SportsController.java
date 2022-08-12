@@ -2,6 +2,7 @@ package com.kh.apartmentor.sports.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,20 +105,30 @@ public class SportsController {
 	
 	// 카테고리 리스트 띄우기
 	@RequestMapping("sportsOptionView.sp")
-	public ModelAndView selectOptionList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, String category, ModelAndView mv) {
-		PageInfo pi = Pagination.getPageInfo(sportsService.selectOptionListCount(category), currentPage, 10, 5);
+	public ModelAndView selectOptionList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, String category, String userNo, ModelAndView mv) {
+		
+		// HashMap으로 두개의 변수를 받아온다.
+		HashMap<String, String> map = new HashMap();
+		map.put("category", category);
+		map.put("userNo", userNo);
+		
+		// 페이징 처리를 위한 VO담기
+		PageInfo pi = Pagination.getPageInfo(sportsService.selectOptionListCount(map), currentPage, 10, 5);
 		
 		mv.addObject("pi", pi)
 		  .addObject("category", category)
-		  .addObject("list", sportsService.selectOptionList(category, pi))
+		  .addObject("list", sportsService.selectOptionList(map, pi))
 		  .setViewName("sports/sportsListView");
 		
 		return mv;
 	}
 	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping("deleteReserveSports.sp")
+	public String deleteReserveSports(int reserveNo) {
+		//System.out.println(reserveNo);
+		return sportsService.deleteReserveSports(reserveNo) > 0 ? "success" : "fail";
+	}
 	
 	
 	

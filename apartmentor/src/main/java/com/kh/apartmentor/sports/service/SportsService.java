@@ -1,6 +1,7 @@
 package com.kh.apartmentor.sports.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,16 +62,17 @@ public class SportsService {
 	 * }
 	 */
 	 
-	public int selectOptionListCount(String category) {
-		return sportsDao.selectOptionListCount(sqlSession, category);
+	public int selectOptionListCount(HashMap<String,String> map) {
+		return sportsDao.selectOptionListCount(sqlSession, map);
 	}
 	
-	public ArrayList<Reserve> selectOptionList(String category, PageInfo pi){
-		return sportsDao.selectOptionList(sqlSession, category, pi);
-
+	public ArrayList<Reserve> selectOptionList(HashMap<String,String> map, PageInfo pi){
+		return sportsDao.selectOptionList(sqlSession, map, pi);
 	}
 	
-	
+	public int deleteReserveSports(int reserveNo) {
+		return sportsDao.deleteReserveSports(sqlSession, reserveNo);
+	}
 	
 	
 	

@@ -109,63 +109,96 @@
 	</select>  -->
 	
 	<select id="selectOptionListCount" resultType="_int">
-		<if test="category == 'ALL'">
-			SELECT COUNT(*)
-			FROM
-					RESERVE
-			WHERE	
-					STATUS = 'Y'
-		</if>
-		<if test="category == 'GF'">
-			SELECT COUNT(*)
-			FROM
-					RESERVE
-			WHERE	
-					STATUS = 'Y'
-			AND
-					FACILITY = 'GF'
-		</if>
-		<if test="category == 'MG'">
-			SELECT COUNT(*)
-			FROM
-					RESERVE
-			WHERE	
-					STATUS = 'Y'
-			AND
-					FACILITY = 'MG'
-		</if>
+		<choose>
+			<!-- 관리자면 모든 예약 리스트 갯수 가져오기 -->
+			<when test="userNo == 1">
+				SELECT COUNT(*)
+				FROM
+						RESERVE
+				WHERE	
+						STATUS = 'Y'
+				<if test="category == 'ALL'">
+		
+				</if>
+				<if test="category == 'GF'">
+					AND
+							FACILITY = 'GF'
+				</if>
+				<if test="category == 'MG'">
+					AND
+							FACILITY = 'MG'
+				</if>
+			</when>
+			<!-- 관리자가 아니면 자기의 예약리스트만 가져온다. -->
+			<otherwise>
+				SELECT COUNT(*)
+				FROM
+						RESERVE
+				WHERE	
+						STATUS = 'Y'
+				<if test="category == 'ALL'">
+		
+				</if>
+				<if test="category == 'GF'">
+					AND
+							FACILITY = 'GF'
+				</if>
+				<if test="category == 'MG'">
+					AND
+							FACILITY = 'MG'
+				</if>
+					AND 	
+						USER_NO = #{userNo}
+			</otherwise>
+		</choose>	
 	</select>
 	
 
 	<select id="selectOptionList" resultMap="sportsResultSet">
 		<choose>
-			<when test="category == 'ALL'">
+			<!-- 관리자면 모든 사람들 예약 리스트 보여준다. -->
+			<when test="userNo == 1">
 				SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
 				FROM RESERVE R, MEMBER M
 				WHERE R.USER_NO = M.USER_NO
 				AND R.STATUS = 'Y'
+					<if test="category == 'ALL'">
+						
+					</if>
+					<if test="category == 'GF'">		
+						AND FACILITY = 'GF'
+					</if>
+					<if test="category == 'MG'">
+						AND FACILITY = 'MG'
+					</if>
 				ORDER BY START_DAY, START_DATE ASC
 			</when>
-			<when test="category == 'GF'">
+			<!-- 관리자가 아니면 자기의 예약리스트만 보여준다. -->
+			<otherwise>
 				SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
 				FROM RESERVE R, MEMBER M
 				WHERE R.USER_NO = M.USER_NO
 				AND R.STATUS = 'Y'
-				AND FACILITY = 'GF'
+					<if test="category == 'ALL'">
+						
+					</if>
+					<if test="category == 'GF'">		
+						AND FACILITY = 'GF'
+					</if>
+					<if test="category == 'MG'">
+						AND FACILITY = 'MG'
+					</if>
+				AND R.USER_NO = #{userNo}
 				ORDER BY START_DAY, START_DATE ASC
-			</when>
-			<when test="category == 'MG'">
-				SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
-				FROM RESERVE R, MEMBER M
-				WHERE R.USER_NO = M.USER_NO
-				AND R.STATUS = 'Y'
-				AND FACILITY = 'MG'
-				ORDER BY START_DAY, START_DATE ASC
-			</when>
+			</otherwise>
 		</choose>
 	</select>
 
-
+	<delete id="deleteReserveSports">
+		DELETE 
+		FROM RESERVE
+		WHERE RESERVE_NO = #{reserveNo}
+	</delete>
 
 
 
