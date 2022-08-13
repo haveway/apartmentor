@@ -35,9 +35,9 @@
 
 
                 <div id="footer1"> 
-                    <p style="font-size: 15px;">APARTMENTO</p>
+                    <p style="font-size: 15px;">APARTMENTOR</p>
                     <p>주소 : 서울시 어딘가</p>
-                    <p>대표 : Team1 APARTMENTO</p>
+                    <p>대표 : Team1 APARTMENTOR</p>
                 </div>
                 <div id="footer2"> 
                     <p style="font-size: 15px;">고객센터</p>

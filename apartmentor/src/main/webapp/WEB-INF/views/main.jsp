@@ -152,13 +152,14 @@
 	           	</table>
             </div>
             <div id="content4">
+                
                 <form action="visit.car" method="post">
                     <input type="hidden" name="userNo" value="${loginUser.userNo}">
                     <h4>방문차량등록</h4>
                     <table>
                         <tr>
                             <td>방문일</td>
-                            <td><input type="date" name="carDate"><br></td>
+                            <td><input type="date" id="carDate" name="carDate" min=""><br></td>
                         </tr>
                         <tr>
                             <td>차량번호</td>
@@ -175,6 +176,18 @@
                         </tr>
                     </table>
                     <button type="submit">방문 예약 등록</button>
+                    <script>
+                    $('#carDate').click(function(){
+                        var date = new Date();
+                        var year = date.getFullYear();
+                        var month = ("0" + (1 + date.getMonth())).slice(-2);
+                        var day = ("0" + date.getDate()).slice(-2);
+
+                        var today =  year + '-' + month  + '-' + day;
+                        $('#carDate').attr('min', today);
+                    })  // 방문일 선택시 오늘날짜를 기준으로 이전날짜는 선택불가
+                    </script>
+
                 </form>
             </div>
         </div>

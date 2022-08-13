@@ -7,33 +7,178 @@
 	<meta charset="UTF-8">
 	<title>우리아파트 주변지도</title>
 	<style>
-		.wrap {
-			width: 1200px;
-			margin: auto;
-			min-height: 1000px;
-		}
+		.wrap {width:100%;}
+		#map{width:1000px;height:600px;margin:auto;}
+		.chkoption{margin-left:100px; font-size: 18px;}
 	</style>
 </head>
 
 <body>
 	<jsp:include page="../common/header.jsp" />
+	<br><br>
 	<div class="wrap">
-		<div id="map" style="width:800px;height:600px;margin-left:100px;"></div>
+		<div id="map"></div>
+		<p class="chkoption">
+			<input style='zoom:1.5;' type="checkbox" id="chkBike" onclick="bikeMarkers();" /> 따릉이 정보 &nbsp; | &nbsp;
+			<input style='zoom:1.5;' type="checkbox" id="chkPharm" onclick="pharmMarkers()" /> 약국 정보 &nbsp; | &nbsp;
+			<input style='zoom:1.5;' type="checkbox" id="chkTraffic" onclick="setOverlayMapTypeId()" /> 교통 정보 &nbsp; | &nbsp;
+			<input style='zoom:1.5;' type="checkbox" id="chkBicycle" onclick="setOverlayMapTypeId()" /> 자전거도로 정보
+		</p>
+		<jsp:include page="../common/footer.jsp" />
+	</div>
+
 		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7a0d8fb50d86ba5e9d0d3d346e697ce"></script>
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7a0d8fb50d86ba5e9d0d3d346e697ce">
+		</script>
 		<script>
 			var container = document.getElementById('map');
 			var mapOption = {
 				center: new kakao.maps.LatLng(37.52446782011257, 126.8756965780569), // 지도의 중심좌표
-				level: 4 // 지도의 확대 레벨
+				level: 3 // 지도의 확대 레벨
 			};
 
 			var map = new kakao.maps.Map(container, mapOption); // 지도를 생성합니다
 
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			var mapTypeControl = new kakao.maps.MapTypeControl();
+
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+			var markersPharm = [];
+
+			function setPharmMarkers(map) {
+					for (var i = 0; i < markersPharm.length; i++) {
+						markersPharm[i].setMap(map);
+						}            
+				}
+			function pharmMarkers(){
+				if(document.getElementById('chkPharm').checked){
+					setPharmMarkers(map)    
+				} else {
+					setPharmMarkers(null);    
+				}
+			}
+			
+			var markersBike = [];
+
+			function setBikeMarkers(map) {
+					for (var i = 0; i < markersBike.length; i++) {
+						markersBike[i].setMap(map);
+						}            
+				}
+			function bikeMarkers(){
+				if(document.getElementById('chkBike').checked){
+					setBikeMarkers(map)    
+				} else {
+					setBikeMarkers(null);    
+				}
+			}
+
+		
+	
+			
+
+
+			// 지도 타입 정보를 가지고 있을 객체입니다
+			// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
+			// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
+			// 이 예제에서는 지도 타입을 추가할 때 지적편집도, 지형정보, 교통정보, 자전거도로 정보 순으로 추가하므로
+			// 자전거 도로 정보가 가장 앞에 표시됩니다
+			var mapTypes = {
+				traffic :  kakao.maps.MapTypeId.TRAFFIC,
+				bicycle : kakao.maps.MapTypeId.BICYCLE,
+			};
+
+			// 체크 박스를 선택하면 호출되는 함수입니다
+			function setOverlayMapTypeId() {
+				var chkTraffic = document.getElementById('chkTraffic'),
+					chkBicycle = document.getElementById('chkBicycle')
+				
+				
+				// 지도 타입을 제거합니다
+				for (var type in mapTypes) {
+					map.removeOverlayMapTypeId(mapTypes[type]); 
+				}
+			
+				// 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
+				if (chkTraffic.checked) {
+					map.addOverlayMapTypeId(mapTypes.traffic);    
+				}
+				
+				// 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
+				if (chkBicycle.checked) {
+					map.addOverlayMapTypeId(mapTypes.bicycle);    
+				}
+				
+			}
+			
+
+			var imageSrc = 'http://drive.google.com/uc?export=view&id=1jq8tnfKl2i3DKq2pKzBW3I3zgwTD9ES6', // 마커이미지의 주소입니다    
+				imageSize = new kakao.maps.Size(70, 70) // 마커이미지의 크기입니다
+				
+			// 우리아파트 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+				markerPosition = new kakao.maps.LatLng(37.52633421714345, 126.87696052935834); // 마커가 표시될 위치입니다
+
+			// 우리아파트 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+				position: markerPosition, 
+				image: markerImage // 마커이미지 설정 
+
+			});
+
+			// 우리아파트 마커가 지도 위에 표시되도록 설정합니다
+			marker.setMap(map);
+
+			// 우리아파트 인포윈도우 내용
+			var iwContent = '<div style="padding:5px;">'+ '우리아파트' +'</div>' // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+			// 우리아파트 인포윈도우를 생성합니다
+			var infowindow = new kakao.maps.InfoWindow({
+				content : iwContent,
+				removable : true
+			});
+
+			// 우리아파트 마커에 클릭이벤트를 등록합니다
+			kakao.maps.event.addListener(marker, 'click', function() {
+				// 우리아파트 마커 위에 인포윈도우를 표시합니다
+				infowindow.open(map, marker);  
+			});
+
+			// 다각형을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 다각형을 표시합니다 우리아파트 다각형위치
+			var polygonPath = [
+			new kakao.maps.LatLng(37.52598181550368, 126.87599385721951),
+				new kakao.maps.LatLng(37.52751163059024, 126.87634203116995),
+				new kakao.maps.LatLng(37.52725665109719, 126.87807900813584),
+				new kakao.maps.LatLng(37.525990456715846, 126.87780107511111),
+				new kakao.maps.LatLng(37.52571529710934, 126.87745931064488)
+			];
+
+			// 지도에 표시할 다각형을 생성합니다
+			var polygon = new kakao.maps.Polygon({
+				path:polygonPath, // 그려질 다각형의 좌표 배열입니다
+				strokeWeight: 3, // 선의 두께입니다
+				strokeColor: '#39DE2A', // 선의 색깔입니다
+				strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+				strokeStyle: 'longdash', // 선의 스타일입니다
+				fillColor: '#A2FF99', // 채우기 색깔입니다
+				fillOpacity: 0.7 // 채우기 불투명도 입니다
+			});
+
+			// 지도에 다각형을 표시합니다
+			polygon.setMap(map);
+
+
 			
 			$(function(){
 				bike();
-				pharm()
+				pharm();
 				loadBus();
 				setInterval(loadBus, 5000);
 			})
@@ -94,19 +239,19 @@
 								// 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:200px;height:80px;">' + plainNo + '<br>' + '혼잡도 : ' + congetion + '<br>' + 
 												'정류소도착여부 : ' + stopFlag + '</div>' // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-									iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
 								// 인포윈도우를 생성합니다
 								var infowindow = new kakao.maps.InfoWindow({
 								    content : iwContent,
-									removable : iwRemoveable
+									removable : true
 								});
 
 								// 마커에 클릭이벤트를 등록합니다
-							kakao.maps.event.addListener(marker, 'click', function() {
-								// 마커 위에 인포윈도우를 표시합니다
-								infowindow.open(map, marker);  
-							});
+								kakao.maps.event.addListener(marker, 'click', function() {
+									// 마커 위에 인포윈도우를 표시합니다
+									infowindow.open(map, marker);  
+								});
+
 								// 4.995초뒤에 마커삭제
 								setTimeout(function(){
 									marker.setMap(null);
@@ -168,12 +313,11 @@
 								// 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:200px;height:80px;">' + plainNo + '<br>' + '혼잡도 : ' + congetion + '<br>' + 
 												'정류소도착여부 : ' + stopFlag + '</div>' // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-									iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
 								// 인포윈도우를 생성합니다
 								var infowindow = new kakao.maps.InfoWindow({
 								    content : iwContent,
-									removable : iwRemoveable
+									removable : true
 								});
 
 								// 마커에 클릭이벤트를 등록합니다
@@ -210,75 +354,68 @@
 							var parkingBikeTotCnt = bikeList[i]["parkingBikeTotCnt"]
 							var stationLatitude = bikeList[i]["stationLatitude"]
 							var stationLongitude = bikeList[i]["stationLongitude"]
-
 							positions.push({content:'<div style="padding:5px;width:280px;height:60px;">' + stationName + '<br>' + '거치 대수 : ' + parkingBikeTotCnt + '</div>',
 											latlng: new kakao.maps.LatLng(stationLatitude, stationLongitude)}) 
 						}
 						
 						for (var i = 0; i < positions.length; i ++) {
-
 							var imageSrc = 'http://drive.google.com/uc?export=view&id=1btfKJNyY1UEqieXMyEf6PWr-y9VL2Uh6', // 마커이미지의 주소입니다    
 									imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
-
 								// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 								var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
 							// 마커를 생성합니다
 							var marker = new kakao.maps.Marker({
-								map: map, // 마커를 표시할 지도
 								position: positions[i].latlng, // 마커의 위치
 								image: markerImage,
 								clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 							});
+
+							// 생성된 마커를 배열에 추가합니다
+							markersBike.push(marker);
 
 							// 마커에 표시할 인포윈도우를 생성합니다 
 							var infowindow = new kakao.maps.InfoWindow({
 								content: positions[i].content, // 인포윈도우에 표시할 내용
 								removable: true
 							});
-
 							// 이벤트 리스너로는 클로저를 만들어 등록합니다 
 							// for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 							kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
 						}
-
 							// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 							function makeOverListener(map, marker, infowindow) {
 								return function() {
 									infowindow.open(map, marker);
 								};
 							}
-
 							// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
 							function makeOutListener(infowindow) {
 								return function() {
 									infowindow.close();
 								};
 							}
-
-
-
 					}
 				})
 			}
-
 			function pharm(){
 				
 				var today = new Date();
 				var locdate = []; // 올해의 공휴일들을 yyyymmdd형태로 담을 배열.
 				var yyyymmdd = getFullToday();	// 오늘날짜를 yyyymmdd형태로 담는다.(공휴일인지 확인하기 위하여)
 				var hours = today.getHours().toString();
-				console.log(hours);
 				if(hours == '0'){
 					hours = '24';
 				} else if(hours == '1'){
-					console.log("hours == 1 if문들어옴");
 					hours = '25';
 				} // 약국 운영시간이 익일 새벽1시나 새벽2시까지의 경우 25,26시로 표기되기 때문에 현재시간이 00시일경우 24시, 01시일경우 25시로 바꿔준다.
+				for(var i = 2; i < 10; i++){
+					if(hours == i){
+						hours = '0' + today.getHours().toString();
+					}
+				}	// 2시~9시까지는 앞에 0을 붙여준다.
 				
 
 				var minutes = today.getMinutes().toString();
-				console.log("minutes : " + minutes);
 				for(var i = 0; i < 10; i++){
 					if(minutes == i){
 						minutes = '0' + today.getMinutes().toString();
@@ -286,10 +423,10 @@
 				}	// minutes가 0분 ~ 9분까지일경우 앞에 0을붙여준다(01~09의 형태로 변환)
 
 				var currTime = hours + minutes;	// 현재시간 hhmm 형식의 String으로 담긴다.
-				console.log(currTime);
 				// currTime = '2200';
+				console.log(currTime);
 				var yoil = today.getDay();	// 현재 요일
-			
+				
 				
 				function getFullToday(){
 									var date = new Date();
@@ -319,7 +456,7 @@
 					})
 				
 
-				$.ajax({	// 약국을 지도에 뿌려주는 ajax
+				$.ajax({	// 약국을 지도에 marker 해주는 ajax
 					type: "GET",
 					url: "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=3vbFSNBucTjUmlz76x3t%2FXHUxbPw4FBSuJfqY2xhH5n6sriEAxlGGP%2Fdqlhf2FiOxzA4PbMcX7GpGC%2FowflUrQ%3D%3D&Q0=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&Q1=%EC%96%91%EC%B2%9C%EA%B5%AC&ORD=NAME&pageNo=1&numOfRows=300",
 					data: "text",
@@ -396,18 +533,18 @@
 
 								// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 								var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
-									markerPosition = new kakao.maps.LatLng(tmY, tmX); // 마커가 표시될 위치입니다
-
+								markerPosition = new kakao.maps.LatLng(tmY, tmX); // 마커가 표시될 위치입니다
+								
 								// 마커를 생성합니다
 								var marker = new kakao.maps.Marker({
 									position: markerPosition,
 									image: markerImage, // 마커이미지 설정
 									clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
 								});
-									
-								// 마커가 지도 위에 표시되도록 설정합니다
-								marker.setMap(map);
-								
+
+								// 생성된 마커를 배열에 추가합니다
+								markersPharm.push(marker);
+
 								// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:400px;"><b>' + dutyName + '</b><br>' 
 											  + '전화 : ' + dutyTel1 + '<br>'
@@ -433,11 +570,11 @@
 									infowindow.open(map, marker);
 								});
 
-
 							});
 						}
 					}
 				});
+				
 			}
 
 
@@ -447,10 +584,10 @@
 
 		</script>
 
-	</div>
+	
 
 
-	<jsp:include page="../common/footer.jsp" />
+	
 </body>
 
 </html>
