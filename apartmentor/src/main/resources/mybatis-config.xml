@@ -28,5 +28,6 @@
 		<mapper resource="/mappers/main-mapper.xml" />
 		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/chat-mapper.xml" />
+		<mapper resource="/mappers/regoCar-mapper.xml" />
 	</mappers>
 </configuration>

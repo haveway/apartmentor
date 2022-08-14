@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="regoCarMapper">
+	
+	<resultMap id="regoCarResultSet" type="parking">
+		<result column="CAR_NO" property="carNo" />
+		<result column="CAR_PHONE" property="carPhone" />
+		<result column="STATUS" property="status" />
+		<result column="CAR_CATEGORY" property="carCategory" />
+		<result column="CAR_DATE" property="carDate" />
+		<result column="USER_NO" property="userNo" />
+		<result column="CAR_PURPOSE" property="carPurpose" />
+	</resultMap>
+	
+	<insert id="insertRegoCar" parameterType="parking">
+		INSERT INTO PARKING
+		VALUES (#{carNo}, #{carPhone}, 'w', 1, NULL, #{userNo}, NULL)
+	</insert>
+
+
+
+
+
+
+
+
+</mapper>

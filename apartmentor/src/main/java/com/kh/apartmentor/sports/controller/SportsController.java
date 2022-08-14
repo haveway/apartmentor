@@ -85,28 +85,6 @@ public class SportsController {
 	
 	
 	//---------------------------------------- 이용내역 -------------------------------------------
-	// 미니짐 화면 띄우기
-//	@RequestMapping("sportsListView.sp")
-//	public String sportsList() {
-//		return "sports/sportsListView";
-//	}
-	
-	/*
-	 * // 리스트 띄우기
-	 * 
-	 * @RequestMapping("sportsList.sp") public ModelAndView
-	 * selectList(@RequestParam(value="cpage", defaultValue = "1") int currentPage,
-	 * ModelAndView mv) {
-	 * 
-	 * PageInfo pi = Pagination.getPageInfo(sportsService.selectListCount(),
-	 * currentPage, 10, 5);
-	 * 
-	 * mv.addObject("pi", pi) .addObject("list", sportsService.selectList(pi))
-	 * .setViewName("sports/sportsListView");
-	 * 
-	 * return mv; }
-	 */
-	
 	// 카테고리 리스트 띄우기
 	@RequestMapping("sportsOptionView.sp")
 	public ModelAndView selectOptionList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, HttpServletRequest request, String category, ModelAndView mv) {
