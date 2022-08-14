@@ -45,4 +45,16 @@
 
     </context:component-scan>
     
+    
+    <interceptors>
+    	<interceptor>
+    		<mapping path="/sportsOptionView.sp"/>
+    		<mapping path="/miniGym.sp"/>
+    		<mapping path="/golf.sp"/>
+    			<beans:bean class="com.kh.apartmentor.common.intercepter.LoginIntercepter" id="LoginInterceptor">
+    			</beans:bean>
+    	</interceptor>
+    </interceptors>
+    
+    
 </beans:beans>

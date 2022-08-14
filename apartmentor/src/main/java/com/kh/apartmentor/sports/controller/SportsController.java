@@ -4,6 +4,9 @@ package com.kh.apartmentor.sports.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import com.google.gson.Gson;
 import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.common.model.vo.Reserve;
 import com.kh.apartmentor.common.template.Pagination;
+import com.kh.apartmentor.member.model.vo.Member;
 import com.kh.apartmentor.sports.service.SportsService;
 
 @Controller
@@ -105,8 +109,10 @@ public class SportsController {
 	
 	// 카테고리 리스트 띄우기
 	@RequestMapping("sportsOptionView.sp")
-	public ModelAndView selectOptionList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, String category, String userNo, ModelAndView mv) {
+	public ModelAndView selectOptionList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, HttpServletRequest request, String category, ModelAndView mv) {
 		
+		HttpSession session = request.getSession();
+		String userNo = Integer.toString(((Member)session.getAttribute("loginUser")).getUserNo());
 		// HashMap으로 두개의 변수를 받아온다.
 		HashMap<String, String> map = new HashMap();
 		map.put("category", category);
@@ -129,6 +135,24 @@ public class SportsController {
 		//System.out.println(reserveNo);
 		return sportsService.deleteReserveSports(reserveNo) > 0 ? "success" : "fail";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
