@@ -24,6 +24,74 @@
 		border:1px solid black;
 		padding:5px;
 	}
+	
+	.userchat-area {
+		position: relative;
+		width: 200px;
+		padding: 7px;
+		background: #FFFFFF;
+		-webkit-border-radius: 21px;
+		-moz-border-radius: 21px;
+		border-radius: 21px;
+		border: #6DB6C8 solid 4px;
+		font-size:14px;
+		margin-bottom: 10px;
+		margin-left: 20px; 
+	}
+	
+	.userchat-area:after {
+		content: '';
+		position: absolute;
+		border-style: solid;
+		border-width: 12px 23px 12px 0;
+		border-color: transparent #FFFFFF;
+		display: block;
+		width: 0;
+		z-index: 1;
+		left: -23px;
+		top: 21px;
+	}
+	
+	.userchat-area:before {
+		content: '';
+		position: absolute;
+		border-style: solid;
+		border-width: 15px 26px 15px 0;
+		border-color: transparent #6DB6C8;
+		display: block;
+		width: 0;
+		z-index: 0;
+		left: -30px;
+		top: 18px;
+	}
+	
+	.mychat-area {
+		position: relative;
+		width: 200px;
+		padding: 7px;
+		background: #FFFFFF;
+		border: #6DB6C8 solid 4px;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 21px;
+		font-size:14px;
+		margin-bottom: 10px;
+		margin-left: 350px; 
+	}
+
+	.mychat-area:after {
+		content: '';
+		position: absolute;
+		border-style: solid;
+		border-width: 12px 0 12px 22px;
+		border-color: transparent #6DB6C8;
+		display: block;
+		width: 0;
+		z-index: 1;
+		right: -23px;
+		top: 21px;
+	}
+	
 	.onlineCheck{
 		width: 200px;
 		float:left;
@@ -39,6 +107,18 @@
 	#chatBtn{
 		width: 90px;
 		height:40px;
+	}
+	
+	.circle{
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background-color : grey;
+        float:left;
+        margin-top : 5px;
+        margin-right : 7px;
+        margin-left : 10px;
+         
 	}
 	
 </style>	
@@ -66,9 +146,20 @@
 		<div class="chat-area">
 		<c:if test="${not empty chatList }">
 			<c:forEach var="c" items="${chatList}">
-				<div>${c.chatWriter}</div>
-				<div>${c.chatContent}</div>
-				<div>${c.chatSendTime}</div>
+				<c:if test="${loginUser.userName eq c.chatWriter}">
+					<div class="mychat-area">
+						<div>${c.chatWriter}</div>
+						<div>${c.chatContent}</div>
+						<div>${c.chatSendTime}</div>
+					</div>	
+				</c:if>
+				<c:if test="${loginUser.userName ne c.chatWriter}">
+					<div class="userchat-area">
+						<div>${c.chatWriter}</div>
+						<div>${c.chatContent}</div>
+						<div>${c.chatSendTime}</div>
+					</div>
+				</c:if>
 			</c:forEach>
 		</c:if>
 		
@@ -76,6 +167,13 @@
 		
 		<div class="onlineCheck">
 		<p>온라인</p>
+		<c:forEach var='m' items="${MemberList}">
+		<div class="online-area">
+			<div class="circle"></div>
+			<div>${m.userName}</div>
+		</div>
+		</c:forEach>
+		
 		</div>
 		<div>
 			<input type="text" id="chatInput" name="chatContent">
@@ -89,6 +187,9 @@
 		// 채팅페이지로 오자마자 주민단체채팅방전용 웹소켓 접속 시키기
 		$(function(){
 			connectGroup();
+			
+			// 스크롤바 아래로 내리기
+			$('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
 		})
 	
 		// 전역변수
@@ -103,6 +204,7 @@
 			// 연결이 성공했는지 아닌지 확인할 수 있도록 예약작업(콜백)을 설정
  			socket.onopen = function(){
  				console.log("서버와 연결되었습니다.");
+ 				
  			}
 			
  			socket.onclose = function(){
@@ -115,11 +217,44 @@
  			
  			socket.onmessage = function(e){
  				console.log("메세지가 도착하였습니다.");
+ 				var msg = e.data;
+ 				// 받은 메세지 ',' 구분자로 잘라서 배열에 담기
+ 				var arr = msg.split(",");
  				
+ 				// arr[0] : 유저 이름 , arr[1] : 유저가 보낸 메세지
+ 				let nameDiv = $('<div>').append(arr[0]);
+ 				let msgDiv = $('<div>').append(arr[1]);
  				
- 				var div = $('<div style="width:100px;"></div>');
- 				div.text(e.data);
- 				$('.chat-area').append(div);
+ 				// 날짜 를 오전/오후 시간:분 형태로 바꾸기
+ 				let date = new Date();
+ 				let time = (date.getHours() < 12 ? "오전 " : "오후 ") 
+ 							+ date.getHours() 
+ 							+ ":" 
+ 							+ (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
+				
+ 				let timeDiv = $('<div>').append(time);
+ 				
+ 				// 말풍성으로 감싸기
+ 				var chatDiv = $('<div class="userchat-area">');
+ 				var myChatDiv = $('<div class="mychat-area">');
+ 				
+ 				// 자신이 쓴 채팅일 경우 오른쪽에 출력시키기
+ 				if('${loginUser.userName}' == arr[0]) {
+ 					myChatDiv.append(nameDiv);
+ 					myChatDiv.append(msgDiv);
+ 					myChatDiv.append(timeDiv);
+ 	 				
+ 	 				$('.chat-area').append(myChatDiv);
+ 				}else{
+ 					
+	 				// 이름 , 메세지 , 날짜 순으로 append
+	 				chatDiv.append(nameDiv);
+	 				chatDiv.append(msgDiv);
+	 				chatDiv.append(timeDiv);
+	 				
+	 				$('.chat-area').append(chatDiv);
+ 				}
+
  				// 스크롤바 하단
 	 			$('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
  				

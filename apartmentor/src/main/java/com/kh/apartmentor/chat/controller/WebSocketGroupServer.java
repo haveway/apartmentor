@@ -3,6 +3,7 @@ package com.kh.apartmentor.chat.controller;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.json.simple.JSONObject;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -30,6 +31,15 @@ public class WebSocketGroupServer extends TextWebSocketHandler {
 		users.add(session);
 		System.out.println("사용자 접속! : 현재 : " + users.size() + "명");
 		
+		/*
+		// 로그인한 유저의 아이디(PK)를 넘겨주기
+		Member connUser = (Member)session.getAttributes().get("loginUser");
+		TextMessage connUserId = new TextMessage(connUser.getUserId());
+		
+		for(WebSocketSession ws : users) {
+			ws.sendMessage(connUserId);
+		}
+		*/
 	}
 
 	
@@ -41,11 +51,11 @@ public class WebSocketGroupServer extends TextWebSocketHandler {
 		// 인터셉터를 통해 HttpSession의 정보를 WebSocketSession에 담아왔기 때문에 접근해 사용 가능.
 		Member loginUser = (Member)session.getAttributes().get("loginUser");
 		
-		TextMessage newMessage = new TextMessage(loginUser.getUserName() + " : " + message.getPayload());
+		TextMessage newMessage = new TextMessage(loginUser.getUserName() + "," + message.getPayload());
+		
 		for(WebSocketSession ws : users) {
-			ws.sendMessage(newMessage);
+				ws.sendMessage(newMessage);
 		}
-	
 	
 	}
 
