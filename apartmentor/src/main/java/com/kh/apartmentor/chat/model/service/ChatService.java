@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.apartmentor.chat.model.dao.ChatDao;
 import com.kh.apartmentor.chat.model.vo.Chat;
+import com.kh.apartmentor.member.model.vo.Member;
 
 @Service
 public class ChatService {
@@ -24,6 +25,10 @@ public class ChatService {
 
 	public int insertChat(Chat c) {
 		return chatDao.insertChat(sqlSession, c);
+	}
+
+	public ArrayList<Member> selectMemberList() {
+		return chatDao.selectMemberList(sqlSession);
 	}
 
 }
