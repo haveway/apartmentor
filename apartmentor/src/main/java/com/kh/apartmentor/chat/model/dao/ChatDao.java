@@ -23,4 +23,8 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectMemberList");
 	}
 
+	public ArrayList<Chat> selectSendDateList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectSendDateList");
+	}
+
 }

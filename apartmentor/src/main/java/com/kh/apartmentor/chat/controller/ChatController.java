@@ -31,6 +31,9 @@ public class ChatController {
 		ArrayList<Member> MemberList = chatService.selectMemberList();
 		model.addAttribute("MemberList", MemberList);
 		
+		// 날짜별 구분을 위해 중복값없이 날짜만 조회
+		ArrayList<Chat> sendDateList = chatService.selectSendDateList();
+		model.addAttribute("sendDateList", sendDateList);
 		return "chat/chatView";
 	}
 	

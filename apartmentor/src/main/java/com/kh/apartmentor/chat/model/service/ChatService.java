@@ -31,4 +31,8 @@ public class ChatService {
 		return chatDao.selectMemberList(sqlSession);
 	}
 
+	public ArrayList<Chat> selectSendDateList() {
+		return chatDao.selectSendDateList(sqlSession);
+	}
+
 }

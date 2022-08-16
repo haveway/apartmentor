@@ -5,6 +5,7 @@
  	<resultMap type="chat" id="chatResultSet">
  		<result column="CHAT_NO" property="chatNo"/>
  		<result column="CHAT_CONTENT" property="chatContent"/>
+ 		<result column="CHAT_SENDDATE" property="chatSendDate"/>
  		<result column="CHAT_SENDTIME" property="chatSendTime"/>
  		<result column="CHAT_CODE" property="chatCode"/>
  		<result column="CHAT_WRITER" property="chatWriter"/>
@@ -23,6 +24,7 @@
  		SELECT
  				CHAT_NO,
  				CHAT_CONTENT,
+ 				TO_CHAR(CHAT_SENDTIME, 'DL') AS "CHAT_SENDDATE",
  				TO_CHAR(CHAT_SENDTIME, 'AM HH:MI') AS "CHAT_SENDTIME",
  				CHAT_CODE,
  				CHAT_WRITER
@@ -60,6 +62,11 @@
  		 WHERE
  		 		STATUS = 'Y' 				
  				
+ 	</select>
+ 	
+ 	<!-- 채팅날짜 중복값없이 조회 쿼리문 -->
+ 	<select id="selectSendDateList" resultMap="chatResultSet">
+ 		SELECT DISTINCT TO_CHAR(CHAT_SENDTIME, 'DL') AS "CHAT_SENDDATE" FROM CHAT 
  	</select>
  	
  

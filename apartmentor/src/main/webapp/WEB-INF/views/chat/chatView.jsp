@@ -98,12 +98,14 @@
 		height:600px; 
 		margin-left:10px;
 	}
+	
 	#chatInput{
 		width: 500px;
 		margin-left:230px;
 		margin-top:10px;
 		height:50px; 
 	}
+	
 	#chatBtn{
 		width: 90px;
 		height:40px;
@@ -118,7 +120,12 @@
         margin-top : 5px;
         margin-right : 7px;
         margin-left : 10px;
-         
+	}
+	
+	.chatSendDate{
+		font-size:17px;
+		margin-top : 7px;
+		margin-bottom : 7px;
 	}
 	
 </style>	
@@ -145,25 +152,31 @@
 		<br><br>
 		
 		<div class="chat-area">
-		<c:if test="${not empty chatList }">
-			<c:forEach var="c" items="${chatList}">
-				<c:if test="${loginUser.userName eq c.chatWriter}">
-					<div class="mychat-area">
-						<div>${c.chatWriter}</div>
-						<div>${c.chatContent}</div>
-						<div>${c.chatSendTime}</div>
-					</div>	
-				</c:if>
-				<c:if test="${loginUser.userName ne c.chatWriter}">
-					<div class="userchat-area">
-						<div>${c.chatWriter}</div>
-						<div>${c.chatContent}</div>
-						<div>${c.chatSendTime}</div>
-					</div>
-				</c:if>
-			</c:forEach>
-		</c:if>
-		
+			<c:if test="${not empty chatList }">
+				<!-- DB에 중복값없이 조회한 날짜 반복문 돌리기 -->
+				<c:forEach var="ct" items="${sendDateList}">
+					<div class="chatSendDate" align="center">${ct.chatSendDate}</div>
+						<!-- 채팅내역 반복문 -->
+						<c:forEach var="c" items="${chatList}">
+							<c:if test="${ct.chatSendDate eq c.chatSendDate }">
+								<c:if test="${loginUser.userName eq c.chatWriter}">
+									<div class="mychat-area">
+										<div>${c.chatWriter}</div>
+										<div>${c.chatContent}</div>
+										<div>${c.chatSendTime}</div>
+									</div>	
+								</c:if>
+								<c:if test="${loginUser.userName ne c.chatWriter}">
+									<div class="userchat-area">
+										<div>${c.chatWriter}</div>
+										<div>${c.chatContent}</div>
+										<div>${c.chatSendTime}</div>
+									</div>
+								</c:if>
+							</c:if>
+						</c:forEach>
+				</c:forEach>
+			</c:if>
 		</div>
 		
 		<div class="onlineCheck">
@@ -171,7 +184,7 @@
 		<c:forEach var='m' items="${MemberList}">
 		<div class="online-area">
 			<div class="circle"></div>
-			<div>${m.userName}</div>
+			<div id="${m.userName}">${m.userName}</div>
 		</div>
 		</c:forEach>
 		
@@ -187,10 +200,12 @@
 	<script>
 		// 채팅페이지로 오자마자 주민단체채팅방전용 웹소켓 접속 시키기
 		$(function(){
+			// 윕소켓 접속
 			connectGroup();
 			
 			// 스크롤바 아래로 내리기
 			$('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+			
 		})
 	
 		// 전역변수
@@ -206,7 +221,7 @@
  			socket.onopen = function(){
  				console.log("서버와 연결되었습니다.");
  				
- 			}
+			}
 			
  			socket.onclose = function(){
  				console.log("서버와 연결이 종료되었습니다.");
@@ -230,12 +245,12 @@
  				let date = new Date();
  				let time = (date.getHours() < 12 ? "오전 " : "오후 ") 
  							+ date.getHours() 
- 							+ ":" 
+ 								+ ":" 
  							+ (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
 				
  				let timeDiv = $('<div>').append(time);
  				
- 				// 말풍성으로 감싸기
+ 				// 말풍선으로 감싸기
  				var chatDiv = $('<div class="userchat-area">');
  				var myChatDiv = $('<div class="mychat-area">');
  				
@@ -262,7 +277,7 @@
  			}
 		}
 	
-		// 메시지 전송함수 : 입력한 글자를 불러와서 서버에 전송
+		// 메세지 전송함수 : 전송 버튼 클릭 시 입력한 메세지를 DB에 저장하고 입력한 메세지를 전송  
  		function send(){
  			var text = $('#chatInput').val();
  			if(!text){
@@ -279,7 +294,7 @@
 						},
 				success : function(result){
 					if(result == 'success'){
-						// 입력한 글자 전송
+						// 입력한 메세지 전송
 						socket.send(text);
 			 			$('#chatInput').val('');
 			 			
