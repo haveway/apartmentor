@@ -143,6 +143,7 @@
 		    <button type="button" class="btn">관리소 채팅방</button>
 		  </div>
 		<br><br>
+		
 		<div class="chat-area">
 		<c:if test="${not empty chatList }">
 			<c:forEach var="c" items="${chatList}">

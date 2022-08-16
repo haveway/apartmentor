@@ -34,14 +34,11 @@ public class ChatController {
 		return "chat/chatView";
 	}
 	
-	
 	// 채팅내역 DB저장
 	@ResponseBody
 	@RequestMapping("insertChat.ch")
 	public String insertChat(Chat c) {
 		return chatService.insertChat(c) > 0 ? "success" : "fail";
 	}
-	
-	
 	
 }

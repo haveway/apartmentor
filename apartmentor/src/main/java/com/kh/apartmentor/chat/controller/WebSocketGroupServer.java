@@ -3,7 +3,10 @@ package com.kh.apartmentor.chat.controller;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.json.simple.JSONObject;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -20,10 +23,8 @@ import com.kh.apartmentor.member.model.vo.Member;
 
 public class WebSocketGroupServer extends TextWebSocketHandler {
 	
-
 	private Set<WebSocketSession> users = new CopyOnWriteArraySet<WebSocketSession>();
 
-	
 	
 	// webSocket 연결 성공 시 
 	@Override
@@ -31,15 +32,8 @@ public class WebSocketGroupServer extends TextWebSocketHandler {
 		users.add(session);
 		System.out.println("사용자 접속! : 현재 : " + users.size() + "명");
 		
-		/*
-		// 로그인한 유저의 아이디(PK)를 넘겨주기
-		Member connUser = (Member)session.getAttributes().get("loginUser");
-		TextMessage connUserId = new TextMessage(connUser.getUserId());
+		//Member loginUser = (Member)session.getAttributes().get("loginUser");
 		
-		for(WebSocketSession ws : users) {
-			ws.sendMessage(connUserId);
-		}
-		*/
 	}
 
 	
@@ -64,6 +58,9 @@ public class WebSocketGroupServer extends TextWebSocketHandler {
 		users.remove(session);
 		System.out.println("사용자 종료! 현재 : " + users.size() + "명");
 	}
+	
+	
+	
 
 	
 }
