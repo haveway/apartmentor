@@ -91,22 +91,6 @@
 	</insert>
 
 	<!-- ************************************이용내역************************************** -->
-<!-- 	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM
-				RESERVE
-		WHERE	
-				STATUS = 'Y'
-	</select>
-	
-	
-	<select id="selectList" resultMap="sportsResultSet">
-		SELECT RESERVE_NO, START_DATE, END_DATE, FACILITY, SEAT_NUMBER, R.USER_NO, USER_NAME, R.STATUS, START_DAY, CREATE_DATE
-		FROM RESERVE R, MEMBER M
-		WHERE R.USER_NO = M.USER_NO
-		AND R.STATUS = 'Y'
-		ORDER BY START_DAY, START_DATE ASC
-	</select>  -->
 	
 	<select id="selectOptionListCount" resultType="_int">
 		<choose>

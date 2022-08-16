@@ -52,16 +52,6 @@ public class SportsService {
 	
 	//-------------------- 이용내역 ----------------------------
 	
-	/*
-	 * public int selectListCount() { return sportsDao.selectListCount(sqlSession);
-	 * }
-	 * 
-	 * public ArrayList<Reserve> selectList(PageInfo pi){ return
-	 * sportsDao.selectList(sqlSession, pi);
-	 * 
-	 * }
-	 */
-	 
 	public int selectOptionListCount(HashMap<String,String> map) {
 		return sportsDao.selectOptionListCount(sqlSession, map);
 	}

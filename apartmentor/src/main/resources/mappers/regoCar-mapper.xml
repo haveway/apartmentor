@@ -10,11 +10,12 @@
 		<result column="CAR_DATE" property="carDate" />
 		<result column="USER_NO" property="userNo" />
 		<result column="CAR_PURPOSE" property="carPurpose" />
+		<result column="APT_NO" property="aptNo"/>
 	</resultMap>
 	
 	<insert id="insertRegoCar" parameterType="parking">
 		INSERT INTO PARKING
-		VALUES (#{carNo}, #{carPhone}, 'W', 1, NULL, #{userNo}, NULL)
+		VALUES (#{carNo}, #{carPhone}, 'W', 1, SYSDATE, #{userNo}, NULL)
 	</insert>
 
 	<select id="selectRegoCarList" resultMap="regoCarResultSet">
@@ -29,6 +30,54 @@
 		FROM PARKING
 		WHERE CAR_NO = #{carNo}
 	</delete>
+
+	
+	<!-- ****************관리자 주차 등록******************* -->
+	
+	<select id="adminRegoCarListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+				PARKING
+		WHERE	
+				CAR_CATEGORY = 1
+		<if test="category == 'ALL'">
+
+		</if>
+		<if test="category == 'WW'">
+			AND
+					STATUS = 'W'
+		</if>
+		<if test="category == 'YY'">
+			AND
+					STATUS = 'Y'
+		</if>
+	</select>
+	
+	
+	<select id="adminRegoCarList" resultMap="regoCarResultSet">
+		SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, APT_NO, R.USER_NO
+		FROM PARKING R, MEMBER M
+		WHERE R.USER_NO = M.USER_NO
+		AND CAR_CATEGORY = 1
+		<if test="category == 'ALL'">
+			
+		</if>
+		<if test="category == 'WW'">		
+			AND R.STATUS = 'W'
+		</if>
+		<if test="category == 'YY'">
+			AND R.STATUS = 'Y'
+		</if>
+		ORDER BY CAR_DATE DESC
+	</select>
+		
+	<update id="appRegoCar" parameterType="parking">
+		UPDATE PARKING
+		SET STATUS = 'Y'
+		WHERE CAR_NO = #{carNo}
+	</update>
+
+
 
 
 

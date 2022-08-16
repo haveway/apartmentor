@@ -22,5 +22,6 @@ public class Parking {
 	private Date carDate;
 	private String carPurpose;
 	private int userNo;
+	private String aptNo;
 
 }

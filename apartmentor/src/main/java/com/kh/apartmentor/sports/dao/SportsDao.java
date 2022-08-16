@@ -44,21 +44,6 @@ public class SportsDao {
 	
 	
 	// --------------------------- 이용내역 ----------------------------------------------------
-	/*
-	 * public int selectListCount(SqlSessionTemplate sqlSession) { return
-	 * sqlSession.selectOne("sportsMapper.selectListCount"); }
-	 * 
-	 * public ArrayList<Reserve> selectList(SqlSessionTemplate sqlSession, PageInfo
-	 * pi){
-	 * 
-	 * int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit(); int limit =
-	 * pi.getBoardLimit();
-	 * 
-	 * RowBounds rowBounds = new RowBounds(offset, limit);
-	 * 
-	 * return (ArrayList)sqlSession.selectList("sportsMapper.selectList",
-	 * null,rowBounds); }
-	 */
 	 
 	public int selectOptionListCount(SqlSessionTemplate sqlSession, HashMap<String,String> map) {
 		return sqlSession.selectOne("sportsMapper.selectOptionListCount", map);

@@ -70,20 +70,20 @@
 		</div>
 		
 		<div style="margin:auto; width:700px;">
-		<table class="table table-hover" id="regoCar-List" align="center">
-			<thead>
-				<tr style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
-					<th>No.</th>
-					<th>차량번호</th>
-					<th>연락처</th>
-					<th>승인현황</th>
-					<th>등록 취소</th>
-				</tr>
-			</thead>
-			<tbody>
-				
-			</tbody>
-		</table>
+			<table class="table table-hover" id="regoCar-List" align="center">
+				<thead>
+					<tr style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
+						<th>No.</th>
+						<th>차량번호</th>
+						<th>연락처</th>
+						<th>승인현황</th>
+						<th>등록 취소</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
 		</div>
 		
 
