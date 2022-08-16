@@ -174,14 +174,14 @@
 		<br>
 		<div id="pagingArea">
 			<c:choose>
-				<c:when test="${empty keyword}">
+				<c:when test="${empty condition}">
 					<c:choose>
 						<c:when test="${ pi.currentPage eq 1 }">
 							<div class="page-item disabled"><a class="page-link" href="#">이전</a></div>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${empty keyword}">
+								<c:when test="${empty condition}">
 									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
 								</c:when>
 								<c:otherwise>
@@ -190,10 +190,9 @@
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
-					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${!empty keyword}">
+							<c:when test="${!empty condition}">
 								<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
 							</c:when>
 							<c:otherwise>
@@ -207,7 +206,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${empty keyword}">
+								<c:when test="${empty condition}">
 									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
 								</c:when>
 								<c:otherwise>
@@ -224,7 +223,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${empty keyword}">
+								<c:when test="${empty condition}">
 									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
 								</c:when>
 								<c:otherwise>
@@ -236,7 +235,7 @@
 					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${empty keyword}">
+							<c:when test="${empty condition}">
 								<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
 							</c:when>
 							<c:otherwise>
@@ -250,7 +249,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${empty keyword}">
+								<c:when test="${empty condition}">
 									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
 								</c:when>
 								<c:otherwise>

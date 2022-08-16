@@ -69,7 +69,7 @@ public class MemberController {
 		
 		if(loginUser != null && bCryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
-			mv.setViewName("main");
+			mv.setViewName("redirect:main.do");
 		} else {
 			session.setAttribute("noLogin", "noLogin");
 			mv.setViewName("redirect:/");
