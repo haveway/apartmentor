@@ -111,22 +111,20 @@
 	</form>	
 		<div style="margin-left: 150px; margin-top: 20px;">
 			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
-			<button type="button" class="btn btn-info" id="okBtn" onclick="ok()">승인</button>
-			<button type="button" class="btn btn-outline-info" id="noBtn" onclick="no()">반려</button>&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-info" id="okBtn">승인</button>
+			<button type="button" class="btn btn-outline-info" id="noBtn">반려</button>&nbsp;&nbsp;&nbsp;
 		</div>
 	
 	<script>
 		$(function(){
-			var ok = $('#okBtn');
-			var no = $('#noBtn');
-			
-			ok.click(function(){
+
+			$('#okBtn').click(function(){
 				const form = $('#visitStatus');
 				form.attr('action', 'okReserve.visit');
 				form.submit();
 			})
 			
-			no.click(function(){
+			$('#noBtn').click(function(){
 				const form = $('#visitStatus');
 				form.attr('action', 'noReserve.visit');
 				form.submit();

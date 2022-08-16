@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,6 @@ import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.common.template.Pagination;
 import com.kh.apartmentor.notice.model.service.NoticeService;
 import com.kh.apartmentor.notice.model.vo.Notice;
-import com.kh.apartmentor.visit.model.vo.Visit;
 
 @Controller
 public class NoticeController {
@@ -30,7 +30,7 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	/**
-	 * 공지사항 추가 메소드
+	 * 공지사항 등록
 	 */
 	@RequestMapping("insert.notice")
 	public String insertNotice(Notice n, MultipartFile upfile, HttpSession session, Model model) {
@@ -40,7 +40,7 @@ public class NoticeController {
 			String changeName = saveFile(upfile, session);
 			
 			n.setOriginName(upfile.getOriginalFilename());
-			n.setChangeName("resources/uploadFiles/" + changeName);
+			n.setChangeName("resources/noticeImg/" + changeName);
 			
 		}
 		
@@ -58,7 +58,7 @@ public class NoticeController {
 	
 
 	/**
-	 * 실제 넘어온 파일을 변경해서 서버에 업로드 해주는 메소드
+	 * 실제 넘어온 파일을 변경해서 서버에 업로드
 	 */
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
@@ -76,7 +76,7 @@ public class NoticeController {
 		String changeName = currentTime + ranNum + ext;
 		
 		// 업로드 시키고자 하는 폴더의 물리적인 경로를 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		String savePath = session.getServletContext().getRealPath("/resources/noticeImg/");
 		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
@@ -88,7 +88,7 @@ public class NoticeController {
 	
 	
 	/**
-	 * 공지사항 목록 페이지로 이동하는 메소드
+	 * 공지사항 목록 페이지로 이동
 	 */
 	@RequestMapping("list.notice")
 	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
@@ -146,7 +146,7 @@ public class NoticeController {
 	}
 
 	/**
-	 * 공지사항 작성 페이지로 이동하는 메소드
+	 * 공지사항 작성 페이지로 이동
 	 */
 	@RequestMapping("enrollForm.notice")
 	public String enrollFormNotice() {
@@ -154,7 +154,7 @@ public class NoticeController {
 	}
 
 	/**
-	 * 공지사항 상세 페이지로 이동하는 메소드
+	 * 공지사항 상세 페이지로 이동
 	 */
 	@RequestMapping("detail.notice")
 	public ModelAndView detailVist(ModelAndView mv, int nno) {
@@ -166,6 +166,69 @@ public class NoticeController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 공지사항 수정 페이지로 이동
+	 */
+	@RequestMapping("updateForm.notice")
+	public String updateNotice(int nno, Model model) {
 		
+		model.addAttribute("n", noticeService.selectNotice(nno));
+		
+		return "notice/noticeUpdateForm";
+		
+	}
+	
+	/**
+	 * 공지사항 수정
+	 */
+	@RequestMapping("update.notice")
+	public String updateNotice(Notice n, MultipartFile reupfile, HttpSession session, Model model) {
+		// 새로운첨부파일넘겨온 경우
+		if(!reupfile.getOriginalFilename().equals("")) {
+			// 기존에 첨부파일이 있는 경우 => 기존의 첨부파일을 지우기
+			if(n.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(n.getChangeName())).delete();
+			}
+			// 새로 넘어온 첨부파일을 서버에 업로드 시키기
+			String changeName = saveFile(reupfile, session);
+						
+			// 새로운 정보(원본명, 저장경로) 담기
+			n.setOriginName(reupfile.getOriginalFilename());
+			n.setChangeName("resources/noticeImg/" + changeName);
+			}
+		
+		int result = noticeService.updateNotice(n);
+
+			if(result > 0) {
+				session.setAttribute("alertMsg2", "공지사항 수정 성공");
+				return "redirect:detail.notice?nno="  + n.getNoticeNo();
+			} else {
+				model.addAttribute("alertMsg1", "공지사항 수정 실패");
+				return "updateForm.notice?nno" + n.getNoticeNo();
+			}
+			
+	}
+	
+	/**
+	 * 공지사항 삭제
+	 */
+	@RequestMapping("delete.notice")
+	public String deleteNotice(int nno, String filePath, HttpSession session, Model model) {
+		
+		int result = noticeService.deleteNotice(nno);
+		
+		if(result > 0) { 
+			// 만약에 첨부파일이 있었을 경우 삭제하기
+			if(!filePath.equals("")) {
+				// 기존에 존재하는 첨부파일을 삭제
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg2", "공지사항 삭제 성공");
+			return "redirect:list.notice";
+		} else {
+			model.addAttribute("alertMsg1", "공지사항 삭제 실패");
+			return "detail.notice?nno" + nno;
+		}
+	}
 }

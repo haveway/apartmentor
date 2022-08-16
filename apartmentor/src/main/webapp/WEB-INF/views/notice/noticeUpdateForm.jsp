@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 작성</title>
+<title>공지사항 수정</title>
 <style>
 .noticeContent {
 	width: 1200px;
@@ -50,7 +50,7 @@ h1 {
 
 	<div class="noticeContent">
 
-		<h1>공지사항 작성 페이지</h1>
+		<h1>공지사항 수정 페이지</h1>
 
 		<br> <br>
 
@@ -58,8 +58,8 @@ h1 {
 
 			<br><br>
 
-			<form id="noticeEnrollForm" method="post" action="insert.notice" enctype="multipart/form-data">
-				<input type="hidden" name="userNo" value="${ loginUser.userNo }">
+			<form id="noticeEnrollForm" method="post" action="update.notice" enctype="multipart/form-data">
+				<input type="hidden" name="noticeNo" value="${n.noticeNo}">
 				<table>
 					<tr style="height: 35px">
 						<th>말머리</th>
@@ -74,29 +74,54 @@ h1 {
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" name="noticeTitle" placeholde="제목을 입력해주세요" required>
+							<input type="text" name="noticeTitle" placeholde="제목을 입력해주세요" value="${n.noticeTitle}">
 						</td>
 					</tr>
 					<tr>
 						<th>일정 종류</th>
 						<td>
-							<input type="text" name="noticeCalender" placeholde="일정 종류를 입력해주세요">
+							<input type="text" name="noticeCalender" placeholde="일정 종류를 입력해주세요" value="${n.noticeCalender}">
 						</td>
 					</tr>
 					<tr>
 						<th>일정 날짜</th>
-						<td style="width: 210px;"><input type="text" id="datepicker" name="noticeStartDate" /></td>
-						<td style="font-weight: bolder;">&nbsp;~&nbsp;</td>
-						<td><input type="text" id="datepicker2" name="noticeEndDate" /></td>
+					<c:choose>
+						<c:when test="${not empty n.noticeStartDate}">
+							<td style="width: 210px;">
+								<input type="text" id="datepicker" name="noticeStartDate" value="${n.noticeStartDate}" />
+							</td>
+							<td style="font-weight: bolder;">&nbsp;~&nbsp;</td>
+							<td>
+								<input type="text" id="datepicker2" name="noticeEndDate" value="${n.noticeEndDate}"/>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td style="width: 210px;">
+								<input type="text" id="datepicker" name="noticeStartDate"/>
+							</td>
+							<td style="font-weight: bolder;">&nbsp;~&nbsp;</td>
+							<td>
+								<input type="text" id="datepicker2" name="noticeEndDate"/>
+							</td>
+						</c:otherwise>
+					</c:choose>
 					</tr>
 					 <tr>
                         <th><label for="upfile">첨부파일</label></th>
-                        <td colspan="3"><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                        <td colspan="3">
+                        	<input type="file" id="upfile" class="form-control-file border" name="reupfile">
+                        	<c:if test="${ not empty n.changeName }">
+	                        	현재 업로드 된 파일 :
+		                        <a href="${ n.changeName }" download="${ n.originName }">${ n.originName }</a>
+	                         	<input type="hidden" name="originName" value="${ b.originName }">
+	                         	<input type="hidden" name="changeName" value="${ b.changeName }">
+                       		</c:if>	
+                        </td>
                     </tr>
 					<tr>
 						<th>내용 입력</th>
 						<td colspan="6"><textarea name="noticeContent" a wrap="hard" rows="20" 
-								cols="80" style="resize: none;" placeholder="내용을 입력해주세요" required></textarea>
+								cols="80" style="resize: none;" placeholder="내용을 입력해주세요">${n.noticeContent}</textarea>
 						</td>
 					</tr>
 				</table>
@@ -110,6 +135,16 @@ h1 {
 			<br><br>
 
 			</form>
+			
+			<script>
+				$(function(){ // 카테고리 선택했던 거 보여지게
+					$("#category>option").each(function(){
+						if($(this).val() == '${n.noticeCategory}') {
+							$(this).attr("selected", "true")
+						}
+					})
+				})
+			</script>
 
 			<script>
 				// datepicker 관련
@@ -154,6 +189,8 @@ h1 {
 			        	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
 			     	});
 				})
+				
+
 				
 			</script>
 	

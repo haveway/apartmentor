@@ -46,88 +46,155 @@
 	</insert>
 	
 	<select id="selectVisitCategory" resultMap="visitCategoryResultSet">
-		SELECT VISIT_CATEGORY, VISIT_VALUE
-		  FROM VISIT_CATEGORY
+		SELECT
+				VISIT_CATEGORY,
+				VISIT_VALUE
+		  FROM
+		  		VISIT_CATEGORY
 	</select>
 	
 	<select id="selectVisitReserve" parameterType="_int" resultMap="visitResultSet"> 
-		SELECT APT_NO, VISIT_DATE, VISIT_TIME, VISIT_CATEGORY, VISIT_VALUE
-		  FROM VISIT
-		  JOIN MEMBER USING(USER_NO)
-		  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-		 WHERE APT_NO = (SELECT APT_NO
-		                   FROM MEMBER
-		                  WHERE USER_NO = #{vno})
-		   AND VISIT_STATUS = 'Y'
-		 ORDER BY VISIT_DATE ASC
+		SELECT 
+				APT_NO,
+				VISIT_DATE,
+				VISIT_TIME,
+				VISIT_CATEGORY,
+				VISIT_VALUE
+		  FROM
+		  		VISIT
+		  JOIN
+		  		MEMBER USING(USER_NO)
+		  JOIN
+		  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+		 WHERE
+		 		APT_NO = (SELECT
+		 				  		 APT_NO
+		                    FROM 
+		                   		 MEMBER
+		                   WHERE
+		                  		 USER_NO = #{vno})
+		   AND 
+		   		VISIT_STATUS = 'Y'
+		 ORDER 
+		 	BY  VISIT_DATE ASC
 	</select>
 	
 	<select id="checkVisitReserve" parameterType="visit" resultMap="visitResultSet">
-		SELECT VISIT_CATEGORY, VISIT_DATE, VISIT_TIME
-		  FROM VISIT
-		  JOIN MEMBER USING(USER_NO)
-		 WHERE APT_NO = (SELECT APT_NO
-		                   FROM MEMBER
-		                  WHERE USER_NO = #{userNo})
-		   AND VISIT_STATUS = 'Y'
-		   AND VISIT_CATEGORY = #{visitCategory}
-		   AND VISIT_DATE = #{visitDate}
-		   AND VISIT_TIME = #{visitTime}
+		SELECT
+				VISIT_CATEGORY,
+				VISIT_DATE,
+				VISIT_TIME
+		  FROM
+		  		VISIT
+		  JOIN
+		  		MEMBER USING(USER_NO)
+		 WHERE
+		 		APT_NO = (SELECT
+		 				  		 APT_NO
+		                    FROM
+		                    	 MEMBER
+		                   WHERE
+		                   		 USER_NO = #{userNo})
+		   AND
+		   		VISIT_STATUS = 'Y'
+		   AND
+		   		VISIT_CATEGORY = #{visitCategory}
+		   AND 
+		   		VISIT_DATE = #{visitDate}
+		   AND 
+		   		VISIT_TIME = #{visitTime}
 	</select>
 	
 	<select id="selectVisitReserveAll" resultMap="visitResultSet">
-		SELECT APT_NO, VISIT_DATE, VISIT_TIME, VISIT_CATEGORY, VISIT_VALUE
-		  FROM VISIT
-		  JOIN MEMBER USING(USER_NO)		  
-		  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-		 WHERE VISIT_STATUS = 'Y'
-	     ORDER BY VISIT_DATE ASC
+		SELECT
+				APT_NO,
+				VISIT_DATE,
+				VISIT_TIME,
+				VISIT_CATEGORY,
+				VISIT_VALUE
+		  FROM
+		  		VISIT
+		  JOIN
+		  		MEMBER USING(USER_NO)		  
+		  JOIN 
+		  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+		 WHERE
+		 		VISIT_STATUS = 'Y'
+	     ORDER 
+	     	BY  VISIT_DATE ASC
 	</select>
 
 	
 	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*)
-		  FROM VISIT
+		SELECT
+				COUNT(*)
+		  FROM
+		  		VISIT
 	</select>
 	
 	<select id="selectList" resultMap="visitResultSet">
-		SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-		  FROM VISIT
-		  JOIN MEMBER USING(USER_NO)		  
-		  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-		 ORDER BY CREATE_DATE DESC
+		SELECT
+				VISIT_NO,
+				VISIT_VALUE,
+				APT_NO,
+				DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+				CREATE_DATE
+		  FROM 
+		  		VISIT
+		  JOIN 
+		  		MEMBER USING(USER_NO)		  
+		  JOIN 
+		  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+		 ORDER 
+		 	BY  CREATE_DATE DESC
 	</select>
 	
 	<select id="selectCategoryListCount" resultType="_int">
-
 			<if test="category == '가스'">
-			   SELECT COUNT(*)
-			     FROM VISIT
-				WHERE VISIT_CATEGORY = 1
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_CATEGORY = 1
 			</if>
 			<if test="category == '난방'">
-			   SELECT COUNT(*)
-			     FROM VISIT
-				WHERE VISIT_CATEGORY = 2
+			   SELECT
+			   		   COUNT(*)
+			     FROM 
+			     	   VISIT
+				WHERE 
+					   VISIT_CATEGORY = 2
 			</if>
 			<if test="category == '소독'">
-			   SELECT COUNT(*)
-			     FROM VISIT
-				WHERE VISIT_CATEGORY = 3
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_CATEGORY = 3
 			</if>
 			<if test="category == '수도'">
-			   SELECT COUNT(*)
-			     FROM VISIT	
-				WHERE VISIT_CATEGORY = 4
+			   SELECT 
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT	
+				WHERE 
+				       VISIT_CATEGORY = 4
 			</if>
 			<if test="category == '전기'">
-			   SELECT COUNT(*)
-			     FROM VISIT
-				WHERE VISIT_CATEGORY = 5
+			   SELECT 
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE 
+					   VISIT_CATEGORY = 5
 			</if>
 			<if test="category == '전체'">
-			   SELECT COUNT(*)
-			     FROM VISIT			
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT			
 			</if>
 
 	</select>
@@ -135,72 +202,149 @@
 	<select id="selectCategoryList" resultMap="visitResultSet">
 		<choose>
 			<when test="category == '가스'">
-				SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-				  FROM VISIT
-				  JOIN MEMBER USING(USER_NO)		  
-				  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-				 WHERE VISIT_CATEGORY = 1
-				 ORDER BY CREATE_DATE DESC
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_CATEGORY = 1
+				 ORDER 
+				 	BY  CREATE_DATE DESC
 			</when>
 			<when test="category == '난방'">
-				SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-				  FROM VISIT
-				  JOIN MEMBER USING(USER_NO)		  
-				  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-				 WHERE VISIT_CATEGORY = 2
-				 ORDER BY CREATE_DATE DESC
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_CATEGORY = 2
+				 ORDER
+				 	BY  CREATE_DATE DESC
 			</when>
 			<when test="category == '소독'">
-				SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-				  FROM VISIT
-				  JOIN MEMBER USING(USER_NO)		  
-				  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-				 WHERE VISIT_CATEGORY = 3
-				 ORDER BY CREATE_DATE DESC
+				SELECT 
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, 
+						CREATE_DATE
+				  FROM 
+				  		VISIT
+				  JOIN 
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_CATEGORY = 3
+				 ORDER
+				 	BY  CREATE_DATE DESC
 			</when>
 			<when test="category == '수도'">
-				SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-				  FROM VISIT
-				  JOIN MEMBER USING(USER_NO)		  
-				  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-				 WHERE VISIT_CATEGORY = 4
-				 ORDER BY CREATE_DATE DESC
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM 
+				  		VISIT
+				  JOIN 
+				  		MEMBER USING(USER_NO)		  
+				  JOIN 
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE 
+				 		VISIT_CATEGORY = 4
+				 ORDER 
+				 	BY 
+				 		CREATE_DATE DESC
 			</when>
 			<when test="category == '전기'">
-				SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-				  FROM VISIT
-				  JOIN MEMBER USING(USER_NO)		  
-				  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-				 WHERE VISIT_CATEGORY = 5
-				 ORDER BY CREATE_DATE DESC
+				SELECT 
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_CATEGORY = 5
+				 ORDER
+				 	BY  CREATE_DATE DESC
 			</when>
 			<when test="category == '전체'">
-				SELECT VISIT_NO, VISIT_VALUE, APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, CREATE_DATE
-				  FROM VISIT
-				  JOIN MEMBER USING(USER_NO)		  
-				  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-				 ORDER BY CREATE_DATE DESC
+				SELECT 
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 ORDER
+				 	BY  CREATE_DATE DESC
 			</when>
 		</choose>
 	</select>
 	
 	<select id="selectVisit" resultMap="visitResultSet">
-		SELECT VISIT_NO, VISIT_VALUE, APT_NO, VISIT_DATE, VISIT_TIME, CREATE_DATE, USER_NO, VISIT_CONTENT, EMAIL
-		  FROM VISIT
-		  JOIN MEMBER USING(USER_NO)		  
-		  JOIN VISIT_CATEGORY USING(VISIT_CATEGORY)
-		 WHERE VISIT_NO = #{visitNo}
+		SELECT
+				VISIT_NO,
+				VISIT_VALUE,
+				APT_NO,
+				VISIT_DATE,
+				VISIT_TIME,
+				CREATE_DATE,
+				USER_NO,
+				VISIT_CONTENT,
+				EMAIL
+		  FROM
+		  		VISIT
+		  JOIN
+		  		MEMBER USING(USER_NO)		  
+		  JOIN
+		  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+		 WHERE
+		 		VISIT_NO = #{visitNo}
 	</select>
 	
 	<update id="okReserveStatus" parameterType="_int">
-		UPDATE VISIT
-		   SET VISIT_STATUS = 'Y'
-		 WHERE VISIT_NO = #{visitNo}
+		UPDATE
+				VISIT
+		   SET
+		   		VISIT_STATUS = 'Y'
+		 WHERE
+		 		VISIT_NO = #{visitNo}
 	</update>
 	
 	<update id="noReserveStatus" parameterType="_int">
-		UPDATE VISIT
-		   SET VISIT_STATUS = 'N'
-		 WHERE VISIT_NO = #{visitNo}
+		UPDATE
+				VISIT
+		   SET
+		   		VISIT_STATUS = 'N'
+		 WHERE
+		 		VISIT_NO = #{visitNo}
 	</update>
 </mapper>

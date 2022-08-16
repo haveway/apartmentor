@@ -60,4 +60,12 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
 	}
 
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.update("noticeMapper.updateNotice", n);
+	}
+
+	public int deleteNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+		return sqlSession.update("noticeMapper.deleteNotice", noticeNo);
+	}
+
 }

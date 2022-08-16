@@ -34,7 +34,7 @@ public class VisitController {
 	private JavaMailSender sender;
 
 	/**
-	 * 예약 작성 페이지로 이동하는 메소드
+	 * 예약 작성 페이지로 이동
 	 */
 	@RequestMapping("enrollForm.visit")
 	public ModelAndView enrollFormVisit(ModelAndView mv) {
@@ -46,7 +46,7 @@ public class VisitController {
 	}
 	
 	/**
-	 * 예약을 추가하는 메소드
+	 * 예약 등록
 	 */
 	@RequestMapping("insert.visit")
 	public String insertVisitReserve(Visit v, HttpSession session, Model model) {
@@ -63,7 +63,7 @@ public class VisitController {
 	}
 	
 	/**
-	 * 예약 날짜 / 시간 가져오는 메소드
+	 * 예약 날짜 / 시간 가져오기
 	 */
 	@ResponseBody
 	@RequestMapping(value="select.visit", produces="application/json; charset=UTF-8")
@@ -71,6 +71,9 @@ public class VisitController {
 		return new Gson().toJson(visitService.selectVisitReserve(vno));
 	}
 	
+	/**
+	 * 예약 날짜 / 시간 중복 체크
+	 */
 	@ResponseBody
 	@RequestMapping(value="check.visit", produces="application/json; charset=UTF-8")
 	public String ajaxCheckVisitReserve(Visit v) {
@@ -78,7 +81,7 @@ public class VisitController {
 	}
 	
 	/**
-	 * 예약 날짜 / 시간 전부 가져오는 메소드
+	 * 예약 날짜 / 시간 전부 가져오기
 	 */
 	@ResponseBody
 	@RequestMapping(value="selectAll.visit", produces="application/json; charset=UTF-8")
@@ -87,7 +90,7 @@ public class VisitController {
 	}
 	
 	/**
-	 * 예약 목록 페이지로 이동하는 메소드
+	 * 예약 목록 페이지로 이동
 	 */
 	@RequestMapping("list.visit")
 	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
@@ -122,7 +125,7 @@ public class VisitController {
 	}
 	
 	/**
-	 * 예약 상세 페이지로 이동하는 메소드
+	 * 예약 상세 페이지로 이동
 	 */
 	@RequestMapping("detail.visit")
 	public String detailVist(int vno, Model model) {
@@ -155,7 +158,7 @@ public class VisitController {
 			sender.send(message);
 			
 			
-			session.setAttribute("alertMsg2", "예약이 승인 되었습니다");
+			session.setAttribute("alertMsg2", "예약이 승인 성공");
 			return "redirect:list.visit";
 		} else { 
 			session.setAttribute("alertMsg1", "예약 승인 오류");

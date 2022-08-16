@@ -30,6 +30,12 @@ public interface NoticeService {
 	ArrayList<Notice> searchList(HashMap map, PageInfo pi);
 	
 	// 공지사항 상세 페이지
-	Notice selectNotice(int noticeNo);	
+	Notice selectNotice(int noticeNo);
+	
+	// 공지사항 수정 입력
+	int updateNotice(Notice n);
+	
+	// 공지사항 삭제
+	int deleteNotice(int noticeNo);
 
 }

@@ -60,6 +60,7 @@
 	
 	<form id="noticeStatus" action="" method="post">
 		<input type="hidden" name="nno" value="${n.noticeNo}">
+		<input type="hidden" value="${ n.changeName }" name="filePath">
 				<table id="noticeDetail">
 					<tr style="height: 35px">
 						<th>말머리</th>
@@ -113,25 +114,23 @@
 
 			</form>	
 		<div style="margin-left: 150px; margin-top: 20px;">
-			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
+			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="location.href='list.notice'">돌아가기</button>
 			<c:if test="${loginUser.userName eq '관리자'}">
-				<button type="button" class="btn btn-danger" id="deleteBtn" onclick="delete()">삭제</button>
-				<button type="button" class="btn btn-info" id="updateBtn" onclick="update()">수정</button>&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-danger" id="deleteBtn">삭제</button>
+				<button type="button" class="btn btn-info" id="updateBtn">수정</button>&nbsp;&nbsp;&nbsp;
 			</c:if>
 		</div>
 		
 		<script>
 		$(function(){
-			var deleteBtn = $('#deleteBtn');
-			var updateBtn = $('#updateBtn');
 			
-			deleteBtn.click(function(){
+			$('#deleteBtn').click(function(){
 				const form = $('#noticeStatus');
 				form.attr('action', 'delete.notice');
 				form.submit();
 			})
 			
-			updateBtn.click(function(){
+			$('#updateBtn').click(function(){
 				const form = $('#noticeStatus');
 				form.attr('action', 'updateForm.notice');
 				form.submit();
