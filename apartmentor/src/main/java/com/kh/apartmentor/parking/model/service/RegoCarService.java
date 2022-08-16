@@ -22,10 +22,13 @@ public class RegoCarService {
 		return regoCarDao.insertRegoCar(sqlSession, p);
 	}
 	
+	public ArrayList<Parking> selectRegoCarList(int userNo){
+		return regoCarDao.selectRegoCarList(sqlSession, userNo);
+	}
 	
-	
-	
-	
+	public int deleteRegoCar(String carNo){
+		return regoCarDao.deleteRegoCar(sqlSession, carNo);
+	}
 	
 	
 	

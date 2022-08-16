@@ -32,6 +32,10 @@
      #regoCar-phone{
 		padding-left: 3em;
 	}
+	
+	.regoCar-dlt-btn{
+		cursor: pointer;
+	}
     
 </style>
 </head>
@@ -66,13 +70,14 @@
 		</div>
 		
 		<div style="margin:auto; width:700px;">
-		<table class="table table-hover" align="center">
+		<table class="table table-hover" id="regoCar-List" align="center">
 			<thead>
 				<tr style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
 					<th>No.</th>
 					<th>차량번호</th>
 					<th>연락처</th>
 					<th>승인현황</th>
+					<th>등록 취소</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -93,6 +98,11 @@
 
 
 		<script>
+	    	$(function(){
+	    		selectRegoCarList();
+	    	})
+		
+			// 차량등록
 			function regoCar(){
 				if($("#carNo").val() == "" || $("#carPhone").val() == ""){
 					swal({
@@ -111,10 +121,15 @@
 						},
 						success : function(){
 	 						swal({
-								title : "등록이 완료 되었습니다. 관리자에게 승인요청하겠습니다.",
+								title : "등록이 완료 되었습니다.",
+								text : "관리자에게 승인요청하겠습니다.",
 							    	icon  : "success",
 							    	closeOnClickOutside : false
-							})
+							}).then(function(){
+									$("#carNo").val("");
+									$("#carPhone").val("");
+									selectRegoCarList();
+								});
 						},
 						error : function(){
 	 						swal({
@@ -123,17 +138,91 @@
 							    	closeOnClickOutside : false
 							})
 						}
-						
-						
-						
-						
 					})
 				}
-					
-					
-				
-				
 			}
+			
+			// 등록된 차량리스트 
+			function selectRegoCarList(){
+	    		$.ajax({
+	    			url : 'selectRegoCarList.rg', 
+	    			data : {
+						userNo : ${ loginUser.getUserNo()}		
+	    			},
+	    			success : function(list){
+	    				let value = '';
+	    				if(list.length == 0){
+	    					value += '<tr style="width: 70px; height: 30px; text-align: center;">'
+	    						   + '<td colspan="5">등록된 차량이 없습니다.</td>'
+								   + '</tr>'
+	    				}
+	    				else{
+		    				for(let i = 0; i < list.length; i++){
+		    					if(list[i].status == 'W'){
+		    						list[i].status = '승인대기중';
+		    					}
+		    					if(list[i].status == 'Y'){
+		    						list[i].status = '승인완료';
+		    					}
+		    					value += '<tr style="width: 70px; height: 30px; text-align: center;">'
+		    						   + '<td>' + [i+1] + '</td>'
+									   + '<td>' + list[i].carNo + '</td>'
+									   + '<td>' + list[i].carPhone + '</td>'
+									   + '<td>' + list[i].status + '</td>'
+		                		  	   + "<td>" + "<a class='regoCar-dlt-btn' align='center' style='width: 50px'>취소 요청</a>" + "</td>"
+									   + '</tr>'
+		    				}
+	    				}
+	    				$('#regoCar-List tbody').html(value);
+	    			},
+	    			error : function(){
+ 						swal({
+							title : "오류입니다. 관리자에게 문의하세요",
+						    	icon  : "error",
+						    	closeOnClickOutside : false
+						});
+	    			}
+	    		})
+	    	} 
+			
+			
+			// 차량 등록 취소
+	        $(document).on("click",".regoCar-dlt-btn", function deleteRegoCar(){
+	        	
+	        	//console.log($(this).parents("tr").find("td:eq(1)").text());
+	        	 $.ajax({
+	        		url : "deleteRegoCar.rg",
+	        		data : {
+	        			carNo : $(this).parents("tr").find("td:eq(1)").text()
+	        		},
+	        		type : "post",
+	        		success : function(result){
+	        			
+ 	        			// result값에 따라서 성공했으면 성공메시지 띄우기
+	        			if(result > 0 ){
+	 						swal({
+								title : "등록취소가 완료 되었습니다.",
+								text : "차량 등록을 삭제했습니다.",
+							    	icon  : "success",
+							    	closeOnClickOutside : false
+							}).then(function(){
+									selectRegoCarList();
+								});
+	        			} 
+	        			
+	        		},
+	        		error : function(){
+ 						swal({
+							title : "오류입니다. 관리자에게 문의하세요",
+						    	icon  : "error",
+						    	closeOnClickOutside : false
+						});
+	        		}
+	        	}); 
+	        	
+	        });
+			
+			
 		</script>
 
 

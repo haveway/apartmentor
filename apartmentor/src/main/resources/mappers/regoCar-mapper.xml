@@ -14,12 +14,21 @@
 	
 	<insert id="insertRegoCar" parameterType="parking">
 		INSERT INTO PARKING
-		VALUES (#{carNo}, #{carPhone}, 'w', 1, NULL, #{userNo}, NULL)
+		VALUES (#{carNo}, #{carPhone}, 'W', 1, NULL, #{userNo}, NULL)
 	</insert>
 
+	<select id="selectRegoCarList" resultMap="regoCarResultSet">
+		SELECT CAR_NO, CAR_PHONE, STATUS, CAR_CATEGORY, USER_NO
+		FROM PARKING
+		WHERE CAR_CATEGORY = 1
+		AND USER_NO = #{userNo}
+	</select>
 
-
-
+	<delete id="deleteRegoCar" parameterType="parking">
+		DELETE 
+		FROM PARKING
+		WHERE CAR_NO = #{carNo}
+	</delete>
 
 
 

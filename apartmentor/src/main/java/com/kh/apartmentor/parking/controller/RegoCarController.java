@@ -1,7 +1,6 @@
 package com.kh.apartmentor.parking.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.kh.apartmentor.member.model.vo.Member;
 import com.kh.apartmentor.parking.model.service.RegoCarService;
 import com.kh.apartmentor.parking.model.vo.Parking;
 
@@ -34,9 +32,19 @@ public class RegoCarController {
 		return new Gson().toJson(regoCarService.insertRegoCar(p));
 	}
 	
-	// 주차 리스트 띄우는거 해보기!
+	// 주차 리스트 
+	@ResponseBody
+	@RequestMapping(value="selectRegoCarList.rg", produces="application/json; charset=UTF-8")
+	public String selectRegoCarList(int userNo) {
+		return new Gson().toJson(regoCarService.selectRegoCarList(userNo));
+	}
 	
-	
+	// 주차 등록 삭제
+	@ResponseBody
+	@RequestMapping(value="deleteRegoCar.rg", produces="application/json; charset=UTF-8")
+	public String deleteRegoCar(String carNo) {
+		return new Gson().toJson(regoCarService.deleteRegoCar(carNo));
+	}
 	
 	
 	
