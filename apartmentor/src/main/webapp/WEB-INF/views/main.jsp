@@ -68,8 +68,50 @@
 	        width : 1200px; 
 	        height : 400px;     
 	    }
-
-        
+	    #weather0{
+	    	color: gray; 
+	    	padding:5px;
+	    	padding-left: 67%}
+	    #weather1{
+	    	font-size:50px; 
+	    	font-weight: bold;
+	    	padding: 15px;
+	    	padding-right: 27%;
+	    	padding-left: 33%;
+	    }
+	    .weatherImg1{
+	    	height: 50px;
+	    	text-align: center;
+	    }
+	    #weather2{
+	    display: flex;
+	    flex-direction: row;}
+	    #weather2 div{
+	    	height: 100px;
+	    	width: 33.33%;
+	    	padding: 5px;
+	    	text-align: center;
+	    	font-size: 20px;
+	    }
+	    #weather2 img {
+	    	width: 20px;
+	    	height: 20px;
+	    }
+	    #weather2_1{
+	    	float: left;
+	    }
+	    #weather2_2{
+	    	border-left: 2px gray solid; 
+	    	border-right: 2px gray solid;
+		}
+		#weather2_3{
+			float: right;
+		}
+		
+		#weather3{
+			margin-top: 40px;
+			float: right;
+		}
         
     </style>    
 </head>
@@ -114,10 +156,81 @@
 	           		</c:choose>
 	           	</table>
             </div>
-            <div id="content2">
-               		날씨
+            <div id="content2" onload="weather()">            	
             </div>
         </div>
+        <script>
+        $(function(){
+            weather();
+         })
+        function weather() {
+        	let today = new Date();
+
+        	let year = today.getFullYear();
+        	let month = ('0' + (today.getMonth() + 1)).slice(-2);
+        	let day = ('0' + today.getDate()).slice(-2);
+
+        	let dateString = year +  month  + day;
+
+        	let hours = ('0' + today.getHours()).slice(-2); 
+        	let minutes = ('0' + today.getMinutes()).slice(-2);
+
+        	let timeString = hours +  minutes ;
+
+        	$.ajax({
+        		type:"get",
+        		url:"https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=Cxg6AeR%2BimSFoU9%2BWZ6JAPNCCMlkuC5%2FLqSiaCg7a5w7ra6MXu%2B2sg6ijMvlcGoNTbQLkKTlMvW7LmzJ41GJIA%3D%3D&pageNo=1&numOfRows=10"
+        			+"&dataType=json"
+        			+"&nx=55&ny=127"
+        			+"&base_date=" + dateString 
+        			+"&base_time=" + timeString,
+        		data :{},
+        		success:function(data){
+        			console.log(data);
+        			const itemArr = data.response.body.items.item;
+        			let date1 = itemArr[1].baseDate;
+        			let time1 = itemArr[1].baseTime;
+        			let date2 = date1.substr(4, 2);
+        			let date3 = date1.substr(6, 2);
+        			let time2 = time1.substr(0, 2);
+        			
+        			let REH = itemArr[1].obsrValue;
+        			let RN1 = itemArr[2].obsrValue;
+        			let T1H = itemArr[3].obsrValue;
+        			let WSD = itemArr[7].obsrValue;
+					let value = "";
+        			value += '<div id="weather0" class="a1">'
+        					  	+ date2 + "월" + date3 + "일 " + time2 + ":00 기준 "
+        				   + '</div>'
+           				   + '<div id="weather1">'
+           				   		+ T1H + "℃" + '<img class="weatherImg1" src="./resources/img/main/high_Temperature.png">'
+           				   + '</div>'
+           				   + '<div id="weather2">'
+	           				   + '<div id="weather2_1">'
+		           			  		+ '<img src="./resources/img/main/humidity.png">' + '습도'
+		           			   + '<br><br>'
+		           			   		+ REH + "%"
+	           				   + '</div>'
+	           				   + '<div id="weather2_2">'
+	           				   		+ '<img src="./resources/img/main/wind.png">' + '풍속'
+	           				   + '<br><br>'
+	           				   		+ WSD + "m/s"
+	           			       + '</div>'
+	           			       + '<div id="weather2_3">'
+	           				   		+ '<img src="./resources/img/main/raindrops.png">' + '1시간 강수량'
+	           				   + '<br><br>'
+	           				   		+ RN1 + "mm"
+	           				   + '</div>'
+           			       + '</div>'
+           			       + '<div id="weather3" class="a1">'
+           				   		+ '<a href="https://www.weather.go.kr/w/index.do" target="_blank">기상청 바로가기</a>'
+           				   + '</div>';
+           				$('#content2').html(value);
+        		},
+				error:{}	        			
+        	})
+		}
+        </script>
         <br>
         <div id="contentWrap2">
             <div id="content3">

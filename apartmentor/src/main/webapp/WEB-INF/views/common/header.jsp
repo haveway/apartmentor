@@ -35,7 +35,7 @@
 		}
     
     	div{
-            /* border: 1px solid red; */
+            /*  border: 1px solid red;  */
             font-family: 'InfinitySans-RegularA1';
             
         }
@@ -170,6 +170,7 @@
     .accordion-content:hover {background:  rgb(202,194,176); cursor: pointer;}
     .accordion-content {padding-top: 10px;}
     .hr1{margin-bottom: 0; margin-top: 0; height: 1px;}
+    .last{border-bottom: 2px solid black;}
     </style>
 </head>
 <body>
@@ -211,10 +212,10 @@
 			            	<div class="accordion-content" onclick="location.href='list.bo'">
 			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</p>
 			            	</div>
-			            	<div class="accordion-content" onclick="location.href='#'">
+			            	<div class="accordion-content" onclick="location.href='list.vote'">
 			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;투표</p>
 			            	</div>
-			            	<div class="accordion-content" onclick="location.href='#'">
+			            	<div class="accordion-content last" onclick="location.href='#'">
 			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;채팅</p>
 			            	</div>
 	            		</div>
@@ -231,21 +232,17 @@
             			<div class="accordion-content" onclick="location.href='seatView.st'">
 		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;독서실<p>
 		            	</div>
-		            	<div class="accordion-content"onclick="location.href='miniGym.sp'">
-		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;미니 GYM</p>
-		            	</div>
-		            	<div class="accordion-content"onclick="location.href='golf.sp'">
-		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;실내골프연습장</p>
+		            	<div class="accordion-content "onclick="location.href='golf.sp'">
+		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;체육시설</p>
 		            	</div>
 		            	<c:choose>
                         	<c:when test="${loginUser.userId eq 'admin'}">
-                        		
-				            	<div class="accordion-content" onclick="location.href='list.visit'">
+				            	<div class="accordion-content last" onclick="location.href='list.visit'">
 				            		<p>&nbsp;&nbsp;&nbsp;&nbsp;방문예약 목록페이지</p>
 			            		</div>
 			            	</c:when>
 			            	<c:otherwise>
-				            	<div class="accordion-content" onclick="location.href='enrollForm.visit'">
+				            	<div class="accordion-content last" onclick="location.href='enrollForm.visit'">
 				            		<p>&nbsp;&nbsp;&nbsp;&nbsp;방문예약 페이지</p>
 			            		</div>
 			            	</c:otherwise>
@@ -254,8 +251,20 @@
 	          	</div>
 	          	<div class="accordion-body">
            			<div class="accordion-content" onclick="location.href='#'">
-	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;관리비/차량등록<p>
+	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;관리비 조회<p>
 	            	</div>
+	            	<c:choose>
+	            		<c:when test="${loginUser.userId eq 'admin'}">
+		           			<div class="accordion-content" onclick="location.href='adminRegoCar.rg?cpage=1&category=ALL'">
+			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;입주민 차량등록<p>
+			            	</div>
+		            	</c:when>
+		            	<c:otherwise>
+			            	<div class="accordion-content" onclick="location.href='regoCar.rg'">
+			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;입주민 차량등록</p>
+		            		</div>
+			            </c:otherwise>
+	            	</c:choose>
 	            	<div class="accordion-content" onclick="location.href='map.api'">
 	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;우리 동네 지도</p>
 	            	</div>
@@ -266,7 +275,6 @@
             		</c:if>
 				</div>
 	        </div>
-
       	</div>
 	    </div>
         <div id="logo">
@@ -286,10 +294,6 @@
 	        </div>
     	</div>
     </div>
-    
-    
-    
-    
     <!-- 회원가입 모달 -->
     <div class="modal" id="myModal4">
         <div class="modal-dialog">
