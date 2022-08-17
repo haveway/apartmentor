@@ -145,8 +145,9 @@
 	           				</tr>
 	           			</c:when>
 	           			<c:otherwise>
+	           			
 	           				<c:forEach var="n" items="${nList}" begin="0" end="4">
-			           			<tr onclick="location.href='#'" class="td" id="noticeTr">
+			           			<tr onclick="location.href='detail.notice?nno=' + ${n.noticeNo}" class="td" id="noticeTr">
 			           				<td class="td1">${n.noticeCategoryValue}</td>
 			           				<td class="td2">${n.noticeTitle}</td>
 			           				<td class="td3">${n.createDate}</td>
