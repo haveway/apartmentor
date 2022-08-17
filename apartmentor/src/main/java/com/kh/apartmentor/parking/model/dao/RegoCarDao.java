@@ -18,8 +18,8 @@ public class RegoCarDao {
 		return sqlSession.insert("regoCarMapper.insertRegoCar", p);
 	}
 	
-	public ArrayList<Parking> selectRegoCarList(SqlSessionTemplate sqlSession, int userNo){
-		return (ArrayList)sqlSession.selectList("regoCarMapper.selectRegoCarList", userNo);
+	public ArrayList<Parking> selectRegoCarList(SqlSessionTemplate sqlSession, String aptNo){
+		return (ArrayList)sqlSession.selectList("regoCarMapper.selectRegoCarList", aptNo);
 	}
 	
 	public int deleteRegoCar(SqlSessionTemplate sqlSession, String carNo){

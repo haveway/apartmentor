@@ -147,7 +147,8 @@
 	    		$.ajax({
 	    			url : 'selectRegoCarList.rg', 
 	    			data : {
-						userNo : ${ loginUser.getUserNo()}		
+	    				// aptNo로 주기 
+						aptNo : '${ loginUser.getAptNo() }'		
 	    			},
 	    			success : function(list){
 	    				let value = '';
