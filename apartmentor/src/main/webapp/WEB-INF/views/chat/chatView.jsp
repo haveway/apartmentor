@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -146,19 +146,22 @@
 		
 		<div class="btn-group btn-group-lg" id="chatTitleBtn">
 		    <button type="button" class="btn btn-primary" disabled>주민채팅방</button>
-		    <button type="button" class="btn">경비실 채팅방</button>
+		    <button type="button" class="btn" onclick="location.href='guardChatForm.ch'">경비실 채팅방</button>
 		    <button type="button" class="btn">관리소 채팅방</button>
 		  </div>
 		<br><br>
 		
 		<div class="chat-area">
+			
 			<c:if test="${not empty chatList }">
 				<!-- DB에 중복값없이 조회한 날짜 반복문 돌리기 -->
-				<c:forEach var="ct" items="${sendDateList}">
+				<c:forEach var="ct" items="${sendDateList}" varStatus="status">
 					<div class="chatSendDate" align="center">${ct.chatSendDate}</div>
 						<!-- 채팅내역 반복문 -->
 						<c:forEach var="c" items="${chatList}">
+							<!-- 해당 날짜에 입력된 채팅일 경우 내역 출력 -->
 							<c:if test="${ct.chatSendDate eq c.chatSendDate }">
+								<!-- 자신이 쓴 채팅과 다른 사람이 쓴 채팅 구별하기 -->
 								<c:if test="${loginUser.userName eq c.chatWriter}">
 									<div class="mychat-area">
 										<div>${c.chatWriter}</div>
@@ -296,8 +299,7 @@
 					if(result == 'success'){
 						// 입력한 메세지 전송
 						socket.send(text);
-			 			$('#chatInput').val('');
-			 			
+			 			location.reload();
 					}else{
 						swal('오잉?',"다시 작성해주세요!", 'warning');
 					}

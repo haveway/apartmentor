@@ -2,6 +2,8 @@ package com.kh.apartmentor.chat.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,11 +39,20 @@ public class ChatController {
 		return "chat/chatView";
 	}
 	
-	// 채팅내역 DB저장
+	// 그룹채팅내역 DB저장
 	@ResponseBody
 	@RequestMapping("insertChat.ch")
 	public String insertChat(Chat c) {
 		return chatService.insertChat(c) > 0 ? "success" : "fail";
 	}
+	
+	// 경비실채팅방 페이지로 포워딩
+	@RequestMapping("guardChatForm.ch")
+	public String guardChatForm(HttpSession session) {
+		return "chat/guardChatView";
+	}
+	
+	
+	
 	
 }

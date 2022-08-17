@@ -24,7 +24,7 @@
  		SELECT
  				CHAT_NO,
  				CHAT_CONTENT,
- 				TO_CHAR(CHAT_SENDTIME, 'DL') AS "CHAT_SENDDATE",
+ 				TO_CHAR(CHAT_SENDTIME, 'YYYY"년 "MM"월 "DD"일 "DAY') AS "CHAT_SENDDATE",
  				TO_CHAR(CHAT_SENDTIME, 'AM HH:MI') AS "CHAT_SENDTIME",
  				CHAT_CODE,
  				CHAT_WRITER
@@ -50,7 +50,7 @@
  				)
  	</insert>
  	
- 	<!-- 멤버 조회 쿼리문 -->
+ 	<!-- 멤버 조회 쿼리문(경비 제외) -->
  	<select id="selectMemberList" resultMap="MemberResultMap">
  		SELECT
  				USER_NO,
@@ -60,13 +60,21 @@
  		  FROM
  		  		MEMBER
  		 WHERE
- 		 		STATUS = 'Y' 				
+ 		 		STATUS = 'Y'
+ 		   AND NOT USER_NO = 9		 				
  				
  	</select>
  	
  	<!-- 채팅날짜 중복값없이 조회 쿼리문 -->
  	<select id="selectSendDateList" resultMap="chatResultSet">
- 		SELECT DISTINCT TO_CHAR(CHAT_SENDTIME, 'DL') AS "CHAT_SENDDATE" FROM CHAT 
+ 		SELECT 
+ 				CHAT_SENDDATE
+		  FROM  ( 
+		  		SELECT DISTINCT TO_CHAR(CHAT_SENDTIME, 'YYYY"년 "MM"월 "DD"일 "DAY') AS "CHAT_SENDDATE" 
+		 		  FROM CHAT 
+		 		 WHERE CHAT_CODE = 1
+		 		)
+		ORDER BY CHAT_SENDDATE ASC
  	</select>
  	
  
