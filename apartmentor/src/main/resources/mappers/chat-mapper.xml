@@ -77,5 +77,36 @@
 		ORDER BY CHAT_SENDDATE ASC
  	</select>
  	
+ 	<!-- 경비실 채팅내역 조회 쿼리문 -->
+ 	<select id="selectGuardChatList" resultMap="chatResultSet">
+ 		SELECT 
+ 				CHAT_CONTENT, 
+ 				TO_CHAR(CHAT_SENDTIME, 'AM HH:MI') AS "CHAT_SENDTIME", 
+ 				CHAT_WRITER
+		  FROM 
+		  		CHAT
+		 WHERE 
+		 		CHAT_CODE = 2
+		   AND 
+		   		USER_NO = #{userNo} 
+ 	</select>
+ 	
+ 	<!-- 경비실 채팅 작성 쿼리문 -->
+ 	<insert id="guardChatInsert" parameterType="chat">
+ 		INSERT
+ 		  INTO
+ 		  		CHAT
+ 		VALUES
+ 				(
+ 				SEQ_CHNO.NEXTVAL,
+ 				#{chatContent},
+ 				SYSDATE,
+ 				2,
+ 				#{chatWriter},
+ 				#{userNo}
+ 				)	
+ 	</insert>
+ 	
+ 	
  
 </mapper>

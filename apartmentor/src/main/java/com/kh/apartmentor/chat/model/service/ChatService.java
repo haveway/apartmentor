@@ -35,4 +35,12 @@ public class ChatService {
 		return chatDao.selectSendDateList(sqlSession);
 	}
 
+	public ArrayList<Chat> selectGuardChatList(int userNo) {
+		return chatDao.selectGuardChatList(sqlSession, userNo);
+	}
+
+	public int guardChatInsert(Chat c) {
+		return chatDao.guardChatInsert(sqlSession, c);
+	}
+
 }

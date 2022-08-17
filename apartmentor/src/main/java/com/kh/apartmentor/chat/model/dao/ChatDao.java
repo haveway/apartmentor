@@ -27,4 +27,12 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectSendDateList");
 	}
 
+	public ArrayList<Chat> selectGuardChatList(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectGuardChatList", userNo);
+	}
+
+	public int guardChatInsert(SqlSessionTemplate sqlSession, Chat c) {
+		return sqlSession.insert("chatMapper.guardChatInsert", c);
+	}
+
 }

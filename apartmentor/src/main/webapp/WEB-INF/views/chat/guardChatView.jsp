@@ -153,16 +153,19 @@
 		
 		<div class="chat-area">
 	
-	
-		
-		
-		
 		
 		
 		
 		
 		
 		</div>
+		
+				
+		<div>
+			<input type="text" id="chatInput" name="chatContent">
+			<button class="btn btn-primary" id="chatBtn" onclick="addGuardChat();">전송</button>
+		</div>
+		
 		
 		
 		
@@ -174,14 +177,101 @@
 	
 	// 채팅 리스트 조회 기능 호출
 	$(function(){
-		selectSecuChatList();
-	});
+		selectGuardChatList();
+		
+		// 스크롤바 아래로 내리기
+		$('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+		
+	})
+		
+	// 경비실채팅 조회 ajax
+	function selectGuardChatList(){
+		console.log('1초마다 실행');
+		var loginUserName = '${loginUser.userName}';
+		$.ajax({
+			url : 'selectGuardChatList.ch',
+			data : { userNo : ${loginUser.userNo} },
+			success : function(list){
+				let value = '';
+				 for(let i in list){
+					 // 자신이 쓴 채팅일 경우 
+					 if(loginUserName == list[i].chatWriter) {
+						 value += "<div class='mychat-area'>"
+						 		+ "<div>" + list[i].chatWriter + "</div>"
+						 		+ "<div>" + list[i].chatContent + "</div>"
+						 		+ "<div>" + list[i].chatSendTime + "</div>"
+						 		+ "</div>";
+					 } else {
+						 value += "<div class='userchat-area'>"
+						 		+ "<div>" + list[i].chatWriter + "</div>"
+						 		+ "<div>" + list[i].chatContent + "</div>"
+						 		+ "<div>" + list[i].chatSendTime + "</div>"
+						 		+ "</div>";
+					 }
+					 $('.chat-area').html(value);
+					// 스크롤바 아래로 내리기
+					$('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+				 }
+			}, error : function(){
+				console.log('비동기요청 실패!');
+			}
+		})
+	}
 	
-	// 경비실채팅 조회 기능
-	function selectSecuChatList(){
-		var userNo = ${loginUser.userNo};
+	// 1초마다 경비실채팅 조회 ajax 실행해주는 setInterval
+	setInterval(function gList(){
+		selectGuardChatList();
+	},1000);
+	
+	// 채팅 작성용 ajax
+	function addGuardChat(){
+		
+		if($('#chatInput').val().trim() != '') {
+			// 사용자가 입력했을 경우에만 댓글 작성해주는 ajax
+			$.ajax({
+				url:'guardChatInsert.ch',
+				data:{
+						userNo : '${loginUser.userNo}',
+						chatContent : $('#chatInput').val(),
+						chatWriter : '${loginUser.userName}'
+					 },
+				success:function(result){
+					if(result == 'success'){
+						$('#chatInput').val('');
+						
+					}else{
+						swal('오잉?',"다시 작성해주세요!", 'warning');
+					}
+					
+				}, error:function(){
+					swal('뭥미?', "비동기 요청 실패!", 'warning');
+				}
+			});
+			
+		}
+		else { // 사용자가 빈 문자열을 입력했을 경우 알러창 띄워주기
+			swal('알림', "입력 후 작성해주세요!", 'warning');
+		}
+		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	</script>
 	

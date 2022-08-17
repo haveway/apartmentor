@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.apartmentor.chat.model.service.ChatService;
 import com.kh.apartmentor.chat.model.vo.Chat;
 import com.kh.apartmentor.member.model.vo.Member;
@@ -52,7 +53,19 @@ public class ChatController {
 		return "chat/guardChatView";
 	}
 	
+	// 경비실 채팅방 리스트 조회 
+	@ResponseBody
+	@RequestMapping(value="selectGuardChatList.ch", produces="application/json; charset=UTF-8")
+	public String selectGuardChatList(int userNo) {
+		ArrayList<Chat> list = chatService.selectGuardChatList(userNo);
+		return new Gson().toJson(list);
+	}
 	
-	
+	// 회원 채팅 작성 
+	@ResponseBody
+	@RequestMapping("guardChatInsert.ch")
+	public String guardChatInsert(Chat c) {
+		return chatService.guardChatInsert(c) > 0 ? "success" : "fail";
+	}
 	
 }
