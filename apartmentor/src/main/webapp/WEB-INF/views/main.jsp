@@ -186,7 +186,7 @@
         			+"&base_time=" + timeString,
         		data :{},
         		success:function(data){
-        			console.log(data);
+        			/* console.log(data); */
         			const itemArr = data.response.body.items.item;
         			let date1 = itemArr[1].baseDate;
         			let time1 = itemArr[1].baseTime;

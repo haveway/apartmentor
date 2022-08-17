@@ -37,18 +37,13 @@
                 <div id="footer1"> 
                     <p style="font-size: 15px;">APARTMENTOR</p>
                     <p>주소 : 서울시 어딘가</p>
-                    <p>대표 : Team1 APARTMENTOR</p>
+                    <p>대표 : TEAM1 APARTMENTOR</p>
                 </div>
                 <div id="footer2"> 
-                    <p style="font-size: 15px;">고객센터</p>
+                    <p style="font-size: 10px;">Copyrightⓒ2008 XX All rights APARTMENTOR</p>
                     <p>이용약관</p>
                     <p>개인정보처리방침</p>
                 </div>
-                <div id="footer3"> 
-                    <p style="font-size: 15px;">운영시간</p>
-                    
-                </div>
-
             </div>
 
             <br>
