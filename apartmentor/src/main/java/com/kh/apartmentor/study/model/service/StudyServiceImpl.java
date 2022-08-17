@@ -32,4 +32,14 @@ public class StudyServiceImpl implements StudyService {
 	public ArrayList<Reserve> selectList() {
 		return studyDao.selectList(sqlSession);
 	}
+
+	@Override
+	public int updateStatus(String today) {
+		return studyDao.updateStatus(sqlSession, today);
+	}
+
+	@Override
+	public int deleteReserve(int userNo) {
+		return studyDao.deleteReserve(sqlSession, userNo);
+	}
 }

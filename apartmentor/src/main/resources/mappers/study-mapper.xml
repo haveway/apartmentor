@@ -52,12 +52,14 @@
 		       SEAT_NUMBER,
 		       USER_NO,
 		       STATUS,
-		       CREATE_DATE,
+		       TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
 		       START_DAY
 		  FROM
 		       RESERVE
 		 WHERE
 		       USER_NO = #{userNo}
+		   AND
+		       STATUS = 'Y'
 	</select>
 	
 	<select id="selectList" resultMap="studyResultSet">
@@ -69,12 +71,20 @@
 		       SEAT_NUMBER,
 		       USER_NO,
 		       STATUS,
-		       CREATE_DATE,
+		       TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
 		       START_DAY
 		  FROM
 		       RESERVE
 		 WHERE
 		       STATUS = 'Y'
 	</select>
+	
+	<update id="updateStatus">
+		update reserve set status = 'N' where TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') != #{today}
+	</update>
+	
+	<update id="deleteReserve">
+		update reserve set status = 'N' where user_no = #{userNo}
+	</update>
 
 </mapper>

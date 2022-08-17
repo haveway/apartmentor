@@ -21,4 +21,12 @@ public class StudyDao {
 	public ArrayList<Reserve> selectList(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("studyMapper.selectList");
 	}
+	
+	public int updateStatus(SqlSessionTemplate sqlSession, String today) {
+		return sqlSession.update("studyMapper.updateStatus", today);
+	}
+	
+	public int deleteReserve(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.update("studyMapper.deleteReserve", userNo);
+	}
 }
