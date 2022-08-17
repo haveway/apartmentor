@@ -220,10 +220,10 @@
 			var uri = "ws://localhost:8015/apartmentor/gp";
 			socket = new WebSocket(uri);
 			
+			
 			// 연결이 성공했는지 아닌지 확인할 수 있도록 예약작업(콜백)을 설정
- 			socket.onopen = function(){
+ 			socket.onopen = function(e){
  				console.log("서버와 연결되었습니다.");
- 				
 			}
 			
  			socket.onclose = function(){
@@ -239,7 +239,6 @@
  				var msg = e.data;
  				// 받은 메세지 ',' 구분자로 잘라서 배열에 담기
  				var arr = msg.split(",");
- 				
  				// arr[0] : 유저 이름 , arr[1] : 유저가 보낸 메세지
  				let nameDiv = $('<div>').append(arr[0]);
  				let msgDiv = $('<div>').append(arr[1]);
@@ -247,10 +246,11 @@
  				// 날짜 를 오전/오후 시간:분 형태로 바꾸기
  				let date = new Date();
  				let time = (date.getHours() < 12 ? "오전 " : "오후 ") 
- 							+ date.getHours() 
- 								+ ":" 
+ 							+ (date.getHours() < 10 ? "0" + date.getHours() : 
+ 							  (date.getHours() > 12 ? (date.getHours() - 12 < 10 ? "0" + date.getHours() : date.getHours() - 12) : date.getHours())) 
+ 							+ ":" 
  							+ (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
-				
+ 							
  				let timeDiv = $('<div>').append(time);
  				
  				// 말풍선으로 감싸기
@@ -299,7 +299,8 @@
 					if(result == 'success'){
 						// 입력한 메세지 전송
 						socket.send(text);
-			 			location.reload();
+						$('#chatInput').val('');
+						location.reload();
 					}else{
 						swal('오잉?',"다시 작성해주세요!", 'warning');
 					}

@@ -127,6 +127,11 @@
 		margin-top : 7px;
 		margin-bottom : 7px;
 	}
+	.online-area{
+		margin-left : 5px;
+		margin-bottom : 5px;
+		font-size : 20px;
+	}
 	
 </style>
 </head>
@@ -143,32 +148,19 @@
 			<h1>경비실채팅</h1> 
 		</div>
 		<br><br><br>
-		
 		<div class="btn-group btn-group-lg" id="chatTitleBtn">
-		    <button type="button" class="btn" onclick="location.href='chatForm.ch'">주민채팅방</button>
-		    <button type="button" class="btn btn-primary" disabled >경비실 채팅방</button>
-		    <button type="button" class="btn">관리소 채팅방</button>
-		  </div>
+					<button type="button" class="btn" onclick="location.href='chatForm.ch'">주민채팅방</button>
+			    	<button type="button" class="btn btn-primary" disabled >경비실 채팅방</button>
+			    	<button type="button" class="btn">관리소 채팅방</button>
+		</div>
 		<br><br>
 		
-		<div class="chat-area">
-	
+		<div class="chat-area"></div>
 		
-		
-		
-		
-		
-		</div>
-		
-				
 		<div>
 			<input type="text" id="chatInput" name="chatContent">
 			<button class="btn btn-primary" id="chatBtn" onclick="addGuardChat();">전송</button>
 		</div>
-		
-		
-		
-		
 		
 		
 	</div>

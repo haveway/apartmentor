@@ -24,15 +24,21 @@ public class ChatController {
 	
 	// 주민채팅방 페이지로 포워딩
 	@RequestMapping("chatForm.ch")
-	public String chatForm(Model model) {
+	public String chatForm(Model model, HttpSession session) {
 		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+			// 온라인구분을 위한 회원 전체 조회 
+			ArrayList<Member> MemberList = chatService.selectMemberList();
+			model.addAttribute("MemberList", MemberList);
+			
+			// 로그인한 유저가 경비원일 경우
+		if(loginUser.getUserNo() == 9) {
+			return "chat/guardExcludeChatView";
+		}
 		// 주민채팅리스트 조회(chatCode=1)
 		ArrayList<Chat> chatList = chatService.selectChatList();
 		model.addAttribute("chatList", chatList);
-		
-		// 온라인구분을 위한 회원 전체 조회 
-		ArrayList<Member> MemberList = chatService.selectMemberList();
-		model.addAttribute("MemberList", MemberList);
 		
 		// 날짜별 구분을 위해 중복값없이 날짜만 조회
 		ArrayList<Chat> sendDateList = chatService.selectSendDateList();
@@ -49,11 +55,12 @@ public class ChatController {
 	
 	// 경비실채팅방 페이지로 포워딩
 	@RequestMapping("guardChatForm.ch")
-	public String guardChatForm(HttpSession session) {
+	public String guardChatForm(Model model) {
+		
 		return "chat/guardChatView";
 	}
 	
-	// 경비실 채팅방 리스트 조회 
+	// 경비실 채팅 리스트 조회 
 	@ResponseBody
 	@RequestMapping(value="selectGuardChatList.ch", produces="application/json; charset=UTF-8")
 	public String selectGuardChatList(int userNo) {

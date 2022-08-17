@@ -26,6 +26,7 @@ public class WebSocketGroupServer extends TextWebSocketHandler {
 	// webSocket 연결 성공 시 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		session.getId();
 		users.add(session);
 		System.out.println("사용자 접속! : 현재 : " + users.size() + "명");
 		
