@@ -19,10 +19,11 @@
 	</insert>
 
 	<select id="selectRegoCarList" resultMap="regoCarResultSet">
-		SELECT CAR_NO, CAR_PHONE, STATUS, CAR_CATEGORY, USER_NO
-		FROM PARKING
-		WHERE CAR_CATEGORY = 1
-		AND USER_NO = #{userNo}
+		SELECT CAR_NO, CAR_PHONE, P.STATUS, CAR_CATEGORY, P.USER_NO, APT_NO
+		FROM PARKING P, MEMBER M
+        WHERE P.USER_NO = M.USER_NO
+		AND CAR_CATEGORY = 1
+		AND M.APT_NO = #{aptNo}
 	</select>
 
 	<delete id="deleteRegoCar" parameterType="parking">

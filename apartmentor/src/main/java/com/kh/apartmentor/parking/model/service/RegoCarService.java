@@ -25,8 +25,8 @@ public class RegoCarService {
 		return regoCarDao.insertRegoCar(sqlSession, p);
 	}
 	
-	public ArrayList<Parking> selectRegoCarList(int userNo){
-		return regoCarDao.selectRegoCarList(sqlSession, userNo);
+	public ArrayList<Parking> selectRegoCarList(String aptNo){
+		return regoCarDao.selectRegoCarList(sqlSession, aptNo);
 	}
 	
 	public int deleteRegoCar(String carNo){

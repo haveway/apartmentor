@@ -44,8 +44,8 @@ public class RegoCarController {
 	// 주차 리스트 
 	@ResponseBody
 	@RequestMapping(value="selectRegoCarList.rg", produces="application/json; charset=UTF-8")
-	public String selectRegoCarList(int userNo) {
-		return new Gson().toJson(regoCarService.selectRegoCarList(userNo));
+	public String selectRegoCarList(String aptNo) {
+		return new Gson().toJson(regoCarService.selectRegoCarList(aptNo));
 	}
 	
 	// 주차 등록 삭제 (관리자 페이지에서도 사용)
