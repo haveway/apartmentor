@@ -14,6 +14,12 @@ public interface StudyService {
 	
 	//좌석 전체 조회
 	ArrayList<Reserve> selectList();
+	
+	//상태 컬럼 수정
+	int updateStatus(String today);
+	
+	//예약 취소
+	int deleteReserve(int userNo);
 
 	
 }
