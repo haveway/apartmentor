@@ -17,6 +17,8 @@ public class Vote {
 	
 	private int voteNo;
 	private String voteTitle;
+	private String voteContent;
+	private int userNo;
 	private Date voteStart;
 	private Date voteEnd;
 	private Date voteCreate;
