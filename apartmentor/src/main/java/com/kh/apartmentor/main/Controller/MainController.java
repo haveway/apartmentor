@@ -14,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.apartmentor.board.model.vo.Board;
+import com.kh.apartmentor.common.model.vo.Reserve;
 import com.kh.apartmentor.main.model.Service.MainService;
 import com.kh.apartmentor.notice.model.vo.Notice;
+import com.kh.apartmentor.visit.model.vo.Visit;
 
 @Controller
 public class MainController {
@@ -35,6 +37,16 @@ public class MainController {
 		ArrayList<Notice> nList = mainService.noticeList();
 		m.addAttribute("bList", bList);
 		m.addAttribute("nList", nList);
+		
+		// 달력 관련
+		ArrayList<Visit> visitList = mainService.visitReserveList();
+		ArrayList<Reserve> reserveList = mainService.reserveReserveList();
+		ArrayList<Notice> noticeList = mainService.noticeReserveList();
+		
+		m.addAttribute("visitList", visitList);
+		m.addAttribute("reserveList", reserveList);
+		m.addAttribute("noticeList", noticeList);
+		//
 
 		return "main";
 	}

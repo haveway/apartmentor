@@ -65,7 +65,7 @@ h1 {
 
 			<form id="visitEnrollForm" method="post" action="insert.visit">
 				<input type="hidden" name="userNo" value="${ loginUser.userNo }">
-				<input type="hidden" name="userNo" value="${ loginUser.email }">
+				<input type="hidden" name="email" value="${ loginUser.email }">
 				<table>
 					<tr style="height: 60px">
 						<th>예약 종류</th>
@@ -142,7 +142,7 @@ h1 {
 			        	showAnim: "slide", //애니메이션을 적용한다.
 			        	showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
 			        	dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-			        	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
+			        	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], // 월의 한글 형식.
 			     	});
 				})
 				
@@ -193,9 +193,6 @@ h1 {
 			<br><br>
 
 		<script>
-			
-			
-		
 			$(function(){
 				// 예약된 날짜와 시간 호출
 				selectVisitReserve()
@@ -205,7 +202,7 @@ h1 {
 			function selectVisitReserve(){
 				$.ajax({
 					url : 'select.visit',
-					data : {vno : ${loginUser.userNo}},
+					data : {nno : ${loginUser.userNo}},
 					success : function(reserve){
 							let list = '';
 							

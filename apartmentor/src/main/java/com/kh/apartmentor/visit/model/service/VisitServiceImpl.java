@@ -26,8 +26,8 @@ public class VisitServiceImpl implements VisitService {
 	}
 
 	@Override
-	public ArrayList<Visit> selectVisitReserve(int vno) {
-		return visitDao.selectVisitReserve(sqlSession, vno);
+	public ArrayList<Visit> selectVisitReserve(int nno) {
+		return visitDao.selectVisitReserve(sqlSession, nno);
 	}
 
 	@Override

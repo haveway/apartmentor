@@ -17,8 +17,8 @@ public class VisitDao {
 		return sqlSession.insert("visitMapper.insertVisitReserve",v);
 	}
 
-	public ArrayList<Visit> selectVisitReserve(SqlSessionTemplate sqlSession, int vno) {
-		return (ArrayList)sqlSession.selectList("visitMapper.selectVisitReserve",vno);
+	public ArrayList<Visit> selectVisitReserve(SqlSessionTemplate sqlSession, int nno) {
+		return (ArrayList)sqlSession.selectList("visitMapper.selectVisitReserve",nno);
 	}
 
 	public ArrayList<VisitCategory> selectVisitCategory(SqlSessionTemplate sqlSession) {
