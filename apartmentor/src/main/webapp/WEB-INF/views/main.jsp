@@ -112,6 +112,9 @@
 			margin-top: 40px;
 			float: right;
 		}
+		.visitCar{
+			font-size: 16px;
+		}
         
     </style>    
 </head>
@@ -269,8 +272,10 @@
                 
                 <form action="visit.car" method="post">
                     <input type="hidden" name="userNo" value="${loginUser.userNo}">
-                    <h4>방문차량등록</h4>
-                    <table>
+					<div class="title">
+						방문차량 등록
+					   </div>
+                    <table class="table visitCar" >
                         <tr>
                             <td>방문일</td>
                             <td><input type="date" id="carDate" name="carDate" min=""><br></td>
@@ -289,7 +294,9 @@
                             <td><input type="text" name="carPhone" placeholder="ex)010-1234-5678"></td>
                         </tr>
                     </table>
-                    <button type="submit">방문 예약 등록</button>
+					<div style="margin-left:150px;">
+						<button class="btn-primary" type="submit">방문 예약 등록</button>
+					</div>
                     <script>
                     $('#carDate').click(function(){
                         var date = new Date();
