@@ -611,7 +611,10 @@
 					
 					<c:forEach var="vL" items="${visitList}">
 						<c:if test="${vL ne null && loginUser.aptNo eq vL.aptNo}">
-								<tr data-toggle="modal" data-target="#myModal">
+							<form id="visitStatus" action="" method="post">
+							<input type="hidden" name="email" value="${loginUser.email}">
+							<input type="hidden" name="vno" value="${vL.visitNo}">
+								<tr class="tr" data-toggle="modal" data-target="#myModal" data-id="${loginUser.aptNo}님의 ${vL.visitDate} ${vL.visitTime}에  ${vL.visitValue} 일정이 있습니다.">
 									<th>
 										<div name="status">
 											${fn:substring(vL.visitDate, 8, 10)}
@@ -624,12 +627,13 @@
 										${vL.visitValue}
 									</td>
 								</tr>
-							</c:if>
+							</form>
+						</c:if>
 					</c:forEach>
 					
 					<c:forEach var="rL" items="${reserveList}">
 						<c:if test="${rL ne null && loginUser.aptNo eq rL.aptNo}">
-							<tr data-toggle="modal" data-target="#myModal">
+							<tr>
 								<th>
 									<div name="status">
 										${fn:substring(rL.startDay, 8, 10)}
@@ -650,10 +654,10 @@
 					
 					<c:forEach var="nL" items="${noticeList}">
 						<c:if test="${nL ne null}">
-							<tr data-toggle="modal" data-target="#myModal">
+							<tr>
 								<th>
 									<div name="status">
-										${fn:substring(nL.noticeStartDate, 8, 10)}
+										${fn:substring(nL.noticeEndDate, 8, 10)}
 									</div>
 								</th>
 								<td>
@@ -673,6 +677,13 @@
                 
             </div>
     	</div>
+    	
+    	<script>
+    		$(".tr").click(function(){
+    			var data = $(this).data('id');
+    			$('#modalContent').html(data);
+    		});
+    	</script>
     	
     	<script>
     	
@@ -722,23 +733,37 @@
 		      
 		        <!-- Modal Header -->
 		        <div class="modal-header">
-		          <h4 class="modal-title">Modal Heading</h4>
+		          <h4 class="modal-title">방문 예약</h4>
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
 		        </div>
 		        
 		        <!-- Modal body -->
 		        <div class="modal-body">
-		          Modal body..
+		          <p id="modalContent"></p>
+		          <p>취소 신청의 경우, 관리자 승인 시 메일로 알려드립니다</p>
 		        </div>
 		        
 		        <!-- Modal footer -->
 		        <div class="modal-footer">
-		          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		          <button type="button" class="btn btn-info" data-dismiss="modal">닫기</button>
+		          <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelBtn">취소 신청</button>
 		        </div>
 		        
 		      </div>
 		    </div>
 		  </div>
+		  
+		  <script>
+		  $(function(){
+
+				$('#cancelBtn').click(function(){
+					const form = $('#visitStatus');
+					form.attr('action', 'cancelStatus.visit');
+					form.submit();
+				})
+		  
+		  })
+		  </script>
     	
         <!-- 끝 -->
     

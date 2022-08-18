@@ -137,7 +137,7 @@
 				VISIT_NO,
 				VISIT_VALUE,
 				APT_NO,
-				DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+				DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
 				CREATE_DATE
 		  FROM 
 		  		VISIT
@@ -205,7 +205,8 @@
 				SELECT
 						VISIT_NO,
 						VISIT_VALUE,
-						APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -223,7 +224,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -240,7 +241,8 @@
 				SELECT 
 						VISIT_NO,
 						VISIT_VALUE,
-						APT_NO, DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE, 
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE, 
 						CREATE_DATE
 				  FROM 
 				  		VISIT
@@ -258,7 +260,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM 
 				  		VISIT
@@ -277,7 +279,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -295,7 +297,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -309,6 +311,140 @@
 		</choose>
 	</select>
 	
+	<select id="selectStatusListCount" resultType="_int">
+			<if test="statusCategory == '승인'">
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_STATUS = 'Y'
+			</if>
+			<if test="statusCategory == '취소'">
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_STATUS = 'N'
+			</if>
+			<if test="statusCategory == '대기'">
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_STATUS = 'W'
+			</if>
+			<if test="statusCategory == '취소대기'">
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_STATUS = 'C'
+			</if>
+			<if test="statusCategory == '전체'">
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+			</if>
+	</select>
+	
+	<select id="selectStatusList" resultMap="visitResultSet">
+		<choose>
+			<when test="statusCategory == '승인'">
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_STATUS = 'Y'
+				 ORDER 
+				 	BY  CREATE_DATE DESC
+			</when>
+			<when test="statusCategory == '취소'">
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'N', '예약 취소') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_STATUS = 'N'
+				 ORDER 
+				 	BY  CREATE_DATE DESC
+			</when>
+			<when test="statusCategory == '대기'">
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'W', '예약 대기') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_STATUS = 'W'
+				 ORDER 
+				 	BY  CREATE_DATE DESC
+			</when>
+			<when test="statusCategory == '취소대기'">
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'C', '취소 대기') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_STATUS = 'C'
+				 ORDER 
+				 	BY  CREATE_DATE DESC
+			</when>
+			<when test="statusCategory == '전체'">
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 ORDER 
+				 	BY  CREATE_DATE DESC
+			</when>	
+		</choose>
+	</select>
+		
 	<select id="selectVisit" resultMap="visitResultSet">
 		SELECT
 				VISIT_NO,
@@ -319,6 +455,7 @@
 				CREATE_DATE,
 				USER_NO,
 				VISIT_CONTENT,
+				VISIT_STATUS,
 				EMAIL
 		  FROM
 		  		VISIT
@@ -347,4 +484,23 @@
 		 WHERE
 		 		VISIT_NO = #{visitNo}
 	</update>
+	
+	<update id="cancelStatus" parameterType="_int">
+		UPDATE
+				VISIT
+		   SET
+		   		VISIT_STATUS = 'C'
+		 WHERE
+		 		VISIT_NO = #{visitNo}
+	</update>
+	
+	<update id="cancelReserveStatus" parameterType="_int">
+		UPDATE
+				VISIT
+		   SET
+		   		VISIT_STATUS = 'N'
+		 WHERE
+		 		VISIT_NO = #{visitNo}
+	</update>
+	
 </mapper>

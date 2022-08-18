@@ -21,6 +21,7 @@
 	</resultMap>
 	
 	<resultMap type="visit" id="visitResultSet">
+		<result column="VISIT_NO" property="visitNo" />
 		<result column="VISIT_CATEGORYE" property="visitCategory" />
 		<result column="VISIT_VALUE" property="visitValue" />
 		<result column="VISIT_DATE" property="visitDate" />
@@ -67,6 +68,7 @@
 	
 	<select id="visitReserveList" resultMap="visitResultSet">
 		SELECT
+				VISIT_NO,
 				VISIT_VALUE,
 				VISIT_DATE,
 				VISIT_TIME,

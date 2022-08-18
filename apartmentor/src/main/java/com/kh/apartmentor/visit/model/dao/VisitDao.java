@@ -58,17 +58,38 @@ public class VisitDao {
 		
 		return (ArrayList)sqlSession.selectList("visitMapper.selectCategoryList", category, rowBounds);
 	}
-
-	public Visit selectVisit(SqlSessionTemplate sqlSession, int visitVo) {
-		return sqlSession.selectOne("visitMapper.selectVisit", visitVo);
+	
+	public int selectStatusListCount(SqlSessionTemplate sqlSession, String statusCategory) {
+		return sqlSession.selectOne("visitMapper.selectStatusListCount", statusCategory);
 	}
 
-	public int okReserveStatus(SqlSessionTemplate sqlSession, int visitVo) {
-		return sqlSession.update("visitMapper.okReserveStatus", visitVo);
+	public ArrayList<Visit> selectStatusList(SqlSessionTemplate sqlSession, String statusCategory, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("visitMapper.selectStatusList", statusCategory, rowBounds);
 	}
 
-	public int noReserveStatus(SqlSessionTemplate sqlSession, int visitVo) {
-		return sqlSession.update("visitMapper.noReserveStatus", visitVo);
+	public Visit selectVisit(SqlSessionTemplate sqlSession, int visitNo) {
+		return sqlSession.selectOne("visitMapper.selectVisit", visitNo);
+	}
+
+	public int okReserveStatus(SqlSessionTemplate sqlSession, int visitNo) {
+		return sqlSession.update("visitMapper.okReserveStatus", visitNo);
+	}
+
+	public int noReserveStatus(SqlSessionTemplate sqlSession, int visitNo) {
+		return sqlSession.update("visitMapper.noReserveStatus", visitNo);
+	}
+
+	public int cancelStatus(SqlSessionTemplate sqlSession, int visitNo) {
+		return sqlSession.update("visitMapper.cancelStatus", visitNo);
+	}
+
+	public int cancelReserveStatus(SqlSessionTemplate sqlSession, int visitNo) {
+		return sqlSession.update("visitMapper.cancelReserveStatus", visitNo);
 	}
 	
 	
