@@ -79,6 +79,11 @@ public class VoteServiceImpl implements VoteService{
 		return voteDao.selectVoteItem(sqlSession, vno);
 	}
 
+	@Override
+	public int submitVote(VoteItem vi) {
+		return voteDao.submitVote(sqlSession, vi);
+	}
+
 
 
 

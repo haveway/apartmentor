@@ -157,5 +157,21 @@ public class VoteController {
 		return mv;
 	}
 	
+	@RequestMapping("submit.vote")
+	public void submitVote(int itemNo, int userNo, int voteNo) {
+		
+		VoteItem vi = new VoteItem();
+		vi.setItemNo(itemNo);
+		vi.setUserNo(userNo);
+		vi.setVoteNo(voteNo);
+		
+		int result = voteService.submitVote(vi);
+		
+		System.out.println(vi);
+		
+		
+		
+	}
+	
 
 }

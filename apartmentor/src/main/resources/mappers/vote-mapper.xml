@@ -242,6 +242,23 @@
 		 	   VOTE_ITEM
 		 WHERE VOTE_NO = #{vno}
 	</select>
+	
+	<insert id="submitVote" parameterType="voteItem">
+		INSERT
+		  INTO 
+		  	   VOTE_MEMBER
+		  	   (
+		  	   USER_NO,
+		  	   VOTE_NO,
+		  	   ITEM_NO
+	    	   )
+	    VALUES 
+	    	   (
+	    	   #{userNo},
+	    	   #{voteNo},
+	    	   #{itemNo}
+	    	   )
+	</insert>
 
   
   

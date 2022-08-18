@@ -30,6 +30,8 @@ public interface VoteService {
 	Vote selectVote(int vno);
 
 	ArrayList<VoteItem> selectVoteItem(int vno);
+
+	int submitVote(VoteItem vi);
 	
 	
 	
