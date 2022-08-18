@@ -46,7 +46,7 @@
 		
 		<div class="cate-div">
 			<h4><a href="adminRegoCar.rg?currentPage=1&category=ALL"><u>입주민 주차등록 현황</u></a></h4>
-			<h4><a href="#" style="color: black">방문차량 등록 현황</a></h4>
+			<h4><a href="adminVisitCar.car" style="color: black">방문차량 등록 현황</a></h4>
 		</div>
 		
 		<br><br><br>
@@ -143,7 +143,6 @@
 		// 차량 등록 취소
 	    $(document).on("click",".regoCar-dlt-btn", function deleteRegoCar(){
 	    	
-	    	//console.log($(this).parents("tr").find("td:eq(1)").text());
 	    	 $.ajax({
 	    		url : "deleteRegoCar.rg",
 	    		data : {
@@ -240,7 +239,7 @@
 
 	<br><br><br>
 	</div>
-
+	<jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>
