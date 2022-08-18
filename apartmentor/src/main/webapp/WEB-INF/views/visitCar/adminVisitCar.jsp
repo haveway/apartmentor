@@ -53,7 +53,6 @@
 		<table class="table table-hover" id="VisitCar-List" align="center">
 			<thead>
 				<tr style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
-					<th>No.</th>
 					<th>동/호수</th>
 					<th>차량번호</th>
 					<th>연락처</th>
@@ -65,7 +64,6 @@
 			<tbody>
 				<c:forEach var="s" items="${list}" varStatus="status">
                      <tr style="width: 70px; height: 30px; text-align: center;">
-                        <td>${status.count }</td>
                         <td>${s.aptNo }</td>
                         <td>${s.carNo }</td>
                         <td>${s.carPhone }</td>
@@ -90,7 +88,7 @@
 		    	$.ajax({
 		    		url : "deleteVisitCar.car",
 		    		data : {
-		    			carNo : $(this).parents("tr").find("td:eq(2)").text()
+		    			carNo : $(this).parents("tr").find("td:eq(1)").text()
 		    		},
 		    		type : "post",
 		    		success : function(result){

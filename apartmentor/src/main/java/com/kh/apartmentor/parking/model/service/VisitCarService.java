@@ -16,6 +16,8 @@ public interface VisitCarService {
 
 	int updateVisitCar(Parking p);
 	
+	ArrayList<Parking> selectVisitCarList(String aptNo);
+	
 	// ------------관리자 방문차량-------------------
 	int adminVisitCarListCount();
 	

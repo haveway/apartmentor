@@ -43,6 +43,10 @@ public class VisitCarServiceImpl implements VisitCarService {
 		return visitCarDao.updateVisitCar(sqlSession, p);
 	}
 	
+	@Override
+	public ArrayList<Parking> selectVisitCarList(String aptNo){
+		 return visitCarDao.selectVisitCarList(sqlSession, aptNo);
+	}
 	
 	
 	//--------------------------- 관리자 방문예약 ------------------------------------

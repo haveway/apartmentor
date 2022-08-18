@@ -75,6 +75,11 @@ public class VisitCarController {
 		System.out.println("방문차량 업데이트 결과 :" + result + "대의 차량을 업데이트 하였습니다.");
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="selectVisitCarList.car", produces="application/json; charset=UTF-8")
+	public String selectRegoCarList(String aptNo) {
+		return new Gson().toJson(visitCarService.selectVisitCarList(aptNo));
+	}
 	
 	//----------------------------관리자 방문 차량 ------------------------------
 

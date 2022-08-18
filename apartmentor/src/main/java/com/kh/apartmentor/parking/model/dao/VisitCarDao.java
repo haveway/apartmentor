@@ -28,6 +28,10 @@ public class VisitCarDao {
 		return sqlSession.update("visitCarMapper.updateVisitCar", p);
 	}
 
+	public ArrayList<Parking> selectVisitCarList(SqlSessionTemplate sqlSession, String aptNo){
+		return (ArrayList)sqlSession.selectList("visitCarMapper.selectVisitCarList", aptNo);
+	}
+	
 	
 	// --------------------------- 관리자 방문예약 ----------------------------------
 	

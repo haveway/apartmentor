@@ -37,7 +37,7 @@
             (
             #{carNo},
             #{carPhone},
-            'N',
+            'W',
             #{carCategory},
             #{carDate},
             #{carPurpose},
@@ -50,7 +50,7 @@
             PARKING
            SET 
                CAR_PHONE = #{carPhone},
-               STATUS = 'N',
+               STATUS = 'W',
                 CAR_CATEGORY = #{carCategory},
                 CAR_DATE = #{carDate},
                 CAR_PURPOSE = #{carPurpose},
@@ -69,6 +69,16 @@
            ELSE 'N'
           END
    </update>
+   
+   	<select id="selectVisitCarList" resultMap="visitCarResultSet">
+      SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, TO_CHAR(CAR_DATE, 'YYYY-MM-DD') AS CAR_DATE, APT_NO, R.USER_NO, CAR_PURPOSE
+      FROM PARKING R, MEMBER M
+      WHERE R.USER_NO = M.USER_NO
+      AND CAR_CATEGORY = 2
+      AND M.APT_NO = #{aptNo}
+      AND R.STATUS IN('Y','W')
+      ORDER BY CAR_DATE ASC
+	</select>
 
    
    <!-- ********************관리자 방문예약 ********************** -->
@@ -82,7 +92,7 @@
    
    
    <select id="adminVisitCarList" resultMap="visitCarResultSet">
-        SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, CAR_DATE, APT_NO, R.USER_NO, CAR_PURPOSE
+      SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, CAR_DATE, APT_NO, R.USER_NO, CAR_PURPOSE
       FROM PARKING R, MEMBER M
       WHERE R.USER_NO = M.USER_NO
       AND CAR_CATEGORY = 2
