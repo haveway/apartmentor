@@ -632,24 +632,44 @@
 					</c:forEach>
 					
 					<c:forEach var="rL" items="${reserveList}">
-						<c:if test="${rL ne null && loginUser.aptNo eq rL.aptNo}">
+						<c:choose>
+							<c:when test="${rL ne null && loginUser.aptNo eq rL.aptNo && rL.facilityValue ne '독서실'}">
+								<tr>
+									<th>
+										<div name="status">
+											${fn:substring(rL.startDay, 8, 10)}
+										</div>
+									</th>
+									<td>
+										${rL.startDate}
+										<c:if test="${not empty rL.endDate}">
+										~ ${rL.endDate}
+										</c:if>
+									</td>
+									<td>
+										${rL.facilityValue}
+									</td>
+								</tr>
+							</c:when>
+							<c:when test="${rL ne null && loginUser.aptNo eq rL.aptNo && rL.facilityValue eq '독서실'}" >
 							<tr>
-								<th>
-									<div name="status">
-										${fn:substring(rL.startDay, 8, 10)}
-									</div>
-								</th>
-								<td>
-									${rL.startDate}
-									<c:if test="${not empty rL.endDate}">
-									~ ${rL.endDate}
-									</c:if>
-								</td>
-								<td>
-									${rL.facilityValue}
-								</td>
-							</tr>
-						</c:if>
+									<th>
+										<div name="status">
+											${fn:substring(rL.startDay, 6, 8)}
+										</div>
+									</th>
+									<td>
+										${rL.startDate}
+										<c:if test="${not empty rL.endDate}">
+										~ ${rL.endDate}
+										</c:if>
+									</td>
+									<td>
+										${rL.facilityValue}
+									</td>
+								</tr>
+							</c:when>
+						</c:choose>
 					</c:forEach>
 					
 					<c:forEach var="nL" items="${noticeList}">
