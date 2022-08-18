@@ -11,7 +11,7 @@
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	
 	<!-- CSS -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<!-- Default theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme -->
@@ -309,7 +309,7 @@
                     <div class="modal-body mb">
                         <b>아이디 : </b>
                         <div class="modal-input">
-                            <input type="text" id="addId" name="userId" oninput="checkId();" required readonly  value="${loginUser.userId}">
+                            <input type="text" id="addId" name="userId"  required readonly  value="${loginUser.userId}">
                         </div>
                         <p id="p1">영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.</p>
 
@@ -327,36 +327,36 @@
                         
                         <b>이름 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addName" name="userName"  oninput="checkName()" required readonly value="${loginUser.userName}">
+                        	<input type="text" id="addName" name="userName"   required readonly value="${loginUser.userName}">
                         </div>
                         <p id="p4">한글이름으로 입력하세요.</p>
 
                         <b>생년월일 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addBirthday" name="birthday"  oninput="checkBirth()" required readonly value="${loginUser.birthday}">
+                        	<input type="text" id="addBirthday" name="birthday"   required readonly value="${loginUser.birthday}">
                         </div>
                         <p id="p5">6자리 숫자로 입력하세요.</p>
 
                         <b>휴대폰 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required value="${loginUser.phone}">
+                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required >
                         </div>
                         <p id="p6">-을 제외한 11자리 숫자로 입력하세요.</p>
 
                         <b>이메일 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required value="${loginUser.email}">
+                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required >
                         </div>
                         <p id="p7">예시와 같은 형식으로 입력하세요.</p>
                         
                         <b>동 </b>
                         <div class="modal-input">
-                        	<input type="text" id="addAptNo1" name="aptNo1" oninput="checkAptNo1()" required readonly value="${loginUser.aptNo}">
+                        	<input type="text" id="addAptNo1" name="aptNo1"  required readonly value="${loginUser.aptNo}">
                         </div>
                         <p id="p8-1">주소변경시 관리사무소에 문의해주세요.</p>
                         <b>호수 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addAptNo2" name="aptNo2" oninput="checkAptNo2()" required readonly value="${loginUser.aptNo}">
+                        	<input type="text" id="addAptNo2" name="aptNo2" required readonly value="${loginUser.aptNo}">
                         </div>
                         <p id="p8-2">주소변경시 관리사무소에 문의해주세요.</p>
                     </div>
@@ -364,13 +364,17 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember" class="btn submit" disabled>가입신청</button>
+                        <button type="submit" id="updateMember" class="btn submit" disabled>정보수정</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 	<script>
+		var I2;
+		var I3;
+		var I6;
+		var I7;
 		/* 비밀번호 유효성 검사 */
 		function checkPwd() {
 			let p2 = $('#p2');
@@ -379,12 +383,16 @@
 			if(!regExpPwd.test(addPwd)){
 				 p2.attr('style','color:red;');
 				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
-				 $('#insertMember').attr('disabled',true);
+				 I2 = 'n';
+				 chkbtn();
+			     return; 
 			}
 			else {
 				p2.attr('style','color:#32CD32;');
 				p2.text('사용가능한 비밀번호 입니다.')
-				$('#insertMember').attr('disabled',false);
+				I2 = 'y';
+				chkbtn();
+			    return;
 			}
 		}
 		
@@ -396,12 +404,16 @@
 			if(addPwd != rePwd1){
 				p3.attr('style','color:red;');
 				p3.text('비밀번호를 일치하게 입력해주세요.')
-				$('#insertMember').attr('disabled',true);
+				I3 = 'n';
+				chkbtn();
+			    return;
 			}
 			else {
 				p3.attr('style','color:#32CD32;');
 				p3.text('비밀번호가 일치합니다.')
-				$('#insertMember').attr('disabled',false);
+				I3 = 'y';
+				chkbtn();
+			    return;
 			} 
 		}
 		/* 휴대폰 체크 형식 */
@@ -412,12 +424,16 @@
 	 		if(!regExpPhone.test(addPhone)){
 	 			p6.attr('style','color:red;');
 				p6.text('-을 제외한 11자리 숫자로 입력하세요.')
-				$('#insertMember').attr('disabled',true);
+				I6 = 'n';
+				chkbtn();
+			    return;
 			} 
 	 		else {
 				p6.attr('style','color:#32CD32;');
 				p6.text('올바른  형식 입니다.');	
-				$('#insertMember').attr('disabled',false);
+				I6 = 'y';
+				chkbtn();
+			    return;
 			}
 		}
 	 	
@@ -430,13 +446,28 @@
 	 		if(!regExpEmail.test(addEmail)){
 	 			p7.attr('style','color:red;');
 				p7.text('올바른 형식의 이메일이 아닙니다.')
-				$('#insertMember').attr('disabled',true);
+				I7 = 'n';
+				chkbtn();
+			    return;
 			} 
 	 		else {
 				p7.attr('style','color:#32CD32;');
 				p7.text('올바른  형식 입니다.');	
-				$('#insertMember').attr('disabled',false);
+				I7 = 'y';
+				chkbtn();
+			    return;
 			}
+		}
+	 	function chkbtn() {
+	 		var success = "";
+	 		success = I2 + I3 + I6 + I7;
+	 		if( success == 'yyyy'){
+	 			$('#updateMember').attr('disabled',false);
+	 			console.log(success)
+	 		}else{
+	 			$('#updateMember').attr('disabled',true);
+	 			
+	 		}
 		}
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

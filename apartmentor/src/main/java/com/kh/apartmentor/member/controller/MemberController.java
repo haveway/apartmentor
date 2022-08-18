@@ -124,7 +124,7 @@ public class MemberController {
 		int result = memberService.insertMember(m);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg2", "성공적으로 회원가입이 되었습니다.");
+			session.setAttribute("alertMsg2", "회원가입 성공 ! 관리자 승인 후  회원가입이 완료 됩니다.");
 			return "redirect:/";
 		}else { 
 			mv.addObject("alertMsg1", "다시 확인해주세요.");
