@@ -1,7 +1,4 @@
-package com.kh.apartmentor.parking.controller;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package com.kh.apartmentor.parkingVisit.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.common.template.Pagination;
-import com.kh.apartmentor.parking.model.service.VisitCarService;
-import com.kh.apartmentor.parking.model.vo.Parking;
+import com.kh.apartmentor.parkingVisit.model.service.VisitCarService;
+import com.kh.apartmentor.parkingVisit.model.vo.ParkingVisit;
 
 @Controller
 public class VisitCarController {
@@ -28,8 +25,8 @@ public class VisitCarController {
 	
 	@ResponseBody
 	@RequestMapping("visit.car")
-	public ModelAndView SelectVisitCar(Parking p, ModelAndView mv, HttpSession session) {
-		
+	public ModelAndView SelectVisitCar(ParkingVisit p, ModelAndView mv, HttpSession session) {
+		System.out.println(p);
 		int selectResult = visitCarService.selectVisitCar(p);
 		int enrollResult;
 		
@@ -50,8 +47,7 @@ public class VisitCarController {
 		return mv;
 	}
 	
-	public int enrollVisitCar(Parking p) {
-        
+	public int enrollVisitCar(ParkingVisit p) {
 		int result = visitCarService.enrollVisitCar(p);
 		setDayVisitCar();
 		
@@ -59,7 +55,7 @@ public class VisitCarController {
 		
 	}
 
-	public int updateVisitCar(Parking p) {
+	public int updateVisitCar(ParkingVisit p) {
 		
 		int result = visitCarService.updateVisitCar(p);
 		setDayVisitCar();

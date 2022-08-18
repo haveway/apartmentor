@@ -155,7 +155,7 @@
 				}
 			}
 			
-			// 등록된 차량리스트 
+			// 방문주차 차량리스트 
 			function selectVisitCarList(){
 	    		$.ajax({
 	    			url : 'selectVisitCarList.car', 
@@ -173,10 +173,10 @@
 	    				else{
 		    				for(let i = 0; i < list.length; i++){
 		    					value += '<tr style="width: 70px; height: 30px; text-align: center;">'
-		    						   + '<td>' + list[i].carDate + '</td>'
+		    						   + '<td>' + list[i].visitCarDate + '</td>'
 									   + '<td>' + list[i].carNo + '</td>'
-									   + '<td>' + list[i].carPhone + '</td>'
-									   + '<td>' + list[i].carPurpose + '</td>'
+									   + '<td>' + list[i].visitCarPhone + '</td>'
+									   + '<td>' + list[i].purpose + '</td>'
 		                		  	   + "<td>" + "<a class='visitCar-dlt-btn' align='center' style='width: 50px'>취소 요청</a>" + "</td>"
 									   + '</tr>'
 		    				}

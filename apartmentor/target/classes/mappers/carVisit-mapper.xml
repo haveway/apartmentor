@@ -2,82 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="visitCarMapper">
 
-   <resultMap id="visitCarResultSet" type="parking">
+   <resultMap id="visitCarResultSet" type="parkingVisit">
       <result column="CAR_NO" property="carNo" />
-      <result column="CAR_PHONE" property="carPhone" />
+      <result column="VISITCAR_PHONE" property="visitCarPhone" />
+      <result column="VISITCAR_DATE" property="visitCarDate" />
+      <result column="PURPOSE" property="purpose" />
       <result column="STATUS" property="status" />
-      <result column="CAR_CATEGORY" property="carCategory" />
-      <result column="CAR_DATE" property="carDate" />
       <result column="USER_NO" property="userNo" />
-      <result column="CAR_PURPOSE" property="carPurpose" />
       <result column="APT_NO" property="aptNo"/>
    </resultMap>
    
    
    <select id="selectVisitCar" resultType="_int">
       SELECT COUNT(*) 
-        FROM PARKING 
+        FROM PARKING_VISIT 
        WHERE CAR_NO = #{carNo}
    </select>
 
-   <insert id="enrollVisitCar" parameterType="parking">
+   <insert id="enrollVisitCar" parameterType="parkingVisit">
       INSERT
         INTO
-              PARKING
+              PARKING_VISIT
               (
+              VISITCAR_NO,
               CAR_NO,
-              CAR_PHONE,
+              VISITCAR_PHONE,
+              VISITCAR_DATE,
+              PURPOSE,
               STATUS,
-              CAR_CATEGORY,
-              CAR_DATE,
-              CAR_PURPOSE,
               USER_NO
               )
       VALUES
             (
+            SEQ_VCNO.NEXTVAL,
             #{carNo},
-            #{carPhone},
+            #{visitCarPhone},
+            #{visitCarDate},
+            #{purpose},
             'W',
-            #{carCategory},
-            #{carDate},
-            #{carPurpose},
             #{userNo}
             )
    </insert>
    
-   <update id="updateVisitCar" parameterType="parking">
+   <update id="updateVisitCar" parameterType="parkingVisit">
       UPDATE 
-            PARKING
+            PARKING_VISIT
            SET 
-               CAR_PHONE = #{carPhone},
+               VISITCAR_PHONE = #{visitCarPhone},
                STATUS = 'W',
-                CAR_CATEGORY = #{carCategory},
-                CAR_DATE = #{carDate},
-                CAR_PURPOSE = #{carPurpose},
-                USER_NO = #{userNo}
+               VISITCAR_DATE = #{visitCarDate},
+               PURPOSE = #{purpose},
+               USER_NO = #{userNo}
        WHERE 
              CAR_NO = #{carNo}
    </update>
    
    <update id="setDayVisitCar">
-      UPDATE PARKING
+      UPDATE PARKING_VISIT
            SET STATUS = CASE
-           WHEN CAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+           WHEN VISITCAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
            THEN 'Y'
- <![CDATA[WHEN CAR_DATE > TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+ <![CDATA[WHEN VISITCAR_DATE > TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
            THEN 'W'
            ELSE 'N'
           END
    </update>
    
    	<select id="selectVisitCarList" resultMap="visitCarResultSet">
-      SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, TO_CHAR(CAR_DATE, 'YYYY-MM-DD') AS CAR_DATE, APT_NO, R.USER_NO, CAR_PURPOSE
-      FROM PARKING R, MEMBER M
-      WHERE R.USER_NO = M.USER_NO
-      AND CAR_CATEGORY = 2
+      SELECT VISITCAR_NO, CAR_NO, VISITCAR_PHONE, TO_CHAR(VISITCAR_DATE, 'YYYY-MM-DD') AS VISITCAR_DATE, PURPOSE, P.STATUS, APT_NO, P.USER_NO
+      FROM PARKING_VISIT P, MEMBER M
+      WHERE P.USER_NO = M.USER_NO
       AND M.APT_NO = #{aptNo}
-      AND R.STATUS IN('Y','W')
-      ORDER BY CAR_DATE ASC
+      AND P.STATUS IN('Y','W')
+      ORDER BY VISITCAR_DATE ASC
 	</select>
 
    
@@ -85,23 +82,20 @@
    <select id="adminVisitCarListCount" resultType="_int">
       SELECT COUNT(*)
       FROM
-            PARKING
-      WHERE   
-            CAR_CATEGORY = 2
+            PARKING_VISIT
    </select>
    
    
    <select id="adminVisitCarList" resultMap="visitCarResultSet">
-      SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, CAR_DATE, APT_NO, R.USER_NO, CAR_PURPOSE
-      FROM PARKING R, MEMBER M
-      WHERE R.USER_NO = M.USER_NO
-      AND CAR_CATEGORY = 2
-      ORDER BY CAR_DATE ASC
+      SELECT VISITCAR_NO, CAR_NO, VISITCAR_PHONE, TO_CHAR(VISITCAR_DATE, 'YYYY-MM-DD') AS VISITCAR_DATE, PURPOSE, P.STATUS, APT_NO, P.USER_NO
+      FROM PARKING_VISIT P, MEMBER M
+      WHERE P.USER_NO = M.USER_NO
+      ORDER BY VISITCAR_DATE ASC
    </select>
 
-   <delete id="deleteVisitCar" parameterType="parking">
+   <delete id="deleteVisitCar" parameterType="parkingVisit">
       DELETE 
-      FROM PARKING
+      FROM PARKING_VISIT
       WHERE CAR_NO = #{carNo}
    </delete>
 

@@ -66,9 +66,9 @@
                      <tr style="width: 70px; height: 30px; text-align: center;">
                         <td>${s.aptNo }</td>
                         <td>${s.carNo }</td>
-                        <td>${s.carPhone }</td>
-                        <td>${s.carPurpose }</td>
-                        <td>${s.carDate }</td>
+                        <td>${s.visitCarPhone }</td>
+                        <td>${s.purpose }</td>
+                        <td>${s.visitCarDate }</td>
                         <td>
                         	<a class='visitCar-dlt-btn' align='center' style='width: 50px'>삭제</a>	
                         </td>

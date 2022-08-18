@@ -1,4 +1,4 @@
-package com.kh.apartmentor.parking.model.dao;
+package com.kh.apartmentor.parkingVisit.model.dao;
 
 import java.util.ArrayList;
 
@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.parking.model.vo.Parking;
+import com.kh.apartmentor.parkingVisit.model.vo.ParkingVisit;
 
 @Repository
 public class VisitCarDao {
 
-	public int enrollVisitCar(SqlSessionTemplate sqlSession, Parking p) {
+	public int enrollVisitCar(SqlSessionTemplate sqlSession, ParkingVisit p) {
 		return sqlSession.insert("visitCarMapper.enrollVisitCar", p);
 	}
 
@@ -20,11 +21,11 @@ public class VisitCarDao {
 		return sqlSession.update("visitCarMapper.setDayVisitCar");
 	}
 
-	public int selectVisitCar(SqlSessionTemplate sqlSession, Parking p) {
+	public int selectVisitCar(SqlSessionTemplate sqlSession, ParkingVisit p) {
 		return sqlSession.selectOne("visitCarMapper.selectVisitCar", p);
 	}
 
-	public int updateVisitCar(SqlSessionTemplate sqlSession, Parking p) {
+	public int updateVisitCar(SqlSessionTemplate sqlSession, ParkingVisit p) {
 		return sqlSession.update("visitCarMapper.updateVisitCar", p);
 	}
 

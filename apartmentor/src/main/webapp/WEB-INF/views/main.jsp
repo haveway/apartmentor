@@ -439,7 +439,7 @@
                     <table class="table visitCar" >
                         <tr>
                             <td>방문일</td>
-                            <td><input type="date" id="carDate" name="carDate" min=""><br></td>
+                            <td><input type="date" id="visitCarDate" name="visitCarDate" min=""><br></td>
                         </tr>
                         <tr>
                             <td>차량번호</td>
@@ -447,26 +447,25 @@
                         </tr>
                         <tr>
                             <td>방문 목적</td>
-                            <td><input type="text" name="carPurpose" placeholder="ex)친척 방문"></td>
-                            <input type="hidden" name="carCategory" value="2">
+                            <td><input type="text" name="purpose" placeholder="ex)친척 방문"></td>
                         </tr>
                         <tr>
                             <td>비상 연락처</td>
-                            <td><input type="text" name="carPhone" placeholder="ex)010-1234-5678"></td>
+                            <td><input type="text" name="visitCarPhone" placeholder="ex)010-1234-5678"></td>
                         </tr>
                     </table>
 					<div style="margin-left:150px;">
 						<button class="btn-primary" type="submit">방문 예약 등록</button>
 					</div>
                     <script>
-                    $('#carDate').click(function(){
+                    $('#visitCarDate').click(function(){
                         var date = new Date();
                         var year = date.getFullYear();
                         var month = ("0" + (1 + date.getMonth())).slice(-2);
                         var day = ("0" + date.getDate()).slice(-2);
 
                         var today =  year + '-' + month  + '-' + day;
-                        $('#carDate').attr('min', today);
+                        $('#visitCarDate').attr('min', today);
                     })  // 방문일 선택시 오늘날짜를 기준으로 이전날짜는 선택불가
                     </script>
 

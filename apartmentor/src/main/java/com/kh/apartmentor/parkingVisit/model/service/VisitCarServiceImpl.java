@@ -1,4 +1,4 @@
-package com.kh.apartmentor.parking.model.service;
+package com.kh.apartmentor.parkingVisit.model.service;
 
 import java.util.ArrayList;
 
@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.apartmentor.common.model.vo.PageInfo;
-import com.kh.apartmentor.parking.model.dao.VisitCarDao;
 import com.kh.apartmentor.parking.model.vo.Parking;
+import com.kh.apartmentor.parkingVisit.model.dao.VisitCarDao;
+import com.kh.apartmentor.parkingVisit.model.vo.ParkingVisit;
 
 @Service
 public class VisitCarServiceImpl implements VisitCarService {
@@ -21,7 +22,7 @@ public class VisitCarServiceImpl implements VisitCarService {
 	
 
 	@Override
-	public int enrollVisitCar(Parking p) {
+	public int enrollVisitCar(ParkingVisit p) {
 		return visitCarDao.enrollVisitCar(sqlSession, p);
 	}
 
@@ -33,13 +34,13 @@ public class VisitCarServiceImpl implements VisitCarService {
 
 
 	@Override
-	public int selectVisitCar(Parking p) {
+	public int selectVisitCar(ParkingVisit p) {
 		return visitCarDao.selectVisitCar(sqlSession, p);
 	}
 
 
 	@Override
-	public int updateVisitCar(Parking p) {
+	public int updateVisitCar(ParkingVisit p) {
 		return visitCarDao.updateVisitCar(sqlSession, p);
 	}
 	
