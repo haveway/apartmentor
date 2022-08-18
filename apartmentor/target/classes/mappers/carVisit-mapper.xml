@@ -39,7 +39,7 @@
 			   PARKING
   		   SET 
   		       CAR_PHONE = #{carPhone},
-     	       STATUS = 'N',
+     	       STATUS = 'W',
   	           CAR_CATEGORY = #{carCategory},
   	           CAR_DATE = #{carDate},
    		       CAR_PURPOSE = #{carPurpose},
@@ -53,6 +53,8 @@
 	  	   SET STATUS = CASE
 	   	  WHEN CAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 	   	  THEN 'Y'
+ <![CDATA[WHEN CAR_DATE > TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+	   	  THEN 'W'
 	   	  ELSE 'N'
 	       END
 	</update>

@@ -53,7 +53,7 @@
                 </table>
                 <br>
                 <div style="margin-left:200px;">
-                    <button type="submit" onclick="">투표하기</button>
+                    <button type="submit" onclick="submitVote();">투표하기</button>
                 </div>
          </div>
           
@@ -61,9 +61,14 @@
 
     </div>
     <script>
-    $("input[name='checkItem']:checked").each(function(){	
-	    console.log($(this).val())
-    });
+        function submitVote(){
+
+            $("input[name='checkItem']:checked").each(function(){	
+	          console.log($(this).val())
+            });
+            
+        }
+   
 
     </script>
 
