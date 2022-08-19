@@ -21,5 +21,6 @@ public class VoteItem {
 	private int userNo;
 	private String originName;
 	private String changeName;
+	private int itemCount;
 
 }

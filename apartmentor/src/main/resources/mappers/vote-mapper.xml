@@ -17,6 +17,7 @@
 		<result column="ITEM_NAME" property="itemName" />
 		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CHANGE_NAME" property="changeName" />
+		<result column="ITEM_COUNT" property="itemCount" />
 		<result column="VOTE_NO" property="voteNo" />
 	</resultMap>
 
@@ -239,6 +240,7 @@
 				ITEM_NAME,
 				ORIGIN_NAME,
 				CHANGE_NAME,
+				ITEM_COUNT,
 				VOTE_NO
 		  FROM
 		 	   VOTE_ITEM
@@ -278,7 +280,7 @@
 				ITEM_NO = #{itemNo}
 	</update>
 	
-	<select id="totalCount">
+	<select id="totalCount" resultType="_int">
 		SELECT COUNT(*)
 		  FROM VOTE_MEMBER
 		 WHERE VOTE_NO = #{voteNo}

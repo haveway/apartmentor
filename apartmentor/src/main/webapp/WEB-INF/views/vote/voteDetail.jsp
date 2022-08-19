@@ -13,7 +13,7 @@
 
     #voteItemList tr{
         border: 1px solid gray;
-        font-size: 20px;
+        font-size: 18px;
     }
 
 </style>
@@ -38,18 +38,19 @@
                 <table id="voteItemList">			
                     <c:forEach var="vi" items="${vi}">
                         <tr>
-                            <td width="200px;" height="75px">
-                            <c:if test="${v.voteType == 1}">    <!-- voteType이 1이면 체크버튼-->
-                            &nbsp;<input style="zoom:1.3;" type="checkbox" name="checkItem" value="${vi.itemNo}"> ${vi.itemName} 
-                            </c:if>
-                            <c:if test="${v.voteType == 0}">    <!-- voteType이 0이면 라디오 버튼-->
-                            &nbsp;<input style="zoom:1.3;" type="radio" name="checkItem" value="${vi.itemNo}"> ${vi.itemName}
-                        </c:if>
-                            </td>
-                            <td width="75px;">
+                            <td width="75px;" align="center">
                                 <c:if test="${vi.changeName != 'null'}">
                                     <img src="${vi.changeName}" height="70px;" alt="">
                                 </c:if>
+                            </td>
+
+                            <td width="200px;" height="75px">
+                            <c:if test="${v.voteType == 1}">    <!-- voteType이 1이면 체크버튼-->
+                                &nbsp;<input style="zoom:1.3;" type="checkbox" name="checkItem" value="${vi.itemNo}"> ${vi.itemName} 
+                            </c:if>
+                            <c:if test="${v.voteType == 0}">    <!-- voteType이 0이면 라디오 버튼-->
+                                &nbsp;<input style="zoom:1.3;" type="radio" name="checkItem" value="${vi.itemNo}"> ${vi.itemName}
+                            </c:if>
                             </td>
                         </tr>
                     </c:forEach>

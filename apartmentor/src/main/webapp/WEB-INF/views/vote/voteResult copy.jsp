@@ -14,7 +14,7 @@
 
     #voteItemList tr{
         border: 1px solid gray;
-        font-size: 18px;
+        font-size: 20px;
     }
 
 </style>
@@ -26,6 +26,7 @@
     <div class="wrap">
         <input type="hidden" name="userNo" id="userNo" value="${loginUser.userNo}">
         <input type="hidden" name="voteNo" id="voteNo" value="${v.voteNo}">
+        
             <div style="margin-left:300px;">
                 <h3>Q. ${v.voteTitle}</h3> 
             </div>
@@ -39,32 +40,39 @@
                 투표기한 : ${v.voteStart} ~ ${v.voteEnd} <br>
                 총 투표자 : ${totalCount}명
                 
-                    <table id="voteItemList" width="400">
-                        <c:forEach var="vi" items="${vi}">
-                            <c:set var="totalCount" value="${totalCount}"/>
-                            <c:set var="itemCount" value="${vi.itemCount}"/>
-                            <fmt:parseNumber var="ratio" value="${itemCount/totalCount*100}" integerOnly="true" />
-                            <tr>
-                                <td width="20" align="center"><img src="${vi.changeName}" height="70px;" alt=""></td>
-                                <td width="130">
-                                        ${vi.itemName}
-                                </td>
-                                    <td>
-                                    <table width="${ratio}">
-                                        <tr>
-                                            <td bgcolor="#00589b" height="15" style="color:white; font-size:12px;">${ratio}%</td>
-                                        </tr>
-                                    </table>
+                <c:forEach var="vi" items="${vi}">
+                <table id="voteItemList">			
+                    <c:set var="totalCount" value="${totalCount}"/>
+                    <c:set var="itemCount" value="${vi.itemCount}"/>
+                    <fmt:parseNumber var="ratio" value="${itemCount/totalCount*100}" integerOnly="true" />
+                        <tr>
+                            <td width="75px;">
+                                <c:if test="${vi.changeName != 'null'}">
+                                    <img src="${vi.changeName}" height="70px;" alt=""><br>
+                                </c:if>
+                            </td>
+                            <td width="300px;" height="75px">
+                                &nbsp;${vi.itemName} <br>
+                            </td>
+                            <table width="${ratio}">
+                                <tr>
+                                    <td bgcolor="red">
+                                        ${ratio}
                                     </td>
-                                <td width="40" align="center">${vi.itemCount}표</td>
-                            </tr>	
-                        </c:forEach>
+                                </tr>
+                            </table>
+                        </tr>
                     </table>
+                    <br>
+                </c:forEach>
                 <br>
                 <div style="margin-left:150px;">
                     <button type="submit" onclick="reVote();">다시 투표하기</button>
                 </div>
          </div>
+
+         
+          
         
 
     </div>

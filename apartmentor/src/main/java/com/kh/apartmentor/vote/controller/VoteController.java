@@ -94,9 +94,9 @@ public class VoteController {
 		for(int i = 0; i < itemName.length; i++) {
 			if(!upfile[i].getOriginalFilename().equals("")) {
 				String changeName = saveFile(upfile[i], session);
-				voteItemList.add(new VoteItem(0, 0, itemName[i], 0, upfile[i].getOriginalFilename(), "/apartmentor/resources/uploadFiles/" + changeName));
+				voteItemList.add(new VoteItem(0, 0, itemName[i], 0, upfile[i].getOriginalFilename(), "/apartmentor/resources/uploadFiles/" + changeName, 0));
 			} else {
-				voteItemList.add(new VoteItem(0, 0, itemName[i], 0, "null", "null"));
+				voteItemList.add(new VoteItem(0, 0, itemName[i], 0, "null", "null", 0));
 			}
 		}
 
@@ -156,11 +156,13 @@ public class VoteController {
 		
 		Vote v = voteService.selectVote(voteNo);
 		ArrayList<VoteItem> vi = voteService.selectVoteItem(voteNo);
-		
+
+		System.out.println();
 		int result = voteService.chkVoteMember(voteMember);	// 멤버가 투표했는지 여부
 		
 		if(result > 0) {	// 투표했으면 투표결과페이지를 띄워준다
 			int totalCount = voteService.totalCount(voteNo); // 총 투표수
+			model.addAttribute("totalCount", totalCount);
 			model.addAttribute("voteNo", voteNo);
 			model.addAttribute("v", v);
 			model.addAttribute("vi", vi);
