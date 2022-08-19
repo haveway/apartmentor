@@ -16,6 +16,8 @@
 	<typeAlias type="com.kh.apartmentor.visit.model.vo.VisitCategory" alias="visitCategory"/>
 	<typeAlias type="com.kh.apartmentor.notice.model.vo.Notice" alias="notice"/>
 	<typeAlias type="com.kh.apartmentor.chat.model.vo.Chat" alias="chat"/>
+	<typeAlias type="com.kh.apartmentor.vote.model.vo.Vote" alias="vote"/>
+	<typeAlias type="com.kh.apartmentor.vote.model.vo.VoteItem" alias="voteItem"/>
 </typeAliases>
 
 
@@ -30,5 +32,6 @@
 		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/chat-mapper.xml" />
 		<mapper resource="/mappers/regoCar-mapper.xml" />
+		<mapper resource="/mappers/vote-mapper.xml" />
 	</mappers>
 </configuration>
