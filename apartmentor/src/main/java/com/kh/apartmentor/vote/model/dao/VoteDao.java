@@ -58,7 +58,6 @@ public class VoteDao {
 		return (ArrayList)sqlSession.selectList("voteMapper.selectCategoryList", keyword, rowBounds);
 	}
 
-	
 	public int searchListCount(SqlSessionTemplate sqlSession,String keyword) {
 		return sqlSession.selectOne("voteMapper.searchListCount", keyword);
 	}
