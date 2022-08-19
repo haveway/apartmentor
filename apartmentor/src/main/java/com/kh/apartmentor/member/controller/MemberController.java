@@ -48,7 +48,6 @@ public class MemberController {
 		map.put("keyword", keyword);
 		map.put("condition", condition);
 		
-		System.out.println(map);
 		
 		PageInfo pi = Pagination.getPageInfo(memberService.selectSearchCount(map), currentPage, 5, 10);
 		
@@ -109,15 +108,11 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public String insertMember(Member m,ModelAndView mv, HttpSession session, String aptNo1, String aptNo2) {
-		System.out.println("1         "+m);
 		String aptNo = aptNo1 + "동" + aptNo2 + "호";
 		m.setAptNo(aptNo);
-		System.out.println("2           "+m);
-		System.out.println("평문" + m.getUserPwd());
 		
 		String encPwd = bCryptPasswordEncoder.encode(m.getUserPwd());
 		
-		System.out.println("암호문" + encPwd);
 		
 		m.setUserPwd(encPwd);
 		
@@ -142,7 +137,6 @@ public class MemberController {
 		m.setBirthday(birthday);
 		m.setAptNo(aptNo);
 		
-		System.out.println(m);
 		Member userId = memberService.selectId(m);
 		return new Gson().toJson(userId);
 		
@@ -157,7 +151,6 @@ public class MemberController {
 		m.setBirthday(birthday);
 		m.setAptNo(aptNo);
 		
-		System.out.println(m);
 		Member userPwd = memberService.findPwd(m);
 		userPwd.setUserId(id);
 		
@@ -167,7 +160,6 @@ public class MemberController {
 	@RequestMapping(value = "update.pw")
 	public String updatePw(String newPwd, String checkPwd, String pwdId, HttpSession session) {
 		
-		System.out.println(pwdId);
 		
 		if(newPwd.equals(checkPwd)) {
 			newPwd = checkPwd;
@@ -180,7 +172,6 @@ public class MemberController {
 			
 			int result = memberService.updatePwd(map);
 			
-			System.out.println(result);
 			
 			if(result > 0) {
 				session.setAttribute("alertMsg2", "비밀번호 변경완료.");

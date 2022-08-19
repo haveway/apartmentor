@@ -215,7 +215,7 @@
 			            	<div class="accordion-content" onclick="location.href='list.vote'">
 			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;투표</p>
 			            	</div>
-			            	<div class="accordion-content last" onclick="location.href='#'">
+			            	<div class="accordion-content last" onclick="location.href='chatForm.ch'">
 			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;채팅</p>
 			            	</div>
 	            		</div>
@@ -250,7 +250,7 @@
 					</div>
 	          	</div>
 	          	<div class="accordion-body">
-           			<div class="accordion-content" onclick="location.href='#'">
+           			<div class="accordion-content" onclick="location.href='feeView.fe'">
 	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;관리비 조회<p>
 	            	</div>
 	            	<c:choose>

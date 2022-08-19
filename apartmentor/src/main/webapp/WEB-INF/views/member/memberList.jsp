@@ -23,13 +23,13 @@
 	td{height: 20px;}
 	
 	.th1{width: 100px}
-	.th2{width: 190px}
+	.th2{width: 200px}
 	.th3{width: 190px}
 	.th4{width: 200px}
-	.th5{width: 120px}
+	.th5{width: 110px}
 	
 	.btn1{
-		width: 100%;
+		width: 70%;
 		height:100%;
 		margin: auto;
 		
@@ -303,13 +303,10 @@
 	$(".modal1").click(function(){
 		var data = $(this).data('id');
 		$("#userNo1").val(data);
-		console.log("asdasd");
 	});
 	$(".modal2").click(function(){
 		var data = $(this).data('id');
 		$("#userNo2").val(data);
-		console.log(data)
-		console.log("12312313");
 	});
 	</script>
 </body>
