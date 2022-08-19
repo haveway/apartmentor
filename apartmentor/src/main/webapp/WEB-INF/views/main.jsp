@@ -608,7 +608,27 @@
 				<table id="scheduleTable" class="table">
 					<tbody class="schedule">
 					
-					
+					<c:forEach var="vL" items="${visitList}">
+						<c:if test="${vL ne null && loginUser.aptNo eq vL.aptNo}">
+							<form id="visitStatus" action="" method="post">
+							<input type="hidden" name="email" value="${loginUser.email}">
+							<input type="hidden" name="vno" value="${vL.visitNo}">
+								<tr class="tr" data-toggle="modal" data-target="#myModal" data-id="${loginUser.aptNo}님의 ${vL.visitDate} ${vL.visitTime}에  ${vL.visitValue} 일정이 있습니다.">
+									<th>
+										<div name="status">
+											${fn:substring(vL.visitDate, 8, 10)}
+										</div>
+									</th>
+									<td>
+										${vL.visitTime}
+									</td>
+									<td>
+										${vL.visitValue}
+									</td>
+								</tr>
+							</form>
+						</c:if>
+					</c:forEach>
 					
 					<c:forEach var="rL" items="${reserveList}">
 						<c:choose>
@@ -669,8 +689,6 @@
 						</c:if>
 					</c:forEach>
 					
-					
-					
 					</tbody>
 				</table>
                 
@@ -678,59 +696,11 @@
     	</div>
     	
     	<script>
-    	$(function(){
-			selectVisitList();
-		})
-		
-		function selectVisitList(){
-    		$.ajax({
-    			url : 'selectVisit.main',
-    			data : {userNo : ${loginUser.userNo}},
-    			async : false,
-    			success : function(visitList) {
-    				vList = '';
-    				
-    				for(let i in visitList) {
-    					vList += '<form id="visitStatus" action="" method="post">'
-    						   + '<input type="hidden" name="email" value="' + visitList[i].email + '">'
-    						   + '<input type="hidden" name="vno" value="' + visitList[i].visitNo + '">'
-    						   + '<tr class="tr" data-toggle="modal" data-target="#myModal" data-id="' + visitList[i].aptNo + '님의 ' + visitList[i].visitDate + '&nbsp;' + visitList[i].visitTime + '에 ' + visitList[i].visitValue + ' 검침 일정이 있습니다.">'
-    						   + '<th>'
-    						   + '<div name="status">'
-    						   + visitList[i].visitDate.substring(8, 10)
-    						   + '</div>'
-    						   + '</th>'
-    						   + '<td>'
-    						   + visitList[i].visitTime
-    						   + '</td>'
-    						   + '<td>'
-    						   + visitList[i].visitValue
-    						   + '</td>'
-    						   + '</tr>'
-    						   + '</form>';
-    						   
-    						   console.log(visitList[i].visitNo);
-    				}	
-    				
-    				$('.schedule').html(vList);
-    				
-    	    		$(".tr").click(function(){
-    	    			var data = $(this).data('id');
-    	    			$('#modalContent').html(data);
-    	    		});
-    	    		
-
-    			},
-    			error : function(){
-					console.log('예약 조회 실패');
-				}
-    			
+    		$(".tr").click(function(){
+    			var data = $(this).data('id');
+    			$('#modalContent').html(data);
     		});
-    	}
-		
-    	
     	</script>
-
     	
     	<script>
     	
@@ -739,7 +709,6 @@
 		
 		  $(function(){
 			    var rows = document.getElementById("scheduleTable").getElementsByTagName("tr");
-			    console.log("tr 개수 " + rows.length);	// tbody tr
 				
 			    // tr만큼 루프돌면서 컬럼값 접근
 			    for( var r=0; r < rows.length; r++ ){

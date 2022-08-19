@@ -20,8 +20,8 @@ public class MainDao {
 		return (ArrayList)sqlSession.selectList("mainMapper.noticeList");
 	}
 
-	public ArrayList<Visit> visitReserveList(SqlSessionTemplate sqlSession, int userNo) {
-		return (ArrayList)sqlSession.selectList("mainMapper.visitReserveList", userNo);
+	public ArrayList<Visit> visitReserveList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("mainMapper.visitReserveList");
 	}
 
 	public ArrayList<Reserve> reserveReserveList(SqlSessionTemplate sqlSession) {

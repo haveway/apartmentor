@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.kh.apartmentor.board.model.vo.Board;
 import com.kh.apartmentor.common.model.vo.Reserve;
 import com.kh.apartmentor.main.model.Service.MainService;
@@ -41,19 +39,15 @@ public class MainController {
 		m.addAttribute("nList", nList);
 		
 		// 달력 관련
+		ArrayList<Visit> visitList = mainService.visitReserveList();
 		ArrayList<Reserve> reserveList = mainService.reserveReserveList();
 		ArrayList<Notice> noticeList = mainService.noticeReserveList();
 		
+		m.addAttribute("visitList", visitList);
 		m.addAttribute("reserveList", reserveList);
 		m.addAttribute("noticeList", noticeList);
 
 		return "main";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="selectVisit.main", produces="application/json; charset=UTF-8")
-	public String ajaxSelectVisitReserve(int userNo) {
-		return new Gson().toJson( mainService.visitReserveList(userNo));
 	}
 
 }

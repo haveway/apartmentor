@@ -32,8 +32,8 @@ public class MainServiceImpl implements MainService{
 	
 	//유리
 	@Override
-	public ArrayList<Visit> visitReserveList(int userNo) {
-		return mainDao.visitReserveList(sqlSession, userNo);
+	public ArrayList<Visit> visitReserveList() {
+		return mainDao.visitReserveList(sqlSession);
 	}
 	@Override
 	public ArrayList<Reserve> reserveReserveList() {

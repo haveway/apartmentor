@@ -73,8 +73,7 @@
 				VISIT_VALUE,
 				VISIT_DATE,
 				VISIT_TIME,
-				APT_NO,
-				EMAIL
+				APT_NO
 		  FROM
 		  		VISIT
 		  JOIN
@@ -83,11 +82,10 @@
 		  		MEMBER USING(USER_NO)
 		 WHERE
 		 		VISIT_STATUS = 'Y'
-		   AND 
-		   		USER_NO = #{userNo}
 		 ORDER 
 		    BY	VISIT_TIME ASC
 	</select>
+	
 	
 	<select id="noticeReserveList" resultMap="noticeResultSet">
 		SELECT
