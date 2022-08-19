@@ -2,59 +2,101 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="visitCarMapper">
 
-	
-	<select id="selectVisitCar" resultType="_int">
-		SELECT COUNT(*) 
-		  FROM PARKING 
-		 WHERE CAR_NO = #{carNo}
+   <resultMap id="visitCarResultSet" type="parkingVisit">
+      <result column="CAR_NO" property="carNo" />
+      <result column="VISITCAR_PHONE" property="visitCarPhone" />
+      <result column="VISITCAR_DATE" property="visitCarDate" />
+      <result column="PURPOSE" property="purpose" />
+      <result column="STATUS" property="status" />
+      <result column="USER_NO" property="userNo" />
+      <result column="APT_NO" property="aptNo"/>
+   </resultMap>
+   
+   
+   <select id="selectVisitCar" resultType="_int">
+      SELECT COUNT(*) 
+        FROM PARKING_VISIT 
+       WHERE CAR_NO = #{carNo}
+   </select>
+
+   <insert id="enrollVisitCar" parameterType="parkingVisit">
+      INSERT
+        INTO
+              PARKING_VISIT
+              (
+              VISITCAR_NO,
+              CAR_NO,
+              VISITCAR_PHONE,
+              VISITCAR_DATE,
+              PURPOSE,
+              STATUS,
+              USER_NO
+              )
+      VALUES
+            (
+            SEQ_VCNO.NEXTVAL,
+            #{carNo},
+            #{visitCarPhone},
+            #{visitCarDate},
+            #{purpose},
+            'W',
+            #{userNo}
+            )
+   </insert>
+   
+   <update id="updateVisitCar" parameterType="parkingVisit">
+      UPDATE 
+            PARKING_VISIT
+           SET 
+               VISITCAR_PHONE = #{visitCarPhone},
+               STATUS = 'W',
+               VISITCAR_DATE = #{visitCarDate},
+               PURPOSE = #{purpose},
+               USER_NO = #{userNo}
+       WHERE 
+             CAR_NO = #{carNo}
+   </update>
+   
+   <update id="setDayVisitCar">
+      UPDATE PARKING_VISIT
+           SET STATUS = CASE
+           WHEN VISITCAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+           THEN 'Y'
+ <![CDATA[WHEN VISITCAR_DATE > TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+           THEN 'W'
+           ELSE 'N'
+          END
+   </update>
+   
+   	<select id="selectVisitCarList" resultMap="visitCarResultSet">
+      SELECT VISITCAR_NO, CAR_NO, VISITCAR_PHONE, TO_CHAR(VISITCAR_DATE, 'YYYY-MM-DD') AS VISITCAR_DATE, PURPOSE, P.STATUS, APT_NO, P.USER_NO
+      FROM PARKING_VISIT P, MEMBER M
+      WHERE P.USER_NO = M.USER_NO
+      AND M.APT_NO = #{aptNo}
+      AND P.STATUS IN('Y','W')
+      ORDER BY VISITCAR_DATE ASC
 	</select>
 
-	<insert id="enrollVisitCar" parameterType="parking">
-		INSERT
-		  INTO
-		  	   PARKING
-		  	   (
-		  	   CAR_NO,
-		  	   CAR_PHONE,
-		  	   STATUS,
-		  	   CAR_CATEGORY,
-		  	   CAR_DATE,
-		  	   CAR_PURPOSE,
-		  	   USER_NO
-		  	   )
-		VALUES
-				(
-				#{carNo},
-				#{carPhone},
-				'N',
-				#{carCategory},
-				#{carDate},
-				#{carPurpose},
-				#{userNo}
-				)
-	</insert>
-	
-	<update id="updateVisitCar" parameterType="parking">
-		UPDATE 
-			   PARKING
-  		   SET 
-  		       CAR_PHONE = #{carPhone},
-     	       STATUS = 'N',
-  	           CAR_CATEGORY = #{carCategory},
-  	           CAR_DATE = #{carDate},
-   		       CAR_PURPOSE = #{carPurpose},
-   		       USER_NO = #{userNo}
-		 WHERE 
-		       CAR_NO = #{carNo}
-	</update>
-	
-	<update id="setDayVisitCar">
-		UPDATE PARKING
-	  	   SET STATUS = CASE
-	   	  WHEN CAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-	   	  THEN 'Y'
-	   	  ELSE 'N'
-	       END
-	</update>
+   
+   <!-- ********************관리자 방문예약 ********************** -->
+   <select id="adminVisitCarListCount" resultType="_int">
+      SELECT COUNT(*)
+      FROM
+            PARKING_VISIT
+   </select>
+   
+   
+   <select id="adminVisitCarList" resultMap="visitCarResultSet">
+      SELECT VISITCAR_NO, CAR_NO, VISITCAR_PHONE, TO_CHAR(VISITCAR_DATE, 'YYYY-MM-DD') AS VISITCAR_DATE, PURPOSE, P.STATUS, APT_NO, P.USER_NO
+      FROM PARKING_VISIT P, MEMBER M
+      WHERE P.USER_NO = M.USER_NO
+      ORDER BY VISITCAR_DATE ASC
+   </select>
+
+   <delete id="deleteVisitCar" parameterType="parkingVisit">
+      DELETE 
+      FROM PARKING_VISIT
+      WHERE CAR_NO = #{carNo}
+   </delete>
 
 </mapper>

@@ -111,8 +111,15 @@
 	</form>	
 		<div style="margin-left: 150px; margin-top: 20px;">
 			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
-			<button type="button" class="btn btn-info" id="okBtn">승인</button>
-			<button type="button" class="btn btn-outline-info" id="noBtn">반려</button>&nbsp;&nbsp;&nbsp;
+		<c:choose>
+			<c:when test="${v.visitStatus eq 'C'}">
+				<button type="button" class="btn btn-info" id="cancelBtn">취소승인</button>
+			</c:when>
+			<c:otherwise>
+				<button type="button" class="btn btn-info" id="okBtn">예약승인</button>
+				<button type="button" class="btn btn-info" id="noBtn">예약취소</button>&nbsp;&nbsp;&nbsp;
+			</c:otherwise>
+		</c:choose>
 		</div>
 	
 	<script>
@@ -127,6 +134,12 @@
 			$('#noBtn').click(function(){
 				const form = $('#visitStatus');
 				form.attr('action', 'noReserve.visit');
+				form.submit();
+			})
+			
+			$('#cancelBtn').click(function(){
+				const form = $('#visitStatus');
+				form.attr('action', 'cancelReserve.visit');
 				form.submit();
 			})
 			

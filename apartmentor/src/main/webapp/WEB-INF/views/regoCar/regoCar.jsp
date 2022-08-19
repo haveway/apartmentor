@@ -15,11 +15,11 @@
 		margin-top: 30px;
     }
     
-    .regoCar-title{
+    .regoCar-title, .visitCar-List{
     	padding-left: 19em;
     }
      
-    .regoCar-title2{
+    .regoCar-title2, .regoCar-title3{
     	display : flex;
 		flex-direction: row;
     	padding-left: 19em;
@@ -86,20 +86,33 @@
 			</table>
 		</div>
 		
-
-
-
-
-
-
-
-
-
+		<br><br>
+		<div class="regoCar-title3">
+			<h2>방문차량현황</h2>
+		</div>
+		
+		<div style="margin:auto; width:700px;">
+			<table class="table table-hover" id="visitCar-List" align="center">
+				<thead>
+					<tr style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
+						<th>방문일</th>
+						<th>차량번호</th>
+						<th>연락처</th>
+						<th>방문목적</th>
+						<th>삭제</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
 
 
 		<script>
 	    	$(function(){
 	    		selectRegoCarList();
+	    		selectVisitCarList();
 	    	})
 		
 			// 차량등록
@@ -142,10 +155,10 @@
 				}
 			}
 			
-			// 등록된 차량리스트 
-			function selectRegoCarList(){
+			// 방문주차 차량리스트 
+			function selectVisitCarList(){
 	    		$.ajax({
-	    			url : 'selectRegoCarList.rg', 
+	    			url : 'selectVisitCarList.car', 
 	    			data : {
 	    				// aptNo로 주기 
 						aptNo : '${ loginUser.getAptNo() }'		
@@ -159,22 +172,16 @@
 	    				}
 	    				else{
 		    				for(let i = 0; i < list.length; i++){
-		    					if(list[i].status == 'W'){
-		    						list[i].status = '승인대기중';
-		    					}
-		    					if(list[i].status == 'Y'){
-		    						list[i].status = '승인완료';
-		    					}
 		    					value += '<tr style="width: 70px; height: 30px; text-align: center;">'
-		    						   + '<td>' + [i+1] + '</td>'
+		    						   + '<td>' + list[i].visitCarDate + '</td>'
 									   + '<td>' + list[i].carNo + '</td>'
-									   + '<td>' + list[i].carPhone + '</td>'
-									   + '<td>' + list[i].status + '</td>'
-		                		  	   + "<td>" + "<a class='regoCar-dlt-btn' align='center' style='width: 50px'>취소 요청</a>" + "</td>"
+									   + '<td>' + list[i].visitCarPhone + '</td>'
+									   + '<td>' + list[i].purpose + '</td>'
+		                		  	   + "<td>" + "<a class='visitCar-dlt-btn' align='center' style='width: 50px'>취소 요청</a>" + "</td>"
 									   + '</tr>'
 		    				}
 	    				}
-	    				$('#regoCar-List tbody').html(value);
+	    				$('#visitCar-List tbody').html(value);
 	    			},
 	    			error : function(){
  						swal({
@@ -222,6 +229,51 @@
 	        	}); 
 	        	
 	        });
+			
+			
+			// 이용자 방문차량리스트 
+			function selectRegoCarList(){
+	    		$.ajax({
+	    			url : 'selectRegoCarList.rg', 
+	    			data : {
+	    				// aptNo로 주기 
+						aptNo : '${ loginUser.getAptNo() }'		
+	    			},
+	    			success : function(list){
+	    				let value = '';
+	    				if(list.length == 0){
+	    					value += '<tr style="width: 70px; height: 30px; text-align: center;">'
+	    						   + '<td colspan="5">등록된 차량이 없습니다.</td>'
+								   + '</tr>'
+	    				}
+	    				else{
+		    				for(let i = 0; i < list.length; i++){
+		    					if(list[i].status == 'W'){
+		    						list[i].status = '승인대기중';
+		    					}
+		    					if(list[i].status == 'Y'){
+		    						list[i].status = '승인완료';
+		    					}
+		    					value += '<tr style="width: 70px; height: 30px; text-align: center;">'
+		    						   + '<td>' + [i+1] + '</td>'
+									   + '<td>' + list[i].carNo + '</td>'
+									   + '<td>' + list[i].carPhone + '</td>'
+									   + '<td>' + list[i].status + '</td>'
+		                		  	   + "<td>" + "<a class='regoCar-dlt-btn' align='center' style='width: 50px'>취소 요청</a>" + "</td>"
+									   + '</tr>'
+		    				}
+	    				}
+	    				$('#regoCar-List tbody').html(value);
+	    			},
+	    			error : function(){
+ 						swal({
+							title : "오류입니다. 관리자에게 문의하세요",
+						    	icon  : "error",
+						    	closeOnClickOutside : false
+						});
+	    			}
+	    		})
+	    	}
 			
 			
 		</script>

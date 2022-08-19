@@ -36,13 +36,25 @@ public interface VisitService {
 	// 카테고리 별 예약 리스트 조회
 	ArrayList<Visit> selectCategoryList(String category, PageInfo pi);
 	
+	// 상태 별 예약 조회
+	int selectStatusListCount(String statusCategory);
+	
+	// 상태 별 예약 리스트 조회
+	ArrayList<Visit> selectStatusList(String statusCategory, PageInfo pi);
+	
 	// 예약 상세 조회
-	Visit selectVisit(int visitVo);
+	Visit selectVisit(int visitNo);
 	
 	// 예약 승인
-	int okReserveStatus(int visitVo);
+	int okReserveStatus(int visitNo);
 	
 	// 예약 거절
-	int noReserveStatus(int visitVo);
+	int noReserveStatus(int visitNo);
+
+	// 예약 취소 신청
+	int cancelStatus(int visitNo);
+
+	// 예약 취소
+	int cancelReserveStatus(int vno);
 	
 }

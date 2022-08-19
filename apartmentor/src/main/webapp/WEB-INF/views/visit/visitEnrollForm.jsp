@@ -73,7 +73,7 @@ h1 {
 						<td>
 							<select name="visitCategory" id="category"
 								style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
-									<c:forEach var="c" items="${ visitCategory }">
+									<c:forEach var="c" items="${visitCategory}">
 										<option value="${c.visitCategory}">${c.visitValue}</option>
 									</c:forEach>
 							</select>
@@ -123,6 +123,8 @@ h1 {
 				    $("#text-contents.body-contents").html(data);
 				});
 				
+
+				
 				
 				
 				// datepicker 관련
@@ -158,6 +160,8 @@ h1 {
 					    dropdown: true, // 밑으로 보여지게
 					    scrollbar: true // 스크롤바
 					});
+					
+				
 				})
 				
 			</script>
@@ -251,6 +255,8 @@ h1 {
 			
 			
 			function check(){
+				
+               
 				$.ajax({
 					url : 'check.visit',
 					data : {
@@ -268,6 +274,8 @@ h1 {
 	 							    	closeOnClickOutside : false
 	 							})
 							} else {
+								
+								if(visitTime )
 								$("#submitBtn").attr("disabled", false);
 								swal({
  									title : "예약이 가능합니다.",
@@ -279,7 +287,8 @@ h1 {
 					error : function(){
 						console.log("예약 가능 조회 실패");
 					}
-				});		
+				});	
+			
 						
 			}
 			

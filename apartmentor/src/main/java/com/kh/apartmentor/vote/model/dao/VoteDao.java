@@ -79,4 +79,8 @@ public class VoteDao {
 		return (ArrayList)sqlSession.selectList("voteMapper.selectVoteItem", vno);
 	}
 
+	public int submitVote(SqlSessionTemplate sqlSession, VoteItem vi) {
+		return sqlSession.insert("voteMapper.submitVote", vi);
+	}
+
 }

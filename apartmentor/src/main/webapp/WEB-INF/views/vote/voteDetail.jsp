@@ -23,6 +23,9 @@
     <br>
     <br>
     <div class="wrap">
+        <input type="hidden" name="userNo" id="userNo" value="${loginUser.userNo}">
+        <input type="hidden" name="voteNo" id="voteNo" value="${v.voteNo}">
+        
             <div style="margin-left:300px;">
                 <h3>Q. ${v.voteTitle}</h3> 
             </div>
@@ -53,7 +56,7 @@
                 </table>
                 <br>
                 <div style="margin-left:200px;">
-                    <button type="submit" onclick="">투표하기</button>
+                    <button type="submit" onclick="submitVote();">투표하기</button>
                 </div>
          </div>
           
@@ -61,9 +64,19 @@
 
     </div>
     <script>
-    $("input[name='checkItem']:checked").each(function(){	
-	    console.log($(this).val())
-    });
+        function submitVote(){
+
+            $("input[name='checkItem']:checked").each(function(){	
+	          var itemNo = $(this).val();
+              var userNo = $('#userNo').val();
+              var voteNo = $('#voteNo').val();
+
+              location.href = "submit.vote?itemNo=" + itemNo + "&userNo=" + userNo + "&voteNo=" + voteNo 
+
+            });
+            
+        }
+   
 
     </script>
 

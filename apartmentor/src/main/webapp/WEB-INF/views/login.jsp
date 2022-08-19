@@ -6,11 +6,11 @@
 <head>
     <meta charset="UTF-8">
     
-    <!-- JavaScript -->
+	<!-- JavaScript -->
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	
 	<!-- CSS -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<!-- Default theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme -->
@@ -22,9 +22,20 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
+        @font-face {
+		    font-family: 'InfinitySans-RegularA1';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		div{
+            /*  border: 1px solid red;  */
+            font-family: 'InfinitySans-RegularA1';
+            
+        }
         .loginWrap{
             display: flex;
             flex-direction: column;
@@ -225,7 +236,7 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember" class="btn submit" disabled>가입신청</button>
+                        <button type="submit" id="insertMember" class="btn submit" disabled >가입신청</button>
                     </div>
                 </form>
             </div>
@@ -339,12 +350,22 @@
 	   
 	/* 회원 가입 */
 	
+	var I1;
+	var I2;
+	var I3;
+	var I4;
+	var I5;
+	var I6;
+	var I7;
+	var I8;
+	var I9;
 	/* 중복체크,유효성검사  */
 	function checkId() {
 		let p1 = $('#p1');
 		let addId = $('#addId').val();
 		$.ajax({
 			url : 'checkId.me',
+			async: false,
 			data : {
 				userId : addId
 			},
@@ -352,19 +373,26 @@
 				if(result == 0){
 					p1.attr('style','color:red;');
 					p1.text('중복되는 아이디입니다');
-					$('#insertMember').attr('disabled',true);
+					I1 = 'n';
+					chkbtn();
+					return; 
 				}
 				else {
 					 let regExpId = /^\w{4,8}$/;
 					 if(!regExpId.test(addId)){ // 조건에 안맞음
 						 p1.attr('style','color:red;');
 						 p1.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
-						 $('#insertMember').attr('disabled',true);
+						 I1 = 'n';
+							chkbtn();
+							return; 
 					 } 
 					 else { //조건맞음
 						p1.attr('style','color:#32CD32;');
 						p1.text('멋진 아이디네요!');
-						$('#insertMember').attr('disabled',false);
+						
+						I1 = 'y';
+						chkbtn();
+						return; 
 					 }
 				}
 			},
@@ -382,12 +410,16 @@
 		if(!regExpPwd.test(addPwd)){
 			 p2.attr('style','color:red;');
 			 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
-			 $('#insertMember').attr('disabled',true);
+			 I2 = 'n';
+				chkbtn();
+				return; 
 		}
 		else {
 			p2.attr('style','color:#32CD32;');
 			p2.text('사용가능한 비밀번호 입니다.')
-			$('#insertMember').attr('disabled',false);
+			I2 = 'y';
+			chkbtn();
+			return; 
 		}
 	}
 	
@@ -399,12 +431,16 @@
 		if(addPwd != rePwd1){
 			p3.attr('style','color:red;');
 			p3.text('비밀번호를 일치하게 입력해주세요.')
-			$('#insertMember').attr('disabled',true);
+			I3 = 'n';
+			chkbtn();
+			return; 
 		}
 		else {
 			p3.attr('style','color:#32CD32;');
 			p3.text('비밀번호가 일치합니다.')
-			$('#insertMember').attr('disabled',false);
+			I3 = 'y';
+			chkbtn();
+			return; 
 		} 
 	}
  	
@@ -416,12 +452,16 @@
 		if(!regExpName.test(addName)){
 			p4.attr('style','color:red;');
 			p4.text('올바른 형식의 이름을 입력하세요.(한글만 입력 가능)')
-			$('#insertMember').attr('disabled',true);
+			I4 = 'n';
+			chkbtn();
+			return; 
 		}
 		else {
 			p4.attr('style','color:#32CD32;');
 			p4.text('멋진 이름이네요!');	 
-			$('#insertMember').attr('disabled',false);
+			I4 = 'y';
+			chkbtn();
+			return; 
 		}
 	}
  	
@@ -433,11 +473,15 @@
  		if (!regExpBirth.test(addBirthday)) {
  			p5.attr('style','color:red;');
 			p5.text('6자리 숫자로 입력하세요.')
-			$('#insertMember').attr('disabled',true);
+			I5 = 'n';
+			chkbtn();
+			return; 
 		} else {
 			p5.attr('style','color:#32CD32;');
 			p5.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			I5 = 'y';
+			chkbtn();
+			return; 
 		}
 	}
  	
@@ -449,12 +493,16 @@
  		if(!regExpPhone.test(addPhone)){
  			p6.attr('style','color:red;');
 			p6.text('-을 제외한 11자리 숫자로 입력하세요.')
-			$('#insertMember').attr('disabled',true);
+			I6 = 'n';
+			chkbtn();
+			return; 
 		} 
  		else {
 			p6.attr('style','color:#32CD32;');
 			p6.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			I6 = 'y';
+			chkbtn();
+			return; 
 		}
 	}
  	
@@ -467,12 +515,16 @@
  		if(!regExpEmail.test(addEmail)){
  			p7.attr('style','color:red;');
 			p7.text('올바른 형식의 이메일이 아닙니다.')
-			$('#insertMember').attr('disabled',true);
+			I8 = 'n';
+			chkbtn();
+			return; 
 		} 
  		else {
 			p7.attr('style','color:#32CD32;');
 			p7.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			I7 = 'y';
+			chkbtn();
+			return; 
 		}
 	}
  	
@@ -484,12 +536,16 @@
  		if(!regExpAptNo.test(addAptNo1)){
  			p8.attr('style','color:red;');
 			p8.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
-			$('#insertMember').attr('disabled',true);
+			I8 = 'n';
+			chkbtn();
+			return; 
 		} 
  		else {
 			p8.attr('style','color:#32CD32;');
 			p8.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			I8 = 'y';
+			chkbtn();
+			return; 
 		}
 	}
  	function checkAptNo2() {
@@ -499,13 +555,29 @@
  		if(!regExpAptNo.test(addAptNo2)){
  			p8.attr('style','color:red;');
 			p8.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
-			$('#insertMember').attr('disabled',true);
+			I9 = 'n';
+			chkbtn();
+			return;
 		} 
  		else {
 			p8.attr('style','color:#32CD32;');
 			p8.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			I9 = 'y';
+			chkbtn();
+			return;
+			
 		}
+	}
+ 	
+ 	
+ 	function chkbtn() {
+ 		var success = "";
+ 		success = I1 + I2 + I3 + I4 + I5 + I6 + I7 + I8 + I9;
+ 		if( success == 'yyyyyyyyy'){
+ 			$('#insertMember').attr('disabled',false);
+ 		}else{
+ 			$('#insertMember').attr('disabled',true);
+ 		}
 	}
  	
  	
@@ -570,7 +642,7 @@
  		
  		if (!regExpAptNo.test(aptNo1Id)) {
  			p141.attr('style','color:red;');
- 			p141.text('숫자만 입력해 주세요.')
+ 			p141.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
 			$('#selectId').attr('disabled',true);
 		} else {
 			p141.attr('style','color:#32CD32;');
@@ -587,7 +659,7 @@
  		
  		if (!regExpAptNo.test(aptNo2Id)) {
  			p142.attr('style','color:red;');
- 			p142.text('숫자만 입력해 주세요.')
+ 			p142.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
 			$('#selectId').attr('disabled',true);
 		} else {
 			p142.attr('style','color:#32CD32;');
@@ -612,7 +684,8 @@
     				swal('오류', '일치하는 정보가 없습니다', 'warning');    	
     			} 
     			else { 
-    				swal('성공!', '회원님의 아이디는 ' + result.userId + ' 입니다.', 'success');    	
+    				swal('성공!', '회원님의 아이디는 ' + result.userId + ' 입니다.', 'success'); 
+
     			}	
     		},
 			error:function(){
@@ -646,12 +719,12 @@
     						  + '<div class="modal-body" id="pwdBody">'
     						  + '<b>' + '비밀번호' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="text" id="updatePwd1" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
+    						  + '<input type="password" id="updatePwd1" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
     						  + '</div>'
     						  + '<p id="p9">' + '6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.' + '</p>'
     						  + '<b>' + '비밀번호 확인' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="text" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2()" required>'
+    						  + '<input type="password" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2()" required>'
     						  + '</div>'
     						  + '<p id="p10">' + '비밀번호를 일치하게 입력해주세요.' + '</p>'
     						  + '</div>'

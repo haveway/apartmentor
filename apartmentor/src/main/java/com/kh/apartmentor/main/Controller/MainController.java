@@ -46,7 +46,6 @@ public class MainController {
 		m.addAttribute("visitList", visitList);
 		m.addAttribute("reserveList", reserveList);
 		m.addAttribute("noticeList", noticeList);
-		//
 
 		return "main";
 	}
