@@ -297,7 +297,7 @@
 			<div class="seat-area-R">
 				<table id="seatTable2" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="109" end="114">
-						<tr><td id=${ i }><div class="tdDiv"><br>${ i }</div></td></tr>
+						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
 						<c:forEach var="s" items="${ list }">
 							<script>markSeat();</script>
 						</c:forEach>
@@ -308,7 +308,7 @@
 			<div class="seat-area-L" style="padding-top: 70px; padding-bottom: 70px">
 				<table id="seatTable3" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="115" end="120">
-						<tr><td id=${ i }><div class="tdDiv"><br>${ i }</div></td></tr>
+						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
 						<c:forEach var="s" items="${ list }">
 							<script>markSeat();</script>
 						</c:forEach>
@@ -319,7 +319,7 @@
 			<div class="seat-area-R">
 				<table id="seatTable4" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="121" end="126">
-						<tr><td id=${ i }><div class="tdDiv"><br>${ i }</div></td></tr>
+						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
 						<c:forEach var="s" items="${ list }">
 							<script>markSeat();</script>
 						</c:forEach>
@@ -330,7 +330,7 @@
 			<div class="seat-area-L" style="padding-top: 70px; padding-bottom: 70px;">
 				<table id="seatTable5" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="127" end="132">
-						<tr><td id=${ i }><div class="tdDiv"><br>${ i }</div></td></tr>
+						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
 						<c:forEach var="s" items="${ list }">
 							<script>markSeat();</script>
 						</c:forEach>
