@@ -1,6 +1,4 @@
-package com.kh.apartmentor.parking.model.vo;
-
-import java.sql.Date;
+package com.kh.apartmentor.parkingVisit.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,13 +11,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Parking {
-	
+public class ParkingVisit {
+	private String visitCarNo;
 	private String carNo;
-	private String carPhone;
+	private String visitCarPhone;
+	private String visitCarDate;
+	private String purpose;
 	private String status;
-	private String createDate;
 	private int userNo;
 	private String aptNo;
-
+	
 }

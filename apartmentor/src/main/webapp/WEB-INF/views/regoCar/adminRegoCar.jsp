@@ -46,7 +46,7 @@
 		
 		<div class="cate-div">
 			<h4><a href="adminRegoCar.rg?currentPage=1&category=ALL"><u>입주민 주차등록 현황</u></a></h4>
-			<h4><a href="#" style="color: black">방문차량 등록 현황</a></h4>
+			<h4><a href="adminVisitCar.car" style="color: black">방문차량 등록 현황</a></h4>
 		</div>
 		
 		<br><br><br>
@@ -60,7 +60,6 @@
 		<table class="table table-hover" id="regoCar-List" align="center">
 			<thead>
 				<tr style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
-					<th>No.</th>
 					<th>동/호수</th>
 					<th>차량번호</th>
 					<th>연락처</th>
@@ -71,7 +70,6 @@
 			<tbody>
 				<c:forEach var="s" items="${list}" varStatus="status">
                      <tr style="width: 70px; height: 30px; text-align: center;">
-                        <td>${status.count }</td>
                         <td>${s.aptNo }</td>
                         <td>${s.carNo }</td>
                         <td>${s.carPhone }</td>
@@ -113,7 +111,7 @@
 	    	 $.ajax({
 	    		url : "appRegoCar.rg",
 	    		data : {
-	    			carNo : $(this).parents("tr").find("td:eq(2)").text()
+	    			carNo : $(this).parents("tr").find("td:eq(1)").text()
 	    		},
 	    		type : "post",
 	    		success : function(result){
@@ -143,11 +141,10 @@
 		// 차량 등록 취소
 	    $(document).on("click",".regoCar-dlt-btn", function deleteRegoCar(){
 	    	
-	    	//console.log($(this).parents("tr").find("td:eq(1)").text());
 	    	 $.ajax({
 	    		url : "deleteRegoCar.rg",
 	    		data : {
-	    			carNo : $(this).parents("tr").find("td:eq(2)").text()
+	    			carNo : $(this).parents("tr").find("td:eq(1)").text()
 	    		},
 	    		type : "post",
 	    		success : function(result){
@@ -240,7 +237,7 @@
 
 	<br><br><br>
 	</div>
-
+	<jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>

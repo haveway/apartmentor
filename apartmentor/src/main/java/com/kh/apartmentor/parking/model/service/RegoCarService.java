@@ -35,9 +35,7 @@ public class RegoCarService {
 	
 	//-------------- 관리자 -----------------------
 	public int adminRegoCarListCount(String category) {
-		int result = regoCarDao.adminRegoCarListCount(sqlSession, category);
-		System.out.println(result);
-		return result;
+		return regoCarDao.adminRegoCarListCount(sqlSession, category);
 	}
 	
 	public ArrayList<Parking> adminRegoCarList(String category, PageInfo pi){

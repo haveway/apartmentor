@@ -6,23 +6,20 @@
 		<result column="CAR_NO" property="carNo" />
 		<result column="CAR_PHONE" property="carPhone" />
 		<result column="STATUS" property="status" />
-		<result column="CAR_CATEGORY" property="carCategory" />
 		<result column="CAR_DATE" property="carDate" />
 		<result column="USER_NO" property="userNo" />
-		<result column="CAR_PURPOSE" property="carPurpose" />
 		<result column="APT_NO" property="aptNo"/>
 	</resultMap>
 	
 	<insert id="insertRegoCar" parameterType="parking">
 		INSERT INTO PARKING
-		VALUES (#{carNo}, #{carPhone}, 'W', 1, SYSDATE, #{userNo}, NULL)
+		VALUES (#{carNo}, #{carPhone}, 'W', SYSDATE, #{userNo})
 	</insert>
 
 	<select id="selectRegoCarList" resultMap="regoCarResultSet">
-		SELECT CAR_NO, CAR_PHONE, P.STATUS, CAR_CATEGORY, P.USER_NO, APT_NO
+		SELECT CAR_NO, CAR_PHONE, P.STATUS, P.USER_NO, APT_NO
 		FROM PARKING P, MEMBER M
         WHERE P.USER_NO = M.USER_NO
-		AND CAR_CATEGORY = 1
 		AND M.APT_NO = #{aptNo}
 	</select>
 
@@ -31,6 +28,7 @@
 		FROM PARKING
 		WHERE CAR_NO = #{carNo}
 	</delete>
+	
 
 	
 	<!-- ****************관리자 주차 등록******************* -->
@@ -39,37 +37,35 @@
 		SELECT COUNT(*)
 		FROM
 				PARKING
-		WHERE	
-				CAR_CATEGORY = 1
+		
 		<if test="category == 'ALL'">
 
 		</if>
 		<if test="category == 'WW'">
-			AND
+			WHERE
 					STATUS = 'W'
 		</if>
 		<if test="category == 'YY'">
-			AND
+			WHERE
 					STATUS = 'Y'
 		</if>
 	</select>
 	
 	
 	<select id="adminRegoCarList" resultMap="regoCarResultSet">
-		SELECT CAR_NO, CAR_PHONE, R.STATUS, CAR_CATEGORY, APT_NO, R.USER_NO
-		FROM PARKING R, MEMBER M
-		WHERE R.USER_NO = M.USER_NO
-		AND CAR_CATEGORY = 1
+		SELECT CAR_NO, CAR_PHONE, P.STATUS, APT_NO, P.USER_NO
+		FROM PARKING P, MEMBER M
+		WHERE P.USER_NO = M.USER_NO
 		<if test="category == 'ALL'">
 			
 		</if>
 		<if test="category == 'WW'">		
-			AND R.STATUS = 'W'
+			AND P.STATUS = 'W'
 		</if>
 		<if test="category == 'YY'">
-			AND R.STATUS = 'Y'
+			AND P.STATUS = 'Y'
 		</if>
-		ORDER BY CAR_DATE DESC
+		ORDER BY CREATE_DATE DESC
 	</select>
 		
 	<update id="appRegoCar" parameterType="parking">
