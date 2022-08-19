@@ -47,6 +47,9 @@ public class MainController {
 		m.addAttribute("reserveList", reserveList);
 		m.addAttribute("noticeList", noticeList);
 		//
+<<<<<<< HEAD
+>>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
+=======
 >>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
 
 		return "main";

@@ -67,5 +67,8 @@ public class VoteDao {
 		return (ArrayList)sqlSession.selectList("voteMapper.selectVoteItem", vno);
 	}
 
+<<<<<<< HEAD
+>>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
+=======
 >>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
 }
