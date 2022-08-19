@@ -15,8 +15,6 @@ public interface VisitCarService {
 
 	int selectVisitCar(ParkingVisit p);
 
-	int updateVisitCar(ParkingVisit p);
-	
 	ArrayList<Parking> selectVisitCarList(String aptNo);
 	
 	// ------------관리자 방문차량-------------------
@@ -24,5 +22,5 @@ public interface VisitCarService {
 	
 	ArrayList<Parking> adminVisitCarList(PageInfo pi);
 	
-	int deleteVisitCar(String carNo);
+	int deleteVisitCar(ParkingVisit p);
 }

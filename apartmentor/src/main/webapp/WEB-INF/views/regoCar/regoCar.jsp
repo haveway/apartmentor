@@ -33,7 +33,7 @@
 		padding-left: 3em;
 	}
 	
-	.regoCar-dlt-btn{
+	.regoCar-dlt-btn, .visitCar-dlt-btn{
 		cursor: pointer;
 	}
     
@@ -154,6 +154,78 @@
 					})
 				}
 			}
+	    	
+	    	// 방문차량 취소
+	        $(document).on("click",".regoCar-dlt-btn", function deleteRegoCar(){
+	        	
+	        	//console.log($(this).parents("tr").find("td:eq(1)").text());
+	        	 $.ajax({
+	        		url : "deleteRegoCar.rg",
+	        		data : {
+	        			carNo : $(this).parents("tr").find("td:eq(1)").text()
+	        		},
+	        		type : "post",
+	        		success : function(result){
+	        			
+ 	        			// result값에 따라서 성공했으면 성공메시지 띄우기
+	        			if(result > 0 ){
+	 						swal({
+								title : "등록취소가 완료 되었습니다.",
+								text : "차량 등록을 삭제했습니다.",
+							    	icon  : "success",
+							    	closeOnClickOutside : false
+							}).then(function(){
+									selectRegoCarList();
+								});
+	        			} 
+	        			
+	        		},
+	        		error : function(){
+ 						swal({
+							title : "오류입니다. 관리자에게 문의하세요",
+						    	icon  : "error",
+						    	closeOnClickOutside : false
+						});
+	        		}
+	        	}); 
+	        	
+	        });
+			
+			// 차량 등록 취소
+	        $(document).on("click",".visitCar-dlt-btn", function deleteVisitCar(){
+	        	
+	        	 $.ajax({
+	        		url : "deleteVisitCar.car",
+	        		data : {
+	        			visitCarDate : $(this).parents("tr").find("td:eq(0)").text(),
+	        			carNo : $(this).parents("tr").find("td:eq(1)").text()
+	        		},
+	        		type : "post",
+	        		success : function(result){
+	        			
+ 	        			// result값에 따라서 성공했으면 성공메시지 띄우기
+	        			if(result > 0 ){
+	 						swal({
+								title : "방문차량 취소가 완료 되었습니다.",
+								text : "방문차량 등록을 삭제했습니다.",
+							    	icon  : "success",
+							    	closeOnClickOutside : false
+							}).then(function(){
+									selectVisitCarList();
+								});
+	        			} 
+	        			
+	        		},
+	        		error : function(){
+ 						swal({
+							title : "오류입니다. 관리자에게 문의하세요",
+						    	icon  : "error",
+						    	closeOnClickOutside : false
+						});
+	        		}
+	        	}); 
+	        	
+	        });
 			
 			// 방문주차 차량리스트 
 			function selectVisitCarList(){
@@ -192,44 +264,6 @@
 	    			}
 	    		})
 	    	} 
-			
-			
-			// 차량 등록 취소
-	        $(document).on("click",".regoCar-dlt-btn", function deleteRegoCar(){
-	        	
-	        	//console.log($(this).parents("tr").find("td:eq(1)").text());
-	        	 $.ajax({
-	        		url : "deleteRegoCar.rg",
-	        		data : {
-	        			carNo : $(this).parents("tr").find("td:eq(1)").text()
-	        		},
-	        		type : "post",
-	        		success : function(result){
-	        			
- 	        			// result값에 따라서 성공했으면 성공메시지 띄우기
-	        			if(result > 0 ){
-	 						swal({
-								title : "등록취소가 완료 되었습니다.",
-								text : "차량 등록을 삭제했습니다.",
-							    	icon  : "success",
-							    	closeOnClickOutside : false
-							}).then(function(){
-									selectRegoCarList();
-								});
-	        			} 
-	        			
-	        		},
-	        		error : function(){
- 						swal({
-							title : "오류입니다. 관리자에게 문의하세요",
-						    	icon  : "error",
-						    	closeOnClickOutside : false
-						});
-	        		}
-	        	}); 
-	        	
-	        });
-			
 			
 			// 이용자 방문차량리스트 
 			function selectRegoCarList(){

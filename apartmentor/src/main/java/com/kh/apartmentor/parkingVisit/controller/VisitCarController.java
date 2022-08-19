@@ -26,22 +26,21 @@ public class VisitCarController {
 	@ResponseBody
 	@RequestMapping("visit.car")
 	public ModelAndView SelectVisitCar(ParkingVisit p, ModelAndView mv, HttpSession session) {
-		System.out.println(p);
 		int selectResult = visitCarService.selectVisitCar(p);
-		int enrollResult;
 		
 		if(selectResult > 0) {
-			enrollResult = updateVisitCar(p);
-		} else {
-			enrollResult = enrollVisitCar(p);
-		}
-		
-		if(enrollResult > 0) {
-			session.setAttribute("alertMsg2", "방문차량  등록완료"); 
+			session.setAttribute("alertMsg1", "동일한 차량은 하루에 한번만 등록하셔도 됩니다!");
 			mv.setViewName("main");
 		} else {
-			session.setAttribute("alertMsg1", "방문차량 등록실패. 관리자에게 문의해주세요.");
-			mv.setViewName("main");
+			int enrollResult = enrollVisitCar(p);
+			
+			if(enrollResult > 0) {
+				session.setAttribute("alertMsg2", "방문차량  등록완료"); 
+				mv.setViewName("main");
+			} else {
+				session.setAttribute("alertMsg1", "방문차량 등록실패. 관리자에게 문의해주세요.");
+				mv.setViewName("main");
+			}
 		}
 		
 		return mv;
@@ -52,23 +51,11 @@ public class VisitCarController {
 		setDayVisitCar();
 		
 		return result;
-		
 	}
 
-	public int updateVisitCar(ParkingVisit p) {
-		
-		int result = visitCarService.updateVisitCar(p);
-		setDayVisitCar();
-		
-		return result;
-	}
-	
 	@Scheduled(cron="1 00 00 * * ?")
 	public void setDayVisitCar() {
-
 		int result = visitCarService.setDayVisitCar();
-		
-		System.out.println("방문차량 업데이트 결과 :" + result + "대의 차량을 업데이트 하였습니다.");
 	}
 	
 	@ResponseBody
@@ -96,8 +83,8 @@ public class VisitCarController {
 	// 방문차량 삭제 
 	@ResponseBody
 	@RequestMapping(value="deleteVisitCar.car", produces="application/json; charset=UTF-8")
-	public String deleteRegoCar(String carNo) {
-		return new Gson().toJson(visitCarService.deleteVisitCar(carNo));
+	public String deleteRegoCar(ParkingVisit p) {
+		return new Gson().toJson(visitCarService.deleteVisitCar(p));
 	}
 	
 	

@@ -25,10 +25,6 @@ public class VisitCarDao {
 		return sqlSession.selectOne("visitCarMapper.selectVisitCar", p);
 	}
 
-	public int updateVisitCar(SqlSessionTemplate sqlSession, ParkingVisit p) {
-		return sqlSession.update("visitCarMapper.updateVisitCar", p);
-	}
-
 	public ArrayList<Parking> selectVisitCarList(SqlSessionTemplate sqlSession, String aptNo){
 		return (ArrayList)sqlSession.selectList("visitCarMapper.selectVisitCarList", aptNo);
 	}
@@ -50,8 +46,8 @@ public class VisitCarDao {
 		return (ArrayList)sqlSession.selectList("visitCarMapper.adminVisitCarList",null, rowBounds);
 	}
 	
-	public int deleteVisitCar(SqlSessionTemplate sqlSession, String carNo){
-		return sqlSession.delete("visitCarMapper.deleteVisitCar", carNo);
+	public int deleteVisitCar(SqlSessionTemplate sqlSession, ParkingVisit p){
+		return sqlSession.delete("visitCarMapper.deleteVisitCar", p);
 	}
 	
 	

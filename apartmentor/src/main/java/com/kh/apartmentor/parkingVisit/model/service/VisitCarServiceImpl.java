@@ -26,24 +26,16 @@ public class VisitCarServiceImpl implements VisitCarService {
 		return visitCarDao.enrollVisitCar(sqlSession, p);
 	}
 
-
 	@Override
 	public int setDayVisitCar() {
 		return visitCarDao.setDayVisitCar(sqlSession);
 	}
-
 
 	@Override
 	public int selectVisitCar(ParkingVisit p) {
 		return visitCarDao.selectVisitCar(sqlSession, p);
 	}
 
-
-	@Override
-	public int updateVisitCar(ParkingVisit p) {
-		return visitCarDao.updateVisitCar(sqlSession, p);
-	}
-	
 	@Override
 	public ArrayList<Parking> selectVisitCarList(String aptNo){
 		 return visitCarDao.selectVisitCarList(sqlSession, aptNo);
@@ -63,8 +55,8 @@ public class VisitCarServiceImpl implements VisitCarService {
 	}
 	
 	@Override
-	public int deleteVisitCar(String carNo){
-		return visitCarDao.deleteVisitCar(sqlSession, carNo);
+	public int deleteVisitCar(ParkingVisit p){
+		return visitCarDao.deleteVisitCar(sqlSession, p);
 	}
 	
 	

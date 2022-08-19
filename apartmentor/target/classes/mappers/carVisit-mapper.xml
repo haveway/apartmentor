@@ -17,6 +17,7 @@
       SELECT COUNT(*) 
         FROM PARKING_VISIT 
        WHERE CAR_NO = #{carNo}
+       AND visitcar_date = #{visitCarDate}
    </select>
 
    <insert id="enrollVisitCar" parameterType="parkingVisit">
@@ -43,19 +44,6 @@
             #{userNo}
             )
    </insert>
-   
-   <update id="updateVisitCar" parameterType="parkingVisit">
-      UPDATE 
-            PARKING_VISIT
-           SET 
-               VISITCAR_PHONE = #{visitCarPhone},
-               STATUS = 'W',
-               VISITCAR_DATE = #{visitCarDate},
-               PURPOSE = #{purpose},
-               USER_NO = #{userNo}
-       WHERE 
-             CAR_NO = #{carNo}
-   </update>
    
    <update id="setDayVisitCar">
       UPDATE PARKING_VISIT
@@ -97,6 +85,7 @@
       DELETE 
       FROM PARKING_VISIT
       WHERE CAR_NO = #{carNo}
+      AND VISITCAR_DATE = #{visitCarDate}
    </delete>
 
 </mapper>

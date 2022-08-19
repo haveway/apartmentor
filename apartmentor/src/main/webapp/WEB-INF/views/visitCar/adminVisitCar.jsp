@@ -88,6 +88,7 @@
 		    	$.ajax({
 		    		url : "deleteVisitCar.car",
 		    		data : {
+		    			visitCarDate : $(this).parents("tr").find("td:eq(4)").text(),
 		    			carNo : $(this).parents("tr").find("td:eq(1)").text()
 		    		},
 		    		type : "post",
