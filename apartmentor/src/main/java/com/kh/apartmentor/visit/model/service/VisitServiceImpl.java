@@ -26,8 +26,8 @@ public class VisitServiceImpl implements VisitService {
 	}
 
 	@Override
-	public ArrayList<Visit> selectVisitReserve(int vno) {
-		return visitDao.selectVisitReserve(sqlSession, vno);
+	public ArrayList<Visit> selectVisitReserve(int nno) {
+		return visitDao.selectVisitReserve(sqlSession, nno);
 	}
 
 	@Override
@@ -64,20 +64,41 @@ public class VisitServiceImpl implements VisitService {
 	public ArrayList<Visit> selectCategoryList(String category, PageInfo pi) {
 		return visitDao.selectCategoryList(sqlSession, category, pi);
 	}
-
+	
 	@Override
-	public Visit selectVisit(int visitVo) {
-		return visitDao.selectVisit(sqlSession, visitVo);
+	public int selectStatusListCount(String statusCategory) {
+		return visitDao.selectStatusListCount(sqlSession, statusCategory);
 	}
 
 	@Override
-	public int okReserveStatus(int visitVo) {
-		return visitDao.okReserveStatus(sqlSession, visitVo);
+	public ArrayList<Visit> selectStatusList(String statusCategory, PageInfo pi) {
+		return visitDao.selectStatusList(sqlSession, statusCategory, pi);
+	}
+
+
+	@Override
+	public Visit selectVisit(int visitNo) {
+		return visitDao.selectVisit(sqlSession, visitNo);
 	}
 
 	@Override
-	public int noReserveStatus(int visitVo) {
-		return visitDao.noReserveStatus(sqlSession, visitVo);
+	public int okReserveStatus(int visitNo) {
+		return visitDao.okReserveStatus(sqlSession, visitNo);
+	}
+
+	@Override
+	public int noReserveStatus(int visitNo) {
+		return visitDao.noReserveStatus(sqlSession, visitNo);
+	}
+
+	@Override
+	public int cancelStatus(int visitNo) {
+		return visitDao.cancelStatus(sqlSession, visitNo);
+	}
+
+	@Override
+	public int cancelReserveStatus(int visitNo) {
+		return visitDao.cancelReserveStatus(sqlSession, visitNo);
 	}
 
 

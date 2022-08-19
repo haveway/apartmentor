@@ -94,7 +94,15 @@ h1 {
 					</select>
 				</th>
 				<th>동·호수</th>
-				<th>예약 상태</th>
+				<th>
+					<select name="statusCategory" id="statusCategory" style="width: 100px; height: 30px; text-align: center; font-weight: bolder;">
+						<option value="전체">예약 전체</option>
+						<option value="대기">예약 대기</option>
+						<option value="취소대기">취소 대기</option>
+						<option value="승인">예약 승인</option>
+						<option value="취소">예약 취소</option>
+					</select>
+				</th>
 				<th>신청일</th>
 				</tr>
 		</thead>
@@ -117,14 +125,6 @@ h1 {
 		</tbody>
 	</table>
 	
-	<c:if test="${not empty category}">
-		<script>
-			$(function(){
-				$("#visitList option[value=${category}]").attr("selected", true);  
-			})
-	    </script>
-	</c:if>
-	
 	<script>
 		$(function(){
 			$('#visitCategory').change(function(){
@@ -133,6 +133,31 @@ h1 {
 			})
 		})
 	</script>
+	
+	<c:if test="${not empty category}">
+		<script>
+			$(function(){
+				$("#visitList option[value=${category}]").attr("selected", true);  
+			})
+	    </script>
+	</c:if>
+	
+	
+	<script>
+		$(function(){
+			$('#statusCategory').change(function(){
+				var statusCategory = $("#statusCategory option:selected").val();
+				location.href='statusList.visit?currentPage=1&statusCategory=' + statusCategory;
+			})
+		})
+	</script>
+		<c:if test="${not empty statusCategory}">
+		<script>
+			$(function(){
+				$("#visitList option[value=${statusCategory}]").attr("selected", true);  
+			})
+	    </script>
+	</c:if>
 
 		
 	
@@ -144,8 +169,11 @@ h1 {
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${empty category}">
+							<c:when test="${empty category and empty statusCategory}">
 								<li class="page-item"><a class="page-link" href="list.visit?cpage=${ pi.currentPage - 1 }">이전</a></li>
+							</c:when>
+							<c:when test="${not empty statusCategory}">
+								<li class="page-item"><a class="page-link" href="statusList.visit?cpage=${ pi.currentPage - 1 }&statusCategory=${statusCategory}">이전</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="categoryList.visit?cpage=${ pi.currentPage - 1 }&category=${category}">이전</a></li>
@@ -156,8 +184,11 @@ h1 {
 				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${empty category}">
+							<c:when test="${empty category and empty statusCategory}">
 								<li class="page-item"><a class="page-link" href="list.visit?cpage=${p}">${p}</a></li>
+							</c:when>
+							<c:when test="${not empty statusCategory}">
+								<li class="page-item"><a class="page-link" href="statusList.visit?cpage=${p}&statusCategory=${statusCategory}">${p}</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="categoryList.visit?cpage=${p}&category=${category}">${p}</a></li>
@@ -171,8 +202,11 @@ h1 {
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${empty category}">
+							<c:when test="${empty category and empty statusCategory}">
 								<li class="page-item"><a class="page-link" href="list.visit?cpage=${ pi.currentPage + 1 }">다음</a></li>
+							</c:when>
+							<c:when test="${not empty statusCategory}">
+								<li class="page-item"><a class="page-link" href="statusList.visit?cpage=${ pi.currentPage + 1 }&statusCategory=${statusCategory}">다음</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="categoryList.visit?cpage=${ pi.currentPage + 1 }&category=${category}">다음</a></li>

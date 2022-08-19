@@ -67,8 +67,8 @@ public class VisitController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="select.visit", produces="application/json; charset=UTF-8")
-	public String ajaxSelectVisitReserve(int vno) {
-		return new Gson().toJson(visitService.selectVisitReserve(vno));
+	public String ajaxSelectVisitReserve(int nno) {
+		return new Gson().toJson(visitService.selectVisitReserve(nno));
 	}
 	
 	/**
@@ -118,6 +118,25 @@ public class VisitController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
+		
+		
+		return "visit/visitListView";
+		
+	}
+	
+	/**
+	 * 예약 목록 페이지 - 상태 종류
+	 */
+	@RequestMapping("statusList.visit")
+	public String selectStatusList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String statusCategory, Model model) {
+		
+		PageInfo pi = Pagination.getPageInfo(visitService.selectStatusListCount(statusCategory), currentPage, 5, 10);
+		
+		ArrayList<Visit> list = visitService.selectStatusList(statusCategory, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("statusCategory", statusCategory);
 		
 		
 		return "visit/visitListView";
@@ -193,9 +212,60 @@ public class VisitController {
 			session.setAttribute("alertMsg2", "예약이 반려 되었습니다");
 			return "redirect:list.visit";
 		} else {
-			session.setAttribute("alertMsg1", "예약 승인 오류");
+			session.setAttribute("alertMsg1", "예약 반려 오류");
 			return "redirect:detail.visit?vno=" + vno;
 		}
 		
 	}
+	
+	/**
+	 * 예약 취소 신청
+	 */
+	@RequestMapping("cancelStatus.visit")
+	public String cancelStatus(int vno, HttpSession session) {
+		System.out.println(vno);
+		
+		int result = visitService.cancelStatus(vno);
+		
+		if(result > 0) { 
+			session.setAttribute("alertMsg2", "취소 신청이 완료 되었습니다");
+			return "main";
+		} else {
+			session.setAttribute("alertMsg1", "취소 신청이 실패 되었습니다");
+			return "main";
+		}
+ 
+	}
+	
+	/**
+	 * 예약 취소 승인
+	 */
+	@RequestMapping("cancelReserve.visit")
+	public String cancelReserveStatus(int vno, String visitEmail, String aptNo, String visitValue, String visitDate, String visitTime, HttpServletRequest request, HttpSession session) throws MessagingException {
+		
+		int result = visitService.cancelReserveStatus(vno);
+		
+		if(result > 0) { // 예약 취소 승인시 메일 보내고 목록페이지로
+			
+			String ip = request.getRemoteAddr();
+			
+			MimeMessage message = sender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setTo(visitEmail);
+			helper.setSubject(visitValue + " 검침 방문 예약이 취소 되셨습니다.");
+			helper.setText(aptNo + "의 " + visitDate + "&nbsp;" + visitTime + "에 예약한 " +
+						   visitValue + " 검침 방문 예약 취소 되셨습니다.<br>" +
+						   "다른 날짜에 다시 예약해주시길 바랍니다.<br>", true);
+			sender.send(message);
+			
+			
+			session.setAttribute("alertMsg2", "예약이 취소 되었습니다");
+			return "redirect:list.visit";
+		} else {
+			session.setAttribute("alertMsg1", "예약 취소 오류");
+			return "redirect:detail.visit?vno=" + vno;
+		}
+		
+	}
+	
 }

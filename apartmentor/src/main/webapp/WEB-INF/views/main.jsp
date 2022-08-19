@@ -23,10 +23,7 @@
             flex-direction: row;
             justify-content: center;
         }
-        #calendar{
-            width: 1200px;
-            height: 300px;
-        }
+        
         .table{
         text-align: center;
         font-size: 12px;
@@ -68,6 +65,7 @@
 	        width : 1200px; 
 	        height : 400px;     
 	    }
+	    
 	    #weather0{
 	    	color: gray; 
 	    	padding:5px;
@@ -111,6 +109,172 @@
 		#weather3{
 			margin-top: 40px;
 			float: right;
+		}
+		.visitCar{
+			font-size: 16px;
+		}
+		
+		/* Calender Css */
+		/* 달력전체 */
+		.sec_cal { 
+		    width: 360px;
+		    font-family: "NotoSansR";
+		    margin-left: 25px;
+		}
+		
+		.sec_cal .cal_nav {
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    font-weight: 700;
+		    font-size: 48px;
+		    line-height: 78px;
+		}
+		
+		.sec_cal .cal_nav .year-month {
+		    width: 300px;
+		    text-align: center;
+		    line-height: 1;
+		}
+		
+		.sec_cal .cal_nav .nav {
+		    display: flex;
+		    border: 1px solid #333333;
+		    border-radius: 5px;
+		}
+		
+		.sec_cal .cal_nav .go-prev,
+		.sec_cal .cal_nav .go-next {
+		    display: block;
+		    width: 50px;
+		    height: 78px;
+		    font-size: 0;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		}
+		
+		.sec_cal .cal_nav .go-prev::before,
+		.sec_cal .cal_nav .go-next::before {
+		    content: "";
+		    display: block;
+		    width: 20px;
+		    height: 20px;
+		    border: 3px solid #000;
+		    border-width: 3px 3px 0 0;
+		    transition: border 0.1s;
+		}
+		
+		.sec_cal .cal_nav .go-prev:hover::before,
+		.sec_cal .cal_nav .go-next:hover::before {
+		    border-color: #ed2a61;
+		}
+		
+		.sec_cal .cal_nav .go-prev::before {
+		    transform: rotate(-135deg);
+		}
+		
+		.sec_cal .cal_nav .go-next::before {
+		    transform: rotate(45deg);
+		}
+		
+		.sec_cal .cal_wrap {
+		    padding-top: 40px;
+		    position: relative;
+		    margin: 0 auto;
+		}
+		
+		.sec_cal .cal_wrap .days {
+		    display: flex;
+		    margin-bottom: 20px;
+		    padding-bottom: 20px;
+		    border-bottom: 1px solid #ddd;
+		}
+		
+		.sec_cal .cal_wrap::after {
+		    top: 368px;
+		}
+		
+		.sec_cal .cal_wrap .day {
+		    display:flex;
+		    align-items: center;
+		    justify-content: center;
+		    width: calc(100% / 7);
+		    text-align: left;
+		    color: #999;
+		    font-size: 12px;
+		    text-align: center;
+		    border-radius:5px
+		}
+		
+		.current.today {background: rgb(242 242 242);}
+		
+		.sec_cal .cal_wrap .dates {
+		    display: flex;
+		    flex-flow: wrap;
+		    height: 290px;
+		}
+		
+		.sec_cal .cal_wrap .day:nth-child(7n -1) {
+		    color: #3c6ffa;
+		}
+		
+		.sec_cal .cal_wrap .day:nth-child(7n) {
+		    color: #ed2a61;
+		}
+		
+		.sec_cal .cal_wrap .day.disable {
+		    color: #ddd;
+		}
+		
+		/* 일정 관련 */
+		.done {
+			background-color : #f0eee9;
+			border-radius : 50%;
+			line-height:35px;
+			height : 35px;
+			width : 35px;
+			margin : 0 auto;
+		}
+		
+		.now {
+			background-color : red;
+			color : white;
+			border-radius : 50%;
+			line-height:35px;
+			height : 35px;
+			width : 35px;
+			margin : 0 auto;
+		}
+		
+		.yet {
+			background-color : #00589b;
+			color : white;
+			border-radius : 50%;
+			line-height:35px;
+			height : 35px;
+			width : 35px;
+			margin : 0 auto;
+		}
+		
+		#scheduleTable td {
+			text-align : center;
+ 			vertical-align : middle;
+		}
+		
+		.scrollBar::-webkit-scrollbar {
+		    width: 10px;  /* 스크롤바의 너비 */
+		}
+		
+		.scrollBar::-webkit-scrollbar-thumb {
+		    height: 30%; /* 스크롤바의 길이 */
+		    background: #00589b; /* 스크롤바의 색상 */
+		    
+		    border-radius: 10px;
+		}
+		
+		.scrollBar::-webkit-scrollbar-track {
+		    background: #f0eee9;  /*스크롤바 뒷 배경 색상*/
 		}
         
     </style>    
@@ -269,11 +433,13 @@
                 
                 <form action="visit.car" method="post">
                     <input type="hidden" name="userNo" value="${loginUser.userNo}">
-                    <h4>방문차량등록</h4>
-                    <table>
+					<div class="title">
+						방문차량 등록
+					   </div>
+                    <table class="table visitCar" >
                         <tr>
                             <td>방문일</td>
-                            <td><input type="date" id="carDate" name="carDate" min=""><br></td>
+                            <td><input type="date" id="visitCarDate" name="visitCarDate" min=""><br></td>
                         </tr>
                         <tr>
                             <td>차량번호</td>
@@ -281,24 +447,25 @@
                         </tr>
                         <tr>
                             <td>방문 목적</td>
-                            <td><input type="text" name="carPurpose" placeholder="ex)친척 방문"></td>
-                            <input type="hidden" name="carCategory" value="2">
+                            <td><input type="text" name="purpose" placeholder="ex)친척 방문"></td>
                         </tr>
                         <tr>
                             <td>비상 연락처</td>
-                            <td><input type="text" name="carPhone" placeholder="ex)010-1234-5678"></td>
+                            <td><input type="text" name="visitCarPhone" placeholder="ex)010-1234-5678"></td>
                         </tr>
                     </table>
-                    <button type="submit">방문 예약 등록</button>
+					<div style="margin-left:150px;">
+						<button class="btn-primary" type="submit">방문 예약 등록</button>
+					</div>
                     <script>
-                    $('#carDate').click(function(){
+                    $('#visitCarDate').click(function(){
                         var date = new Date();
                         var year = date.getFullYear();
                         var month = ("0" + (1 + date.getMonth())).slice(-2);
                         var day = ("0" + date.getDate()).slice(-2);
 
                         var today =  year + '-' + month  + '-' + day;
-                        $('#carDate').attr('min', today);
+                        $('#visitCarDate').attr('min', today);
                     })  // 방문일 선택시 오늘날짜를 기준으로 이전날짜는 선택불가
                     </script>
 
@@ -306,12 +473,6 @@
             </div>
         </div>
 		<br>
-<<<<<<< HEAD
-        <div id="calendar">
-  			<a href="list.notice">임시</a>
-        </div>
-    </div>
-=======
 		
 		<!-- 유리 -->
 		  
@@ -447,51 +608,55 @@
 				<table id="scheduleTable" class="table">
 					<tbody class="schedule">
 					
-					<c:forEach var="vL" items="${visitList}">
-						<c:if test="${vL ne null && loginUser.aptNo eq vL.aptNo}">
-								<tr data-toggle="modal" data-target="#myModal">
+					
+					
+					<c:forEach var="rL" items="${reserveList}">
+						<c:choose>
+							<c:when test="${rL ne null && loginUser.aptNo eq rL.aptNo && rL.facilityValue ne '독서실'}">
+								<tr>
 									<th>
 										<div name="status">
-											${fn:substring(vL.visitDate, 8, 10)}
+											${fn:substring(rL.startDay, 8, 10)}
 										</div>
 									</th>
 									<td>
-										${vL.visitTime}
+										${rL.startDate}
+										<c:if test="${not empty rL.endDate}">
+										~ ${rL.endDate}
+										</c:if>
 									</td>
 									<td>
-										${vL.visitValue}
+										${rL.facilityValue}
 									</td>
 								</tr>
-							</c:if>
-					</c:forEach>
-					
-					<c:forEach var="rL" items="${reserveList}">
-						<c:if test="${rL ne null && loginUser.aptNo eq rL.aptNo}">
-							<tr data-toggle="modal" data-target="#myModal">
-								<th>
-									<div name="status">
-										${fn:substring(rL.startDay, 8, 10)}
-									</div>
-								</th>
-								<td>
-									${rL.startDate}
-									<c:if test="${not empty rL.endDate}">
-									~ ${rL.endDate}
-									</c:if>
-								</td>
-								<td>
-									${rL.facilityValue}
-								</td>
-							</tr>
-						</c:if>
+							</c:when>
+							<c:when test="${rL ne null && loginUser.aptNo eq rL.aptNo && rL.facilityValue eq '독서실'}" >
+							<tr>
+									<th>
+										<div name="status">
+											${fn:substring(rL.startDay, 6, 8)}
+										</div>
+									</th>
+									<td>
+										${rL.startDate}
+										<c:if test="${not empty rL.endDate}">
+										~ ${rL.endDate}
+										</c:if>
+									</td>
+									<td>
+										${rL.facilityValue}
+									</td>
+								</tr>
+							</c:when>
+						</c:choose>
 					</c:forEach>
 					
 					<c:forEach var="nL" items="${noticeList}">
 						<c:if test="${nL ne null}">
-							<tr data-toggle="modal" data-target="#myModal">
+							<tr>
 								<th>
 									<div name="status">
-										${fn:substring(nL.noticeStartDate, 8, 10)}
+										${fn:substring(nL.noticeEndDate, 8, 10)}
 									</div>
 								</th>
 								<td>
@@ -513,12 +678,63 @@
     	</div>
     	
     	<script>
+    	$(function(){
+			selectVisitList();
+		})
+		
+		function selectVisitList(){
+    		$.ajax({
+    			url : 'selectVisit.main',
+    			data : {userNo : ${loginUser.userNo}},
+    			async : false,
+    			success : function(visitList) {
+    				vList = '';
+    				
+    				for(let i in visitList) {
+    					vList += '<form id="visitStatus" action="" method="post">'
+    						   + '<input type="hidden" name="email" value="' + visitList[i].email + '">'
+    						   + '<input type="hidden" name="vno" value="' + visitList[i].visitNo + '">'
+    						   + '<tr class="tr" data-toggle="modal" data-target="#myModal" data-id="' + visitList[i].aptNo + '님의 ' + visitList[i].visitDate + '&nbsp;' + visitList[i].visitTime + '에 ' + visitList[i].visitValue + ' 검침 일정이 있습니다.">'
+    						   + '<th>'
+    						   + '<div name="status">'
+    						   + visitList[i].visitDate.substring(8, 10)
+    						   + '</div>'
+    						   + '</th>'
+    						   + '<td>'
+    						   + visitList[i].visitTime
+    						   + '</td>'
+    						   + '<td>'
+    						   + visitList[i].visitValue
+    						   + '</td>'
+    						   + '</tr>'
+    						   + '</form>';
+    						   
+    						   console.log(visitList[i].visitNo);
+    				}	
+    				
+    				$('.schedule').html(vList);
+    				
+    	    		$(".tr").click(function(){
+    	    			var data = $(this).data('id');
+    	    			$('#modalContent').html(data);
+    	    		});
+    	    		
+
+    			},
+    			error : function(){
+					console.log('예약 조회 실패');
+				}
+    			
+    		});
+    	}
+		
+    	
+    	</script>
+
+    	
+    	<script>
     	
     	date = Number(new Date().getDate());
-    	console.log("오늘 : " + date);
-    	status = Number($('div[name=status]').text());
-    	console.log("형변환 후 : " + $('div[name=status]').eq(2).text());
-    	
 
 		
 		  $(function(){
@@ -529,21 +745,18 @@
 			    for( var r=0; r < rows.length; r++ ){
 			    	if($('div[name=status]').eq(r).text() < date) {
 						$('div[name=status]').eq(r).addClass('done');
-						console.log("done 횟수");
 			    	}
 			    };
 			    	
 			    for( var r=0; r < rows.length; r++ ){	
 			    	if($('div[name=status]').eq(r).text() == date) {
 						$('div[name=status]').eq(r).addClass('now');
-						console.log("now 횟수 ");
 					}
 			    };
 			    	
 			    for( var r=0; r < rows.length; r++ ){	
 			    	if($('div[name=status]').eq(r).text() > date) {
 						$('div[name=status]').eq(r).addClass('yet');
-						console.log("yet 횟수 ");
 			    	}
 			    };
 			 
@@ -560,26 +773,39 @@
 		      
 		        <!-- Modal Header -->
 		        <div class="modal-header">
-		          <h4 class="modal-title">Modal Heading</h4>
+		          <h4 class="modal-title">방문 예약</h4>
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
 		        </div>
 		        
 		        <!-- Modal body -->
 		        <div class="modal-body">
-		          Modal body..
+		          <p id="modalContent"></p>
+		          <p>취소 신청의 경우, 관리자 승인 시 메일로 알려드립니다</p>
 		        </div>
 		        
 		        <!-- Modal footer -->
 		        <div class="modal-footer">
-		          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		          <button type="button" class="btn btn-info" data-dismiss="modal">닫기</button>
+		          <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelBtn">취소 신청</button>
 		        </div>
 		        
 		      </div>
 		    </div>
 		  </div>
+		  
+		  <script>
+		  $(function(){
+
+				$('#cancelBtn').click(function(){
+					const form = $('#visitStatus');
+					form.attr('action', 'cancelStatus.visit');
+					form.submit();
+				})
+		  
+		  })
+		  </script>
     	
         <!-- 끝 -->
->>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
     
     
     

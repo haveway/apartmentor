@@ -65,7 +65,7 @@ h1 {
 
 			<form id="visitEnrollForm" method="post" action="insert.visit">
 				<input type="hidden" name="userNo" value="${ loginUser.userNo }">
-				<input type="hidden" name="userNo" value="${ loginUser.email }">
+				<input type="hidden" name="email" value="${ loginUser.email }">
 				<table>
 					<tr style="height: 60px">
 						<th>예약 종류</th>
@@ -73,7 +73,7 @@ h1 {
 						<td>
 							<select name="visitCategory" id="category"
 								style="width: 70px; height: 30px; text-align: center; font-weight: bolder;">
-									<c:forEach var="c" items="${ visitCategory }">
+									<c:forEach var="c" items="${visitCategory}">
 										<option value="${c.visitCategory}">${c.visitValue}</option>
 									</c:forEach>
 							</select>
@@ -123,6 +123,8 @@ h1 {
 				    $("#text-contents.body-contents").html(data);
 				});
 				
+
+				
 				
 				
 				// datepicker 관련
@@ -142,7 +144,7 @@ h1 {
 			        	showAnim: "slide", //애니메이션을 적용한다.
 			        	showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
 			        	dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
-			        	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
+			        	monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'], // 월의 한글 형식.
 			     	});
 				})
 				
@@ -158,6 +160,8 @@ h1 {
 					    dropdown: true, // 밑으로 보여지게
 					    scrollbar: true // 스크롤바
 					});
+					
+				
 				})
 				
 			</script>
@@ -193,9 +197,6 @@ h1 {
 			<br><br>
 
 		<script>
-			
-			
-		
 			$(function(){
 				// 예약된 날짜와 시간 호출
 				selectVisitReserve()
@@ -205,7 +206,7 @@ h1 {
 			function selectVisitReserve(){
 				$.ajax({
 					url : 'select.visit',
-					data : {vno : ${loginUser.userNo}},
+					data : {nno : ${loginUser.userNo}},
 					success : function(reserve){
 							let list = '';
 							
@@ -254,6 +255,8 @@ h1 {
 			
 			
 			function check(){
+				
+               
 				$.ajax({
 					url : 'check.visit',
 					data : {
@@ -271,6 +274,7 @@ h1 {
 	 							    	closeOnClickOutside : false
 	 							})
 							} else {
+								
 								$("#submitBtn").attr("disabled", false);
 								swal({
  									title : "예약이 가능합니다.",
@@ -282,7 +286,8 @@ h1 {
 					error : function(){
 						console.log("예약 가능 조회 실패");
 					}
-				});		
+				});	
+			
 						
 			}
 			

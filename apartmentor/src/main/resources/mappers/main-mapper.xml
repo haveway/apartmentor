@@ -14,8 +14,6 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="NOTICE_NO" property="noticeNo"/>
 		<result column="NOTICE_CATEGORY_VALUE" property="noticeCategoryValue"/>
-<<<<<<< HEAD
-=======
 		
 		<result column="NOTICE_CALENDER" property="noticeCalender" />
 		<result column="NOTICE_START_DATE" property="noticeStartDate" />
@@ -23,11 +21,13 @@
 	</resultMap>
 	
 	<resultMap type="visit" id="visitResultSet">
+		<result column="VISIT_NO" property="visitNo" />
 		<result column="VISIT_CATEGORYE" property="visitCategory" />
 		<result column="VISIT_VALUE" property="visitValue" />
 		<result column="VISIT_DATE" property="visitDate" />
 		<result column="VISIT_TIME" property="visitTime" />
 		<result column="APT_NO" property="aptNo" />
+		<result column="EMAIL" property="visitEmail" />
 	</resultMap>
 	
 	<resultMap type="reserve" id="reserveResultSet">
@@ -37,7 +37,6 @@
 		<result column="END_DATE" property="endDate" />
 		<result column="FACILITY_VALUE" property="facilityValue" />
 		<result column="APT_NO" property="aptNo" />
->>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
 	</resultMap>
 	
 	<select id="boardList" resultMap="boardResultSet">
@@ -67,15 +66,15 @@
 		 ORDER 
 		    BY	NOTICE_NO DESC	
 	</select>
-<<<<<<< HEAD
-=======
 	
 	<select id="visitReserveList" resultMap="visitResultSet">
 		SELECT
+				VISIT_NO,
 				VISIT_VALUE,
 				VISIT_DATE,
 				VISIT_TIME,
-				APT_NO
+				APT_NO,
+				EMAIL
 		  FROM
 		  		VISIT
 		  JOIN
@@ -84,6 +83,8 @@
 		  		MEMBER USING(USER_NO)
 		 WHERE
 		 		VISIT_STATUS = 'Y'
+		   AND 
+		   		USER_NO = #{userNo}
 		 ORDER 
 		    BY	VISIT_TIME ASC
 	</select>
@@ -103,7 +104,7 @@
 	
 	<select id="reserveReserveList" resultMap="reserveResultSet">
 		SELECT
-				DECODE(FACILITY, 'ST', '독서실', 'MG', '미니짐', 'GF', '골프') FACILITY_VALUE,
+				DECODE(FACILITY, 'st', '독서실', 'MG', '미니짐', 'GF', '골프') FACILITY_VALUE,
 				START_DAY,
 				START_DATE,
 				END_DATE,
@@ -118,5 +119,4 @@
 		 	BY  START_DAY DESC
 	</select>
 	
->>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
 </mapper>

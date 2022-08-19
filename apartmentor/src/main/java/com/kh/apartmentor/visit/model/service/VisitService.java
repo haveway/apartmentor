@@ -16,7 +16,7 @@ public interface VisitService {
 	ArrayList<VisitCategory> selectVisitCategory();
 	
 	// 예약 날짜 / 시간 가져오기
-	ArrayList<Visit> selectVisitReserve(int vno);
+	ArrayList<Visit> selectVisitReserve(int nno);
 	
 	// 예약 가능 여부 검색
 	Visit checkVisitReserve(Visit v);
@@ -36,13 +36,25 @@ public interface VisitService {
 	// 카테고리 별 예약 리스트 조회
 	ArrayList<Visit> selectCategoryList(String category, PageInfo pi);
 	
+	// 상태 별 예약 조회
+	int selectStatusListCount(String statusCategory);
+	
+	// 상태 별 예약 리스트 조회
+	ArrayList<Visit> selectStatusList(String statusCategory, PageInfo pi);
+	
 	// 예약 상세 조회
-	Visit selectVisit(int visitVo);
+	Visit selectVisit(int visitNo);
 	
 	// 예약 승인
-	int okReserveStatus(int visitVo);
+	int okReserveStatus(int visitNo);
 	
 	// 예약 거절
-	int noReserveStatus(int visitVo);
+	int noReserveStatus(int visitNo);
+
+	// 예약 취소 신청
+	int cancelStatus(int visitNo);
+
+	// 예약 취소
+	int cancelReserveStatus(int vno);
 	
 }
