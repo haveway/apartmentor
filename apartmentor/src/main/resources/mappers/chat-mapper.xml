@@ -50,7 +50,7 @@
  				)
  	</insert>
  	
- 	<!-- 멤버 조회 쿼리문(경비 제외) -->
+ 	<!-- 멤버 조회 쿼리문(관리 제외) -->
  	<select id="selectMemberList" resultMap="MemberResultMap">
  		SELECT
  				USER_NO,
@@ -77,7 +77,7 @@
 		ORDER BY CHAT_SENDDATE ASC
  	</select>
  	
- 	<!-- 경비실 채팅내역 조회 쿼리문 -->
+ 	<!-- 관리실 채팅내역 조회 쿼리문 -->
  	<select id="selectGuardChatList" resultMap="chatResultSet">
  		SELECT 
  				CHAT_CONTENT, 
@@ -91,7 +91,7 @@
 		   		USER_NO = #{userNo} 
  	</select>
  	
- 	<!-- 경비실 채팅 작성 쿼리문 -->
+ 	<!-- 관리실 채팅 작성 쿼리문 -->
  	<insert id="guardChatInsert" parameterType="chat">
  		INSERT
  		  INTO
