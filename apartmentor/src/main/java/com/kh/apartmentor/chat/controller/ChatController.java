@@ -30,9 +30,9 @@ public class ChatController {
 		
 			// 온라인구분을 위한 회원 전체 조회 
 			ArrayList<Member> MemberList = chatService.selectMemberList();
-			model.addAttribute("MemberList", MemberList);
+			session.setAttribute("MemberList", MemberList);
 			
-			// 로그인한 유저가 경비원일 경우
+			// 로그인한 유저가 관리실일 경우 관리실 전용 채팅 페이지로 포워딩
 		if(loginUser.getUserNo() == 9) {
 			return "chat/guardExcludeChatView";
 		}
@@ -53,14 +53,14 @@ public class ChatController {
 		return chatService.insertChat(c) > 0 ? "success" : "fail";
 	}
 	
-	// 경비실채팅방 페이지로 포워딩
+	// 관리실채팅방 페이지로 포워딩
 	@RequestMapping("guardChatForm.ch")
 	public String guardChatForm(Model model) {
 		
 		return "chat/guardChatView";
 	}
 	
-	// 경비실 채팅 리스트 조회 
+	// 관리실 채팅 리스트 조회 
 	@ResponseBody
 	@RequestMapping(value="selectGuardChatList.ch", produces="application/json; charset=UTF-8")
 	public String selectGuardChatList(int userNo) {
@@ -68,11 +68,22 @@ public class ChatController {
 		return new Gson().toJson(list);
 	}
 	
-	// 회원 채팅 작성 
+	// 관리실 채팅방 회원 채팅 작성 
 	@ResponseBody
 	@RequestMapping("guardChatInsert.ch")
 	public String guardChatInsert(Chat c) {
 		return chatService.guardChatInsert(c) > 0 ? "success" : "fail";
 	}
+	
+	// 관리실채팅방에서 회원 클릭시 회원과의 채팅 내역 조회
+	@RequestMapping("guardExcludeChatList.ch")
+	public String guardExcludeChatList(int userNo, Model model) {
+		ArrayList<Chat> gList = chatService.selectGuardChatList(userNo);
+		model.addAttribute("gList", gList);
+		return "chat/guardExcludeChatView";
+	}
+	
+	
+	
 	
 }
