@@ -1,9 +1,9 @@
 package com.kh.apartmentor.vote.model.service;
 
-public class VoteService {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-<<<<<<< HEAD
-=======
 import com.kh.apartmentor.common.model.vo.PageInfo;
 import com.kh.apartmentor.notice.model.vo.Notice;
 import com.kh.apartmentor.vote.model.vo.Vote;
@@ -27,11 +27,18 @@ public interface VoteService {
 
 	ArrayList<Vote> searchList(String keyword, PageInfo pi);
 
-	Vote selectVote(int vno);
+	Vote selectVote(int voteNo);
 
-	ArrayList<VoteItem> selectVoteItem(int vno);
+	ArrayList<VoteItem> selectVoteItem(int voteNo);
+
+	int submitVote(VoteItem vi);
+
+	int chkVoteMember(VoteItem voteMember);
+
+	int increaseItemCount(int itemNo);
+
+	int totalCount(int voteNo);
 	
 	
 	
->>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
 }

@@ -70,13 +70,33 @@ public class VoteServiceImpl implements VoteService{
 	}
 
 	@Override
-	public Vote selectVote(int vno) {
-		return voteDao.selectVote(sqlSession, vno);
+	public Vote selectVote(int voteNo) {
+		return voteDao.selectVote(sqlSession, voteNo);
 	}
 
 	@Override
-	public ArrayList<VoteItem> selectVoteItem(int vno) {
-		return voteDao.selectVoteItem(sqlSession, vno);
+	public ArrayList<VoteItem> selectVoteItem(int voteNo) {
+		return voteDao.selectVoteItem(sqlSession, voteNo);
+	}
+
+	@Override
+	public int submitVote(VoteItem vi) {
+		return voteDao.submitVote(sqlSession, vi);
+	}
+
+	@Override
+	public int chkVoteMember(VoteItem voteMember) {
+		return voteDao.chkVoteMember(sqlSession, voteMember);
+	}
+
+	@Override
+	public int increaseItemCount(int itemNo) {
+		return voteDao.increaseItemCount(sqlSession, itemNo);
+	}
+
+	@Override
+	public int totalCount(int voteNo) {
+		return voteDao.totalCount(sqlSession, voteNo);
 	}
 
 

@@ -18,7 +18,7 @@ public class VoteItem {
 	private int itemNo;
 	private int voteNo;
 	private String itemName;
-	private int count;
+	private int userNo;
 	private String originName;
 	private String changeName;
 

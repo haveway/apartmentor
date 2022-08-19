@@ -1,9 +1,21 @@
 package com.kh.apartmentor.vote.model.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.kh.apartmentor.common.model.vo.PageInfo;
+import com.kh.apartmentor.vote.model.vo.Vote;
+import com.kh.apartmentor.vote.model.vo.VoteItem;
+
+@Repository
 public class VoteDao {
 
-<<<<<<< HEAD
-=======
 	public int insertVote(Vote v, SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("voteMapper.insertVote", v);
 	}
@@ -59,16 +71,28 @@ public class VoteDao {
 		return (ArrayList)sqlSession.selectList("voteMapper.selectSearchList", keyword, rowBounds);
 	}
 
-	public Vote selectVote(SqlSessionTemplate sqlSession, int vno) {
-		return sqlSession.selectOne("voteMapper.selectVote", vno);
+	public Vote selectVote(SqlSessionTemplate sqlSession, int voteNo) {
+		return sqlSession.selectOne("voteMapper.selectVote", voteNo);
 	}
 
-	public ArrayList<VoteItem> selectVoteItem(SqlSessionTemplate sqlSession, int vno) {
-		return (ArrayList)sqlSession.selectList("voteMapper.selectVoteItem", vno);
+	public ArrayList<VoteItem> selectVoteItem(SqlSessionTemplate sqlSession, int voteNo) {
+		return (ArrayList)sqlSession.selectList("voteMapper.selectVoteItem", voteNo);
 	}
 
-<<<<<<< HEAD
->>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
-=======
->>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
+	public int submitVote(SqlSessionTemplate sqlSession, VoteItem vi) {
+		return sqlSession.insert("voteMapper.submitVote", vi);
+	}
+
+	public int chkVoteMember(SqlSessionTemplate sqlSession, VoteItem voteMember) {
+		return sqlSession.selectOne("voteMapper.chkVoteMember", voteMember);
+	}
+
+	public int increaseItemCount(SqlSessionTemplate sqlSession, int itemNo) {
+		return sqlSession.update("voteMapper.increaseItemCount", itemNo);
+	}
+
+	public int totalCount(SqlSessionTemplate sqlSession, int voteNo) {
+		return sqlSession.selectOne("voteMapper.totalCount", voteNo);
+	}
+
 }
