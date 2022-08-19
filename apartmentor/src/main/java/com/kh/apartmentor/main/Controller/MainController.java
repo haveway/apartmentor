@@ -35,6 +35,19 @@ public class MainController {
 		ArrayList<Notice> nList = mainService.noticeList();
 		m.addAttribute("bList", bList);
 		m.addAttribute("nList", nList);
+<<<<<<< HEAD
+=======
+		
+		// 달력 관련
+		ArrayList<Visit> visitList = mainService.visitReserveList();
+		ArrayList<Reserve> reserveList = mainService.reserveReserveList();
+		ArrayList<Notice> noticeList = mainService.noticeReserveList();
+		
+		m.addAttribute("visitList", visitList);
+		m.addAttribute("reserveList", reserveList);
+		m.addAttribute("noticeList", noticeList);
+		//
+>>>>>>> parent of b1472ee (Merge branch 'main' of https://github.com/haveway/apartmentor)
 
 		return "main";
 	}

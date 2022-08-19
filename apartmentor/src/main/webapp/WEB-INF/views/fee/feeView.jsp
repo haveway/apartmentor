@@ -63,6 +63,8 @@
 							        onClick: function(point, event) {
 							            if(event.length <= 0) return;
 							            
+							            // point 클릭했을 때 collapse2 open
+							            
 							            document.getElementById('viewArea').innerHTML = '<table class="table">'
 												
 												   + '<tr rowspan="2">'
@@ -84,26 +86,7 @@
 	
 												   + '</table>';
 															   
-							            /* document.getElementById('viewArea').innerHTML = '<table class="table">'
-				
-																					   + '<tr rowspan="2">'
-																					   + '<td>'
-																					   + '관리비내역'
-																					   + '</td>'
-																					   + '<td>'
-																					   + '</td>'
-																					   + '</tr>'
-				
-																					   + '<tr>'
-																					   + '<td>'
-																					   + '2022년 7월'
-																					   + '</td>'
-																					   + '<td>'
-																					   + '320,110원'
-																					   + '</td>'	
-																					   + '</tr>'
-				
-																					   + '</table>';	 */				
+							            	
 											
 							        },
 							    }
@@ -151,8 +134,27 @@
 
 
 
-
-
+	<!--  보관 -->
+	<!-- document.getElementById('viewArea').innerHTML = '<table class="table">'
+				
+																					   + '<tr rowspan="2">'
+																					   + '<td>'
+																					   + '관리비내역'
+																					   + '</td>'
+																					   + '<td>'
+																					   + '</td>'
+																					   + '</tr>'
+				
+																					   + '<tr>'
+																					   + '<td>'
+																					   + '2022년 7월'
+																					   + '</td>'
+																					   + '<td>'
+																					   + '320,110원'
+																					   + '</td>'	
+																					   + '</tr>'
+				
+																					   + '</table>'; -->
 
 
 
