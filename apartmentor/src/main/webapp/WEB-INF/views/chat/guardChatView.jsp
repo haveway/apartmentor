@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>경비실 채팅</title>
+<title>관리실 채팅</title>
 <style>
 	.content-area{
 		width:1200px;
@@ -145,13 +145,12 @@
 	<div class="content-area">
 	
 		<div align="center" style="margin-right:600px;">
-			<h1>경비실채팅</h1> 
+			<h1>채팅</h1> 
 		</div>
 		<br><br><br>
 		<div class="btn-group btn-group-lg" id="chatTitleBtn">
 					<button type="button" class="btn" onclick="location.href='chatForm.ch'">주민채팅방</button>
-			    	<button type="button" class="btn btn-primary" disabled >경비실 채팅방</button>
-			    	<button type="button" class="btn">관리소 채팅방</button>
+			    	<button type="button" class="btn btn-primary" disabled >관리실 채팅방</button>
 		</div>
 		<br><br>
 		
@@ -176,7 +175,7 @@
 		
 	})
 		
-	// 경비실채팅 조회 ajax
+	// 관리실채팅 조회 ajax
 	function selectGuardChatList(){
 		console.log('1초마다 실행');
 		var loginUserName = '${loginUser.userName}';
@@ -210,7 +209,7 @@
 		})
 	}
 	
-	// 1초마다 경비실채팅 조회 ajax 실행해주는 setInterval
+	// 1초마다 관리실채팅 조회 ajax 실행해주는 setInterval
 	setInterval(function gList(){
 		selectGuardChatList();
 	},1000);
@@ -244,24 +243,7 @@
 		else { // 사용자가 빈 문자열을 입력했을 경우 알러창 띄워주기
 			swal('알림', "입력 후 작성해주세요!", 'warning');
 		}
-		
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

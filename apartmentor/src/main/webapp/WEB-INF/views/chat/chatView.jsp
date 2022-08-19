@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -146,8 +147,7 @@
 		
 		<div class="btn-group btn-group-lg" id="chatTitleBtn">
 		    <button type="button" class="btn btn-primary" disabled>주민채팅방</button>
-		    <button type="button" class="btn" onclick="location.href='guardChatForm.ch'">경비실 채팅방</button>
-		    <button type="button" class="btn">관리소 채팅방</button>
+		    <button type="button" class="btn" onclick="location.href='guardChatForm.ch'">관리실 채팅방</button>
 		  </div>
 		<br><br>
 		
@@ -155,7 +155,7 @@
 			
 			<c:if test="${not empty chatList }">
 				<!-- DB에 중복값없이 조회한 날짜 반복문 돌리기 -->
-				<c:forEach var="ct" items="${sendDateList}" varStatus="status">
+				<c:forEach var="ct" items="${sendDateList}">
 					<div class="chatSendDate" align="center">${ct.chatSendDate}</div>
 						<!-- 채팅내역 반복문 -->
 						<c:forEach var="c" items="${chatList}">
@@ -187,7 +187,7 @@
 		<c:forEach var='m' items="${MemberList}">
 		<div class="online-area">
 			<div class="circle"></div>
-			<div id="${m.userName}">${m.userName}</div>
+			<div id="${m.userName}" class="onlineUser">${m.userName}</div>
 		</div>
 		</c:forEach>
 		
@@ -199,6 +199,8 @@
 
 
 	</div>	
+	
+	
 	
 	<script>
 		// 채팅페이지로 오자마자 주민단체채팅방전용 웹소켓 접속 시키기
@@ -222,8 +224,9 @@
 			
 			
 			// 연결이 성공했는지 아닌지 확인할 수 있도록 예약작업(콜백)을 설정
- 			socket.onopen = function(e){
+ 			socket.onopen = function(){
  				console.log("서버와 연결되었습니다.");
+ 				socket.send('');
 			}
 			
  			socket.onclose = function(){
@@ -238,8 +241,21 @@
  				console.log("메세지가 도착하였습니다.");
  				var msg = e.data;
  				// 받은 메세지 ',' 구분자로 잘라서 배열에 담기
- 				var arr = msg.split(",");
+ 				var arr = msg.split("/");
  				// arr[0] : 유저 이름 , arr[1] : 유저가 보낸 메세지
+				if(arr[1] == ''){
+					// 접속시 보낸 메세지가 [관리자, 홍길동] 형식인 문자열로 왔기 때문에 정규표현식을 사용해 [,],공백을 없애준 뒤 ,로 잘라 onLineArr에 담는다.
+					var onLineArr = (arr[0].replace(/\[|\]|\s/g, '')).split(",");
+					console.log(onLineArr);
+					// 반복문을 통한 접속한 사용자의 온라인 표시
+	 				$('.circle').css('background-color', 'grey');
+					for(var i in onLineArr){
+					// 온라인 표시
+	 					$('#'+onLineArr[i]).prev().css('background-color', 'green');
+					}					
+					return;
+				}
+ 				
  				let nameDiv = $('<div>').append(arr[0]);
  				let msgDiv = $('<div>').append(arr[1]);
  				
@@ -247,11 +263,22 @@
  				let date = new Date();
  				let time = (date.getHours() < 12 ? "오전 " : "오후 ") 
  							+ (date.getHours() < 10 ? "0" + date.getHours() : 
- 							  (date.getHours() > 12 ? (date.getHours() - 12 < 10 ? "0" + date.getHours() : date.getHours() - 12) : date.getHours())) 
+ 							  (date.getHours() > 12 ? (date.getHours() - 12 < 10 ? "0" + (date.getHours() - 12) : date.getHours() - 12) : date.getHours())) 
  							+ ":" 
  							+ (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
  							
  				let timeDiv = $('<div>').append(time);
+ 				
+ 				//채팅에서 오늘 날짜인 내역이 없을 시 사용할 오늘 날짜 변수 세팅 (DB에서 조회한 형식과 일치하게 세팅.)
+ 				<c:set var="today" value="<%=new java.util.Date() %>"/>
+ 			 	<c:set var="nowDay"><fmt:formatDate value="${today}" pattern="yyyy년 MM월 dd일 EE요일"/></c:set>
+ 			 	
+ 			 	// 오늘 날짜가 없을 시 채팅창에 오늘 날짜 추가
+ 				let today = '${nowDay}';
+ 				var dayDiv = '<div class="chatSendDate" align="center">' + today + '</div>';
+ 				if($('.chatSendDate:last').text() != today){
+	 				$('.chat-area').append(dayDiv);
+ 				}
  				
  				// 말풍선으로 감싸기
  				var chatDiv = $('<div class="userchat-area">');
@@ -283,7 +310,8 @@
 		// 메세지 전송함수 : 전송 버튼 클릭 시 입력한 메세지를 DB에 저장하고 입력한 메세지를 전송  
  		function send(){
  			var text = $('#chatInput').val();
- 			if(!text){
+ 			if(text == ''){
+ 				swal('오잉?',"다시 작성해주세요!", 'warning');
  				return;
  			}
  		// DB에 채팅내역을 저장 후 메세지 전송하기 위한 ajax실행
@@ -300,7 +328,6 @@
 						// 입력한 메세지 전송
 						socket.send(text);
 						$('#chatInput').val('');
-						location.reload();
 					}else{
 						swal('오잉?',"다시 작성해주세요!", 'warning');
 					}
