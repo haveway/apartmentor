@@ -33,4 +33,8 @@ public class Reserve {
 	private String startDay;
 	private String userName;
 	
+	//유리
+	private String facilityValue;
+	private String aptNo;
+	
 }
