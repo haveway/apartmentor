@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주민투표</title>
+<title>투표결과</title>
 <style>
     .wrap{
         width:1200px; margin:auto; 
@@ -30,21 +30,20 @@
                 <h3>Q. ${v.voteTitle}</h3> 
             </div>
             <div style="margin-left:300px">
-                <c:if test="${v.voteType == 1}"> <!-- voteType이 1이면 복수선택 표시-->
-                    복수선택<br>
+                <c:if test="${v.status == 'Y'}">
+                    [투표진행중]<br>
                 </c:if>
-                투표기한 : ${v.voteStart} ~ ${v.voteEnd}
+                <c:if test="${v.status == 'N'}">
+                    [투표완료]<br>
+                </c:if>
+                투표기한 : ${v.voteStart} ~ ${v.voteEnd} <br>
+                총 투표자 : 0 명
                 
                 <table id="voteItemList">			
                     <c:forEach var="vi" items="${vi}">
                         <tr>
                             <td width="200px;" height="75px">
-                            <c:if test="${v.voteType == 1}">    <!-- voteType이 1이면 체크버튼-->
-                            &nbsp;<input style="zoom:1.3;" type="checkbox" name="checkItem" value="${vi.itemNo}"> ${vi.itemName} 
-                            </c:if>
-                            <c:if test="${v.voteType == 0}">    <!-- voteType이 0이면 라디오 버튼-->
-                            &nbsp;<input style="zoom:1.3;" type="radio" name="checkItem" value="${vi.itemNo}"> ${vi.itemName}
-                        </c:if>
+                            &nbsp;${vi.itemName}
                             </td>
                             <td width="75px;">
                                 <c:if test="${vi.changeName != 'null'}">
@@ -56,24 +55,15 @@
                 </table>
                 <br>
                 <div style="margin-left:200px;">
-                    <button type="submit" onclick="submitVote();">투표하기</button>
+                    <button type="submit" onclick="reVote();">다시 투표하기</button>
                 </div>
          </div>
-
+          
         
 
     </div>
     <script>
-        function submitVote(){
-
-            $("input[name='checkItem']:checked").each(function(){	
-	          var itemNo = $(this).val();
-              var userNo = $('#userNo').val();
-              var voteNo = $('#voteNo').val();
-
-              location.href = "submit.vote?itemNo=" + itemNo + "&userNo=" + userNo + "&voteNo=" + voteNo 
-
-            });
+        function reVote(){
             
         }
    

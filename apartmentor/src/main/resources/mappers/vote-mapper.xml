@@ -52,6 +52,7 @@
 		  	   ITEM_NAME,
 		  	   ORIGIN_NAME,
 		  	   CHANGE_NAME,
+		  	   ITEM_COUNT,
 		  	   VOTE_NO
 		  	   )
 			   SELECT SEQ_INO.NEXTVAL, A.* 
@@ -61,6 +62,7 @@
 			   #{item.itemName} AS ITEM_NAME,
 			   #{item.originName} AS ORIGIN_NAME,
 			   #{item.changeName} AS CHANGE_NAME,
+			   0 AS ITEM_COUNT,
 			   (SELECT MAX(VOTE_NO) FROM VOTE) AS VOTE_NO
 	 	  	   FROM DUAL
 		</foreach>
@@ -228,7 +230,7 @@
 			   STATUS
 		  FROM
 		 	   VOTE
-		 WHERE VOTE_NO = #{vno}
+		 WHERE VOTE_NO = #{voteNo}
 	</select>
 	
 	<select id="selectVoteItem" resultMap="voteItemResultSet">
@@ -240,7 +242,46 @@
 				VOTE_NO
 		  FROM
 		 	   VOTE_ITEM
-		 WHERE VOTE_NO = #{vno}
+		 WHERE VOTE_NO = #{voteNo}
+	</select>
+	
+	<insert id="submitVote" parameterType="voteItem">
+		INSERT
+		  INTO 
+		  	   VOTE_MEMBER
+		  	   (
+		  	   USER_NO,
+		  	   VOTE_NO,
+		  	   ITEM_NO
+	    	   )
+	    VALUES 
+	    	   (
+	    	   #{userNo},
+	    	   #{voteNo},
+	    	   #{itemNo}
+	    	   )
+	</insert>
+	
+	<select id="chkVoteMember" parameterType="voteItem" resultType="_int">
+	  	SELECT COUNT(*)
+	  	  FROM VOTE_MEMBER
+	  	 WHERE VOTE_NO = #{voteNo}
+	  	   AND USER_NO = #{userNo}
+	</select>
+	
+	<update id="increaseItemCount">
+		UPDATE
+				VOTE_ITEM
+		   SET 
+		   		ITEM_COUNT = ITEM_COUNT + 1
+		 WHERE
+				ITEM_NO = #{itemNo}
+	</update>
+	
+	<select id="totalCount">
+		SELECT COUNT(*)
+		  FROM VOTE_MEMBER
+		 WHERE VOTE_NO = #{voteNo}
 	</select>
 
   
