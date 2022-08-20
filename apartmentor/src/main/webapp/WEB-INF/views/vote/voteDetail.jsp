@@ -29,7 +29,19 @@
             <div style="margin-left:300px;">
                 <h3>Q. ${v.voteTitle}</h3> 
             </div>
+            <div style="margin-left:55%;">
+                <button type="button" id="backBtn" onclick="location.href='list.vote'">목록</button>
+            </div>
             <div style="margin-left:300px">
+                <c:if test="${v.status == 'Y'}">
+                    [투표진행중]<br>
+                </c:if>
+                <c:if test="${v.status == 'N'}">
+                    [투표완료]<br>
+                </c:if>
+                <c:if test="${v.status == 'W'}">
+                    [투표예정]<br>
+                </c:if>
                 <c:if test="${v.voteType == 1}"> <!-- voteType이 1이면 복수선택 표시-->
                     복수선택<br>
                 </c:if>
@@ -39,12 +51,12 @@
                     <c:forEach var="vi" items="${vi}">
                         <tr>
                             <td width="75px;" align="center">
-                                <c:if test="${vi.changeName != 'null'}">
-                                    <img src="${vi.changeName}" height="70px;" alt="">
-                                </c:if>
-                            </td>
+                                    <c:if test="${vi.changeName != 'null'}">
+                                        <img src="${vi.changeName}" width="70px;" height="70px;" alt="">
+                                    </c:if>
+                                    </td>
 
-                            <td width="200px;" height="75px">
+                            <td width="325px;" height="75px">
                             <c:if test="${v.voteType == 1}">    <!-- voteType이 1이면 체크버튼-->
                                 &nbsp;<input style="zoom:1.3;" type="checkbox" name="checkItem" value="${vi.itemNo}"> ${vi.itemName} 
                             </c:if>
@@ -56,8 +68,8 @@
                     </c:forEach>
                 </table>
                 <br>
-                <div style="margin-left:200px;">
-                    <button type="submit" onclick="submitVote();">투표하기</button>
+                <div style="margin-left:150px;">
+                    <button type="submit" id="submitVote" onclick="submitVote();">투표하기</button><br>
                 </div>
          </div>
 
@@ -65,6 +77,12 @@
 
     </div>
     <script>
+         $(function(){
+            if("${v.status}" != 'Y'){
+                $('#submitVote').attr('disabled', true);
+            }
+        })
+
         function submitVote(){
 
             $("input[name='checkItem']:checked").each(function(){	
@@ -77,6 +95,7 @@
             });
             
         }
+
    
 
     </script>

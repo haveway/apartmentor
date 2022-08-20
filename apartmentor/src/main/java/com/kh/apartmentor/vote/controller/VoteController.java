@@ -145,7 +145,7 @@ public class VoteController {
 	}
 	
 	@RequestMapping("detail.vote")
-	public String detailVote(HttpSession session, Model model, int voteNo, int userNo) {
+	public String detailVote(Model model, int voteNo, int userNo) {
 		
 		
 		VoteItem voteMember = new VoteItem();
@@ -157,12 +157,10 @@ public class VoteController {
 		Vote v = voteService.selectVote(voteNo);
 		ArrayList<VoteItem> vi = voteService.selectVoteItem(voteNo);
 
-		System.out.println();
 		int result = voteService.chkVoteMember(voteMember);	// 멤버가 투표했는지 여부
 		
 		if(result > 0) {	// 투표했으면 투표결과페이지를 띄워준다
-			int totalCount = voteService.totalCount(voteNo); // 총 투표수
-			model.addAttribute("totalCount", totalCount);
+			model.addAttribute("totalCount", voteService.totalCount(voteNo)); // 총 투표수
 			model.addAttribute("voteNo", voteNo);
 			model.addAttribute("v", v);
 			model.addAttribute("vi", vi);
@@ -188,18 +186,41 @@ public class VoteController {
 		if(result > 0) { 
 			int countResult = voteService.increaseItemCount(itemNo);
 			if(countResult > 0){
-				session.setAttribute("alertMsg2", "투표 완료");
 				model.addAttribute("voteNo", voteNo);
 				model.addAttribute("userNo", userNo);
 				return "redirect:detail.vote";
 			} else {
-				model.addAttribute("alertMsg1", "투표에 실패하셨습니다");
+				session.setAttribute("alertMsg1", "투표에 실패하셨습니다");
 				return "redirect:detail.vote";
 			}
 		} else {
-			model.addAttribute("alertMsg1", "투표에 실패하셨습니다");
+			session.setAttribute("alertMsg1", "투표에 실패하셨습니다");
 			return "redirect:detail.vote";
 		}
+		
+	}
+	
+	@RequestMapping("re.vote")
+	public String reVote(VoteItem vi, HttpSession session) {
+		
+		List<VoteItem> viList = voteService.selectVoteMember(vi);
+			
+		int countResult = voteService.decreaseItemCount(viList);
+		
+		if(countResult == -1) {
+			
+			if(voteService.deleteVoteMember(vi) > 0) {
+				return "redirect:detail.vote?voteNo=" + vi.getVoteNo() + "&userNo=" + vi.getUserNo();
+			} else {
+				session.setAttribute("alertMsg2", "다시투표하기 실패");
+				return "";
+			}
+			
+		} else {
+			session.setAttribute("alertMsg2", "다시투표하기 실패");
+			return "";
+		}
+		
 		
 	}
 

@@ -38,6 +38,12 @@ public interface VoteService {
 	int increaseItemCount(int itemNo);
 
 	int totalCount(int voteNo);
+
+	List<VoteItem> selectVoteMember(VoteItem vi);
+
+	int decreaseItemCount(List<VoteItem> viList);
+
+	int deleteVoteMember(VoteItem vi);
 	
 	
 	

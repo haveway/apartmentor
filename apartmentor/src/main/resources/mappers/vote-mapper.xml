@@ -60,12 +60,13 @@
 			   FROM(
 		<foreach collection="list" item="item" separator="UNION ALL ">
 			   SELECT	   
-			   #{item.itemName} AS ITEM_NAME,
-			   #{item.originName} AS ORIGIN_NAME,
-			   #{item.changeName} AS CHANGE_NAME,
-			   0 AS ITEM_COUNT,
-			   (SELECT MAX(VOTE_NO) FROM VOTE) AS VOTE_NO
-	 	  	   FROM DUAL
+					  #{item.itemName} AS ITEM_NAME,
+					  #{item.originName} AS ORIGIN_NAME,
+					  #{item.changeName} AS CHANGE_NAME,
+					  0 AS ITEM_COUNT,
+					  (SELECT MAX(VOTE_NO) FROM VOTE) AS VOTE_NO
+	 	  	     FROM 
+	 	  	          DUAL
 		</foreach>
 				) A
 	</insert>
@@ -285,6 +286,40 @@
 		  FROM VOTE_MEMBER
 		 WHERE VOTE_NO = #{voteNo}
 	</select>
+	
+	<select id="selectVoteMember" resultMap="voteItemResultSet">
+		SELECT
+			   ITEM_NO
+		  FROM
+		       VOTE_MEMBER
+		 WHERE
+		 	   VOTE_NO = #{voteNo}
+		   AND
+		   	   USER_NO = #{userNo}
+		
+	</select>
+	
+	<update id="decreaseItemCount" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
+		UPDATE
+				VOTE_ITEM
+		   SET 
+		   		ITEM_COUNT = ITEM_COUNT - 1
+		 WHERE
+				ITEM_NO = #{item.itemNo}
+		</foreach>
+	</update>
+	
+	<delete id="deleteVoteMember">
+		DELETE
+		  FROM
+		  	   VOTE_MEMBER
+ 		 WHERE
+		 	   VOTE_NO = #{voteNo}
+		   AND
+		   	   USER_NO = #{userNo}
+	</delete>
+	
 
   
   

@@ -24,10 +24,11 @@
     <br>
     <br>
     <div class="wrap">
-        <input type="hidden" name="userNo" id="userNo" value="${loginUser.userNo}">
-        <input type="hidden" name="voteNo" id="voteNo" value="${v.voteNo}">
             <div style="margin-left:300px;">
                 <h3>Q. ${v.voteTitle}</h3> 
+            </div>
+            <div style="margin-left:55%;">
+                <button type="button" id="backBtn" onclick="location.href='list.vote'">목록</button>
             </div>
             <div style="margin-left:300px">
                 <c:if test="${v.status == 'Y'}">
@@ -35,6 +36,9 @@
                 </c:if>
                 <c:if test="${v.status == 'N'}">
                     [투표완료]<br>
+                </c:if>
+                <c:if test="${v.status == 'W'}">
+                    [투표예정]<br>
                 </c:if>
                 투표기한 : ${v.voteStart} ~ ${v.voteEnd} <br>
                 총 투표자 : ${totalCount}명
@@ -45,8 +49,13 @@
                             <c:set var="itemCount" value="${vi.itemCount}"/>
                             <fmt:parseNumber var="ratio" value="${itemCount/totalCount*100}" integerOnly="true" />
                             <tr>
-                                <td width="20" align="center"><img src="${vi.changeName}" height="70px;" alt=""></td>
+                                <td td width="75px;" align="center">
+                                    <c:if test="${vi.changeName != 'null'}">
+                                        <img src="${vi.changeName}" width="70px;" height="70px;" alt="">
+                                    </c:if>
+                                </td>
                                 <td width="130">
+
                                         ${vi.itemName}
                                 </td>
                                     <td>
@@ -62,17 +71,26 @@
                     </table>
                 <br>
                 <div style="margin-left:150px;">
-                    <button type="submit" onclick="reVote();">다시 투표하기</button>
+                    <button type="submit" id="reVote">다시 투표하기</button><br>
+                    
                 </div>
          </div>
         
 
     </div>
     <script>
+
+            $('#reVote').click(function(){
+                location.href = 're.vote?voteNo=${v.voteNo}&userNo=${loginUser.userNo}'
+            });
         
-        function reVote(){
-            
-        }
+       
+
+        $(function(){
+            if("${v.status}" != 'Y'){
+                $('#reVote').attr('disabled', true);
+            }
+        })
    
 
     </script>

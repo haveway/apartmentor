@@ -13,6 +13,7 @@
     .btnRemove{
         background-color: red;
         color: white;
+        border: none;
     }
     .btnRemove:hover{
         cursor: pointer;
@@ -45,12 +46,12 @@
                 
                 <input type="button" class="btnAdd" value="항목추가"><br>
                 <hr>
-                투표시작일 <input type="date" name="voteStart" id="" required> <br>
-                투표마감일 <input type="date" name="voteEnd" id="" required> <br>
+                투표시작일 <input type="date" id="voteStart" name="voteStart" min="" required> <br>
+                투표마감일 <input type="date" id="voteEnd" name="voteEnd" min="" required> <br>
 
                 복수선택 가능여부 <input type="checkbox" id="voteType" name="voteType" value="0" id=""> <br>
 
-                <button type="submit">등록</button> <button type="button">취소</button>
+                <button type="submit">등록</button> <button type="button" id="backBtn" onclick="location.href='list.vote'">취소</button>
             </div>
 
             
@@ -71,7 +72,21 @@
                      });
                  }); // end click 
                  
-                }); // end ready       
+        }); // end ready   
+        
+        $('#voteStart').click(function(){
+                        var date = new Date();
+                        var year = date.getFullYear();
+                        var month = ("0" + (1 + date.getMonth())).slice(-2);
+                        var day = ("0" + date.getDate()).slice(-2);
+
+                        var today =  year + '-' + month  + '-' + day;
+                        $('#voteStart').attr('min', today);
+        })  // 시작일 선택시 오늘날짜를 기준으로 이전날짜는 선택불가
+        
+        $('#voteEnd').click(function(){
+            $('#voteEnd').attr('min', $('#voteStart').val());
+        })  // 마감일 선택시 시작일기준으로 이전날짜는 선택불가
                 
         $('#voteType').click(function(){
             if($(this).is(":checked")){

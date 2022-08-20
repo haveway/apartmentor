@@ -99,6 +99,21 @@ public class VoteServiceImpl implements VoteService{
 		return voteDao.totalCount(sqlSession, voteNo);
 	}
 
+	@Override
+	public List<VoteItem> selectVoteMember(VoteItem vi) {
+		return voteDao.selectVoteMember(sqlSession, vi);
+	}
+
+	@Override
+	public int decreaseItemCount(List<VoteItem> viList) {
+		return voteDao.decreaseItemCount(sqlSession, viList);
+	}
+
+	@Override
+	public int deleteVoteMember(VoteItem vi) {
+		return voteDao.deleteVoteMember(sqlSession, vi);
+	}
+
 
 
 

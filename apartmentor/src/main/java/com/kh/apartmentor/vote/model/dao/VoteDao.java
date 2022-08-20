@@ -95,4 +95,16 @@ public class VoteDao {
 		return sqlSession.selectOne("voteMapper.totalCount", voteNo);
 	}
 
+	public List<VoteItem> selectVoteMember(SqlSessionTemplate sqlSession, VoteItem vi) {
+		return sqlSession.selectList("voteMapper.selectVoteMember", vi);
+	}
+
+	public int decreaseItemCount(SqlSessionTemplate sqlSession, List<VoteItem> viList) {
+		return sqlSession.update("voteMapper.decreaseItemCount", viList);
+	}
+
+	public int deleteVoteMember(SqlSessionTemplate sqlSession, VoteItem vi) {
+		return sqlSession.delete("voteMapper.deleteVoteMember", vi);
+	}
+
 }

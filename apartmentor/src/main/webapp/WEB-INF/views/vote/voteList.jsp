@@ -176,7 +176,7 @@
         <c:if test="${not empty category}">
             <script>
                 $(function(){
-                    $("#voteList option[value=${category}]").attr("selected", true);  
+                    $("#voteCategory option[value=${category}]").attr("selected", true);  
                 })
             </script>
         </c:if>
@@ -192,10 +192,6 @@
 
 
     <jsp:include page="../common/footer.jsp"/>
-
-
-
-    </div>
 
 
 </body>
