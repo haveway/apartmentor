@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -221,8 +222,22 @@ public class VoteController {
 			return "";
 		}
 		
-		
 	}
+	
+	@RequestMapping("delete.vote")
+	public String deleteVote(int voteNo, HttpSession session) {
+		
+		int result = voteService.deleteVote(voteNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg2", "투표 삭제에 성공하셨습니다");
+			return "redirect:list.vote";
+		} else {
+			session.setAttribute("alertMsg1", "투표 삭제에 실패하셨습니다");
+			return "redirect:list.vote";
+		}
+	}
+		
 
 	
 

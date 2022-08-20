@@ -95,7 +95,9 @@
                                 	
                                 </td>
                                 <td>${v.voteTitle}</td>
-                                <td>[${v.voteStart} ~ ${v.voteEnd}]</td>
+                                <td>
+                                    [${v.voteStart} ~ ${v.voteEnd}]
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:when>

@@ -44,6 +44,9 @@ public interface VoteService {
 	int decreaseItemCount(List<VoteItem> viList);
 
 	int deleteVoteMember(VoteItem vi);
+
+	int deleteVote(int voteNo);
+
 	
 	
 	

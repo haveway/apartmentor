@@ -19,6 +19,7 @@
 	<div class="wrap">
 		<div id="map"></div>
 		<p class="chkoption">
+			<input style='zoom:1.5;' type="checkbox" id="chkBus" onclick="busMarkers()" /> 버스 정보 &nbsp; | &nbsp;
 			<input style='zoom:1.5;' type="checkbox" id="chkBike" onclick="bikeMarkers();" /> 따릉이 정보 &nbsp; | &nbsp;
 			<input style='zoom:1.5;' type="checkbox" id="chkPharm" onclick="pharmMarkers()" /> 약국 정보 &nbsp; | &nbsp;
 			<input style='zoom:1.5;' type="checkbox" id="chkTraffic" onclick="setOverlayMapTypeId()" /> 교통 정보 &nbsp; | &nbsp;
@@ -56,7 +57,7 @@
 					for (var i = 0; i < markersPharm.length; i++) {
 						markersPharm[i].setMap(map);
 						}            
-			}
+				}
 			function pharmMarkers(){
 				if(document.getElementById('chkPharm').checked){
 					setPharmMarkers(map)    
@@ -71,12 +72,32 @@
 					for (var i = 0; i < markersBike.length; i++) {
 						markersBike[i].setMap(map);
 						}            
-			}
+				}
 			function bikeMarkers(){
 				if(document.getElementById('chkBike').checked){
 					setBikeMarkers(map)    
 				} else {
 					setBikeMarkers(null);    
+				}
+			}
+
+			var markersBus = [];
+
+			function setBusMarkers(map) {
+				
+				
+				for (var i = 0; i < markersBus.length; i++) {
+					markersBus[i].setMap(map);
+				}            
+			}
+
+			function busMarkers(){
+				if(document.getElementById('chkBus').checked){
+					setBusMarkers(map);
+					// setInterval(setBusMarkers(null), 1995);
+					// setInterval(setBusMarkers(map), 2000);
+				} else {
+					setBusMarkers(null);
 				}
 			}
 
@@ -173,8 +194,8 @@
 
 			
 			$(function(){
-				pharm();
 				bike();
+				pharm();
 				loadBus();
 				setInterval(loadBus, 5000);
 			})
@@ -182,6 +203,7 @@
 
 
 			function loadBus() {
+				markersBus = [];
 				$.ajax({
 					url: 'bus640.api',
 					type: "GET",
@@ -230,7 +252,7 @@
 								});
 									
 								// 마커가 지도 위에 표시되도록 설정합니다
-								marker.setMap(map);
+								markersBus.push(marker);
 								
 								// 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:200px;height:80px;">' + plainNo + '<br>' + '혼잡도 : ' + congetion + '<br>' + 
@@ -248,10 +270,9 @@
 									infowindow.open(map, marker);  
 								});
 
-								// 4.995초뒤에 마커삭제
-								setTimeout(function(){
-									marker.setMap(null);
-								}, 4995);
+
+
+
 							});
 						}
 					}
@@ -304,7 +325,7 @@
 								});
 									
 								// 마커가 지도 위에 표시되도록 설정합니다
-								marker.setMap(map);
+								markersBus.push(marker);
 								
 								// 인포윈도우를 생성합니다
 								var iwContent = '<div style="padding:5px;width:200px;height:80px;">' + plainNo + '<br>' + '혼잡도 : ' + congetion + '<br>' + 
@@ -321,10 +342,8 @@
 								// 마커 위에 인포윈도우를 표시합니다
 								infowindow.open(map, marker);  
 							});
-								// 4.995초뒤에 마커삭제
-								setTimeout(function(){
-									marker.setMap(null);
-								}, 4995);
+
+
 							});
 						}
 					}
@@ -420,7 +439,7 @@
 
 				var currTime = hours + minutes;	// 현재시간 hhmm 형식의 String으로 담긴다.
 				// currTime = '2200';
-				console.log(currTime);
+				// console.log(currTime);
 				var yoil = today.getDay();	// 현재 요일
 				
 				
@@ -560,9 +579,9 @@
 									removable : true
 								});
 
-								// 마커에 마우스클릭 이벤트를 등록합니다
+								// 마커에 마우스오버 이벤트를 등록합니다
 								kakao.maps.event.addListener(marker, 'click', function() {
-								// 마커에 마우스클릭 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+								// 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
 									infowindow.open(map, marker);
 								});
 

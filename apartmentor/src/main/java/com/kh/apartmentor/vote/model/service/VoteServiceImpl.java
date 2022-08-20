@@ -114,6 +114,12 @@ public class VoteServiceImpl implements VoteService{
 		return voteDao.deleteVoteMember(sqlSession, vi);
 	}
 
+	@Override
+	public int deleteVote(int voteNo) {
+		return voteDao.deleteVote(sqlSession, voteNo);
+	}
+
+
 
 
 

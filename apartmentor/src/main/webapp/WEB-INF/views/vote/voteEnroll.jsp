@@ -10,14 +10,7 @@
     .wrap{
         width:1200px; margin:auto;
     }
-    .btnRemove{
-        background-color: red;
-        color: white;
-        border: none;
-    }
-    .btnRemove:hover{
-        cursor: pointer;
-    }
+
 </style>
 </head>
 
@@ -44,14 +37,14 @@
                 </div>
                 <br>
                 
-                <input type="button" class="btnAdd" value="항목추가"><br>
+                <input type="button" class="btn btn-info" id="btnAdd" value="항목추가"><br>
                 <hr>
                 투표시작일 <input type="date" id="voteStart" name="voteStart" min="" required> <br>
                 투표마감일 <input type="date" id="voteEnd" name="voteEnd" min="" required> <br>
 
                 복수선택 가능여부 <input type="checkbox" id="voteType" name="voteType" value="0" id=""> <br>
 
-                <button type="submit">등록</button> <button type="button" id="backBtn" onclick="location.href='list.vote'">취소</button>
+                <button class="btn submit" type="submit">등록</button> <button type="button" id="backBtn" class="btn btn-outline-info" onclick="location.href='list.vote'">취소</button>
             </div>
 
             
@@ -60,9 +53,9 @@
 
     <script>
         $(function() {                
-                 $('.btnAdd').click (function () {                                        
+                 $('#btnAdd').click (function () {                                        
                      $('.addItems').append (                        
-                         '<input type="text" size="50" name="itemName" placeholder="항목을 입력하세요." required>  <input type="file" name="upfile"> <input type="button" value="항목제거" class="btnRemove"> <br>'                    
+                         '<input type="text" size="50" name="itemName" placeholder="항목을 입력하세요." required>  <input type="file" name="upfile"> <input type="button" value="항목제거" class="btn btn-outline-info btnRemove"> <br>'                    
                      ); // end append                            
                      $('.btnRemove').on('click', function () { 
                          $(this).prev().prev().remove(); // remove the textbox
@@ -95,8 +88,6 @@
                 $('#voteType').val('0');
 
             }
-            
-
         });
      </script>
 

@@ -107,4 +107,8 @@ public class VoteDao {
 		return sqlSession.delete("voteMapper.deleteVoteMember", vi);
 	}
 
+	public int deleteVote(SqlSessionTemplate sqlSession, int voteNo) {
+		return sqlSession.update("voteMapper.deleteVote", voteNo);
+	}
+
 }

@@ -28,7 +28,7 @@
                 <h3>Q. ${v.voteTitle}</h3> 
             </div>
             <div style="margin-left:55%;">
-                <button type="button" id="backBtn" onclick="location.href='list.vote'">목록</button>
+                <button type="button" id="backBtn" class="btn btn-outline-info" onclick="location.href='list.vote'">목록</button>
             </div>
             <div style="margin-left:300px">
                 <c:if test="${v.status == 'Y'}">
@@ -71,28 +71,21 @@
                     </table>
                 <br>
                 <div style="margin-left:150px;">
-                    <button type="submit" id="reVote">다시 투표하기</button><br>
-                    
+                    <button type="submit" class="btn submit" id="reVote">다시 투표하기</button><br>
                 </div>
          </div>
-        
-
     </div>
-    <script>
 
+    <script>
             $('#reVote').click(function(){
                 location.href = 're.vote?voteNo=${v.voteNo}&userNo=${loginUser.userNo}'
             });
-        
-       
 
         $(function(){
             if("${v.status}" != 'Y'){
                 $('#reVote').attr('disabled', true);
             }
         })
-   
-
     </script>
 
 </body>

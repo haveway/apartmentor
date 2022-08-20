@@ -30,7 +30,7 @@
                 <h3>Q. ${v.voteTitle}</h3> 
             </div>
             <div style="margin-left:55%;">
-                <button type="button" id="backBtn" onclick="location.href='list.vote'">목록</button>
+                <button type="button" id="backBtn" class="btn btn-outline-info" onclick="location.href='list.vote'">목록</button>
             </div>
             <div style="margin-left:300px">
                 <c:if test="${v.status == 'Y'}">
@@ -69,13 +69,15 @@
                 </table>
                 <br>
                 <div style="margin-left:150px;">
-                    <button type="submit" id="submitVote" onclick="submitVote();">투표하기</button><br>
+                    <button type="submit" id="submitVote" class="btn submit" onclick="submitVote();">투표하기</button>
+                    <c:if test="${loginUser.userId eq 'admin'}">
+                        <button type="button" class="btn btn-outline-info" id="deleteVote" onclick="location.href='delete.vote?voteNo=${v.voteNo}'">투표삭제</button>
+                    </c:if>
                 </div>
          </div>
-
-        
-
+         
     </div>
+
     <script>
          $(function(){
             if("${v.status}" != 'Y'){
@@ -84,7 +86,6 @@
         })
 
         function submitVote(){
-
             $("input[name='checkItem']:checked").each(function(){	
 	          var itemNo = $(this).val();
               var userNo = $('#userNo').val();
@@ -93,10 +94,7 @@
               location.href = "submit.vote?itemNo=" + itemNo + "&userNo=" + userNo + "&voteNo=" + voteNo 
 
             });
-            
         }
-
-   
 
     </script>
 

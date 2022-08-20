@@ -81,12 +81,15 @@
           THEN 'N'
           ELSE 'W'
 		   END
+		  WHERE STATUS != 'X'
+		 
 
 	</update>
 	
 	<select id="selectListCount" resultType="_int">
 	  	SELECT COUNT(*)
 	  	  FROM VOTE
+	  	 WHERE STATUS != 'X'
 	</select>
 	
 	<select id="selectVoteList" resultMap="voteResultSet">
@@ -100,6 +103,8 @@
 			   STATUS
 		  FROM
 		 	   VOTE
+ 	     WHERE 
+ 	     	   STATUS != 'X'
          ORDER
             BY
                VOTE_NO DESC
@@ -124,6 +129,7 @@
 		<if test="category == '전체'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
+			    WHERE STATUS != 'X'
 		</if>
 	</select>
 	
@@ -191,6 +197,9 @@
 					   STATUS
 				  FROM
 				 	   VOTE
+				 WHERE 
+				 	   STATUS != 'X'	   
+				 	   
 		         ORDER
 		            BY
 		               VOTE_NO DESC
@@ -219,7 +228,9 @@
 		 WHERE
 		   		VOTE_TITLE
 		  LIKE
-		  		'%' || #{keyword} || '%'						
+		  		'%' || #{keyword} || '%'
+		   AND
+		   	    STATUS != 'X'						
   	</select>
 	<select id="selectVote" resultMap="voteResultSet">
 		SELECT
@@ -320,7 +331,15 @@
 		   	   USER_NO = #{userNo}
 	</delete>
 	
-
+	<update id="deleteVote">
+		UPDATE
+			   VOTE
+		  SET
+		  	   STATUS = 'X'
+ 		 WHERE
+		 	   VOTE_NO = #{voteNo}
+	</update>
+	
   
   
 </mapper>

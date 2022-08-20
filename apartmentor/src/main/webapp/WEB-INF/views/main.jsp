@@ -455,7 +455,7 @@
                         </tr>
                     </table>
 					<div style="margin-left:150px;">
-						<button class="btn-primary" type="submit">방문 예약 등록</button>
+						<button class="btn submit" type="submit">방문 예약 등록</button>
 					</div>
                     <script>
                     $('#visitCarDate').click(function(){

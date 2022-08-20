@@ -46,13 +46,13 @@
    </insert>
    
    <update id="setDayVisitCar">
-      UPDATE PARKING_VISIT
-           SET STATUS = CASE
-           WHEN VISITCAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-           THEN 'Y'
- <![CDATA[WHEN VISITCAR_DATE > TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
-           THEN 'W'
-           ELSE 'N'
+       UPDATE PARKING_VISIT
+          SET STATUS = CASE
+         WHEN VISITCAR_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+         THEN 'Y'
+<![CDATA[WHEN VISITCAR_DATE > TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+         THEN 'W'
+         ELSE 'N'
           END
    </update>
    
@@ -62,7 +62,7 @@
       WHERE P.USER_NO = M.USER_NO
       AND M.APT_NO = #{aptNo}
       AND P.STATUS IN('Y','W')
-      ORDER BY VISITCAR_DATE ASC
+      ORDER BY VISITCAR_DATE DESC
 	</select>
 
    
@@ -72,7 +72,6 @@
       FROM
             PARKING_VISIT
    </select>
-   
    
    <select id="adminVisitCarList" resultMap="visitCarResultSet">
       SELECT VISITCAR_NO, CAR_NO, VISITCAR_PHONE, TO_CHAR(VISITCAR_DATE, 'YYYY-MM-DD') AS VISITCAR_DATE, PURPOSE, P.STATUS, APT_NO, P.USER_NO

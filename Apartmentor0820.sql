@@ -480,7 +480,7 @@ COMMENT ON COLUMN VOTE.VOTE_START IS '시작날짜';
 COMMENT ON COLUMN VOTE.VOTE_END IS '종료날짜';
 COMMENT ON COLUMN VOTE.VOTE_CREATE IS '생성날짜';
 COMMENT ON COLUMN VOTE.VOTE_TYPE IS '(1=가능, 2=불가능)';
-COMMENT ON COLUMN VOTE.STATUS IS '투표상태(Y=투표중, N=투표끝)';
+COMMENT ON COLUMN VOTE.STATUS IS '투표상태(Y=투표중, N=투표끝, W=투표예정, X=투표삭제)';
 
 
 --------------------------------------------------
