@@ -47,6 +47,9 @@
             display: flex;
             flex-direction: row;
             margin: auto;
+			position: -webkit-sticky; /* 사파리 브라우저 지원 */
+    		position: sticky;
+			top: 0px;
         }
         .mainWrap{
         width: 1200px;
