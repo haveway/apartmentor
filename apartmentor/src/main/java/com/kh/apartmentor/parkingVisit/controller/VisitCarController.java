@@ -30,16 +30,16 @@ public class VisitCarController {
 		
 		if(selectResult > 0) {
 			session.setAttribute("alertMsg1", "동일한 차량은 하루에 한번만 등록하셔도 됩니다!");
-			mv.setViewName("main");
+			mv.setViewName("redirect:main.do");
 		} else {
 			int enrollResult = enrollVisitCar(p);
 			
 			if(enrollResult > 0) {
 				session.setAttribute("alertMsg2", "방문차량  등록완료"); 
-				mv.setViewName("main");
+				mv.setViewName("redirect:main.do");
 			} else {
 				session.setAttribute("alertMsg1", "방문차량 등록실패. 관리자에게 문의해주세요.");
-				mv.setViewName("main");
+				mv.setViewName("redirect:main.do");
 			}
 		}
 		

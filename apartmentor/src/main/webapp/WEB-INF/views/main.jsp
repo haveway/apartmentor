@@ -435,7 +435,10 @@
                     <input type="hidden" name="userNo" value="${loginUser.userNo}">
 					<div class="title">
 						방문차량 등록
-					   </div>
+					</div>
+					<div class="a1">
+						<a href="regoCar.rg" class="remainCoupon"></a>
+						</div>
                     <table class="table visitCar" >
                         <tr>
                             <td>방문일</td>
@@ -455,7 +458,7 @@
                         </tr>
                     </table>
 					<div style="margin-left:150px;">
-						<button class="btn submit" type="submit">방문 예약 등록</button>
+						<button class="btn submit" id="submitVisitCar" type="submit">방문 예약 등록</button>
 					</div>
                     <script>
                     $('#visitCarDate').click(function(){
@@ -467,6 +470,14 @@
                         var today =  year + '-' + month  + '-' + day;
                         $('#visitCarDate').attr('min', today);
                     })  // 방문일 선택시 오늘날짜를 기준으로 이전날짜는 선택불가
+
+					$(function(){
+						var couponRemain = 10 - '${couponUsage}';
+						$('.remainCoupon').html("이번달 남은 주차쿠폰 : " + couponRemain);
+						if(couponRemain == 0){
+							$('#submitVisitCar').attr("disabled", true);
+						}
+					})
                     </script>
 
                 </form>

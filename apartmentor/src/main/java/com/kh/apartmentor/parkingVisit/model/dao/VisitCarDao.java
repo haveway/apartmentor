@@ -49,6 +49,9 @@ public class VisitCarDao {
 	public int deleteVisitCar(SqlSessionTemplate sqlSession, ParkingVisit p){
 		return sqlSession.delete("visitCarMapper.deleteVisitCar", p);
 	}
-	
+
+	public int visitCarCount(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("visitCarMapper.visitCarCount", userNo);
+	}
 	
 }

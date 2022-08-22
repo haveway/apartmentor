@@ -58,6 +58,11 @@ public class VisitCarServiceImpl implements VisitCarService {
 	public int deleteVisitCar(ParkingVisit p){
 		return visitCarDao.deleteVisitCar(sqlSession, p);
 	}
+
+	@Override
+	public int visitCarCount(int userNo) {
+		return visitCarDao.visitCarCount(sqlSession, userNo);
+	}
 	
 	
 	

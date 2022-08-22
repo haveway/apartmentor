@@ -23,4 +23,6 @@ public interface VisitCarService {
 	ArrayList<Parking> adminVisitCarList(PageInfo pi);
 	
 	int deleteVisitCar(ParkingVisit p);
+
+	int visitCarCount(int userNo);
 }
