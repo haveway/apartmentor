@@ -171,6 +171,7 @@
     .accordion-content {padding-top: 10px;}
     .hr1{margin-bottom: 0; margin-top: 0; height: 1px;}
     .last{border-bottom: 2px solid black;}
+    
     </style>
 </head>
 <body>
@@ -339,13 +340,13 @@
 
                         <b>휴대폰 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required value="${loginUser.phone}">
+                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required>
                         </div>
                         <p id="p6">-을 제외한 11자리 숫자로 입력하세요.</p>
 
                         <b>이메일 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required value="${loginUser.email}">
+                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required>
                         </div>
                         <p id="p7">예시와 같은 형식으로 입력하세요.</p>
                         
@@ -364,13 +365,17 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="insertMember" class="btn submit" disabled>가입신청</button>
+                        <button type="submit" id="updateMember" class="btn submit" disabled>정보수정</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 	<script>
+	let up2;
+	let up3;
+	let up6;
+	let up7;
 		/* 비밀번호 유효성 검사 */
 		function checkPwd() {
 			let p2 = $('#p2');
@@ -378,13 +383,16 @@
 			let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
 			if(!regExpPwd.test(addPwd)){
 				 p2.attr('style','color:red;');
-				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
-				 $('#insertMember').attr('disabled',true);
+				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.');
+				 up2 = "N";
+				 checkBtn2();
+				 
 			}
 			else {
 				p2.attr('style','color:#32CD32;');
 				p2.text('사용가능한 비밀번호 입니다.')
-				$('#insertMember').attr('disabled',false);
+				up2 = "Y";
+				checkBtn2();
 			}
 		}
 		
@@ -396,12 +404,14 @@
 			if(addPwd != rePwd1){
 				p3.attr('style','color:red;');
 				p3.text('비밀번호를 일치하게 입력해주세요.')
-				$('#insertMember').attr('disabled',true);
+				up3 = "N";
+				checkBtn2();
 			}
 			else {
 				p3.attr('style','color:#32CD32;');
 				p3.text('비밀번호가 일치합니다.')
-				$('#insertMember').attr('disabled',false);
+				up3 = "Y";
+				checkBtn2();
 			} 
 		}
 		/* 휴대폰 체크 형식 */
@@ -412,12 +422,14 @@
 	 		if(!regExpPhone.test(addPhone)){
 	 			p6.attr('style','color:red;');
 				p6.text('-을 제외한 11자리 숫자로 입력하세요.')
-				$('#insertMember').attr('disabled',true);
+				up6 = "N";
+				checkBtn2();
 			} 
 	 		else {
 				p6.attr('style','color:#32CD32;');
 				p6.text('올바른  형식 입니다.');	
-				$('#insertMember').attr('disabled',false);
+				up6 = "Y";
+				checkBtn2();
 			}
 		}
 	 	
@@ -430,14 +442,23 @@
 	 		if(!regExpEmail.test(addEmail)){
 	 			p7.attr('style','color:red;');
 				p7.text('올바른 형식의 이메일이 아닙니다.')
-				$('#insertMember').attr('disabled',true);
+				up7 = "N";
+				checkBtn2();
 			} 
 	 		else {
 				p7.attr('style','color:#32CD32;');
 				p7.text('올바른  형식 입니다.');	
-				$('#insertMember').attr('disabled',false);
+				up7 = "Y";
+				checkBtn2();
 			}
 		}
+	 	function checkBtn2(){
+	 		if(up2 == 'Y' && up3 == 'Y' && up6  == 'Y' && up7 == 'Y'){
+				$('#updateMember').attr('disabled',false);
+			} else {
+				$('#updateMember').attr('disabled',true);
+			}
+	 	}
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	

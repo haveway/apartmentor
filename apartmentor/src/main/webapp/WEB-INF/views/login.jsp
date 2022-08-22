@@ -212,7 +212,7 @@
                         
                         <b>동 </b>
                         <div class="modal-input">
-                        	<input type="text" id="addAptNo1" name="aptNo1" placeholder="ex)101" oninput="checkAptNo1()" required>
+                        	<input type="text" id="addAptNo1" name="aptNo1" placeholder="ex)1~9" oninput="checkAptNo1()" required>
                         </div>
                         <p id="p8-1">숫자만 입력해 주세요.</p>
                         <b>호수 : </b>
@@ -264,7 +264,7 @@
 	
                    <b>동 </b>
                    <div class="modal-input">
-                 		<input type="text" id="aptNo1Id" name="aptNo1" placeholder="ex)101" required oninput="findId4_1()">
+                 		<input type="text" id="aptNo1Id" name="aptNo1" placeholder="ex)1~9" required oninput="findId4_1()">
                    </div>
                    <p id="p14-1">숫자만 입력해 주세요.</p>
                    <b>호수 : </b>
@@ -277,7 +277,7 @@
 	            
 	            <!-- Footer -->
 	            <div class="modal-footer">
-	                <button class="btn submit" id="selectId"onclick="selectId()">찾기</button>
+	                <button class="btn submit" id="selectId"onclick="selectId1()">찾기</button>
 	            </div>
             </div>
         </div>
@@ -297,31 +297,31 @@
 					<div class="modal-body" id="pwdBody">
 						<b>아이디 : </b>
 						<div class="modal-input">
-							<input type="text" id="idPwd" placeholder="ex)user01" required>
+							<input type="text" id="idPwd" placeholder="ex)user01" required oninput="findPwd2()">
 						</div>
-						<p>아이디를 입력하세요</p>
+						<p id="p15">아이디를 입력하세요</p>
 					    <b>이름 : </b>
 					    <div class="modal-input">
-					    	<input type="text" id="namePwd" placeholder="ex)홍길동" required>
+					    	<input type="text" id="namePwd" placeholder="ex)홍길동" required oninput="findPwd1()">
 					    </div>
-					    <p>한글이름으로 입력하세요.</p>
+					    <p id="p16">한글이름으로 입력하세요.</p>
 					
 					    <b>생년월일 : </b>
 					    <div class="modal-input">
-					    	<input type="text" id="birthdayPwd"placeholder="ex)901201" required>
+					    	<input type="text" id="birthdayPwd"placeholder="ex)901201" required oninput="findPwd3()">
 					    </div>
-					    <p>6자리 숫자로 입력하세요.</p>
+					    <p id="p17">6자리 숫자로 입력하세요.</p>
 					
 					    <b>동 </b>
                         <div class="modal-input">
-                        	<input type="text" id="pwdAptNo1" placeholder="ex)101"  required>
+                        	<input type="text" id="pwdAptNo1" placeholder="ex)1~9"  required oninput="findPwd4_1()">
                         </div>
-                        <p id="p8-1">숫자만 입력해 주세요.</p>
+                        <p id="p18-1">숫자만 입력해 주세요.</p>
                         <b>호수 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="pwdAptNo2" placeholder="ex)1001" required>
+                        	<input type="text" id="pwdAptNo2" placeholder="ex)1001" required oninput="findPwd4_2()">
                         </div>
-                        <p id="p8-2">숫자만 입력해 주세요.</p>
+                        <p id="p18-2">숫자만 입력해 주세요.</p>
 					</div>
 	
 					<!-- Footer -->
@@ -334,9 +334,15 @@
 	</div>
     
     <script>
-
-	
-	   
+	let add1;
+	let add2;
+	let add3;
+	let add4;
+	let add5;
+	let add6;
+	let add7;
+	let add8;
+	let add9;
 	/* 회원 가입 */
 	
 	/* 중복체크,유효성검사  */
@@ -345,6 +351,7 @@
 		let addId = $('#addId').val();
 		$.ajax({
 			url : 'checkId.me',
+			async: false,
 			data : {
 				userId : addId
 			},
@@ -352,27 +359,33 @@
 				if(result == 0){
 					p1.attr('style','color:red;');
 					p1.text('중복되는 아이디입니다');
-					$('#insertMember').attr('disabled',true);
+					add1 = 'N';
+					checkBtn1();
 				}
 				else {
-					 let regExpId = /^\w{4,8}$/;
+					 let regExpId = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,8}$/;
 					 if(!regExpId.test(addId)){ // 조건에 안맞음
 						 p1.attr('style','color:red;');
 						 p1.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
-						 $('#insertMember').attr('disabled',true);
+						 add1 = 'N'
+						 checkBtn1();
 					 } 
 					 else { //조건맞음
 						p1.attr('style','color:#32CD32;');
 						p1.text('멋진 아이디네요!');
-						$('#insertMember').attr('disabled',false);
+						add1 = 'Y'
+						checkBtn1();
 					 }
 				}
 			},
 			error : function(result){
-				console.log('실패')
+				console.log('실패');
+				swal('오류', "일치하는 정보가 없습니다", 'warning');
 			}
 		})
 	}
+	
+
 	
 	/* 비밀번호 유효성 검사 */
 	function checkPwd() {
@@ -382,12 +395,14 @@
 		if(!regExpPwd.test(addPwd)){
 			 p2.attr('style','color:red;');
 			 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
-			 $('#insertMember').attr('disabled',true);
+			 add2 = 'N'
+			 checkBtn1();
 		}
 		else {
 			p2.attr('style','color:#32CD32;');
 			p2.text('사용가능한 비밀번호 입니다.')
-			$('#insertMember').attr('disabled',false);
+			add2 = 'Y'
+			checkBtn1();
 		}
 	}
 	
@@ -399,12 +414,14 @@
 		if(addPwd != rePwd1){
 			p3.attr('style','color:red;');
 			p3.text('비밀번호를 일치하게 입력해주세요.')
-			$('#insertMember').attr('disabled',true);
+			add3 = 'N'
+			checkBtn1();
 		}
 		else {
 			p3.attr('style','color:#32CD32;');
 			p3.text('비밀번호가 일치합니다.')
-			$('#insertMember').attr('disabled',false);
+			add3 = 'Y'
+			checkBtn1();
 		} 
 	}
  	
@@ -416,12 +433,14 @@
 		if(!regExpName.test(addName)){
 			p4.attr('style','color:red;');
 			p4.text('올바른 형식의 이름을 입력하세요.(한글만 입력 가능)')
-			$('#insertMember').attr('disabled',true);
+			add4 = 'N'
+			checkBtn1();
 		}
 		else {
 			p4.attr('style','color:#32CD32;');
 			p4.text('멋진 이름이네요!');	 
-			$('#insertMember').attr('disabled',false);
+			add4 = 'Y'
+			checkBtn1();
 		}
 	}
  	
@@ -433,11 +452,13 @@
  		if (!regExpBirth.test(addBirthday)) {
  			p5.attr('style','color:red;');
 			p5.text('6자리 숫자로 입력하세요.')
-			$('#insertMember').attr('disabled',true);
+			add5 = 'N'
+			checkBtn1();
 		} else {
 			p5.attr('style','color:#32CD32;');
 			p5.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			add5 = 'Y'
+			checkBtn1();
 		}
 	}
  	
@@ -449,12 +470,14 @@
  		if(!regExpPhone.test(addPhone)){
  			p6.attr('style','color:red;');
 			p6.text('-을 제외한 11자리 숫자로 입력하세요.')
-			$('#insertMember').attr('disabled',true);
+			add6 = 'N'
+			checkBtn1();
 		} 
  		else {
 			p6.attr('style','color:#32CD32;');
 			p6.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			add6 = 'Y'
+			checkBtn1();
 		}
 	}
  	
@@ -467,12 +490,14 @@
  		if(!regExpEmail.test(addEmail)){
  			p7.attr('style','color:red;');
 			p7.text('올바른 형식의 이메일이 아닙니다.')
-			$('#insertMember').attr('disabled',true);
+			add7 = 'N'
+			checkBtn1();
 		} 
  		else {
 			p7.attr('style','color:#32CD32;');
 			p7.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			add7 = 'Y'
+			checkBtn1();
 		}
 	}
  	
@@ -480,16 +505,18 @@
  	function checkAptNo1() {
  		let addAptNo1 = $('#addAptNo1').val();
  		let p8 = $('#p8-1');
- 		let regExpAptNo =  /^\d{3,4}$/;
+ 		let regExpAptNo =  /^\d{1}$/;
  		if(!regExpAptNo.test(addAptNo1)){
  			p8.attr('style','color:red;');
 			p8.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
-			$('#insertMember').attr('disabled',true);
+			add8 = 'N'
+			checkBtn1();
 		} 
  		else {
 			p8.attr('style','color:#32CD32;');
 			p8.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			add8 = 'Y'
+			checkBtn1();
 		}
 	}
  	function checkAptNo2() {
@@ -499,15 +526,23 @@
  		if(!regExpAptNo.test(addAptNo2)){
  			p8.attr('style','color:red;');
 			p8.text('예시를 참고하여 입력해주세요.(숫자만 입력)')
-			$('#insertMember').attr('disabled',true);
+			add9 = 'N'
+			checkBtn1();
 		} 
  		else {
 			p8.attr('style','color:#32CD32;');
 			p8.text('올바른  형식 입니다.');	
-			$('#insertMember').attr('disabled',false);
+			add9 = 'Y'
+			checkBtn1();
 		}
 	}
- 	
+ 	function checkBtn1(){
+ 		if(add1 == 'Y' && add2 == 'Y' && add3 == 'Y' && add4  == 'Y' && add5 == 'Y' && add6 == 'Y' && add7 == 'Y' && add8 == 'Y' && add9 == 'Y' ){
+			$('#insertMember').attr('disabled',false);
+		} else {
+			$('#insertMember').attr('disabled',true);
+		}
+ 	}
  	
 	/* 아이디 찾기 */
 
@@ -516,11 +551,10 @@
  		let nameId = $('#nameId').val();
  		let p11 = $('#p11');
  		let regExpName = /^[가-힣]{2,}$/;
-
  		if (!regExpName.test(nameId)) {
  			p11.attr('style','color:red;');
- 			p11.text('한글이름으로 입력하세요.')
-			$('#selectId').attr('disabled',true);
+ 			p11.text('한글이름으로 입력하세요.');
+ 			$('#selectId').attr('disabled',true);
 		} else {
 			p11.attr('style','color:#32CD32;');
 			p11.text('올바른  형식 입니다.');	
@@ -536,8 +570,8 @@
     	
     	if (!regExpEmail.test(emailId)) {
  			p12.attr('style','color:red;');
- 			p12.text('예시와 같은 형식으로 입력하세요.')
-			$('#selectId').attr('disabled',true);
+ 			p12.text('예시와 같은 형식으로 입력하세요.');
+ 			$('#selectId').attr('disabled',true);
 		} else {
 			p12.attr('style','color:#32CD32;');
 			p12.text('올바른  형식 입니다.');	
@@ -553,8 +587,8 @@
     	
  		if (!regExpBirth.test(birthdayId)) {
  			p13.attr('style','color:red;');
- 			 p13.text('6자리 숫자로 입력하세요.') 
-			$('#selectId').attr('disabled',true);
+ 			p13.text('6자리 숫자로 입력하세요.') ;
+ 			$('#selectId').attr('disabled',true);
 		} else {
 			p13.attr('style','color:#32CD32;');
 			p13.text('올바른  형식 입니다.');	
@@ -566,12 +600,12 @@
     function findId4_1() {
     	let aptNo1Id = $('#aptNo1Id').val();
  		let p141 = $('#p14-1');
- 		let regExpAptNo =  /^\d{3,4}$/;
+ 		let regExpAptNo =  /^\d{1}$/;
  		
  		if (!regExpAptNo.test(aptNo1Id)) {
  			p141.attr('style','color:red;');
- 			p141.text('숫자만 입력해 주세요.')
-			$('#selectId').attr('disabled',true);
+ 			p141.text('숫자만 입력해 주세요.');
+ 			$('#selectId').attr('disabled',true);
 		} else {
 			p141.attr('style','color:#32CD32;');
 			p141.text('올바른  형식 입니다.');	
@@ -587,8 +621,8 @@
  		
  		if (!regExpAptNo.test(aptNo2Id)) {
  			p142.attr('style','color:red;');
- 			p142.text('숫자만 입력해 주세요.')
-			$('#selectId').attr('disabled',true);
+ 			p142.text('숫자만 입력해 주세요.');
+ 			$('#selectId').attr('disabled',true);
 		} else {
 			p142.attr('style','color:#32CD32;');
 			p142.text('올바른  형식 입니다.');	
@@ -597,7 +631,7 @@
     }
     
  	/* 아이디 찾기 버튼 ajax */
-    function selectId() {
+    function selectId1() {
     	$.ajax({
     		url : 'selectId.me',
     		data : {
@@ -616,12 +650,89 @@
     			}	
     		},
 			error:function(){
-				console.log('실패')
+				console.log('실패');
+				swal('오류', "일치하는 정보가 없습니다", 'warning');
 			}	
     	})
 	}
  	
     /* 비밀번호 찾기 */
+    /* 비밀번호 찾기 아이디  */
+    function findPwd2() {
+    	let idPwd = $('#idPwd').val();	
+    	let p15 = $('#p15');
+    	let regExpId = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,8}$/;
+		if(!regExpId.test(idPwd)){ // 조건에 안맞음
+			p15.attr('style','color:red;');
+			p15.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
+		} else {
+			p15.attr('style','color:#32CD32;');
+			p15.text('멋진 아이디네요!');
+		}
+    }
+    
+    
+    /* 비밀번호 찾기 이름  */
+    function findPwd1() {
+ 		let namePwd = $('#namePwd').val();
+ 		let p16 = $('#p16');
+ 		let regExpName = /^[가-힣]{2,}$/;
+
+ 		if (!regExpName.test(namePwd)) {
+ 			p16.attr('style','color:red;');
+ 			p16.text('한글이름으로 입력하세요.')
+		} else {
+			p16.attr('style','color:#32CD32;');
+			p16.text('올바른  형식 입니다.');	
+		}
+	}
+	
+
+    
+    /* 비밀번호 찾기 생년월일  */
+    function findPwd3() {
+    	let birthdayPwd = $('#birthdayPwd').val();
+    	let p17 = $('#p17');
+    	let regExpBirth = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    	
+ 		if (!regExpBirth.test(birthdayPwd)) {
+ 			p17.attr('style','color:red;');
+ 			p17.text('6자리 숫자로 입력하세요.') 
+		} else {
+			p17.attr('style','color:#32CD32;');
+			p17.text('올바른  형식 입니다.');	
+		}
+    }
+    
+    /* 비밀번호 찾기 동  */
+    function findPwd4_1() {
+    	let aptNo1Pwd = $('#pwdAptNo1').val();
+ 		let p181 = $('#p18-1');
+ 		let regExpAptNo =  /^\d{1}$/;
+ 		
+ 		if (!regExpAptNo.test(aptNo1Pwd)) {
+ 			p181.attr('style','color:red;');
+ 			p181.text('숫자만 입력해 주세요.')
+		} else {
+			p181.attr('style','color:#32CD32;');
+			p181.text('올바른  형식 입니다.');	
+		}
+    }
+    
+    /* 비밀번호 찾기 호  */
+    function findPwd4_2() {
+ 		let aptNo2Pwd = $('#pwdAptNo2').val();
+ 		let p182 = $('#p18-2');
+ 		let regExpAptNo =  /^\d{3,4}$/;;
+ 		
+ 		if (!regExpAptNo.test(aptNo2Pwd)) {
+ 			p182.attr('style','color:red;');
+ 			p182.text('숫자만 입력해 주세요.')
+		} else {
+			p182.attr('style','color:#32CD32;');
+			p182.text('올바른  형식 입니다.');	
+		}
+    }
     
     
     /* 비밀번호 변경 모달 */
@@ -646,12 +757,12 @@
     						  + '<div class="modal-body" id="pwdBody">'
     						  + '<b>' + '비밀번호' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="text" id="updatePwd1" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
+    						  + '<input type="password" id="updatePwd1" name="newPwd" placeholder="ex)asd123!@#" oninput="checkPwd2()" required>'
     						  + '</div>'
     						  + '<p id="p9">' + '6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.' + '</p>'
     						  + '<b>' + '비밀번호 확인' +'</b>'
     						  + '<div class="modal-input">' 
-    						  + '<input type="text" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2()" required>'
+    						  + '<input type="password" id="reUpdatePwd" name="checkPwd" placeholder="ex)asd123!@#" oninput="rePwd2()" required>'
     						  + '</div>'
     						  + '<p id="p10">' + '비밀번호를 일치하게 입력해주세요.' + '</p>'
     						  + '</div>'

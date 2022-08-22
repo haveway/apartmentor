@@ -67,8 +67,22 @@ public class MemberController {
 		Member loginUser = memberService.loginMember(m);
 		
 		if(loginUser != null && bCryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+			
+			if(loginUser.getStatus().equals("W")) {
+				
+				session.setAttribute("alertMsg1", "승인되지 않은 회원입니다.");
+				mv.setViewName("redirect:/");
+				
+			} else if(loginUser.getStatus().equals("N")){
+				
+				session.setAttribute("alertMsg1", "탈퇴(정지)된 회원입니다");
+				mv.setViewName("redirect:/");
+				
+			}else {
+			
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("redirect:main.do");
+			}
 		} else {
 			session.setAttribute("noLogin", "noLogin");
 			mv.setViewName("redirect:/");

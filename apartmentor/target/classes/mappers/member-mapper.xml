@@ -28,7 +28,6 @@
 		       MEMBER
 		 WHERE 
 		       USER_ID = #{userId}
-		   AND STATUS = 'Y'               	       	
 	</select>
 	<insert id="insertMember">
 		INSERT
