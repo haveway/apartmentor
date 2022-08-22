@@ -600,7 +600,7 @@
 			
 			</script>
         
-            <div id="content6" class="scrollBar" style="height: 500px; overflow: auto; overflow-x:hidden;">
+            <div id="content6" class="scrollBar" style="height: 300px; overflow: auto; overflow-x:hidden; margin-top: 100px;">
 				<div class="title" style="width: 500px; text-align: left;">
 					${loginUser.aptNo}의 이번 달 일정 안내
 				</div>
@@ -613,7 +613,8 @@
 							<form id="visitStatus" action="" method="post">
 							<input type="hidden" name="email" value="${loginUser.email}">
 							<input type="hidden" name="vno" value="${vL.visitNo}">
-								<tr class="tr" data-toggle="modal" data-target="#myModal" data-id="${loginUser.aptNo}님의 ${vL.visitDate} ${vL.visitTime}에  ${vL.visitValue} 일정이 있습니다.">
+								<tr class="tr" style="cursor: pointer;" data-toggle="modal" data-target="#myModal"
+										 data-id="${loginUser.aptNo}님의 ${vL.visitDate} ${vL.visitTime}에  ${vL.visitValue} 일정이 있습니다.">
 									<th>
 										<div name="status">
 											${fn:substring(vL.visitDate, 8, 10)}
@@ -673,7 +674,7 @@
 					
 					<c:forEach var="nL" items="${noticeList}">
 						<c:if test="${nL ne null}">
-							<tr>
+							<tr style="cursor: pointer;" onclick="location.href='detail.notice?nno=${nL.noticeNo}'">
 								<th>
 									<div name="status">
 										${fn:substring(nL.noticeEndDate, 8, 10)}
