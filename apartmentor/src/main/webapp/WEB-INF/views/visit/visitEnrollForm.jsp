@@ -260,7 +260,7 @@ h1 {
 				
 				if($("#datepicker").val() == "" || $("#timepicker").val() == ""){
 					swal({
-						title : "날짜랑, 시간을 정해주세요!",
+						title : "날짜와 시간 모두 정해주셔야 합니다!",
 					    	icon  : "error",
 					    	closeOnClickOutside : false
 					})

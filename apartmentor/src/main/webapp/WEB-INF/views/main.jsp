@@ -673,7 +673,7 @@
 					</c:forEach>
 					
 					<c:forEach var="nL" items="${noticeList}">
-						<c:if test="${nL ne null}">
+						<c:if test="${nL ne null and nL.noticeStartDate ne null}">
 							<tr style="cursor: pointer;" onclick="location.href='detail.notice?nno=${nL.noticeNo}'">
 								<th>
 									<div name="status">
