@@ -145,9 +145,7 @@
             background-color: rgb(0,88,155);    
             color: white;        
         }
-        
-        
-        
+
         
         
     /* 메뉴바 */    
