@@ -28,26 +28,30 @@
         <input type="hidden" name="userNo" id="userNo" value="${loginUser.userNo}">
         <input type="hidden" name="voteNo" id="voteNo" value="${v.voteNo}">
         
-            <div style="margin-left:250px;">
-                <h1>Q. ${v.voteTitle}</h1><br>
-            </div>
-            <div style="margin-left:66%;">
-                <button type="button" id="backBtn" class="btn btn-outline-info" onclick="location.href='list.vote'">목록</button>
-            </div>
-            <div style="margin-left:250px">
+            <div style="margin-left:250px; margin-bottom:none;">
                 <c:if test="${v.status == 'Y'}">
-                    <p style="color:blue; margin: 0%;">[투표진행중]<br></p>
+                    <span style="color:blue; margin: 0%; font-size: 25px;">[진행중]</span>
                 </c:if>
                 <c:if test="${v.status == 'N'}">
-                    <p style="color:gray; margin: 0%;">[투표완료]<br></p>
+                    <span style="color:gray; margin: 0%; font-size: 25px;">[완료]</span>
                 </c:if>
                 <c:if test="${v.status == 'W'}">
-                    <p style="color:red; margin: 0%;">[투표예정]<br></p>
+                    <span style="color:red; margin: 0%; font-size: 25px;">[예정]</span>
                 </c:if>
+                <h1 style="line-height: 1;">${v.voteTitle}</h1>
+            <br>
+            </div>
+            <div style="margin-left:250px">
                 <c:if test="${v.voteType == 1}"> <!-- voteType이 1이면 복수선택 표시-->
                     복수선택<br>
                 </c:if>
-                투표기한 : ${v.voteStart} ~ ${v.voteEnd}
+            투표기한 : ${v.voteStart} ~ ${v.voteEnd}
+            <span style="margin-left:275px;"><button type="button" style="margin-bottom: 4px;" id="backBtn" class="btn btn-outline-info" onclick="location.href='list.vote'">목록</button></span>
+            </div>
+            <div style="margin-left:66%;">
+            </div>
+            <div style="margin-left:250px">
+
                 
                 <table id="voteItemList">			
                     <c:forEach var="vi" items="${vi}">
