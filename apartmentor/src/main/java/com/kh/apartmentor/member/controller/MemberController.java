@@ -44,8 +44,6 @@ public class MemberController {
 	@RequestMapping("search.me")
 	public ModelAndView searchMember(@RequestParam(value="cpage", defaultValue="1")  int currentPage, String keyword, ModelAndView mv,String condition) {
 		
-		System.out.println(condition);
-		System.out.println(keyword);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("keyword", keyword);
 		map.put("condition", condition);

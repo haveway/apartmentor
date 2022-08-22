@@ -40,7 +40,7 @@
                     <p>대표 : TEAM1 APARTMENTOR</p>
                 </div>
                 <div id="footer2"> 
-                    <p style="font-size: 10px;">Copyrightⓒ2022 XX All rights APARTMENTOR</p>
+                    <p style="font-size: 10px;">Copyrightⓒ2008 XX All rights APARTMENTOR</p>
                     <p>이용약관</p>
                     <p>개인정보처리방침</p>
                 </div>

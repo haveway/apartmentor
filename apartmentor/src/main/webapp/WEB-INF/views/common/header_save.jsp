@@ -11,7 +11,7 @@
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	
 	<!-- CSS -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 	<!-- Default theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme -->
@@ -26,23 +26,13 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
-    
-    	@font-face {
-		    font-family: 'InfinitySans-RegularA1';
-		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
-		    font-weight: normal;
-		    font-style: normal;
-		}
-    
     	div{
-            /*  border: 1px solid red;  */
-            font-family: 'InfinitySans-RegularA1';
+            border: 1px solid red;
             
-        }
-        
-        #header{  
+        } 
+        #header{       
             background-color: rgb(0,88,155);
-            width: 100%;
+            width: 1200px;
             height: 50px;
             display: flex;
             flex-direction: row;
@@ -93,7 +83,7 @@
             margin: auto;
         }
         #logo a{
-            margin-left: 110px;
+            margin-left: 30px;
         	color: white;
         	text-decoration: none;
         }
@@ -120,20 +110,20 @@
 			border: none;
 			padding-top: 0px
 		}
-		.mb input{
+		.modal-body input{
             margin-top: 7.5px;
             height: 20px;
             width: 100%;
             font-size: 20px;
             border: none;
         }
-        .mb input:focus {outline:none;}
-        .mb b{
+        .modal-body input:focus {outline:none;}
+        .modal-body b{
             font-size: 20px;
             margin-bottom: 30px;
             margin-top: 30px;
         }
-        .mb p{
+        .modal-body p{
             font-size: 7px;
             color: grey;
         }
@@ -146,32 +136,6 @@
             color: white;        
         }
         
-        
-        
-        
-        
-    /* 메뉴바 */    
-    input[id="menuicon"] {display:none;}
-    input[id="menuicon"] + label {display:block;margin:0px;width:45px; height:35px; position:relative; cursor: pointer; margin-top:5px; margin-left:5px;}
-    input[id="menuicon"] + label span {display:block; position:absolute;width:100%;height:5px;  border-radius: 30px; background: #fff; transition:all .35s;}
-    input[id="menuicon"] + label span:nth-child(1) {top:0;}
-    input[id="menuicon"] + label span:nth-child(2) {top: 50%; transform:translatey(-50%);}
-    input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
-    input[id="menuicon"]:checked + label {z-index:2;}
-    input[id="menuicon"]:checked + label span {background:#fff;}
-    input[id="menuicon"]:checked + label span:nth-child(1) {top: 50%; transform:translateY(-50%) rotate(45deg);}
-    input[id="menuicon"]:checked + label span:nth-child(2) {opacity: 0;}
-    input[id="menuicon"]:checked + label span:nth-child(3) {bottom: 50%; transform:translateY(50%) rotate(-45deg);}
-    div[class="sidebar"] {width:13%; height: 100%; background: #f0eee9; position: fixed; top: 0; left: -13%; z-index: 1; transition:all .35s;}
-    input[id="menuicon"]:checked + label + div {left:0;}
-    .accordion-body{padding: 0;}
-    .accordion-content{width: 100%; height: 50px; border-bottom: 1px solid gray; background: #f0eee9}
-    .accordion-button{border-bottom: 1px solid gray; background: #f0eee9}
-    .accordion-content:hover {background:  rgb(202,194,176); cursor: pointer;}
-    .accordion-content {padding-top: 10px;}
-    .hr1{margin-bottom: 0; margin-top: 0; height: 1px;}
-    .last{border-bottom: 2px solid black;}
-    
     </style>
 </head>
 <body>
@@ -190,94 +154,47 @@
 	</c:if>	
 
     <div id="header">
-	    <input type="checkbox" id="menuicon">
-	    <label for="menuicon">
-	        <span></span>
-	        <span></span>
-	        <span></span>
-	    </label>
-	    <div class="sidebar">
-	    	<div style="height: 50px;"></div>
-	    	<div class="accordion accordion-flush" id="accordionFlushExample">
-	        	<div class="accordion-item">
-	          		<h2 class="accordion-header" id="flush-headingOne">
-	            		<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-	              			주민 커뮤니티
-	            		</button>
-	          		</h2>
-	          		<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-	            		<div class="accordion-body">
-	            			<div class="accordion-content" onclick="location.href='list.notice'">
-			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;공지사항<p>
-			            	</div>
-			            	<div class="accordion-content" onclick="location.href='list.bo'">
-			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</p>
-			            	</div>
-			            	<div class="accordion-content" onclick="location.href='list.vote'">
-			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;투표</p>
-			            	</div>
-			            	<div class="accordion-content last" onclick="location.href='chatForm.ch'">
-			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;채팅</p>
-			            	</div>
-	            		</div>
-	          		</div>
-	        	</div>
-	       	<div class="accordion-item">
-	          	<h2 class="accordion-header" id="flush-headingTwo">
-	            	<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-	             		예약
-	            	</button>
-	          	</h2>
-	          	<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-	            	<div class="accordion-body">
-            			<div class="accordion-content" onclick="location.href='seatView.st'">
-		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;독서실<p>
-		            	</div>
-		            	<div class="accordion-content "onclick="location.href='golf.sp'">
-		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;체육시설</p>
-		            	</div>
-		            	<c:choose>
+        <div id="menuBar">
+            <div class = main-nav-left> 
+                <div id="menuImg">asd</div>
+                <div class = "sub-menu">
+                    <ul class = "sub-menu-list">
+                        <li>
+                            <a href="map.api">지도</a>
+                        </li><hr>
+                        <li>
+                            <a href="list.bo">자유게시판</a>
+                        </li><hr>
+                        <li>
+                            <a href="seatView.st">독서실</a>
+                        </li><hr>
+                        <li>
+                            <a href="golf.sp">실내골프연습장</a>
+                        </li><hr>
+                        <li>
+                            <a href="miniGym.sp">미니 GYM</a>
+                        </li><hr>
+                        <c:choose>
                         	<c:when test="${loginUser.userId eq 'admin'}">
-				            	<div class="accordion-content last" onclick="location.href='list.visit'">
-				            		<p>&nbsp;&nbsp;&nbsp;&nbsp;방문예약 목록페이지</p>
-			            		</div>
-			            	</c:when>
-			            	<c:otherwise>
-				            	<div class="accordion-content last" onclick="location.href='enrollForm.visit'">
-				            		<p>&nbsp;&nbsp;&nbsp;&nbsp;방문예약 페이지</p>
-			            		</div>
-			            	</c:otherwise>
-			            </c:choose>		
-					</div>
-	          	</div>
-	          	<div class="accordion-body">
-           			<div class="accordion-content" onclick="location.href='feeView.fe'">
-	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;관리비 조회<p>
-	            	</div>
-	            	<c:choose>
-	            		<c:when test="${loginUser.userId eq 'admin'}">
-		           			<div class="accordion-content" onclick="location.href='adminRegoCar.rg?cpage=1&category=ALL'">
-			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;입주민 차량등록<p>
-			            	</div>
-		            	</c:when>
-		            	<c:otherwise>
-			            	<div class="accordion-content" onclick="location.href='regoCar.rg'">
-			            		<p>&nbsp;&nbsp;&nbsp;&nbsp;입주민 차량등록</p>
-		            		</div>
-			            </c:otherwise>
-	            	</c:choose>
-	            	<div class="accordion-content" onclick="location.href='map.api'">
-	            		<p>&nbsp;&nbsp;&nbsp;&nbsp;우리 동네 지도</p>
-	            	</div>
-	            	<c:if test="${loginUser.userId eq 'admin'}">
-		            	<div class="accordion-content" onclick="location.href='list.me'">
-		            		<p>&nbsp;&nbsp;&nbsp;&nbsp;회원관리</p>
-	            		</div>
-            		</c:if>
-				</div>
-	        </div>
-      	</div>
-	    </div>
+		                        <li>
+		                            <a href="list.visit">방문예약 목록페이지</a>
+                        		</li><hr>
+	                        </c:when>
+	                        <c:otherwise>
+		                        <li>
+		                            <a href="enrollForm.visit">방문예약 페이지</a>
+		                        </li><hr>
+	                        </c:otherwise>
+                        </c:choose>
+                        <c:if test="${loginUser.userId eq 'admin'}">
+	                        <li>
+	                            <a href="list.me">회원관리</a>
+	                        </li>
+                        </c:if>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div id="logo">
         	<a href="main.do" id="logo">APARTMENTOR</a>
         </div>
@@ -295,19 +212,23 @@
 	        </div>
     	</div>
     </div>
+    
+    
+    
+    
     <!-- 회원가입 모달 -->
     <div class="modal" id="myModal4">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Head -->
                 <div class="modal-header">
-                    <h2>회원정보수정</h2>
+                    <h2>회원가입</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
                 <!-- Body -->
                 <form action="update.me" method="post">
-                    <div class="modal-body mb">
+                    <div class="modal-body">
                         <b>아이디 : </b>
                         <div class="modal-input">
                             <input type="text" id="addId" name="userId" oninput="checkId();" required readonly  value="${loginUser.userId}">
@@ -340,13 +261,13 @@
 
                         <b>휴대폰 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required>
+                        	<input type="text" id="addPhone" name="phone" oninput="checkPhone()" required value="${loginUser.phone}">
                         </div>
                         <p id="p6">-을 제외한 11자리 숫자로 입력하세요.</p>
 
                         <b>이메일 : </b>
                         <div class="modal-input">
-                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required>
+                        	<input type="text" id="addEmail" name="email" oninput="checkEmail()" required value="${loginUser.email}">
                         </div>
                         <p id="p7">예시와 같은 형식으로 입력하세요.</p>
                         
@@ -365,17 +286,13 @@
                     <!-- Footer -->
                     <div class="modal-footer">
                        <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
-                        <button type="submit" id="updateMember" class="btn submit" disabled>정보수정</button>
+                        <button type="submit" id="insertMember"class="btn submit" disabled>가입신청</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 	<script>
-	let up2;
-	let up3;
-	let up6;
-	let up7;
 		/* 비밀번호 유효성 검사 */
 		function checkPwd() {
 			let p2 = $('#p2');
@@ -383,16 +300,13 @@
 			let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
 			if(!regExpPwd.test(addPwd)){
 				 p2.attr('style','color:red;');
-				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.');
-				 up2 = "N";
-				 checkBtn2();
-				 
+				 p2.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+				 $('#insertMember').attr('disabled',true);
 			}
 			else {
 				p2.attr('style','color:#32CD32;');
 				p2.text('사용가능한 비밀번호 입니다.')
-				up2 = "Y";
-				checkBtn2();
+				$('#insertMember').attr('disabled',false);
 			}
 		}
 		
@@ -404,14 +318,12 @@
 			if(addPwd != rePwd1){
 				p3.attr('style','color:red;');
 				p3.text('비밀번호를 일치하게 입력해주세요.')
-				up3 = "N";
-				checkBtn2();
+				$('#insertMember').attr('disabled',true);
 			}
 			else {
 				p3.attr('style','color:#32CD32;');
 				p3.text('비밀번호가 일치합니다.')
-				up3 = "Y";
-				checkBtn2();
+				$('#insertMember').attr('disabled',false);
 			} 
 		}
 		/* 휴대폰 체크 형식 */
@@ -422,14 +334,12 @@
 	 		if(!regExpPhone.test(addPhone)){
 	 			p6.attr('style','color:red;');
 				p6.text('-을 제외한 11자리 숫자로 입력하세요.')
-				up6 = "N";
-				checkBtn2();
+				$('#insertMember').attr('disabled',true);
 			} 
 	 		else {
 				p6.attr('style','color:#32CD32;');
 				p6.text('올바른  형식 입니다.');	
-				up6 = "Y";
-				checkBtn2();
+				$('#insertMember').attr('disabled',false);
 			}
 		}
 	 	
@@ -442,25 +352,14 @@
 	 		if(!regExpEmail.test(addEmail)){
 	 			p7.attr('style','color:red;');
 				p7.text('올바른 형식의 이메일이 아닙니다.')
-				up7 = "N";
-				checkBtn2();
+				$('#insertMember').attr('disabled',true);
 			} 
 	 		else {
 				p7.attr('style','color:#32CD32;');
 				p7.text('올바른  형식 입니다.');	
-				up7 = "Y";
-				checkBtn2();
+				$('#insertMember').attr('disabled',false);
 			}
 		}
-	 	function checkBtn2(){
-	 		if(up2 == 'Y' && up3 == 'Y' && up6  == 'Y' && up7 == 'Y'){
-				$('#updateMember').attr('disabled',false);
-			} else {
-				$('#updateMember').attr('disabled',true);
-			}
-	 	}
 	</script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	
 </body>
 </html>

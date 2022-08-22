@@ -184,24 +184,16 @@ h1 {
 				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${p ne pi.currentPage}">
-								<c:choose>
-									<c:when test="${empty category and empty statusCategory}">
-										<li class="page-item"><a class="page-link" href="list.visit?cpage=${p}">${p}</a></li>
-									</c:when>
-									<c:when test="${not empty statusCategory}">
-										<li class="page-item"><a class="page-link" href="statusList.visit?cpage=${p}&statusCategory=${statusCategory}">${p}</a></li>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="categoryList.visit?cpage=${p}&category=${category}">${p}</a></li>
-									</c:otherwise>
-								</c:choose>
+							<c:when test="${empty category and empty statusCategory}">
+								<li class="page-item"><a class="page-link" href="list.visit?cpage=${p}">${p}</a></li>
+							</c:when>
+							<c:when test="${not empty statusCategory}">
+								<li class="page-item"><a class="page-link" href="statusList.visit?cpage=${p}&statusCategory=${statusCategory}">${p}</a></li>
 							</c:when>
 							<c:otherwise>
-								<div class="page-item active"><a class="page-link">${p}</a></div>
+								<li class="page-item"><a class="page-link" href="categoryList.visit?cpage=${p}&category=${category}">${p}</a></li>
 							</c:otherwise>
 						</c:choose>
-							
 					</c:forEach>
 					
 				<c:choose>

@@ -174,36 +174,29 @@
 		<br>
 		<div id="pagingArea">
 			<c:choose>
-				<c:when test="${empty keyword}">
+				<c:when test="${empty condition}">
 					<c:choose>
 						<c:when test="${ pi.currentPage eq 1 }">
 							<div class="page-item disabled"><a class="page-link" href="#">이전</a></div>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${ empty condition}">
+								<c:when test="${empty condition}">
 									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage - 1 }">이전</a></div>
 								</c:when>
 								<c:otherwise>
-									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage - 1 }&condition=${condition}">이전</a></div>
+									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage - 1 }&keyword=${keyword}">이전</a></div>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							 <c:when test="${p ne pi.currentPage}">
-							 <c:choose>
-								<c:when test="${ empty condition}">
-									<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
-								</c:when>
-								<c:otherwise>
-									<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&condition=${condition}">${p}</a></div>
-								</c:otherwise>
-								</c:choose>
+							<c:when test="${!empty condition}">
+								<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
 							</c:when>
 							<c:otherwise>
-								<div class="page-item active"><a class="page-link">${p}</a></div>
+								<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&keyword=${keyword}">${p}</a></div>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -213,11 +206,11 @@
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${ empty condition}">
+								<c:when test="${empty condition}">
 									<div class="page-item"><a class="page-link" href="list.me?cpage=${ pi.currentPage + 1 }">다음</a></div>
 								</c:when>
 								<c:otherwise>
-									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage + 1 }&condition=${condition}">다음</a></div>
+									<div class="page-item"><a class="page-link" href="search.me?cpage=${ pi.currentPage + 1 }&keyword=${keyword}">다음</a></div>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -239,20 +232,14 @@
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
+					
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${p ne pi.currentPage}">
-								<c:choose>
-									<c:when test="${empty condition}">
-										<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
-									</c:when>
-									<c:otherwise>
-										<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></div>
-									</c:otherwise>
-								</c:choose>
+							<c:when test="${empty condition}">
+								<div class="page-item"><a class="page-link" href="list.me?cpage=${p}">${p}</a></div>
 							</c:when>
 							<c:otherwise>
-								<div class="page-item active"><a class="page-link">${p}</a></div>
+								<div class="page-item"><a class="page-link" href="search.me?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></div>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -275,15 +262,6 @@
 			</c:choose>
 		</div>
 	</div>
-	
-	<c:if test="${not empty condition}">
-        <script>
-            $(function(){
-                $('option[value=${condition}]').attr('selected',true);
-
-            })
-        </script>
-    </c:if>
 
 	<!-- 회원 승인 모달 -->
 	<div class="modal" id="myModal5">
@@ -331,8 +309,6 @@
 		$("#userNo2").val(data);
 	});
 	</script>
-	
-
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>
