@@ -171,7 +171,7 @@ public class VisitController {
 			MimeMessage message = sender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setTo(visitEmail);
-			helper.setSubject(visitValue + " 검침 방문 예약이 승인되셨습니다");
+			helper.setSubject(visitValue + " 검침 방문 예약이 승인되셨습니다.");
 			helper.setText(aptNo + "의 " + visitValue + " 검침 방문 예약이 승인되셨습니다.<br>" +
 					 "방문 예약 날짜와 시간은 " + visitDate + "&nbsp;" + visitTime + "입니다.", true);
 			sender.send(message);

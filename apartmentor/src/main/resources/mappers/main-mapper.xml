@@ -88,7 +88,8 @@
 	
 	
 	<select id="noticeReserveList" resultMap="noticeResultSet">
-		SELECT
+		SELECT	
+				NOTICE_NO,
 				NOTICE_CALENDER,
 				NOTICE_START_DATE,
 				NOTICE_END_DATE

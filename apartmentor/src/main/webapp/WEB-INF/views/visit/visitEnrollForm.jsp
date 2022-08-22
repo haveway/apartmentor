@@ -82,7 +82,7 @@ h1 {
 					<tr style="height: 40px">
 						<th>예약 날짜</th>
 						<td>&nbsp;&nbsp;</td>
-						<td><input type="text" id="datepicker" name="visitDate" required /></td>
+						<td><input type="text" id="datepicker" name="visitDate" required readonly /></td>
 						<td>
 							<button type="button" class="btn btn-outline-info"
 								data-toggle="modal" data-target="#myModal" style="width: 100px;">예약 현황</button>
@@ -91,7 +91,7 @@ h1 {
 					<tr style="height: 60px">
 						<th>예약 시간</th>
 						<td>&nbsp;&nbsp;</td>
-						<td style="width: 220px"><input type="text" id="timepicker" name="visitTime" required /></td>
+						<td style="width: 220px"><input type="text" id="timepicker" name="visitTime" required readonly/></td>
 						<td>
 							<button type="button" class="btn btn-info" style="width: 100px;" onclick="check()">
 								시간 확인
@@ -254,41 +254,51 @@ h1 {
 			}
 			
 			
+			
+			
 			function check(){
 				
-               
-				$.ajax({
-					url : 'check.visit',
-					data : {
-							userNo : ${loginUser.userNo},
-							visitDate : $("#datepicker").val(),
-						    visitTime : $("#timepicker").val(),
-							visitCategory : $("#category").val()
-							},
-					success : function(result){
-							if(result != null) {
-								$("#submitBtn").attr("disabled", true);
-								swal({
-	 									title : "예약이 이미 찼습니다.",
-	 							    	icon  : "error",
+				if($("#datepicker").val() == "" || $("#timepicker").val() == ""){
+					swal({
+						title : "날짜랑, 시간을 정해주세요!",
+					    	icon  : "error",
+					    	closeOnClickOutside : false
+					})
+				}
+				else{
+	               
+					$.ajax({
+						url : 'check.visit',
+						data : {
+								userNo : ${loginUser.userNo},
+								visitDate : $("#datepicker").val(),
+							    visitTime : $("#timepicker").val(),
+								visitCategory : $("#category").val()
+								},
+						success : function(result){
+								if(result != null) {
+									$("#submitBtn").attr("disabled", true);
+									swal({
+		 									title : "예약이 이미 찼습니다.",
+		 							    	icon  : "error",
+		 							    	closeOnClickOutside : false
+		 							})
+								} else {
+									
+									$("#submitBtn").attr("disabled", false);
+									swal({
+	 									title : "예약이 가능합니다.",
+	 							    	icon  : "success",
 	 							    	closeOnClickOutside : false
 	 							})
-							} else {
-								
-								$("#submitBtn").attr("disabled", false);
-								swal({
- 									title : "예약이 가능합니다.",
- 							    	icon  : "success",
- 							    	closeOnClickOutside : false
- 							})
-							}
-					},
-					error : function(){
-						console.log("예약 가능 조회 실패");
-					}
-				});	
-			
-						
+								}
+						},
+						error : function(){
+							console.log("예약 가능 조회 실패");
+						}
+					});	
+				}
+				
 			}
 			
 				

@@ -164,14 +164,21 @@ h1 {
 				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${empty condition and empty category}">
-								<li class="page-item"><a class="page-link" href="list.notice?cpage=${p}">${p}</a></li>
-							</c:when>
-							<c:when test="${not empty condition}">
-								<li class="page-item"><a class="page-link" href="search.notice?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+							<c:when test="${p ne pi.currentPage}">
+								<c:choose>
+									<c:when test="${empty condition and empty category}">
+										<li class="page-item"><a class="page-link" href="list.notice?cpage=${p}">${p}</a></li>
+									</c:when>
+									<c:when test="${not empty condition}">
+										<li class="page-item"><a class="page-link" href="search.notice?cpage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="categoryList.notice?cpage=${p}&category=${category}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="categoryList.notice?cpage=${p}&category=${category}">${p}</a></li>
+									<div class="page-item active"><a class="page-link">${p}</a></div>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
