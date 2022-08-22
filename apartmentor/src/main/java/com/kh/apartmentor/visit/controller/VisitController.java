@@ -229,10 +229,10 @@ public class VisitController {
 		
 		if(result > 0) { 
 			session.setAttribute("alertMsg2", "취소 신청이 완료 되었습니다");
-			return "main";
+			return "redirect:main.do";
 		} else {
 			session.setAttribute("alertMsg1", "취소 신청이 실패 되었습니다");
-			return "main";
+			return "redirect:main.do";
 		}
  
 	}

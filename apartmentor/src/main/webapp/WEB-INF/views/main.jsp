@@ -770,7 +770,10 @@
 					form.attr('action', 'cancelStatus.visit');
 					form.submit();
 				})
-		  
+
+				if($('.done')) {
+					$("#cancleBtn").attr("disabled", true);
+				}
 		  })
 		  </script>
     	
