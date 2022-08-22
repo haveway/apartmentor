@@ -61,7 +61,7 @@ public class StudyController {
 	public ModelAndView updateReserve(ModelAndView mv, int userNo) {
 		
 		Reserve r = studyService.selectReserve(userNo);
-		System.out.println("update r : " + r);
+		//System.out.println("update r : " + r);
 		
 		mv.addObject("updateReserve", studyService.selectReserve(userNo))
 		  .setViewName("study/seatView");
@@ -74,7 +74,7 @@ public class StudyController {
 	public ModelAndView updateReserve(ModelAndView mv, String today) {
 		
 		int result = studyService.updateStatus(today);
-		System.out.println("result : " + result);
+		System.out.println("독서실 전 날 이용자 수 : " + result);
 		
 		mv.addObject("updateStatus", studyService.updateStatus(today))
 		  .setViewName("study/seatView");

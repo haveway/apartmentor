@@ -18,6 +18,7 @@
 	<typeAlias type="com.kh.apartmentor.chat.model.vo.Chat" alias="chat"/>
 	<typeAlias type="com.kh.apartmentor.vote.model.vo.Vote" alias="vote"/>
 	<typeAlias type="com.kh.apartmentor.vote.model.vo.VoteItem" alias="voteItem"/>
+	<typeAlias type="com.kh.apartmentor.fee.model.vo.Fee" alias="fee"/>
 </typeAliases>
 
 
@@ -33,5 +34,6 @@
 		<mapper resource="/mappers/chat-mapper.xml" />
 		<mapper resource="/mappers/regoCar-mapper.xml" />
 		<mapper resource="/mappers/vote-mapper.xml" />
+		<mapper resource="/mappers/fee-mapper.xml" />
 	</mappers>
 </configuration>
