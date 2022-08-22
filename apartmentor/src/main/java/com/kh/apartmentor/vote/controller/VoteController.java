@@ -153,25 +153,23 @@ public class VoteController {
 		voteMember.setVoteNo(voteNo);
 		voteMember.setUserNo(userNo);
 		
-		
-		
 		Vote v = voteService.selectVote(voteNo);
 		ArrayList<VoteItem> vi = voteService.selectVoteItem(voteNo);
 
 		int result = voteService.chkVoteMember(voteMember);	// 멤버가 투표했는지 여부
 		
-		if(result > 0) {	// 투표했으면 투표결과페이지를 띄워준다
+		if(result > 0 || v.getStatus().equals("N")) {	// 투표를 했거나 기간이 종료된 투표면 투표결과페이지를 띄워준다
 			model.addAttribute("totalCount", voteService.totalCount(voteNo)); // 총 투표수
 			model.addAttribute("voteNo", voteNo);
 			model.addAttribute("v", v);
 			model.addAttribute("vi", vi);
 			return "vote/voteResult";
-		} else {	// 투표안했으면 투표하는 페이지를 띄워줌
+		} else { // 투표안했으면 투표하는 페이지를 띄워줌
+			model.addAttribute("v", v);
 			model.addAttribute("v", v);
 			model.addAttribute("vi", vi);
 			return "vote/voteDetail";
 		}
-		
 	}
 	
 	@RequestMapping("submit.vote")
@@ -237,8 +235,6 @@ public class VoteController {
 			return "redirect:list.vote";
 		}
 	}
-		
-
 	
 
 }

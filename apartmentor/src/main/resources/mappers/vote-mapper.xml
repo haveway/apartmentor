@@ -128,7 +128,7 @@
 		</if>
 		<if test="category == '전체'">
 			   SELECT COUNT(*)
-			     FROM NOTICE
+			     FROM VOTE
 			    WHERE STATUS != 'X'
 		</if>
 	</select>

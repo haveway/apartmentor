@@ -13,7 +13,9 @@
 
     #voteItemList tr{
         border: 1px solid gray;
-        font-size: 18px;
+    }
+    #voteItemList{
+        width: 600px;
     }
 
 </style>
@@ -26,21 +28,21 @@
         <input type="hidden" name="userNo" id="userNo" value="${loginUser.userNo}">
         <input type="hidden" name="voteNo" id="voteNo" value="${v.voteNo}">
         
-            <div style="margin-left:300px;">
-                <h3>Q. ${v.voteTitle}</h3> 
+            <div style="margin-left:250px;">
+                <h1>Q. ${v.voteTitle}</h1><br>
             </div>
-            <div style="margin-left:55%;">
+            <div style="margin-left:66%;">
                 <button type="button" id="backBtn" class="btn btn-outline-info" onclick="location.href='list.vote'">목록</button>
             </div>
-            <div style="margin-left:300px">
+            <div style="margin-left:250px">
                 <c:if test="${v.status == 'Y'}">
-                    [투표진행중]<br>
+                    <p style="color:blue; margin: 0%;">[투표진행중]<br></p>
                 </c:if>
                 <c:if test="${v.status == 'N'}">
-                    [투표완료]<br>
+                    <p style="color:gray; margin: 0%;">[투표완료]<br></p>
                 </c:if>
                 <c:if test="${v.status == 'W'}">
-                    [투표예정]<br>
+                    <p style="color:red; margin: 0%;">[투표예정]<br></p>
                 </c:if>
                 <c:if test="${v.voteType == 1}"> <!-- voteType이 1이면 복수선택 표시-->
                     복수선택<br>
@@ -50,32 +52,32 @@
                 <table id="voteItemList">			
                     <c:forEach var="vi" items="${vi}">
                         <tr>
-                            <td width="75px;" align="center">
+                            <td width="1%;" align="center">
                                     <c:if test="${vi.changeName != 'null'}">
-                                        <img src="${vi.changeName}" width="70px;" height="70px;" alt="">
+                                        <img src="${vi.changeName}" width="80px;" height="80px;" alt="">
                                     </c:if>
-                                    </td>
+                            </td>
 
-                            <td width="325px;" height="75px">
-                            <c:if test="${v.voteType == 1}">    <!-- voteType이 1이면 체크버튼-->
-                                &nbsp;<input style="zoom:1.3;" type="checkbox" name="checkItem" value="${vi.itemNo}"> ${vi.itemName} 
-                            </c:if>
-                            <c:if test="${v.voteType == 0}">    <!-- voteType이 0이면 라디오 버튼-->
-                                &nbsp;<input style="zoom:1.3;" type="radio" name="checkItem" value="${vi.itemNo}"> ${vi.itemName}
-                            </c:if>
+                            <td width="325px;" height="80px;" style="font-size: 20px;">
+                                <c:if test="${v.voteType == 1}">    <!-- voteType이 1이면 체크버튼-->
+                                    &nbsp;<input style="zoom:1.5;" type="checkbox" name="checkItem" value="${vi.itemNo}"> ${vi.itemName} 
+                                </c:if>
+                                <c:if test="${v.voteType == 0}">    <!-- voteType이 0이면 라디오 버튼-->
+                                    &nbsp;<input style="zoom:1.5;" type="radio" name="checkItem" value="${vi.itemNo}"> ${vi.itemName}
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
                 <br>
-                <div style="margin-left:150px;">
+                <div style="margin-left:27%;">
                     <button type="submit" id="submitVote" class="btn submit" onclick="submitVote();">투표하기</button>
                     <c:if test="${loginUser.userId eq 'admin'}">
                         <button type="button" class="btn btn-outline-info" id="deleteVote" onclick="location.href='delete.vote?voteNo=${v.voteNo}'">투표삭제</button>
                     </c:if>
                 </div>
          </div>
-         
+         <jsp:include page="../common/footer.jsp"/>
     </div>
 
     <script>
@@ -97,6 +99,7 @@
         }
 
     </script>
+
 
 </body>
 </html>

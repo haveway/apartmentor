@@ -61,7 +61,7 @@
         </div>
 
         <div style="margin-left:19%">
-            <select name="voteCategory" id="voteCategory" style="width: 95px; height: 30px; text-align: center; font-weight: bolder;">
+            <select name="voteCategory" id="voteCategory" style="width: 95px; height: 30px; text-align: center; font-weight: bolder; margin-bottom:4px;">
                 <option value="전체">[전체]</option>
                 <option value="진행중">[진행중]</option>
                 <option value="진행예정">[진행예정]</option>
@@ -133,14 +133,21 @@
                     
                         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
                             <c:choose>
-                                <c:when test="${empty category}">
-                                    <li class="page-item"><a class="page-link" href="list.vote?cpage=${p}">${p}</a></li>
-                                </c:when>
-                                <c:when test="${not empty keyword}">
-                                    <li class="page-item"><a class="page-link" href="search.vote?cpage=${p}&keyword=${keyword}">${p}</a></li>
+                                <c:when test="${p ne pi.currentPage}">
+                                    <c:choose>
+                                        <c:when test="${empty category}">
+                                            <li class="page-item"><a class="page-link" href="list.vote?cpage=${p}">${p}</a></li>
+                                        </c:when>
+                                        <c:when test="${not empty keyword}">
+                                            <li class="page-item"><a class="page-link" href="search.vote?cpage=${p}&keyword=${keyword}">${p}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="page-item"><a class="page-link" href="categoryList.vote?cpage=${p}&category=${category}">${p}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item"><a class="page-link" href="categoryList.vote?cpage=${p}&category=${category}">${p}</a></li>
+                                    <div class="page-item active"><a class="page-link">${p}</a></div>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
