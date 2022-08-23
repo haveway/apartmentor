@@ -187,7 +187,7 @@
 		<c:forEach var='m' items="${MemberList}">
 		<div class="online-area">
 			<div class="circle"></div>
-			<div id="${m.userName}" class="onlineUser">${m.userName}</div>
+			<div id="${m.userName}" class="onlineUser">${m.aptNo} ${m.userName}</div>
 		</div>
 		</c:forEach>
 			
