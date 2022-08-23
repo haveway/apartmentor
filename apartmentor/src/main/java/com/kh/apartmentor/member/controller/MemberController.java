@@ -195,7 +195,7 @@ public class MemberController {
 		} else {
 			session.setAttribute("alertMsg1", "비밀번호가 동일하지 않습니다.");
 		}
-		return "login";
+		return "redirect:/";
 	}
 	@ResponseBody
 	@RequestMapping(value = "checkId.me" , produces="application/json; charset=UTF-8")
@@ -211,11 +211,12 @@ public class MemberController {
 	@RequestMapping("logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "login";
+		return "redirect:/";
 	}
+	
+	
 	@RequestMapping("update.me")
 	public String updateMember(Member m, HttpSession session) {
-		
 		
 		String encPwd = bCryptPasswordEncoder.encode(m.getUserPwd());
 		m.setUserPwd(encPwd);
@@ -227,7 +228,7 @@ public class MemberController {
 		} else {
 			session.setAttribute("alertMsg1", "회원정보 변경실패!");
 		}
-		return "main";
+		return "redirect:main.do";
 	}
 	
 }

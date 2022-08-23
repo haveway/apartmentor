@@ -149,6 +149,12 @@
             background-color: rgb(0,88,155);    
             color: white;        
         }
+         .modal-body p{
+         	margin-bottom: 7px;
+         }
+        .modal-header, .modal-body, .modal-footer{
+        	padding: 8px;
+        }
 
         
         

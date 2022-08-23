@@ -92,6 +92,7 @@
         .modal-body p{
             font-size: 7px;
             color: grey;
+            margin-bottom: 7px;
         }
         .modal-input{
             height: 40px; 
@@ -104,6 +105,9 @@
         #p1red{
 	        font-size: 5px;
 	        color: red;
+        }
+        .modal-header, .modal-body, .modal-footer{
+        	padding: 8px;
         }
 
     </style>
@@ -667,7 +671,7 @@
 			p15.text('영문 대 소문자, 숫자 조합 4글자 이상 8글자 이하로 사용하세요.');
 		} else {
 			p15.attr('style','color:#32CD32;');
-			p15.text('멋진 아이디네요!');
+			p15.text('올바른 아이디 입니다.');
 		}
     }
     
