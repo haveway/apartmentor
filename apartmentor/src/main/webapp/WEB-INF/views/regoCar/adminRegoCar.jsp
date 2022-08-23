@@ -174,65 +174,60 @@
 	    });
 	</script>
 
-
 	<div id="pagingArea">
-         <ul class="pagination">
-                
-         <c:choose>
-            <c:when test="${ pi.currentPage eq 1 }">
-               <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
-            </c:when>
-            <c:otherwise>
-               <c:choose>
-                  <c:when test="${empty category}">
-                     <li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage - 1 }">이전</a></li>
-                  </c:when>
-                  <c:otherwise>
-                     <li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage - 1 }&category=${category}">이전</a></li>
-                  </c:otherwise>
-               </c:choose>
-            </c:otherwise>                   
-         </c:choose>
-         
-         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-            <c:choose>
-               <c:when test="${empty category}">
-                  <li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${p}">${p}</a></li>
-               </c:when>
-               <c:otherwise>
-                  <li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${p}&category=${category}">${p}</a></li>
-               </c:otherwise>
-            </c:choose>
-         </c:forEach>
-
-         <c:choose>
-            <c:when test="${ pi.currentPage eq pi.maxPage }">
-               <li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
-            </c:when>
-            <c:otherwise>
-               <c:choose>
-                  <c:when test="${empty category}">
-                     <li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage + 1 }">다음</a></li>
-                  </c:when>
-                  <c:otherwise>
-                     <li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage + 1 }&category=${category}&userNo=${loginUser.getUserNo()}">다음</a></li>
-                  </c:otherwise>
-               </c:choose>
-            </c:otherwise>
-         </c:choose>
-         </ul>
-      </div>
-
-
-
-
-
-
-
-
-
-
-
+		<ul class="pagination">
+			<c:choose>
+					<c:when test="${ pi.currentPage eq 1 }">
+						<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<c:when test="${empty category}">
+								<li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage - 1 }">이전</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage - 1 }&category=${category}">이전</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:otherwise>
+				</c:choose>
+				
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<c:choose>
+	                     	<c:when test="${p ne pi.currentPage}">
+								<c:choose>
+									<c:when test="${empty category}">
+										<li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${p}">${p}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${p}&category=${category}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item active"><a class="page-link">${p}</a></li>
+							</c:otherwise>
+						</c:choose>	
+						
+					</c:forEach>
+					
+				<c:choose>
+					<c:when test="${ pi.currentPage eq pi.maxPage }">
+					 	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<c:when test="${empty category}">
+								<li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage + 1 }">다음</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="adminRegoCar.rg?cpage=${ pi.currentPage + 1 }&category=${category}">다음</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:otherwise>
+				</c:choose>
+    	</ul>	
+	</div>
 
 
 	<br><br><br>

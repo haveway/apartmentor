@@ -134,13 +134,21 @@
             </c:otherwise>                   
          </c:choose>
          
-         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-            <c:choose>
-               <c:when test="${empty category}">
-                  <li class="page-item"><a class="page-link" href="adminVisitCar.car?cpage=${p}">${p}</a></li>
-               </c:when>
-            </c:choose>
-         </c:forEach>
+		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			<c:choose>
+                   	<c:when test="${p ne pi.currentPage}">
+					<c:choose>
+						<c:when test="${empty category}">
+							<li class="page-item"><a class="page-link" href="adminVisitCar.rg?cpage=${p}">${p}</a></li>
+						</c:when>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item active"><a class="page-link">${p}</a></li>
+				</c:otherwise>
+			</c:choose>	
+			
+		</c:forEach>
 
          <c:choose>
             <c:when test="${ pi.currentPage eq pi.maxPage }">

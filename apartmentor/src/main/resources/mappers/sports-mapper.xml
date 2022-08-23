@@ -102,7 +102,7 @@
 				WHERE	
 						STATUS = 'Y'
 				<if test="category == 'ALL'">
-		
+					AND FACILITY IN ('GF', 'MG')
 				</if>
 				<if test="category == 'GF'">
 					AND
@@ -121,7 +121,7 @@
 				WHERE	
 						STATUS = 'Y'
 				<if test="category == 'ALL'">
-		
+					AND FACILITY IN ('GF', 'MG')
 				</if>
 				<if test="category == 'GF'">
 					AND
@@ -147,7 +147,7 @@
 				WHERE R.USER_NO = M.USER_NO
 				AND R.STATUS = 'Y'
 					<if test="category == 'ALL'">
-						
+						AND FACILITY IN ('GF', 'MG')
 					</if>
 					<if test="category == 'GF'">		
 						AND FACILITY = 'GF'
@@ -164,7 +164,7 @@
 				WHERE R.USER_NO = M.USER_NO
 				AND R.STATUS = 'Y'
 					<if test="category == 'ALL'">
-						
+						AND FACILITY IN ('GF', 'MG')
 					</if>
 					<if test="category == 'GF'">		
 						AND FACILITY = 'GF'

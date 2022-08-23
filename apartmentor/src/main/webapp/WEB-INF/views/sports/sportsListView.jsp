@@ -171,16 +171,24 @@
             </c:otherwise>                   
          </c:choose>
          
-         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-            <c:choose>
-               <c:when test="${empty category}">
-                  <li class="page-item"><a class="page-link" href="sportsList.sp?cpage=${p}">${p}</a></li>
-               </c:when>
-               <c:otherwise>
-                  <li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${p}&category=${category}">${p}</a></li>
-               </c:otherwise>
-            </c:choose>
-         </c:forEach>
+		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			<c:choose>
+                   	<c:when test="${p ne pi.currentPage}">
+					<c:choose>
+						<c:when test="${empty category}">
+							<li class="page-item"><a class="page-link" href="sportsList.sp?cpage=${p}">${p}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${p}&category=${category}">${p}</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item active"><a class="page-link">${p}</a></li>
+				</c:otherwise>
+			</c:choose>	
+			
+		</c:forEach>
 
          <c:choose>
             <c:when test="${ pi.currentPage eq pi.maxPage }">
@@ -192,7 +200,7 @@
                      <li class="page-item"><a class="page-link" href="sportsList.sp?cpage=${ pi.currentPage + 1 }">다음</a></li>
                   </c:when>
                   <c:otherwise>
-                     <li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${ pi.currentPage + 1 }&category=${category}&userNo=${loginUser.getUserNo()}">다음</a></li>
+                     <li class="page-item"><a class="page-link" href="sportsOptionView.sp?cpage=${ pi.currentPage + 1 }&category=${category}">다음</a></li>
                   </c:otherwise>
                </c:choose>
             </c:otherwise>
