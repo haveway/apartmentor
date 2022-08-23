@@ -22,6 +22,7 @@
 		<result column="VISIT_VALUE" property="visitValue" />
 	</resultMap>
 
+	<!-- 방문 예약 입력 SQL문 -->
 	<insert id="insertVisitReserve" parameterType="visit">
 		INSERT
 		  INTO
@@ -45,6 +46,7 @@
 				)
 	</insert>
 	
+	<!-- 방문 예약 카테고리 조회 SQL문 -->
 	<select id="selectVisitCategory" resultMap="visitCategoryResultSet">
 		SELECT
 				VISIT_CATEGORY,
@@ -53,9 +55,10 @@
 		  		VISIT_CATEGORY
 	</select>
 	
+	<!-- 로그인한 입주자와 동일한 동의 예약 날짜 / 시간 조회 SQL문  -->
 	<select id="selectVisitReserve" parameterType="_int" resultMap="visitResultSet"> 
 		SELECT 
-				APT_NO,
+				SUBSTR(APT_NO, 1, 2),
 				VISIT_DATE,
 				VISIT_TIME,
 				VISIT_CATEGORY,
@@ -67,18 +70,19 @@
 		  JOIN
 		  		VISIT_CATEGORY USING(VISIT_CATEGORY)
 		 WHERE
-		 		APT_NO = (SELECT
-		 				  		 APT_NO
-		                    FROM 
-		                   		 MEMBER
-		                   WHERE
-		                  		 USER_NO = #{nno})
+		 		SUBSTR(APT_NO, 1, 2) = (SELECT
+		 				  					   SUBSTR(APT_NO, 1, 2)
+		           				         FROM 
+		                   					   MEMBER
+		                   				WHERE
+		                  		 			   USER_NO = #{nno})
 		   AND 
 		   		VISIT_STATUS = 'Y'
 		 ORDER 
 		 	BY  VISIT_DATE ASC
 	</select>
 	
+	<!-- 로그인한 입주자와 동일한 동의 예약 날짜 / 시간 중복 조회 SQL문  -->
 	<select id="checkVisitReserve" parameterType="visit" resultMap="visitResultSet">
 		SELECT
 				VISIT_CATEGORY,
@@ -89,12 +93,12 @@
 		  JOIN
 		  		MEMBER USING(USER_NO)
 		 WHERE
-		 		APT_NO = (SELECT
-		 				  		 APT_NO
-		                    FROM
-		                    	 MEMBER
-		                   WHERE
-		                   		 USER_NO = #{userNo})
+		 		SUBSTR(APT_NO, 1, 2) = (SELECT
+		 				  				        SUBSTR(APT_NO, 1, 2)
+		                    			  FROM
+		                    	 			    MEMBER
+		               				     WHERE
+		                   		 				USER_NO = #{userNo})
 		   AND
 		   		VISIT_STATUS = 'Y'
 		   AND
@@ -105,6 +109,7 @@
 		   		VISIT_TIME = #{visitTime}
 	</select>
 	
+	<!-- 모든 예약의 날짜 / 시간 조회 SQL문 -->
 	<select id="selectVisitReserveAll" resultMap="visitResultSet">
 		SELECT
 				APT_NO,
@@ -124,7 +129,7 @@
 	     	BY  VISIT_DATE ASC
 	</select>
 
-	
+	<!-- 방문 예약 수 조회 SQL문 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT
 				COUNT(*)
@@ -132,6 +137,7 @@
 		  		VISIT
 	</select>
 	
+	<!-- 방문 예약 리스트 조회 SQL문 -->
 	<select id="selectList" resultMap="visitResultSet">
 		SELECT
 				VISIT_NO,
@@ -149,6 +155,7 @@
 		 	BY  CREATE_DATE DESC
 	</select>
 	
+	<!-- 카테고리 별 방문 예약 수 조회 SQL문 -->
 	<select id="selectCategoryListCount" resultType="_int">
 			<if test="category == '가스'">
 			   SELECT
@@ -199,6 +206,7 @@
 
 	</select>
 	
+	<!-- 카테고리 별 방문 예약 리스트 조회 SQL문 -->
 	<select id="selectCategoryList" resultMap="visitResultSet">
 		<choose>
 			<when test="category == '가스'">
@@ -311,6 +319,7 @@
 		</choose>
 	</select>
 	
+	<!-- 예약 상태 별 방문 예약 수 조회 SQL문 -->
 	<select id="selectStatusListCount" resultType="_int">
 			<if test="statusCategory == '승인'">
 			   SELECT
@@ -352,6 +361,7 @@
 			</if>
 	</select>
 	
+	<!-- 예약 상태 별 방문 예약 리스트 조회 SQL문 -->
 	<select id="selectStatusList" resultMap="visitResultSet">
 		<choose>
 			<when test="statusCategory == '승인'">
@@ -444,7 +454,8 @@
 			</when>	
 		</choose>
 	</select>
-		
+	
+	<!-- 해당 방문 예약 상세보기 조회 SQL문 -->
 	<select id="selectVisit" resultMap="visitResultSet">
 		SELECT
 				VISIT_NO,
@@ -467,6 +478,7 @@
 		 		VISIT_NO = #{visitNo}
 	</select>
 	
+	<!-- 예약 승인 SQL문 -->
 	<update id="okReserveStatus" parameterType="_int">
 		UPDATE
 				VISIT
@@ -476,6 +488,7 @@
 		 		VISIT_NO = #{visitNo}
 	</update>
 	
+	<!-- 예약 반려 SQL문 -->
 	<update id="noReserveStatus" parameterType="_int">
 		UPDATE
 				VISIT
@@ -485,6 +498,7 @@
 		 		VISIT_NO = #{visitNo}
 	</update>
 	
+	<!-- 예약 취소 신청 SQL문 -->
 	<update id="cancelStatus" parameterType="_int">
 		UPDATE
 				VISIT
@@ -494,6 +508,7 @@
 		 		VISIT_NO = #{visitNo}
 	</update>
 	
+	<!-- 예약 취소 승인 SQL문 -->
 	<update id="cancelReserveStatus" parameterType="_int">
 		UPDATE
 				VISIT

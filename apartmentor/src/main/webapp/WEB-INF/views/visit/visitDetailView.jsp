@@ -25,15 +25,23 @@
         background-color: #f0eee9;
     }
     
+    .visitStyle {
+    	background-color: white;
+    	border-top: 1px solid grey;
+    	border-bottom : 1px solid grey;
+    	padding-top: 30px;
+    	padding-bottom: 30px;
+    }
+    
     #visitDetail {
     	margin-left: 100px;
-    	
-    	
     }
     
     #visitDetail th {
     	width: 100px;
     	text-align: center;
+    	font-size: 18px;
+    	color: #4d4d4d;
     }
 
 </style>
@@ -62,6 +70,7 @@
 	<br>
 	<br>
 	
+	<div class="visitStyle">
 	<form id="visitStatus" action="" method="post">
 		<input type="hidden" name="vno" value="${v.visitNo}">
 		<input type="hidden" name="visitEmail" value="${v.visitEmail}">
@@ -109,7 +118,9 @@
 			</tr>
 		</table>
 	</form>	
-		<div style="margin-left: 150px; margin-top: 20px;">
+	</div>
+	
+		<div style="margin-left: 150px; margin-top: 40px;">
 			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="history.back()">돌아가기</button>
 		<c:choose>
 			<c:when test="${v.visitStatus eq 'C'}">

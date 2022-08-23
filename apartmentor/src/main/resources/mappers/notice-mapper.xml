@@ -19,6 +19,7 @@
 		<result column="NOTICE_CATEGORY_VALUE" property="noticeCategoryValue" />
 	</resultMap>
 	
+	<!-- 공지사항 입력 SQL문 -->
 	<insert id="insertNotice" parameterType="notice">
 		INSERT
 		  INTO
@@ -50,6 +51,7 @@
 	   			)
 	</insert>
 	
+	<!-- 공지사항 총 게시글 수 조회 SQL문 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT
 				COUNT(*)
@@ -59,6 +61,7 @@
 		 		STATUS = 'Y'
 	</select>
 	
+	<!-- 공지사항 총 게시글 조회 SQL문 -->
 	<select id="selectList" resultMap="noticeResultSet">
 		SELECT 
 				NOTICE_NO,
@@ -76,6 +79,7 @@
          	BY  NOTICE_NO DESC  
 	</select>
 	
+	<!-- 카테고리 별 공지사항 게시글 수 조회 SQL문 -->
 	<select id="selectCategoryListCount" resultType="_int">
 		<if test="category == '공지'">
 			   SELECT COUNT(*)
@@ -102,6 +106,7 @@
 		</if>
 	</select>
 	
+	<!-- 카테고리 별 게시글 조회 SQL문 -->
 	<select id="selectCategoryList" resultMap="noticeResultSet">
 		<choose>
 			<when test="category == '공지'">
@@ -177,6 +182,7 @@
 		</choose>
 	</select>
 	
+	<!-- 검색 결과에 따른 공지사항 게시글 수 조회 SQL문 -->
 	<select id="searchListCount" resultType="_int" parameterType="hashmap">
 		SELECT COUNT(*)
 		  FROM NOTICE
@@ -190,6 +196,7 @@
 		  LIKE '%' || #{keyword} || '%'
 	</select>
 	
+	<!-- 검색 결과에 따른 공지사항 게시글 조회 SQL문 -->
 	<select id="searchList" resultMap="noticeResultSet" parameterType="hashmap">
 		SELECT
 				NOTICE_NO,
@@ -215,6 +222,7 @@
          	BY  NOTICE_NO DESC
 	</select> 
 	
+	<!-- 해당 공지사항의 상세 조회 SQL문 -->
 	<select id="selectNotice" resultMap="noticeResultSet">
 		SELECT
 				NOTICE_NO,
@@ -235,6 +243,7 @@
 	      	    STATUS = 'Y'
 	</select>
 	
+	<!-- 공지사항 수정시 입력 SQL문 -->
 	<update id="updateNotice" parameterType="notice">
 		UPDATE
 		  		NOTICE
@@ -251,6 +260,7 @@
 				NOTICE_NO = #{noticeNo}
 	</update>
 	
+	<!-- 공지사항 삭제 SQL문 -->
 	<update id="deleteNotice" parameterType="_int">
 		UPDATE
 				NOTICE

@@ -24,15 +24,23 @@
         background-color: #f0eee9;
     }
     
+    .noticeStyle {
+    	background-color: white;
+    	border-top: 1px solid grey;
+    	border-bottom : 1px solid grey;
+    	padding-top: 30px;
+    	padding-bottom: 30px;
+    }
+    
     #noticeDetail {
     	margin-left: 100px;
-    	
-    	
     }
     
     #noticeDetail th {
     	width: 100px;
     	text-align: center;
+    	font-size: 18px;
+    	color: #4d4d4d;
     }
 
 </style>
@@ -45,7 +53,7 @@
 <br>
 <br>
 
-<div class="visitContent">
+<div class="noticeContent">
 
 	<h1>공지사항</h1>
 	
@@ -53,11 +61,12 @@
 	<br>
 	<br>
 	
-	<div class="visitDetailContent">
+	<div class="noticeDetailContent">
 	
 	<br>
 	<br>
 	
+	<div class="noticeStyle">
 	<form id="noticeStatus" action="" method="post">
 		<input type="hidden" name="nno" value="${n.noticeNo}">
 		<input type="hidden" value="${ n.changeName }" name="filePath">
@@ -72,7 +81,7 @@
 					</tr>
 					<tr style="height: 35px">
 						<th>일정 종류</th>
-						<td>${n.noticeCalender}</td>
+						<td colspan="3">${n.noticeCalender}</td>
 					</tr>
 					<tr style="height: 35px">
 						<th>일정 날짜</th>
@@ -113,7 +122,10 @@
 				</table>
 
 			</form>	
-		<div style="margin-left: 150px; margin-top: 20px;">
+			
+			</div>
+			
+		<div style="margin-left: 150px; margin-top: 40px;">
 			<button type="button" class="btn btn-outline-info" id="backBtn" onclick="location.href='list.notice'">돌아가기</button>
 			<c:if test="${loginUser.userName eq '관리자'}">
 				<button type="button" class="btn btn-danger" id="deleteBtn">삭제</button>
@@ -139,6 +151,7 @@
 		})
 		
 	</script>
+	
 	
 		<br>
 		<br>
