@@ -509,7 +509,8 @@
 					  </div>
 					</div>
 			</div>	
-				
+	
+
 			<script>
 			$(document).ready(function() {
 			    calendarInit();
@@ -589,7 +590,7 @@
 			            var currentMonthDate = document.querySelectorAll('.dates .current');
 			            currentMonthDate[todayDate -1].classList.add('today');
 			        }
-			        
+			       
 			    }
 	
 			    // 이전달로 이동
@@ -605,9 +606,6 @@
 			    });
 			}
 			
-			$(function(){
-				console.log(new Date().getMonth()+1);
-			})
 			
 			</script>
         
