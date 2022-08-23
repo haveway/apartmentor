@@ -13,5 +13,9 @@ public class FeeDao {
 	public ArrayList<Fee> selectFeeList(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("feeMapper.selectFeeList");
 	}
+	
+	public Fee selectFee(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("feeMapper.selectFee", userNo);
+	}
 
 }

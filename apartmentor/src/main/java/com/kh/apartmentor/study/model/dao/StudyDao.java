@@ -18,8 +18,8 @@ public class StudyDao {
 		return sqlSession.selectOne("studyMapper.selectReserve",userNo);
 	}
 	
-	public ArrayList<Reserve> selectList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("studyMapper.selectList");
+	public ArrayList<Reserve> selectList(SqlSessionTemplate sqlSession, int seatNo){
+		return (ArrayList)sqlSession.selectList("studyMapper.selectList", seatNo);
 	}
 	
 	public int updateStatus(SqlSessionTemplate sqlSession, String today) {

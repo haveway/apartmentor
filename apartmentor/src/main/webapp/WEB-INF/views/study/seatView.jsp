@@ -154,9 +154,6 @@
 		
 					</c:forEach>
 					
-					<!-- <button id="updateBtn" style="height: 25px; border-radius:5px; border: none; background: lightgrey;" onclick="updateReserve();">예약변경</button>  -->                                   
-					
-					
 					<c:forEach var="s" items="${ list }">
 						<c:if test="${ !empty s.seatNo}">
 							<button id="deleteBtn" style="height: 25px; border-radius:5px; border: none; background: lightgrey;" onclick="deleteReserve();">예약취소</button>                                    
@@ -164,23 +161,6 @@
 					</c:forEach>
 				</div>
 				<script>
-					/* function updateReserve(){
-						$('#myStudyInfo').modal('hide');
-						$('#updateModal').modal('show');
-						
-						$.ajax({
-							url: 'updateReserve.st',
-							data: {
-								userNo: ${loginUser.userNo}
-							},
-							success: function(){
-								console.log('꺄홋');
-							}, error: function(){
-								console.log('에효 니가 안되는 건 내 잘못이겠지');
-							}
-						})
-					} */
-					
 					function deleteReserve(){
 						$.ajax({
 							url: 'deleteReserve.st',
@@ -208,40 +188,6 @@
 		</div>
 	</div><!-- modal -->
 	
-<!-- 예약 취소 모달 : The Modal -->
-	<div class="modal" id="deleteModal">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-	
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title"><c:if test="${!empty loginUser}">${loginUser.userName}님 예약한 자리를 취소하시겠습니까?</c:if></h4>
-					<button type="button" class="close" data-dismiss="modal" onclick="hideModal();">&times;</button>
-				</div>
-				
-				<!-- Modal body -->
-				<div class="modal-body" id="deleteModal-body">
-					
-					<c:forEach var="s" items="${ list }">
-						<script>
-							if(${loginUser.userNo} == ${s.seatNo}){
-								
-							}
-
-						</script>
-					</c:forEach>
-				</div>
-				
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="hideModal();">닫기</button>
-				</div>
-		
-			</div><!-- modal-content -->
-		</div>
-	</div><!-- 예약취소 modal -->
-
-
 	<c:choose>
 	<c:when test="${ !empty loginUser.userId }">
 	<div class="content">
@@ -250,48 +196,55 @@
 				<table id="seatTable1" style="height: 560px; width: 70px;">
 					<c:forEach var="i" begin="101" end="108">
 						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
-						<c:forEach var="s" items="${ list }">
-							<script type="text/javascript">
-								function markSeat(){
-									$.ajax({
-										url: 'seatView.st',
-										data: {},
-										type: 'POST',
-										success: function(data){
-											
-											var date = new Date();
-				                            var hours = date.getHours();
-				                            
-				                            if(${s.startDate} <= hours && hours < ${s.endDate}){ // 현재시간이 예약시작시간이랑 종료시간 사이일 경우
-				                            	$('#'+${s.seatNo}).css('height', '70px').css('width', '70px').css('border-radius', '15px');
-				                            
-				                            	if(${loginUser.userNo} == ${s.userNo}){ //내가 예약
-													$('#'+${s.seatNo}).css('background', 'rgb(245, 223, 77)').css('color', 'black').text('이용중');
-													$('#'+${s.seatNo}).css('box-shadow', '1px 1px 5px lightgrey');
-												}
-												else{ // 다른 사람이 예약
-													$('#'+${s.seatNo}).css('background', 'darkgrey').css('color', 'black').text('이용중');
-													$('#'+${s.seatNo}).css('box-shadow', '1px 1px 5px lightgrey');
-												}
-				                            
-				                            } else {
-				                            	if(${loginUser.userNo} == ${s.userNo}){ // 로그인한회원번호 == 예약회원번호
-				                            		if(${s.seatNo} == ${i}){
-				                            			$('#'+${i}+'a').css('height', '70px').css('width', '70px').css('border-radius', '15px').text('내가 예약한 좌석');                    
-														$('#'+${i}+'a').css('box-shadow', '1px 1px 5px lightgrey').css('border', 'solid 1px lightgrey');
-				                            		}
-												}
-				                            }
-										}, error: function(){
-											console.log('tlqkdhodksehlsmsep');
-										}
-									});
-								}
-								
-								markSeat();
-							</script>
-						</c:forEach>
 					</c:forEach>
+					<script type="text/javascript">
+						function markSeat(){
+							$.ajax({
+								url: 'seatView.st',
+								data: {
+									userNo : ${loginUser.userNo}
+								},
+								type: 'post',
+								dataType: 'json',
+								success: function(rsv){
+									console.log('찍히기는 하는데...');
+									
+									var date = new Date();
+		                            var hours = date.getHours();
+		                            
+		                            if(rsv.startDate <= hours && hours < rsv.endDate){
+		                            	$('#' + rsv.seatNo).css('height', '70px').css('width', '70px').css('border-radius', '15px');
+		                            	
+		                            	if(${loginUser.userNo} == rsv.userNo){ // 내가 예약
+		                            		$('#'+rsv.seatNo).css('background', 'rgb(245, 223, 77)').css('color', 'black').text('이용중'); // yellow
+		                            		$('#'+rsv.seatNo).css('box-shadow', '1px 1px 5px lightgrey');
+		                            	}
+		                            }
+								}, error: function(){
+									console.log('tlqkdhodksehlsmsep');
+								}
+							});
+							$.ajax({
+                    			url: 'selectSeatNo.st',
+                    			data: {
+                    				seatNo : 111
+                    			},
+                    			type: 'post',
+                    			dataType: 'json',
+                    			success: function(list){
+                    				console.log('얏호');
+                    				console.log(list);
+                    				/* if(${loginUser.userNo} != rsv.userNo){ // 다른 사람이 예약 
+	                            		$('#'+rsv.seatNo).css('background', 'darkgrey').css('color', 'black').text('이용중'); // darkgrey
+										$('#'+rsv.seatNo).css('box-shadow', '1px 1px 5px lightgrey');
+	                            	} */
+                    			}, error: function(){
+                    				console.log('ㅈㄹ');
+                    			}
+                    		})
+						}
+						markSeat();
+					</script>
 				</table>          
 			</div><!-- seat-area-L -->
        
@@ -299,10 +252,8 @@
 				<table id="seatTable2" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="109" end="114">
 						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
-						<c:forEach var="s" items="${ list }">
-							<script>markSeat();</script>
-						</c:forEach>
 					</c:forEach>
+					<script>markSeat();</script>
 				</table>            
 			</div><!-- seat-area-R -->
 			
@@ -310,10 +261,8 @@
 				<table id="seatTable3" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="115" end="120">
 						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
-						<c:forEach var="s" items="${ list }">
-							<script>markSeat();</script>
-						</c:forEach>
 					</c:forEach>
+					<script>markSeat();</script>
 				</table>          
 			</div><!-- seat-area-L -->
 			
@@ -321,10 +270,8 @@
 				<table id="seatTable4" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="121" end="126">
 						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
-						<c:forEach var="s" items="${ list }">
-							<script>markSeat();</script>
-						</c:forEach>
-					</c:forEach>			
+					</c:forEach>
+					<script>markSeat();</script>			
 				</table>            
 			</div><!-- seat-area-R -->
 			
@@ -332,10 +279,8 @@
 				<table id="seatTable5" style="height: 420px; width: 70px;">
 					<c:forEach var="i" begin="127" end="132">
 						<tr><td id=${ i }><div id="${ i }a" class="tdDiv"><br>${ i }</div></td></tr>
-						<c:forEach var="s" items="${ list }">
-							<script>markSeat();</script>
-						</c:forEach>
 					</c:forEach>
+					<script>markSeat();</script>
 				</table>          
 			</div><!-- seat-area-L -->
 			
@@ -356,10 +301,6 @@
 				<tr width="50px">
 					<td>이용중</td>
 					<td><button style="background: darkgrey;" disabled /></td>
-				</tr>
-				<tr>
-					<td>임박</td>
-					<td><button style="background: lightyellow;" disabled /></td>
 				</tr>
 				<tr>
 					<td>이용가능</td>
@@ -533,25 +474,6 @@
 	                        	        dropdown: true,
 	                        	        scrollbar: true    
 	                        	    });
-	                        	    
-	                        	    /* $('#timepickerEndTime').click(function(event){
-
-	                            		var tpStartTime = $('#timepickerStartTime').val();
-	                            		var tpStartHour = parseInt($('#timepickerStartTime').val().substr(0,2));
-	                            		console.log(tpStartHour);
-	                            		
-	                            		$('#timepickerEndTime').timepicker({
-		                        	    	timeFormat: 'HH:mm p',
-		                        	        interval: 60,
-		                        	        minTime: '00',
-		                        	        defaultTime: tpStartTime,
-		                        	        startTime: tpStartTime,
-		                        	        maxHour: tpStartHour + 3,
-		                        	        dynamic: false,
-		                        	        dropdown: true,
-		                        	        scrollbar: true    
-		                        	    });
-	                            	}) */
 	                        	});
 	                        </script>
                         </div><!-- Modal body -->
@@ -679,43 +601,7 @@
 	    })
 	</script>
 	
-	<%--
 	
-		완 - 모달 내부 타임테이블 css 수정
-		
-		완 - 예약 정보 진입 버튼 => 헤더에 달아놓을까? 도전~! => 개같이 실패... 그래서 Study Room로고를 버튼으로 만들기!
-		
-		완 - Study Room 버튼이 버튼처럼 보이게 하기. 누르고 싶게 만들기 => hover주기?
-		
-		- DB가 비어 있으면 아예 표시를 안하는 것에 대해서? 나만 모른척하면 아무도 모를 거 같기는 한데
-		
-		- 좌석 예약 수정
-		
-		- 로그인 계정 하나당 3시간까지만 예약 가능. 확인(submit버튼 클릭 시 alert띄우기)
-			그럼 2시간 / 1시간은? => 10:00 - 12:00 && 15:00 ~ 16:00
-			내가 2시간을 먼저 예약하면 2를 DB에 저장하고
-			귀찮은데... 수정 기능 만들고 다시 돌아올게
-			
-		완 - 모달 타임피커에서 시간 선택을 잘못하면 바로 다시 예약할 수 있도록? 어떠케...?
-		
-		어쩔티비 - 모달 타임피커 시작시간 클릭 시 종료시간 드롭다운 설정 - 뭔가 되긴 했는데 왜 선택한 시간 이전 시간이 다 뜨는지..?
-		
-		완 - 내가 예약한 좌석
-		완 - 예약종료시간이 되지 않았을 경우 '내가 예약한 좌석'임을 표시 하고 
-		완 - 내가 예약한 시간은 회색 말고 노란색으로 표시
-		완 - 예약한 시간이 지났을 경우 다시 좌석 번호로 표시
-		완 -  내가 예약한 좌석이면 노란색 이용중 다른사람은 파란색 이용중
-		
-		완 - 하루가 지나면 상태 'N'으로 변경 / 날짜가 오늘이 아니면?
-		
-		완 - 내가 예약한 자리인데 시작 시간 전이면 예약한 자리임을 표시
-		
-		
-		
-		
-		
-		
-	 --%>
 	
 	
 

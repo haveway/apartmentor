@@ -76,6 +76,8 @@
 		  FROM
 		       RESERVE
 		 WHERE
+		       SEAT_NUMBER = #{seatNo}
+		   AND
 		       STATUS = 'Y'
 	</select>
 	

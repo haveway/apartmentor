@@ -16,6 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <!-- chart.js 관련 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- jQuery 관련 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -23,75 +25,94 @@
 
 <div class="mainWrap">
 	<div id="chartArea" align="center">
-		<br><h2>관리비 조회</h2><br>
+		<br><h2 id="h2"></h2><br>
 		<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+		
 		<script>
-			const data = {
-				labels: ['4월', '5월', '6월', '7월'],
-				datasets: [{
-					label: '2022년',
-					data: [178000, 184000, 189000, 187000],
-					backgroundColor: 'rgb(0,88,155)',
-					borderColor: 'rgb(0,88,155)',
-					borderWidth: 1,
-					tension: 0.1
-				}]
-			};
+			$.ajax({
+				url : 'feeView.fe',
+				data : {userNo : ${loginUser.userNo}},
+				type: 'post',
+				dataType: 'json',
+				success: function(f){
+					console.log(f);
+					
+					document.getElementById('h2').innerHTML = '관리비 조회 - ' + f.aptNo;
+					
+					var date = new Date();
+			        var month = date.getMonth() + 1;
+			        
+					var data = {
+							labels: [f.feeMonth-3+'월', f.feeMonth-2+'월', f.feeMonth-1 +'월', f.feeMonth +'월'],
+							datasets: [{
+								label: '2022년',
+								data: [f.aptFee3, f.aptFee2, f.aptFee1, f.aptFee],
+								backgroundColor: 'rgba(0,88,155,0.2)',
+								borderColor: 'rgba(0,88,155,0.2)',
+								borderWidth: 1,
+								tension: 0.1,
+							}]
+						};
 
-			const config = {
-				type: 'line',
-				data,
-				options: {
-					scales: {
-						y: {
-							beginAtZero: false
-						}
-					}
+						var config = {
+							type: 'bar',
+							data,
+							options: {
+								scales: {
+									y: {
+										beginAtZero: true
+									}
+								}
+							}
+						};
+
+						var myChart = new Chart(
+							document.getElementById('myChart'),
+							config
+						);
+			   
+						function clickHandler(click){
+							var points = myChart.getElementsAtEventForMode(click, 'nearest', {
+							intersect : true}, true);
+							
+							if(points[0]){
+								var dataset = points[0].datasetIndex;
+								var index = points[0].index;
+			   		
+								//console.log(myChart.data.labels[index]); // 4월
+								//console.log(myChart.data.datasets[0].data[index]); // 178200
+								//console.log(myChart.data.datasets[0].label); // 2022년
+
+						   		document.getElementById('viewArea').innerHTML = '<table class="table">'
+									
+																			   + '<tr rowspan="2">'
+																			   + '<td>'
+																			   + '납부금액'
+																			   + '</td>'
+																			   + '<td>'
+																			   + '</td>'
+																			   + '</tr>'
+												
+																			   + '<tr>'
+																			   + '<td>'
+																			   +  myChart.data.datasets[0].label + ' ' + myChart.data.labels[index]
+																			   + '</td>'
+																			   + '<td>'
+																			   +  myChart.data.datasets[0].data[index] + '원'
+																			   + '</td>'	
+																			   + '</tr>'
+												
+																			   + '</table>';
+						   	}
+			   			}
+			   
+						myChart.canvas.onclick = clickHandler;
+				},error: function(){
+					console.log('실패');
 				}
-			};
-
-			const myChart = new Chart(
-				document.getElementById('myChart'),
-				config
-			);
-   
-			function clickHandler(click){
-				const points = myChart.getElementsAtEventForMode(click, 'nearest', {
-				intersect : true}, true);
-				
-				if(points[0]){
-					const dataset = points[0].datasetIndex;
-					const index = points[0].index;
-   		
-					//console.log(myChart.data.labels[index]); // 4월
-					//console.log(myChart.data.datasets[0].data[index]); // 178200
-					//console.log(myChart.data.datasets[0].label); // 2022년
-
-			   		document.getElementById('viewArea').innerHTML = '<table class="table">'
-						
-																   + '<tr rowspan="2">'
-																   + '<td>'
-																   + '납부금액'
-																   + '</td>'
-																   + '<td>'
-																   + '</td>'
-																   + '</tr>'
-									
-																   + '<tr>'
-																   + '<td>'
-																   +  myChart.data.datasets[0].label + ' ' + myChart.data.labels[index]
-																   + '</td>'
-																   + '<td>'
-																   +  myChart.data.datasets[0].data[index] + '원'
-																   + '</td>'	
-																   + '</tr>'
-									
-																   + '</table>';
-			   	}
-   			}
-   
-			myChart.canvas.onclick = clickHandler;
+			})
 		</script>
+		
 		<br><br>
 		<div class="accordion" id="accordionPanelsStayOpenExample">
 			<div class="accordion-item">
@@ -107,11 +128,10 @@
 				</div><!-- panelsStayOpen-collapseOne -->
 			</div><!-- accordion-item -->
 		</div><!-- accordionPanelsStayOpenExample -->
-		
 	</div><!-- chartArea -->
 </div><!-- mainWrap -->
 
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br>
 </body>
 </html>

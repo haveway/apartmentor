@@ -24,5 +24,8 @@ public class Fee {
 	private int feeMonth;
 	private Date dueDate;
 	private String aptFee;
+	private String aptFee1;
+	private String aptFee2;
+	private String aptFee3;
 	
 }
