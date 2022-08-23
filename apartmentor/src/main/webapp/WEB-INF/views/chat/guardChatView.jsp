@@ -178,7 +178,7 @@
 	// 관리실채팅 조회 ajax
 	function selectGuardChatList(){
 		console.log('1초마다 실행');
-		var loginUserName = '${loginUser.userName}';
+		var loginUserAptNo = '${loginUser.aptNo}';
 		$.ajax({
 			url : 'selectGuardChatList.ch',
 			data : { userNo : ${loginUser.userNo} },
@@ -186,7 +186,7 @@
 				let value = '';
 				 for(let i in list){
 					 // 자신이 쓴 채팅일 경우 
-					 if(loginUserName == list[i].chatWriter) {
+					 if(loginUserAptNo == list[i].chatWriter) {
 						 value += "<div class='mychat-area'>"
 						 		+ "<div>" + list[i].chatWriter + "</div>"
 						 		+ "<div>" + list[i].chatContent + "</div>"
@@ -224,7 +224,7 @@
 				data:{
 						userNo : '${loginUser.userNo}',
 						chatContent : $('#chatInput').val(),
-						chatWriter : '${loginUser.userName}'
+						chatWriter : '${loginUser.aptNo}'
 					 },
 				success:function(result){
 					if(result == 'success'){
@@ -239,7 +239,7 @@
 				}
 			});
 			
-		}
+		}	
 		else { // 사용자가 빈 문자열을 입력했을 경우 알러창 띄워주기
 			swal('알림', "입력 후 작성해주세요!", 'warning');
 		}

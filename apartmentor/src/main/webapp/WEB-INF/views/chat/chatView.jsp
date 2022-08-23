@@ -190,7 +190,7 @@
 			<div id="${m.userName}" class="onlineUser">${m.userName}</div>
 		</div>
 		</c:forEach>
-		
+			
 		</div>
 		<div>
 			<input type="text" id="chatInput" name="chatContent">

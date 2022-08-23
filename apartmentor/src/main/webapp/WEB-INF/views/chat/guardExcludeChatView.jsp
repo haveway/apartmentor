@@ -144,7 +144,7 @@
 			<br>
 			<c:forEach var='m' items="${MemberList}">
 				<div class="online-area">
-					<a class="userList" id="${m.userNo}" onclick="selectGuardChatList(${m.userNo});">${m.userName}</a>
+					<a class="userList" id="${m.userNo}" onclick="selectGuardChatList(${m.userNo});">${m.aptNo}</a>
 				</div>
 			</c:forEach>
 		</div>	
@@ -170,7 +170,7 @@
 		
 		// 1초마다 ajax로 채팅내역조회하는 셋인터벌
 		var interval = setInterval(function() {
-			var loginUserName = '${loginUser.userName}';
+			var loginUserAptNo = '${loginUser.aptNo}';
 			$.ajax({
 				url : 'selectGuardChatList.ch',
 				data : { userNo : uNo },
@@ -178,7 +178,7 @@
 					let value = '';
 					 for(let i in list){
 						 // 자신이 쓴 채팅일 경우 
-						 if(loginUserName == list[i].chatWriter) {
+						 if(loginUserAptNo == list[i].chatWriter) {
 							 value += "<div class='mychat-area'>"
 							 		+ "<div>" + list[i].chatWriter + "</div>"
 							 		+ "<div>" + list[i].chatContent + "</div>"
@@ -221,7 +221,7 @@
 				data:{
 						userNo : userNo,
 						chatContent : $('#chatInput').val(),
-						chatWriter : '${loginUser.userName}'
+						chatWriter : '${loginUser.aptNo}'
 					 },
 				success:function(result){
 					if(result == 'success'){

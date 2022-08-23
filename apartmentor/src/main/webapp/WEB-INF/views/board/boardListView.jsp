@@ -155,16 +155,34 @@
 				
 					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 						<c:choose>
-							<c:when test="${empty keyword and empty option}">
-								<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
-							</c:when>
-							<c:when test="${empty keyword and not empty option}">
-								<li class="page-item"><a class="page-link" href="option.bo?cpage=${p}&option=${option}">${p}</a></li>
+	                     	<c:when test="${p ne pi.currentPage}">
+								<c:choose>
+									<c:when test="${empty keyword and empty option}">
+										<li class="page-item"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
+									</c:when>
+									<c:when test="${empty keyword and not empty option}">
+										<li class="page-item"><a class="page-link" href="option.bo?cpage=${p}&option=${option}">${p}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="search.bo?cpage=${p}&keyword=${keyword}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="search.bo?cpage=${p}&keyword=${keyword}">${p}</a></li>
+								<c:choose>
+									<c:when test="${empty keyword and empty option}">
+										<li class="page-item active"><a class="page-link" href="list.bo?cpage=${p}">${p}</a></li>
+									</c:when>
+									<c:when test="${empty keyword and not empty option}">
+										<li class="page-item active"><a class="page-link" href="option.bo?cpage=${p}&option=${option}">${p}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item active"><a class="page-link" href="search.bo?cpage=${p}&keyword=${keyword}">${p}</a></li>
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
-						</c:choose>
+						</c:choose>	
+						
 					</c:forEach>
 					
 				<c:choose>
@@ -194,6 +212,7 @@
 		<script>
 			$(function(){
 				$('option[value=${option}]').attr('selected',true);
+				
 			})
 		</script>
 	</c:if>
@@ -204,7 +223,7 @@
 			$('#condition').change(function(){
 				var option = $("#condition option:selected").val();
 				location.href='option.bo?currentPage=1&option=' + option;
-			})
+			})	
 		})
 			
 	</script>

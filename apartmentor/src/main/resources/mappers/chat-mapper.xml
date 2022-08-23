@@ -15,7 +15,8 @@
 		<result column="USER_NO" property="userNo"/>    		
 		<result column="USER_ID" property="userId"/>    	
 		<result column="USER_NAME" property="userName"/>    
-		<result column="STATUS" property="status"/>    	
+		<result column="STATUS" property="status"/> 
+		<result column="APT_NO" property="aptNo"/> 
 	</resultMap>
  
  
@@ -56,12 +57,13 @@
  				USER_NO,
  				USER_ID,
  				USER_NAME,
+ 				APT_NO,
  				STATUS
  		  FROM
  		  		MEMBER
  		 WHERE
  		 		STATUS = 'Y'
- 		   AND NOT USER_NO = 9		 				
+ 		   AND NOT USER_NO = 1		 				
  				
  	</select>
  	

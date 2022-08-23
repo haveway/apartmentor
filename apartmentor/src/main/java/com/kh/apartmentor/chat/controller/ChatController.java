@@ -33,7 +33,7 @@ public class ChatController {
 			session.setAttribute("MemberList", MemberList);
 			
 			// 로그인한 유저가 관리실일 경우 관리실 전용 채팅 페이지로 포워딩
-		if(loginUser.getUserNo() == 9) {
+		if(loginUser.getUserNo() == 1) {
 			return "chat/guardExcludeChatView";
 		}
 		// 주민채팅리스트 조회(chatCode=1)
