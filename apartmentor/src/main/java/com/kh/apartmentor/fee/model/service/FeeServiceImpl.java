@@ -19,13 +19,8 @@ public class FeeServiceImpl implements FeeService {
 	private FeeDao feeDao;
 
 	@Override
-	public ArrayList<Fee> selectFeeList() {
-		return feeDao.selectFeeList(sqlSession);
-	}
-
-	@Override
-	public Fee selectFee(int userNo) {
-		return feeDao.selectFee(sqlSession, userNo);
+	public ArrayList<Fee> selectFeeList(int userNo) {
+		return feeDao.selectFeeList(sqlSession, userNo);
 	}
 	
 	

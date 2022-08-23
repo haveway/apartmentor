@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.apartmentor.fee.model.service.FeeService;
 import com.kh.apartmentor.fee.model.vo.Fee;
+import com.kh.apartmentor.member.model.service.MemberService;
 
 @Controller
 public class FeeController {
@@ -25,7 +26,11 @@ public class FeeController {
 	
 	@ResponseBody
 	@RequestMapping(value="feeView.fe", produces="application/json; charset=UTF-8")
-	public String ajaxSelectFee(int userNo) {
-		return new Gson().toJson(feeService.selectFee(userNo));
+	public String ajaxSelectFeeList(int userNo) {
+		
+		ArrayList<Fee> f = feeService.selectFeeList(userNo);
+		System.out.println(f);
+		
+		return new Gson().toJson(feeService.selectFeeList(userNo));
 	}
 }

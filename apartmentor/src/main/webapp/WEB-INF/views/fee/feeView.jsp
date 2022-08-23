@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,23 +31,24 @@
 		
 		<script>
 			$.ajax({
+				type: 'POST',
 				url : 'feeView.fe',
 				data : {userNo : ${loginUser.userNo}},
-				type: 'post',
 				dataType: 'json',
 				success: function(f){
 					console.log(f);
+					console.log(f[1]);
 					
-					document.getElementById('h2').innerHTML = '관리비 조회 - ' + f.aptNo;
+					document.getElementById('h2').innerHTML = '관리비 조회 - ' + f[0].aptNo;
 					
 					var date = new Date();
 			        var month = date.getMonth() + 1;
 			        
 					var data = {
-							labels: [f.feeMonth-3+'월', f.feeMonth-2+'월', f.feeMonth-1 +'월', f.feeMonth +'월'],
+							labels: [f[0].feeDate + '월', f[1].feeDate + '월', f[2].feeDate + '월', f[3].feeDate + '월'],
 							datasets: [{
 								label: '2022년',
-								data: [f.aptFee3, f.aptFee2, f.aptFee1, f.aptFee],
+								data: [f[0].aptFee, f[1].aptFee, f[2].aptFee, f[3].aptFee],
 								backgroundColor: 'rgba(0,88,155,0.2)',
 								borderColor: 'rgba(0,88,155,0.2)',
 								borderWidth: 1,
@@ -107,10 +109,11 @@
 			   			}
 			   
 						myChart.canvas.onclick = clickHandler;
-				},error: function(){
+				},
+				error: function(){
 					console.log('실패');
 				}
-			})
+			});
 		</script>
 		
 		<br><br>

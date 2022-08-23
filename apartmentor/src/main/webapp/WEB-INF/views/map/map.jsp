@@ -518,10 +518,10 @@
 								for(var i = 1; i < 9; i++){
 									if(yoil == i){
 										if(eval('dutyTime' + i + 's') < currTime && currTime < eval('dutyTime' + i + 'c')){
-											var imageSrc = 'http://drive.google.com/uc?export=view&id=1zzt3UCNDqkjVbE2JggHTj9qk4Y6MPGn6', // 마커이미지의 주소입니다    
+											var imageSrc = 'http://drive.google.com/uc?export=view&id=1zzt3UCNDqkjVbE2JggHTj9qk4Y6MPGn6', // 열려있는 약국 이미지
 											imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 										} else {
-											var imageSrc = 'http://drive.google.com/uc?export=view&id=1Ppck2GSKy6W8wHI3psyN46GDoEzigrot', // 마커이미지의 주소입니다    
+											var imageSrc = 'http://drive.google.com/uc?export=view&id=1Ppck2GSKy6W8wHI3psyN46GDoEzigrot', // 닫혀있는 약국 이미지
 											imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 										}
 									}	

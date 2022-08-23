@@ -6,8 +6,6 @@ import com.kh.apartmentor.fee.model.vo.Fee;
 
 public interface FeeService {
 	
-	ArrayList<Fee> selectFeeList();
-	
-	Fee selectFee(int userNo);
+	ArrayList<Fee> selectFeeList(int userNo);
 
 }

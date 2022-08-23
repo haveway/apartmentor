@@ -10,12 +10,11 @@ import com.kh.apartmentor.fee.model.vo.Fee;
 @Repository
 public class FeeDao {
 	
-	public ArrayList<Fee> selectFeeList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("feeMapper.selectFeeList");
+
+	public ArrayList<Fee> selectFeeList(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("feeMapper.selectFeeList", userNo);
 	}
-	
-	public Fee selectFee(SqlSessionTemplate sqlSession, int userNo) {
-		return sqlSession.selectOne("feeMapper.selectFee", userNo);
-	}
+
+
 
 }

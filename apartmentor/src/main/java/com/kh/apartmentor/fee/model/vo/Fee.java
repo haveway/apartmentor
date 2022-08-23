@@ -13,19 +13,10 @@ import lombok.ToString;
 @ToString
 public class Fee {
 	
-//	APT_NO	VARCHAR2(30 BYTE)
-//	USER_NO	NUMBER
-//	FEE_MONTH	NUMBER
-//	DUE_DATE	DATE
-//	APT_FEE	VARCHAR2(30 BYTE)
-	
+	private int feeNo;
 	private String aptNo;
-	private int userNo;
-	private int feeMonth;
-	private Date dueDate;
+	private String feeDate;
+	private String dueDate;
 	private String aptFee;
-	private String aptFee1;
-	private String aptFee2;
-	private String aptFee3;
 	
 }

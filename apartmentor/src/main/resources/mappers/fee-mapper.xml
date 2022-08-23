@@ -3,29 +3,23 @@
 <mapper namespace="feeMapper">
 
 	<resultMap type="fee" id="feeResultSet">
+		<result column="FEE_NO" property="feeNo" />
 		<result column="APT_NO" property="aptNo" />
-		<result column="USER_NO" property="userNo" />
-		<result column="FEE_MONTH" property="feeMonth" />
+		<result column="FEE_DATE" property="feeDate" />
 		<result column="DUE_DATE" property="dueDate" />
 		<result column="APT_FEE" property="aptFee" />
-		<result column="APT_FEE_1" property="aptFee1" />
-		<result column="APT_FEE_2" property="aptFee2" />
-		<result column="APT_FEE_3" property="aptFee3" />
 	</resultMap>
 	
-	<select id="selectFee" resultMap="feeResultSet">
-		SELECT
-		       APT_NO,
-		       USER_NO,
-		       FEE_MONTH,
-		       DUE_DATE,
-		       APT_FEE,
-		       APT_FEE_1,
-		       APT_FEE_2,
-		       APT_FEE_3
-		  FROM
-		       FEE
-		 WHERE
-	           USER_NO = #{userNo}	  
+	<select id="selectFeeList" resultMap="feeResultSet">
+	   SELECT FEE_NO, f.APT_NO, TO_CHAR(FEE_DATE, 'MM') FEE_DATE, TO_CHAR(DUE_DATE, 'MM') DUE_DATE, APT_FEE
+	     FROM FEE f
+	     JOIN MEMBER a USING(USER_NO)
+	    WHERE f.APT_NO = (SELECT APT_NO
+	    				  FROM MEMBER
+	    				 WHERE USER_NO = #{userNo})
+          AND FEE_DATE BETWEEN TRUNC(ADD_MONTHS(SYSDATE,-3)+1) - TO_CHAR(SYSDATE,'DD')
+          				   AND TRUNC(LAST_DAY(SYSDATE)) + 0.99999421
 	</select>
+	
+	
 </mapper>
