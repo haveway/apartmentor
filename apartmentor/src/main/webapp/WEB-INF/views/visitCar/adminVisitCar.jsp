@@ -139,7 +139,7 @@
                    	<c:when test="${p ne pi.currentPage}">
 					<c:choose>
 						<c:when test="${empty category}">
-							<li class="page-item"><a class="page-link" href="adminVisitCar.rg?cpage=${p}">${p}</a></li>
+							<li class="page-item"><a class="page-link" href="adminVisitCar.car?cpage=${p}">${p}</a></li>
 						</c:when>
 					</c:choose>
 				</c:when>

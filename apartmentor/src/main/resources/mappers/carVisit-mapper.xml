@@ -25,25 +25,9 @@
       INSERT
         INTO
               PARKING_VISIT
-              (
-              VISITCAR_NO,
-              CAR_NO,
-              VISITCAR_PHONE,
-              VISITCAR_DATE,
-              PURPOSE,
-              STATUS,
-              USER_NO
-              )
+              (VISITCAR_NO, CAR_NO, VISITCAR_PHONE, VISITCAR_DATE, PURPOSE, STATUS, USER_NO)
       VALUES
-            (
-            SEQ_VCNO.NEXTVAL,
-            #{carNo},
-            #{visitCarPhone},
-            #{visitCarDate},
-            #{purpose},
-            'W',
-            #{userNo}
-            )
+             (SEQ_VCNO.NEXTVAL, #{carNo}, #{visitCarPhone}, #{visitCarDate}, #{purpose}, 'W', #{userNo})
    </insert>
    
    <update id="setDayVisitCar">
@@ -63,7 +47,7 @@
       WHERE P.USER_NO = M.USER_NO
       AND M.APT_NO = #{aptNo}
       AND P.STATUS IN('Y','W')
-      ORDER BY VISITCAR_DATE DESC
+      ORDER BY VISITCAR_DATE ASC
 	</select>
 
    
