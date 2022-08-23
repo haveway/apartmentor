@@ -62,22 +62,43 @@ INSERT INTO MEMBER
 VALUES (SEQ_UNO.NEXTVAL,'1동101호', 'user01', '$2a$10$Tj2EpG0n2ekHAvWvP9i3YeYlHXq0RwBvjaLi4kokWdwYn5CIPqyUG', '홍길동', '970514', '01011112222', 'user01@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동101호', 'user001', '$2a$10$Tj2EpG0n2ekHAvWvP9i3YeYlHXq0RwBvjaLi4kokWdwYn5CIPqyUG', '홍길똥', '960412', '01011112223', 'user001@kh.or.kr', 'W');
+
+INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동201호', 'user02', '$2a$10$wAHLRHkKMu5zESY1zg7Coesp6iYcPtqMzAQ4BsArcFaKqjvQwiPe2', '고성수', '970714', '01012123434', 'user02@kh.or.kr', 'Y');
+
+INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동201호', 'user002', '$2a$10$wAHLRHkKMu5zESY1zg7Coesp6iYcPtqMzAQ4BsArcFaKqjvQwiPe2', '고길동', '920111', '01012123432', 'user002@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동301호', 'user03', '$2a$10$/d4bUsm0U2opfC/TMLWVBOC3NTUr3CWLaEq3jIGlHfMHHW3HnN4Qm', '김유미', '991105', '01056567878', 'user03@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동301호', 'user003', '$2a$10$/d4bUsm0U2opfC/TMLWVBOC3NTUr3CWLaEq3jIGlHfMHHW3HnN4Qm', '김길동', '801105', '01026567278', 'user003@kh.or.kr', 'N');
+
+INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동401호', 'user04', '$2a$10$yxpMzwgyqOk3KquCDZVYo.NcJjNvU0PkI5R1x/eM38V.w6H/lGH0.', '서영재', '881115', '01098987676', 'user04@kh.or.kr', 'Y');
+
+INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동401호', 'user004', '$2a$10$yxpMzwgyqOk3KquCDZVYo.NcJjNvU0PkI5R1x/eM38V.w6H/lGH0.', '서길동', '781115', '01097987676', 'user004@kh.or.kr', 'W');
 
 INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동501호', 'user05', '$2a$10$0pcWEqUUdBtVMNWpw2OTq.LoBIeudVWoyzfx7rUuUwYROAsTNCWYa', '손동환', '970514', '01079796868', 'user05@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동501호', 'user005', '$2a$10$0pcWEqUUdBtVMNWpw2OTq.LoBIeudVWoyzfx7rUuUwYROAsTNCWYa', '손길동', '900504', '01079796808', 'user005@kh.or.kr', 'Y');
+
+INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동601호', 'user06', '$2a$10$dYQrw7ER9qmwB.mTO2zA9O5vhaIERyuERHgCpdqAJshtq2udvRg3a', '임유리', '990107', '01029293838', 'user06@kh.or.kr', 'Y');
 
 INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동601호', 'user006', '$2a$10$dYQrw7ER9qmwB.mTO2zA9O5vhaIERyuERHgCpdqAJshtq2udvRg3a', '임길동', '690107', '01009293838', 'user006@kh.or.kr', 'W');
+
+INSERT INTO MEMBER 
 VALUES (SEQ_UNO.NEXTVAL,'1동701호', 'user07', '$2a$10$ITj7jNJDsNORiEdi94bscuYz0gVAtfeLDV2WPrtc3BJhvo.atwLr6', '조성준', '960625', '01047472020', 'user07@kh.or.kr', 'Y');
+
+INSERT INTO MEMBER 
+VALUES (SEQ_UNO.NEXTVAL,'1동701호', 'user007', '$2a$10$ITj7jNJDsNORiEdi94bscuYz0gVAtfeLDV2WPrtc3BJhvo.atwLr6', '조길동', '960625', '01042472024', 'user007@kh.or.kr', 'W');
 --------------------------------------------------
 --------------     FEE 관련   ------------------   
 --------------------------------------------------
