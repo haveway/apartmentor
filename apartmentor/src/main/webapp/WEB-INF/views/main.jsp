@@ -620,31 +620,29 @@
 					<tbody class="schedule">
 					
 					<c:forEach var="vL" items="${visitList}">
-						<c:if test="${vL ne null && loginUser.aptNo eq vL.aptNo}">
-							<form id="visitStatus" action="" method="post">
-							<input type="hidden" name="email" value="${loginUser.email}">
-							<input type="hidden" name="vno" value="${vL.visitNo}">
-								<tr class="tr" style="cursor: pointer;" data-toggle="modal" data-target="#myModal"
-										 data-id="${loginUser.aptNo}님의 ${vL.visitDate} ${vL.visitTime}에  ${vL.visitValue} 일정이 있습니다.">
-									<th>
-										<div name="status">
-											${fn:substring(vL.visitDate, 8, 10)}
-										</div>
-									</th>
-									<td>
-										${vL.visitTime}
-									</td>
-									<td>
-										${vL.visitValue}
-									</td>
-								</tr>
-							</form>
-						</c:if>
+						<form id="visitStatus" action="" method="post">
+						<input type="hidden" name="email" value="${loginUser.email}">
+						<input type="hidden" name="vno" value="${vL.visitNo}">
+							<tr class="tr" style="cursor: pointer;" data-toggle="modal" data-target="#myModal"
+									 data-id="${loginUser.aptNo}님의 ${vL.visitDate} ${vL.visitTime}에  ${vL.visitValue} 일정이 있습니다.">
+								<th>
+									<div name="status">
+										${fn:substring(vL.visitDate, 8, 10)}
+									</div>
+								</th>
+								<td>
+									${vL.visitTime}
+								</td>
+								<td>
+									${vL.visitValue}
+								</td>
+							</tr>
+						</form>
 					</c:forEach>
 					
 					<c:forEach var="rL" items="${reserveList}">
 						<c:choose>
-							<c:when test="${rL ne null && loginUser.aptNo eq rL.aptNo && rL.facilityValue ne '독서실'}">
+							<c:when test="${rL.facilityValue ne '독서실'}">
 								<tr>
 									<th>
 										<div name="status">
@@ -662,7 +660,7 @@
 									</td>
 								</tr>
 							</c:when>
-							<c:when test="${rL ne null && loginUser.aptNo eq rL.aptNo && rL.facilityValue eq '독서실'}" >
+							<c:when test="${rL.facilityValue eq '독서실'}" >
 							<tr>
 									<th>
 										<div name="status">
@@ -684,7 +682,7 @@
 					</c:forEach>
 					
 					<c:forEach var="nL" items="${noticeList}">
-						<c:if test="${nL ne null and nL.noticeStartDate ne null}">
+						<c:if test="${nL.noticeStartDate ne null}">
 							<tr style="cursor: pointer;" onclick="location.href='detail.notice?nno=${nL.noticeNo}'">
 								<th>
 									<div name="status">
@@ -784,7 +782,7 @@
 				})
 
 				if($('.done')) {
-					$("#cancleBtn").attr("disabled", true);
+					$("#cancelBtn").attr("disabled", true);
 				}
 		  })
 		  </script>

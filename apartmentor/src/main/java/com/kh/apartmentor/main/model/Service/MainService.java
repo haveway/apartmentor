@@ -16,9 +16,9 @@ public interface MainService {
 	ArrayList<Notice> noticeList();
 
 	// 일정 관련
-	ArrayList<Visit> visitReserveList();
-	ArrayList<Reserve> reserveReserveList();
-	ArrayList<Notice> noticeReserveList();
+	ArrayList<Visit> visitReserveList(int userNo);
+	ArrayList<Reserve> reserveReserveList(int userNo);
+	ArrayList<Notice> noticeReserveList(int userNo);
 
 	
 

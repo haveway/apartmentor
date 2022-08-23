@@ -219,7 +219,7 @@ VALUES (SEQ_NNO.NEXTVAL,'탄소중립 생활 실천 캠페인 안내', '행사', '지구를 위해 �
 INSERT INTO NOTICE
 VALUES (SEQ_NNO.NEXTVAL,'승강기 점검 안내', '알림', '승강기 점검이 있겠습니다.', '1', NULL, NULL, '승강기 점검 안내', '22/08/05', '22/08/05', DEFAULT, 'Y');
 INSERT INTO NOTICE
-VALUES (SEQ_NNO.NEXTVAL,'아파트내 벼룩시장 행사 안내', '행사', '아파트내 벼룩시장이 열릴 예정이오니 입주자 여러분들은 많은 참여 부탁드립니다!', '1', NULL, NULL, NULL, '22/08/13', '22/08/14', DEFAULT, 'Y');
+VALUES (SEQ_NNO.NEXTVAL,'아파트내 벼룩시장 행사 안내', '행사', '아파트내 벼룩시장이 열릴 예정이오니 입주자 여러분들은 많은 참여 부탁드립니다!', '1', NULL, NULL, '승강기 점검', '22/08/13', '22/08/14', DEFAULT, 'Y');
 INSERT INTO NOTICE
 VALUES (SEQ_NNO.NEXTVAL,'1동 가스 검침 일정 안내', '알림', '가스 검침을 실시하오니, 1동 입주자 여러분들은 방문 예약 신청 바랍니다.', '1', NULL, NULL, '1동 가스검침 일정', '22/08/25', '22/08/28', DEFAULT, 'Y');
 INSERT INTO NOTICE
@@ -494,6 +494,8 @@ COMMENT ON COLUMN PARKING.CREATE_DATE IS '차량 등록 요청일';
 COMMENT ON COLUMN PARKING.USER_NO IS '회원번호(SEQ_UNO)';
 
 -- 더미데이터
+INSERT INTO VISIT
+VALUES (SEQ_VNO.NEXTVAL, 1, 7, '2022-08-01', '13:00', 'Y', NULL, DEFAULT);
 INSERT INTO VISIT
 VALUES (SEQ_VNO.NEXTVAL, 3, 7, '2022-08-25', '09:40', 'Y', NULL, DEFAULT);
 INSERT INTO VISIT

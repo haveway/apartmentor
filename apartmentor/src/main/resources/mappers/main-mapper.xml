@@ -18,6 +18,7 @@
 		<result column="NOTICE_CALENDER" property="noticeCalender" />
 		<result column="NOTICE_START_DATE" property="noticeStartDate" />
 		<result column="NOTICE_END_DATE" property="noticeEndDate" />
+		<result column="USER_NO" property="userNo" />
 	</resultMap>
 	
 	<resultMap type="visit" id="visitResultSet">
@@ -28,6 +29,7 @@
 		<result column="VISIT_TIME" property="visitTime" />
 		<result column="APT_NO" property="aptNo" />
 		<result column="EMAIL" property="visitEmail" />
+		<result column="USER_NO" property="userNo" />
 	</resultMap>
 	
 	<resultMap type="reserve" id="reserveResultSet">
@@ -37,6 +39,7 @@
 		<result column="END_DATE" property="endDate" />
 		<result column="FACILITY_VALUE" property="facilityValue" />
 		<result column="APT_NO" property="aptNo" />
+		<result column="USER_NO" property="userNo" />
 	</resultMap>
 	
 	<select id="boardList" resultMap="boardResultSet">
@@ -82,8 +85,11 @@
 		  		MEMBER USING(USER_NO)
 		 WHERE
 		 		VISIT_STATUS = 'Y'
+		   AND
+		   		USER_NO = #{userNo}
 		 ORDER 
-		    BY	VISIT_TIME ASC
+		    BY	VISIT_DATE ASC, 
+		    	VISIT_TIME ASC
 	</select>
 	
 	
@@ -114,6 +120,8 @@
 		  		MEMBER USING(USER_NO)
 		 WHERE
 		 		R.STATUS = 'Y'
+		   AND
+		   		USER_NO = #{userNo}
 		 ORDER
 		 	BY  START_DAY DESC
 	</select>

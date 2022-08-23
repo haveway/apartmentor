@@ -66,9 +66,9 @@
 						<th>말머리</th>
 						<td>${n.noticeCategoryValue}</td>
 					</tr>
-					<tr style="height: 35px">
+					<tr style="height: 35px;">
 						<th>제목</th>
-						<td>${n.noticeTitle}</td>
+						<td colspan="3">${n.noticeTitle}</td>
 					</tr>
 					<tr style="height: 35px">
 						<th>일정 종류</th>

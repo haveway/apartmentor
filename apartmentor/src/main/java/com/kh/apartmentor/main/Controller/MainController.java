@@ -49,9 +49,9 @@ public class MainController {
 		m.addAttribute("nList", nList);
 		
 		// 달력 관련
-		ArrayList<Visit> visitList = mainService.visitReserveList();
-		ArrayList<Reserve> reserveList = mainService.reserveReserveList();
-		ArrayList<Notice> noticeList = mainService.noticeReserveList();
+		ArrayList<Visit> visitList = mainService.visitReserveList(userNo);
+		ArrayList<Reserve> reserveList = mainService.reserveReserveList(userNo);
+		ArrayList<Notice> noticeList = mainService.noticeReserveList(userNo);
 		
 		m.addAttribute("visitList", visitList);
 		m.addAttribute("reserveList", reserveList);

@@ -30,18 +30,18 @@ public class MainServiceImpl implements MainService{
 		return mainDao.noticeList(sqlSession);
 	}
 	
-	//유리
+	// 일정
 	@Override
-	public ArrayList<Visit> visitReserveList() {
-		return mainDao.visitReserveList(sqlSession);
+	public ArrayList<Visit> visitReserveList(int userNo) {
+		return mainDao.visitReserveList(sqlSession, userNo);
 	}
 	@Override
-	public ArrayList<Reserve> reserveReserveList() {
-		return mainDao.reserveReserveList(sqlSession);
+	public ArrayList<Reserve> reserveReserveList(int userNo) {
+		return mainDao.reserveReserveList(sqlSession, userNo);
 	}
 	@Override
-	public ArrayList<Notice> noticeReserveList() {
-		return mainDao.noticeReserveList(sqlSession);
+	public ArrayList<Notice> noticeReserveList(int userNo) {
+		return mainDao.noticeReserveList(sqlSession, userNo);
 	}
 	
 
