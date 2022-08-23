@@ -23,7 +23,7 @@
 		height: 60px;
 	}
 	.boardcontent-area{
-		height: 200px;
+		height: auto;
 	}
 	.upfile-area{
 		height: 50px;
@@ -177,8 +177,7 @@
 							   
 						// 자신의 댓글에만 삭제 버튼 부여 & 자신의 댓글 판별을 위해 replyNo를 input type hidden으로 값 넘겨주자. 		   
 						if(loginUserNo == list[i].userNo) { 
-						 	value += "<input type='hidden' name='replyNo' value='"+list[i].replyNo+"'>"
-						 		   + "<button class='btn btn-primary' onclick='deleteReply();'>삭제</button>"; 
+						 	value += "<button class='btn btn-primary' onclick='deleteReply("+list[i].replyNo+");'>삭제</button>"; 
 						}
 							value += "<hr>" 
 								   + "</div>";
@@ -227,12 +226,12 @@
 	}
 	
 	// 댓글 삭제 기능
-	function deleteReply(){
+	function deleteReply(rNo){
 		// DB의 값과 비교할 댓글 번호와 회원번호 넘겨주기
 		$.ajax({
 			url:'replyDelete.bo',
 			data:{
-					replyNo : $("input[name='replyNo']").val()
+					replyNo : rNo
 				 },
 			success:function(result){
 				if(result == 'success'){
