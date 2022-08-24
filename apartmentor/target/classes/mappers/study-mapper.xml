@@ -60,6 +60,8 @@
 		       USER_NO = #{userNo}
 		   AND
 		       STATUS = 'Y'
+		   AND 
+		       FACILITY = 'st'
 	</select>
 	
 	<select id="selectList" resultMap="studyResultSet">
@@ -77,9 +79,11 @@
 		       RESERVE
 		 WHERE
 		       STATUS = 'Y'
+		   AND 
+		       FACILITY = 'st'
 	</select>
 	
-		<select id="selectSeatNoList" resultMap="studyResultSet">
+	<select id="selectSeatNoList" resultMap="studyResultSet">
 		SELECT
 		       RESERVE_NO,
 		       START_DATE,
@@ -96,14 +100,16 @@
 		       SEAT_NUMBER = #{seatNo}
 		   AND
 		       STATUS = 'Y'
+		   AND 
+		       FACILITY = 'st'
 	</select>
 	
 	<update id="updateStatus">
-		update reserve set status = 'N' where TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') != #{today}
+		update reserve set status = 'N' where TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') != #{today} and facility = 'st'
 	</update>
 	
 	<update id="deleteReserve">
-		update reserve set status = 'N' where user_no = #{userNo}
+		update reserve set status = 'N' where user_no = #{userNo} and facility = 'st'
 	</update>
 
 </mapper>

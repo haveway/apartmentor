@@ -17,7 +17,7 @@ public class StudyDao {
 	public Reserve selectReserve(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("studyMapper.selectReserve",userNo);
 	}
-	
+
 	public ArrayList<Reserve> selectList(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("studyMapper.selectList");
 	}

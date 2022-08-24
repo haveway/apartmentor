@@ -10,8 +10,6 @@ public interface StudyService {
 	//좌석 전체 조회 ~ 지금 하는 거
 	ArrayList<Reserve> selectList();
 	
-	
-	
 	//타임테이블: 좌석 번호로 
 	ArrayList<Reserve> selectSeatNoList(int seatNo);
 	
