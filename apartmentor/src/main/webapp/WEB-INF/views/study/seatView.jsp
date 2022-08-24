@@ -302,8 +302,27 @@
 					},
 					success: function(){
 						swal('예약이 취소되었습니다',' ','success');
+						
+						swal({
+							title : '예약이 취소되었습니다',
+							text : '',
+							icon : 'success',
+							closeOnClickOutside : false,
+							closeOnEsc : false,
+							buttons : {
+								doLogin : {
+									text : '확인',
+									value : true,
+									className : 'btn'
+								}
+							}
+						}).then((result) => { 
+							if(result){
+								location.href='seatView.st';
+							}
+						})
+						
 						$('#myStudyInfo').modal('hide');
-						reload();
 					}, error: function(){
 						console.log('에효 니가 안되는 건 내 잘못이겠지');
 					}
@@ -520,19 +539,29 @@
                                         success : function(rsv){
                                         	
                                         	if(rsv != null){
-                                        		swal({
-                                       				title : rsv.createDate,
-                                       				text : rsv.seatNo + '번 좌석' + rsv.startDate + ' - ' + rsv.endDate + ' 예약되었습니다.',
-                                       				icon : 'success',
-                                       				closeOnClickOutside : false, //알럿창 제외하고 클릭시 창 닫히지 않도록
-                                       				closeOnEsc : false,
-                                       			})
+                                       			swal({
+													title : rsv.createDate,
+													text : rsv.seatNo + '번 좌석' + rsv.startDate + ' - ' + rsv.endDate + ' 예약되었습니다.',
+													icon : 'success',
+													closeOnClickOutside : false,
+													closeOnEsc : false,
+													buttons : {
+														doLogin : {
+															text : '확인',
+															value : true,
+															className : 'btn'
+														}
+													}
+												}).then((result) => { 
+													if(result){
+														location.href='seatView.st';
+													}
+												})
                                                	
                                                	var tdDivColor = '#' + rsv.seatNo + 'a';
                                                    $(tdDivColor).css('background', 'deeppink').css('height', '70').text('♥너가 예약한 자리♥');
                                                    
                                                    $('#myModal').modal('hide');
-                                                   reload();
                                         	}
                                         	else{
                                         		swal({
