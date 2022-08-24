@@ -532,6 +532,7 @@
                                                    $(tdDivColor).css('background', 'deeppink').css('height', '70').text('♥너가 예약한 자리♥');
                                                    
                                                    $('#myModal').modal('hide');
+                                                   reload();
                                         	}
                                         	else{
                                         		swal({
