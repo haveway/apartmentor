@@ -2,6 +2,8 @@ package com.kh.apartmentor.study.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,36 +27,29 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping(value="seatView.st", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReserve(int userNo) {
-		Reserve r = studyService.selectReserve(userNo);
-		System.out.println(r);
+	public String ajaxSelectList() {
+		//ArrayList<Reserve> list = studyService.selectList();
+		return new Gson().toJson(studyService.selectList());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reservedInfo.st", produces="application/json; charset=UTF-8")
+	public String ajaxReservedInfo(int userNo) {
 		return new Gson().toJson(studyService.selectReserve(userNo));
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="selectSeatNo.st", produces="application/json; charset=UTF-8")
-	public String ajaxSelectSeatNo(int seatNo) {
-		ArrayList<Reserve> list = studyService.selectList(seatNo);
-		System.out.println("list : " + list);
-		return new Gson().toJson(list);
+	@RequestMapping(value="timeTable.st", produces="application/json; charset=UTF-8")
+	public String ajaxTimeTable(int seatNo) {
+		//ArrayList<Reserve> list = studyService.selectSeatNoList(seatNo);
+		return new Gson().toJson(studyService.selectSeatNoList(seatNo));
 	}
 	
-	
-//	@RequestMapping("seatView.st")
-//	public ModelAndView seatView(ModelAndView mv) {
-//
-//		ArrayList<Reserve> list = studyService.selectList();
-//		
-//		mv.addObject("list", studyService.selectList())
-//		  .setViewName("study/seatView");
-//		
-//		return mv;
-//	}
-	
 	@ResponseBody
-	@RequestMapping("reserveSeat.st")
-	public Reserve reserveSeat(ModelAndView mv, String startTime, String endTime, int seatNo, int userNo, String startDay, int loginUserNo) {
+	@RequestMapping(value="reserveSeat.st", produces="application/json; charset=UTF-8")
+	public String ajaxReserveSeat(String startTime, String endTime, int seatNo, int userNo) {
 		
+		// 전달 받은 값
 		Reserve r = new Reserve();
 		r.setStartDate(startTime);
 		r.setEndDate(endTime);
@@ -63,16 +58,33 @@ public class StudyController {
 		r.setUserNo(userNo);
 		r.setStatus("Y");
 		
-		int result = studyService.reserveSeat(r);
+		// 예약정보 리스트
+		ArrayList<Reserve> seatList = studyService.selectList();
 		
-		Reserve reserveInfo = null;
-		reserveInfo = studyService.selectReserve(loginUserNo);
-		System.out.println("예약 성공 : " + reserveInfo);
-	
-		mv.addObject("reserveInfo", studyService.selectReserve(loginUserNo))
-		  .setViewName("study/seatView");
+		int result = 0;
+		int reservedUserNo = 0;
+		Reserve rsv = null;
 		
-		return reserveInfo;
+		// 리스트에 유저넘버 reservedUserNo에 담기
+		for(int i=0; i<seatList.size(); i++) {
+			reservedUserNo = seatList.get(i).getUserNo();
+		}
+		
+		// 받아온유저넘버 != 예약된유저넘버
+		if(r.getUserNo() != reservedUserNo) {
+			result = studyService.reserveSeat(r); 
+			
+			if(result > 0) {
+				rsv = studyService.selectReserve(userNo);
+				System.out.println(rsv);
+			}else {
+				rsv = null;
+			}
+		}else {
+			rsv = null;
+		}
+		
+		return new Gson().toJson(rsv);
 	}
 	
 	@ResponseBody
@@ -96,8 +108,7 @@ public class StudyController {
 		
 		return result;
 	}
-	
-	
+
 	
 	
 	

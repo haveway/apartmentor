@@ -76,6 +76,23 @@
 		  FROM
 		       RESERVE
 		 WHERE
+		       STATUS = 'Y'
+	</select>
+	
+		<select id="selectSeatNoList" resultMap="studyResultSet">
+		SELECT
+		       RESERVE_NO,
+		       START_DATE,
+		       END_DATE,
+		       FACILITY,
+		       SEAT_NUMBER,
+		       USER_NO,
+		       STATUS,
+		       TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE",
+		       START_DAY
+		  FROM
+		       RESERVE
+		 WHERE
 		       SEAT_NUMBER = #{seatNo}
 		   AND
 		       STATUS = 'Y'

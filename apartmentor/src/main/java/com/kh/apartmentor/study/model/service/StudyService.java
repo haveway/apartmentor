@@ -6,14 +6,20 @@ import com.kh.apartmentor.common.model.vo.Reserve;
 
 public interface StudyService {
 	
+	
+	//좌석 전체 조회 ~ 지금 하는 거
+	ArrayList<Reserve> selectList();
+	
+	
+	
+	//타임테이블: 좌석 번호로 
+	ArrayList<Reserve> selectSeatNoList(int seatNo);
+	
 	//좌석 예약
 	int reserveSeat(Reserve r);
 	
-	//예약 조회
+	//예약 조회 userNo
 	Reserve selectReserve(int userNo);
-	
-	//좌석 전체 조회
-	ArrayList<Reserve> selectList(int seatNo);
 	
 	//상태 컬럼 수정
 	int updateStatus(String today);

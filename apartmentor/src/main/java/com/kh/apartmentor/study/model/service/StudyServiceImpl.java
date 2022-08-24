@@ -29,8 +29,13 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public ArrayList<Reserve> selectList(int seatNo) {
-		return studyDao.selectList(sqlSession, seatNo);
+	public ArrayList<Reserve> selectList() {
+		return studyDao.selectList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Reserve> selectSeatNoList(int seatNo) {
+		return studyDao.selectSeatNoList(sqlSession, seatNo);
 	}
 
 	@Override
