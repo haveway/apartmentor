@@ -76,7 +76,7 @@ public class StudyController {
 			
 			if(result > 0) {
 				rsv = studyService.selectReserve(userNo);
-				System.out.println(rsv);
+				//System.out.println(rsv);
 			}else {
 				rsv = null;
 			}
@@ -92,7 +92,7 @@ public class StudyController {
 	public ModelAndView updateReserve(ModelAndView mv, String today) {
 		
 		int result = studyService.updateStatus(today);
-		System.out.println("독서실 전 날 이용자 수 : " + result);
+		//System.out.println("독서실 전 날 이용자 수 : " + result);
 		
 		mv.addObject("updateStatus", studyService.updateStatus(today))
 		  .setViewName("study/seatView");
