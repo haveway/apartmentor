@@ -103,7 +103,7 @@
 					<div class="btn-area">
 						<button class="btn btn-primary" onclick="postFormSubmit(1)">수정</button>
 						<button class="btn btn-danger" onclick="postFormSubmit(2)">삭제</button>
-					<hr>
+					<br><br>
 					</div>
 				</form>
 			</c:if>
