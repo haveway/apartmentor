@@ -55,9 +55,9 @@ public class VisitController {
 		
 		if(result > 0) { // 성공 => main 페이지로 
 			session.setAttribute("alertMsg2", "예약에 성공하셨습니다");
-			return "main";
+			return "redirect:enrollForm.visit";
 		} else { // 실패 => 작성 페이지 다시 보여주기
-			model.addAttribute("alertMsg1", "예약에 실패하셨습니다");
+			session.setAttribute("alertMsg1", "예약에 실패하셨습니다");
 			return "redirect:enrollForm.visit";
 		}
 	}
