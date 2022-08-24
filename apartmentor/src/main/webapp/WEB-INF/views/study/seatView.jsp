@@ -249,42 +249,37 @@
 					<!-- Modal body -->
 					<div class="modal-body" id="reserveInfo-body">
 						<div id="rsvBody"></div>
-						<!-- <button onclick="deleteReserve();">취소</button> -->
 					</div>
 					<script>
-							$.ajax({
-								url: 'reservedInfo.st',
-								data : {
-									userNo : ${loginUser.userNo}
-								},
-								type: 'post',
-								dataType: 'json',
-								success: function(r){
-									
-									var reserved = document.getElementById('rsvBody');
-									
-									if(r != null){
-										console.log(r);
-										
-										reserved.innerHTML += r.startDay + ' / ' 
-										                    + '좌석번호 : ' + r.seatNo + '번 / ' 
-										                    + r.startDate + ':00 - ' 
-										                    + r.endDate + ':00 ';
-										$(document).ready(function() {
-										    $('#rsvBody').append('<button type="button" onclick="deleteReserve();hideModal();">취소</button>');
-										})
-									}
-									else{
-										reserved.innerHTML += '예약된 정보가 없습니다';
-									}
-									
-									
-									
-								}, error: function(){
-									console.log('에휴 니가 안되는 건 내 잘못이겠지..')
+						$.ajax({
+							url: 'reservedInfo.st',
+							data : {
+								userNo : ${loginUser.userNo}
+							},
+							type: 'post',
+							dataType: 'json',
+							success: function(r){
+								
+								var reserved = document.getElementById('rsvBody');
+								
+								if(r != null){
+									reserved.innerHTML += r.startDay + ' / ' 
+									                    + '좌석번호 : ' + r.seatNo + '번 / ' 
+									                    + r.startDate + ':00 - ' 
+									                    + r.endDate + ':00 ';
+									$(document).ready(function() {
+									    $('#rsvBody').append('<button type="button" onclick="deleteReserve();hideModal();">취소</button>');
+									})
 								}
-							})
-						</script>
+								else{
+									reserved.innerHTML += '예약된 정보가 없습니다';
+								}
+								
+							}, error: function(){
+								console.log('에휴 니가 안되는 건 내 잘못이겠지..')
+							}
+						})
+					</script>
 					
 					<!-- Modal footer -->
 					<div class="modal-footer">
@@ -308,6 +303,7 @@
 					success: function(){
 						swal('예약이 취소되었습니다',' ','success');
 						$('#myStudyInfo').modal('hide');
+						reload();
 					}, error: function(){
 						console.log('에효 니가 안되는 건 내 잘못이겠지');
 					}
@@ -316,7 +312,8 @@
 		</script>
 
         <!-- The Modal -->
-            <div class="modal" id="myModal">
+            <div class="modal" id="myModal" data-bs-keyboard="false" data-bs-backdrop="static">
+            <!-- <div id="myModal" class="modal hide fade in" data-keyboard="false" data-backdrop="static"> -->
                 <div class="modal-dialog modal-dialog-centered"> <!-- modal-dialog-centered 모달창 중앙으로 -->
                     <div class="modal-content">
                 
@@ -332,7 +329,7 @@
                                     });
                                 </script>
                             </h4>
-                            <button type="button" class="close" onclick="hideModal();">&times;</button>
+                            <button type="button" class="close" onclick="reload();">&times;</button>
                         </div>
                         
                         <!-- Modal body -->
@@ -388,30 +385,27 @@
 						                            	type: 'post',
 						                            	dataType: 'json',
 						                            	success: function(sList){
-						                            		
-						                            		$('td').click(function(event) {
-						                                        
-						                            			var cno = $(this).attr('id'); // 클릭한 테이블의 번호
-						                                        
-						                                        for(var j=0; j<sList.length; j++){
-							                            			
-							                            			if(cno == sList[j].seatNo){
-							                            				for(var k=sList[j].startDate; k<sList[j].endDate; k++){
-								                            				if(${loginUser.userNo} == sList[j].userNo){
-								                            					$('#'+k).css('background', 'rgb(245,223,77)'); // yellow
-									                            			}
-								                            				else{
-								                            					$('#'+k).css('background', 'grey');
-								                            				}
+						                                    
+					                            			var cno = clickNo; // 클릭한 테이블의 번호
+					                                        
+					                                        for(var j=0; j<sList.length; j++){
+						                            			if(cno == sList[j].seatNo){
+						                            				for(var k = sList[j].startDate; k < sList[j].endDate; k++){
+							                            				if(${loginUser.userNo} == sList[j].userNo){
+							                            					$('#'+k).css('background', 'rgb(245,223,77)'); // yellow
 								                            			}
-							                            			}
-							                            			else if(cno != sList[j].seatNo){
-							                            				for(var k=sList[j].startDate; k<sList[j].endDate; k++){
-							                            					$('#'+k).css('background', 'white');
+							                            				else{
+							                            					$('#'+k).css('background', 'grey');
 							                            				}
 							                            			}
-							                            		}
-						                                    });
+						                            			}
+						                            			else if(cno != sList[j].seatNo){
+						                            				for(var k = sList[j].startDate; k < sList[j].endDate; k++){
+						                            					$('#'+k).css('background', 'white');
+						                            				}
+						                            			}
+						                            		}
+						                            		
 						                            	}, error: function(){
 						                            		console.log('외않되');
 						                            	}
@@ -505,7 +499,7 @@
                                 var date = new Date();
 	                            var hours = date.getHours();
                                 
-                                /* if((hours > startTime) || // 지금시간 > 선택한 시간
+                                if((hours > startTime) || // 지금시간 > 선택한 시간
                                    (startTime > endTime) || // 시작시간 > 종료시간
                                    ((endTime - startTime) > 3) || // 3시간이상 예약 불가
                                    (startTime == endTime) // 시작시간 == 종료시간
@@ -514,7 +508,7 @@
                                 	$('#timepickerStartTime').val(''); // input값 초기화
                                 	$('#timepickerEndTime').val('');
                                 	
-                                }else{ */
+                                }else{
                                 	$.ajax({
                                         url : 'reserveSeat.st',
                                         data : {
@@ -552,7 +546,7 @@
                                             swal('안됨', '외않되...', 'error');
                                         }
                                     })
-                                /* } */
+                                }
                             }
                         </script>
                     </div><!-- modal-content -->
@@ -604,7 +598,7 @@
 	    		today: today
 	    	},
 	    	success: function(data){
-	    		console.log(today);
+	    		//console.log(today);
 	    	}, error: function(){
 	    		console.log('니가 안되는 건 내 잘못이겠지');
 	    	}
