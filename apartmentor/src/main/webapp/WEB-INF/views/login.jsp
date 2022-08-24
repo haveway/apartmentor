@@ -544,6 +544,8 @@
  		if(add1 == 'Y' && add2 == 'Y' && add3 == 'Y' && add4  == 'Y' && add5 == 'Y' && add6 == 'Y' && add7 == 'Y' && add8 == 'Y' && add9 == 'Y' ){
 			$('#insertMember').attr('disabled',false);
 		} else {
+			console.log('add1 ' + add1);console.log('add2 ' + add2);console.log('add3 ' + add3);console.log('add4 ' + add4);console.log('add5 ' + add5);
+			console.log('add6 ' + add6);console.log('add7 ' + add7);console.log('add8 ' + add8);console.log('add9 ' + add9);
 			$('#insertMember').attr('disabled',true);
 		}
  	}
