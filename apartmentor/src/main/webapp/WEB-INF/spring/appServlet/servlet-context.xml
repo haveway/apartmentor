@@ -51,7 +51,13 @@
     		<mapping path="/sportsOptionView.sp"/>
     		<mapping path="/miniGym.sp"/>
     		<mapping path="/golf.sp"/>
+    		<mapping path="/main.do"/>
     			<beans:bean class="com.kh.apartmentor.common.intercepter.LoginIntercepter" id="LoginInterceptor">
+    			</beans:bean>
+    	</interceptor>
+	    <interceptor>
+    		<mapping path="/list.me"/>
+    			<beans:bean class="com.kh.apartmentor.common.intercepter.AdminIntercepter" id="AdminIntercepter">
     			</beans:bean>
     	</interceptor>
     </interceptors>
