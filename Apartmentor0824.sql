@@ -197,6 +197,20 @@ VALUES (SEQ_RNO.NEXTVAL, '16:00', NULL, 'GF', 5, 14, 'Y', '2022-08-26', SYSDATE)
 INSERT INTO RESERVE
 VALUES (SEQ_RNO.NEXTVAL, '17:00', NULL, 'MG', NULL, 14, 'Y', '2022-08-29', SYSDATE);
 
+-- 독서실 더미 추가
+INSERT INTO RESERVE
+VALUES(SEQ_RNO.NEXTVAL, 16, 19, 'st', 101, 4, 'Y', '22/08/24', '22/08/24');
+INSERT INTO RESERVE
+VALUES(SEQ_RNO.NEXTVAL, 15, 18, 'st', 103, 6, 'Y', '22/08/24', '22/08/24');
+INSERT INTO RESERVE
+VALUES(SEQ_RNO.NEXTVAL, 16, 19, 'st', 111, 8, 'Y', '22/08/24', '22/08/24');
+INSERT INTO RESERVE
+VALUES(SEQ_RNO.NEXTVAL, 15, 18, 'st', 118, 10, 'Y', '22/08/24', '22/08/24');
+INSERT INTO RESERVE
+VALUES(SEQ_RNO.NEXTVAL, 16, 19, 'st', 123, 12, 'Y', '22/08/24', '22/08/24');
+INSERT INTO RESERVE
+VALUES(SEQ_RNO.NEXTVAL, 15, 18, 'st', 128, 14, 'Y', '22/08/24', '22/08/24');
+
 --------------------------------------------------
 --------------     NOTICE 관련   ------------------   
 --------------------------------------------------
