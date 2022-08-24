@@ -49,7 +49,7 @@ public class VisitController {
 	 * 예약 등록
 	 */
 	@RequestMapping("insert.visit")
-	public String insertVisitReserve(Visit v, HttpSession session, Model model) {
+	public String insertVisitReserve(Visit v, HttpSession session) {
 		
 		int result = visitService.insertVisitReserve(v);
 		
