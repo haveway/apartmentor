@@ -40,6 +40,15 @@
 		padding-right:210px;  
 	}
 	#pagingArea {width:fit-content; margin:auto;}
+	
+	#reloadBtn{
+		text-align:right;
+		padding-right: 220px;
+		
+	}
+	#reloadBtn button {
+		font-size: 12px;
+	}
 
 </style>
 </head>
@@ -54,6 +63,9 @@
 	
 		<div align="center" style="margin-right:600px;">
 			<h1>자유게시판</h1> 
+		</div>
+		<div id="reloadBtn">
+			<button type="button" class="btn btn-primary" onclick="location.href='list.bo'" >초기화</button>
 		</div>
 		<br>
 		
