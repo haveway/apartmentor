@@ -148,23 +148,22 @@ public class VoteController {
 	@RequestMapping("detail.vote")
 	public String detailVote(Model model, int voteNo, int userNo) {
 		
-		
 		VoteItem voteMember = new VoteItem();
 		voteMember.setVoteNo(voteNo);
 		voteMember.setUserNo(userNo);
 		
-		Vote v = voteService.selectVote(voteNo);
-		ArrayList<VoteItem> vi = voteService.selectVoteItem(voteNo);
+		Vote v = voteService.selectVote(voteNo); // 투표
+		ArrayList<VoteItem> vi = voteService.selectVoteItem(voteNo); // 투표항목
 
-		int result = voteService.chkVoteMember(voteMember);	// 멤버가 투표했는지 여부
+		int result = voteService.chkVoteMember(voteMember);	// 멤버가 투표했는지 여부확인
 		
-		if(result > 0 || v.getStatus().equals("N")) {	// 투표를 했거나 기간이 종료된 투표면 투표결과페이지를 띄워준다
+		if(result > 0 || v.getStatus().equals("N")) { // 투표를 했거나 기간이 종료된 투표면 투표결과 페이지로 보낸다
 			model.addAttribute("totalCount", voteService.totalCount(voteNo)); // 총 투표수
 			model.addAttribute("voteNo", voteNo);
 			model.addAttribute("v", v);
 			model.addAttribute("vi", vi);
 			return "vote/voteResult";
-		} else { // 투표안했으면 투표하는 페이지를 띄워줌
+		} else { // 투표를 안했으면 투표 페이지로 보낸다
 			model.addAttribute("v", v);
 			model.addAttribute("v", v);
 			model.addAttribute("vi", vi);

@@ -419,8 +419,8 @@
 				}	// minutes가 0분 ~ 9분까지일경우 앞에 0을붙여준다(01~09의 형태로 변환)
 
 				var currTime = hours + minutes;	// 현재시간 hhmm 형식의 String으로 담긴다.
-				// currTime = '2200';
-				console.log(currTime);
+				//  currTime = '2200';
+				// console.log(currTime);
 				var yoil = today.getDay();	// 현재 요일
 				
 				

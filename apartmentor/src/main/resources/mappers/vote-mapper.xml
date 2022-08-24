@@ -45,7 +45,7 @@
 			   )
 	</insert>
 	
-		<insert id="insertVoteItem" parameterType="java.util.List">
+	<insert id="insertVoteItem" parameterType="java.util.List">
 		INSERT 
 		  INTO VOTE_ITEM
 		  	   (
