@@ -244,9 +244,9 @@
  				var arr = msg.split("/");
  				// arr[0] : 유저 이름 , arr[1] : 유저가 보낸 메세지
 				if(arr[1] == ''){
-					// 접속시 보낸 메세지가 [관리자, 홍길동] 형식인 문자열로 왔기 때문에 정규표현식을 사용해 [,],공백을 없애준 뒤 ,로 잘라 onLineArr에 담는다.
-					var onLineArr = (arr[0].replace(/\[|\]|\s/g, '')).split(",");
-					console.log(onLineArr);
+					// 접속시 보낸 메세지가 [관리자, 홍길동] 같이 배열같은 문자열로 왔기 때문에 정규표현식을 사용해 '['와 ']'와 공백을 없애준 뒤 ','로 잘라 onLineArr에 담는다.
+					// 특수문자를 포함 문자로 해석하기 위해 역슬래쉬 붙이기. /s는 공백 문자. /g는 전역에서 검색하기 위한 플래그.
+					var onLineArr = (arr[0].replace(/ \[ | \] | \s /g, '')).split(",");
 					// 반복문을 통한 접속한 사용자의 온라인 표시
 	 				$('.circle').css('background-color', 'grey');
 					for(var i in onLineArr){
@@ -259,7 +259,7 @@
  				let nameDiv = $('<div>').append(arr[0]);
  				let msgDiv = $('<div>').append(arr[1]);
  				
- 				// 날짜 를 오전/오후 시간:분 형태로 바꾸기
+ 				// 날짜 를 오전/오후 시간:분 형태로 바꾸기 (시간으로 오전,오후 구분. 일의자리앞에 0붙이기. 12보다 큰 시간은 -12하기.)
  				let date = new Date();
  				let time = (date.getHours() < 12 ? "오전 " : "오후 ") 
  							+ (date.getHours() < 10 ? "0" + date.getHours() : 
@@ -306,7 +306,14 @@
  				
  			}
 		}
-	
+		
+		// 엔터키 누를 시 전송버튼 클릭 함수
+		$('#chatInput').keydown(function(keyNum){
+			if(keyNum.keyCode == 13) {
+				$('#chatBtn').click();
+			}
+		})
+		
 		// 메세지 전송함수 : 전송 버튼 클릭 시 입력한 메세지를 DB에 저장하고 입력한 메세지를 전송  
  		function send(){
  			var text = $('#chatInput').val();

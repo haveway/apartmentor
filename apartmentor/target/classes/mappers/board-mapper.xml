@@ -98,7 +98,7 @@
   		   AND
   		 		REF_BNO = #{bno}
   		 ORDER
-  		    BY	REPLY_NO DESC				 				
+  		    BY	REPLY_NO ASC  				 				
   	</select>
   
 	<!-- 검색한 게시글의 총 갯수 조회 쿼리문 -->

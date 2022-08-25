@@ -158,7 +158,11 @@
 	</div>
 	
 	<script>
+	
+	// 전역변수
 	var userNo = '';
+	
+	
 	// 회원간의 채팅 리스트 조회 ajax
 	function selectGuardChatList(uNo){
 		// 채팅 작성 시 필요한 uNo를 전역변수에 대입하여 사용할 것이다. 
