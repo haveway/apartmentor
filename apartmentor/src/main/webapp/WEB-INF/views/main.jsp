@@ -337,7 +337,7 @@
 
         	let dateString = year +  month  + day;
 
-        	let hours = ('0' + today.getHours()).slice(-2); 
+        	let hours = ('0' + today.getHours()).slice(-2)-1; 
 
         	let timeString = hours +  "00" ;
 
