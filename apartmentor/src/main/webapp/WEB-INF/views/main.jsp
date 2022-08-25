@@ -615,7 +615,7 @@
 					<tbody class="schedule">
 					
 					<c:forEach var="vL" items="${visitList}">
-						<form id="visitStatus" action="" method="post">
+						<form class="visitStatus" action="" method="post">
 						<input type="hidden" name="email" value="${loginUser.email}">
 						<input type="hidden" name="vno" value="${vL.visitNo}">
 							<tr class="tr" style="cursor: pointer;" data-toggle="modal" data-target="#myModal"
@@ -771,14 +771,11 @@
 		  $(function(){
 
 				$('#cancelBtn').click(function(){
-					const form = $('#visitStatus');
+					const form = $('.visitStatus');
 					form.attr('action', 'cancelStatus.visit');
 					form.submit();
 				})
-
-				if($('.done')) {
-					$("#cancelBtn").attr("disabled", true);
-				}
+				
 		  })
 		  </script>
     	
