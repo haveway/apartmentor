@@ -67,8 +67,8 @@ public class VisitController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="select.visit", produces="application/json; charset=UTF-8")
-	public String ajaxSelectVisitReserve(int nno) {
-		return new Gson().toJson(visitService.selectVisitReserve(nno));
+	public String ajaxSelectVisitReserve(int userNo) {
+		return new Gson().toJson(visitService.selectVisitReserve(userNo));
 	}
 	
 	/**

@@ -206,7 +206,7 @@ h1 {
 			function selectVisitReserve(){
 				$.ajax({
 					url : 'select.visit',
-					data : {nno : ${loginUser.userNo}},
+					data : {userNo : ${loginUser.userNo}},
 					success : function(reserve){
 							let list = '';
 							

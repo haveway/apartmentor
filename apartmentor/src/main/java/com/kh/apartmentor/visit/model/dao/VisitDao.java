@@ -14,11 +14,11 @@ import com.kh.apartmentor.visit.model.vo.VisitCategory;
 public class VisitDao {
 
 	public int insertVisitReserve(SqlSessionTemplate sqlSession, Visit v) {
-		return sqlSession.insert("visitMapper.insertVisitReserve",v);
+		return sqlSession.insert("visitMapper.insertVisitReserve", v);
 	}
 
-	public ArrayList<Visit> selectVisitReserve(SqlSessionTemplate sqlSession, int nno) {
-		return (ArrayList)sqlSession.selectList("visitMapper.selectVisitReserve",nno);
+	public ArrayList<Visit> selectVisitReserve(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("visitMapper.selectVisitReserve", userNo);
 	}
 
 	public ArrayList<VisitCategory> selectVisitCategory(SqlSessionTemplate sqlSession) {

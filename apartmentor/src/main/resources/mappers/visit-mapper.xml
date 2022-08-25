@@ -75,7 +75,7 @@
 		           				         FROM 
 		                   					   MEMBER
 		                   				WHERE
-		                  		 			   USER_NO = #{nno})
+		                  		 			   USER_NO = #{userNo})
 		   AND 
 		   		VISIT_STATUS = 'Y'
 		 ORDER 
