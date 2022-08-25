@@ -67,12 +67,16 @@ public class StudyController {
 		
 		// 리스트에 유저넘버 reservedUserNo에 담기
 		for(int i=0; i<seatList.size(); i++) {
-			reservedUserNo = seatList.get(i).getUserNo();
+			if(seatList.get(i).getUserNo() == r.getUserNo()) {
+				reservedUserNo = seatList.get(i).getUserNo();
+			}else {
+				reservedUserNo = 0;
+			}
 		}
-		
-		// 받아온유저넘버 != 예약된유저넘버
-		if(r.getUserNo() != reservedUserNo) {
-			result = studyService.reserveSeat(r); 
+
+		if(reservedUserNo == 0) {
+			
+			result = studyService.reserveSeat(r);
 			
 			if(result > 0) {
 				rsv = studyService.selectReserve(userNo);
@@ -80,6 +84,7 @@ public class StudyController {
 			}else {
 				rsv = null;
 			}
+			
 		}else {
 			rsv = null;
 		}
@@ -89,11 +94,12 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping("updateStatus.st")
-	public ModelAndView updateReserve(ModelAndView mv, String today) {
+	public ModelAndView updateReserve(ModelAndView mv, String today, int hour) {
 		
 		int result = studyService.updateStatus(today);
 		//System.out.println("독서실 전 날 이용자 수 : " + result);
-		
+		int result2 = studyService.updateStatusByHour(hour);
+		System.out.println(result2);
 		mv.addObject("updateStatus", studyService.updateStatus(today))
 		  .setViewName("study/seatView");
 		

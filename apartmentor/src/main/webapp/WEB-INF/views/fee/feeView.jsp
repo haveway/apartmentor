@@ -45,10 +45,10 @@
 			        var month = date.getMonth() + 1;
 			        
 					var data = {
-							labels: [f[0].feeDate + '월', f[1].feeDate + '월', f[2].feeDate + '월', f[3].feeDate + '월'],
+							labels: [f[3].feeDate + '월', f[2].feeDate + '월', f[1].feeDate + '월', f[0].feeDate + '월'],
 							datasets: [{
 								label: '2022년',
-								data: [f[0].aptFee, f[1].aptFee, f[2].aptFee, f[3].aptFee],
+								data: [f[3].aptFee, f[2].aptFee, f[1].aptFee, f[0].aptFee],
 								backgroundColor: 'rgba(0,88,155,0.2)',
 								borderColor: 'rgba(0,88,155,0.2)',
 								borderWidth: 1,

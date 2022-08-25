@@ -30,6 +30,10 @@ public class StudyDao {
 		return sqlSession.update("studyMapper.updateStatus", today);
 	}
 	
+	public int updateStatusByHour(SqlSessionTemplate sqlSession, int hour) {
+		return sqlSession.update("studyMapper.updateStatusByHour", hour);
+	}
+	
 	public int deleteReserve(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.update("studyMapper.deleteReserve", userNo);
 	}

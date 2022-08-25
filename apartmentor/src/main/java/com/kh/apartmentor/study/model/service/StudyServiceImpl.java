@@ -42,9 +42,16 @@ public class StudyServiceImpl implements StudyService {
 	public int updateStatus(String today) {
 		return studyDao.updateStatus(sqlSession, today);
 	}
+	
+	@Override
+	public int updateStatusByHour(int hour) {
+		return studyDao.updateStatusByHour(sqlSession, hour);
+	}
 
 	@Override
 	public int deleteReserve(int userNo) {
 		return studyDao.deleteReserve(sqlSession, userNo);
 	}
+
+	
 }

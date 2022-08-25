@@ -22,6 +22,8 @@ public interface StudyService {
 	//상태 컬럼 수정
 	int updateStatus(String today);
 	
+	int updateStatusByHour(int hour);
+	
 	//예약 취소
 	int deleteReserve(int userNo);
 	

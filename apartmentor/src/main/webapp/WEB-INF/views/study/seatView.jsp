@@ -222,7 +222,8 @@
         
 <%-- 지금 시간 기준으로 이용중, 이용불가 표시 --%>        
         <div id="waiting">
-			<button onclick="showReserveInfo();" style="width: 110px; height: 30px; border-radius:5px; background: rgb(240, 238, 233); border: solid 1px darkgrey; color: black">예약 취소</button>
+			<button onclick="showReserveInfo();" style="width: 110px; height: 30px; border-radius:5px; 
+					background: rgb(240, 238, 233); border: solid 1px darkgrey; color: grey; box-shadow: 1px 1px 3px lightgrey">예약 조회</button>
 			<br><br>
 			<table id="waitingTable">
 				<tr width="50px">
@@ -268,7 +269,17 @@
 									                    + r.startDate + ':00 - ' 
 									                    + r.endDate + ':00 ';
 									$(document).ready(function() {
-									    $('#rsvBody').append('<button type="button" onclick="deleteReserve();hideModal();">취소</button>');
+										
+										var date = new Date();
+			                            var hours = date.getHours();
+										
+			                            if(hours <= r.endDate){
+			                            	$('#rsvBody').append('<button type="button" onclick="deleteReserve();hideModal();">취소</button>');
+			                            }
+			                            else{
+			                            	$('#rsvBody').append('<button type="button" onclick="deleteReserve();hideModal();" disabled>취소</button>');
+			                            }
+									    
 									})
 								}
 								else{
@@ -301,7 +312,7 @@
 						userNo: ${loginUser.userNo}
 					},
 					success: function(){
-						swal('예약이 취소되었습니다',' ','success');
+						swal('예약이 취소되었습니다','하루에 한 번만 예약이 가능합니다. 당일에는 이용이 불가합니다.','success');
 						
 						swal({
 							title : '예약이 취소되었습니다',
@@ -462,7 +473,7 @@
                                 </tr> 
                             </table>
 <%-- 타임피커 부분 --%>	
-                           	<label for="time">시간 선택 <br>
+                           	<label for="time">시간 선택 (한 번에 3시간까지만 예약 가능합니다) <br>
 							<input type="text" id="timepickerStartTime" class="time" placeholder="시간 선택" readonly> -
 							<input type="text" id="timepickerEndTime" class="time" placeholder="시간 선택" readonly>
                             </label>
@@ -513,71 +524,105 @@
                             function submit(){
                             	var startTime = parseInt($('#timepickerStartTime').val().substr(0,2));  
                                 var endTime = parseInt($('#timepickerEndTime').val().substr(0,2)); 
+                                var seatNo = $('#seatNo').text().substr(0,3);
                                 
                                 <%-- 현재 시간부터 예약 가능, 이전 시간 선택시 예약 불가 알럿 --%>
                                 var date = new Date();
 	                            var hours = date.getHours();
-                                
-                                if((hours > startTime) || // 지금시간 > 선택한 시간
-                                   (startTime > endTime) || // 시작시간 > 종료시간
-                                   ((endTime - startTime) > 3) || // 3시간이상 예약 불가
-                                   (startTime == endTime) // 시작시간 == 종료시간
-                                ){ 
-                                	swal('시간 선택이 잘못되었습니다','지나간 시간은 선택이 불가합니다. 3시간 초과 선택 불가합니다.','warning');
-                                	$('#timepickerStartTime').val(''); // input값 초기화
-                                	$('#timepickerEndTime').val('');
-                                	
-                                }else{
-                                	$.ajax({
-                                        url : 'reserveSeat.st',
-                                        data : {
-                                        	startTime : $('#timepickerStartTime').val().substr(0,2), // 04
-                                    		endTime : $('#timepickerEndTime').val().substr(0,2), // 05
-                                    		seatNo : $('#seatNo').text().substr(0,3), //"110 번 좌석을 선택하셨습니다."에서 앞에 3개만 읽기
-                                    		userNo : ${loginUser.userNo}
-                                        },
-                                        success : function(rsv){
-                                        	
-                                        	if(rsv != null){
-                                       			swal({
-													title : rsv.createDate,
-													text : rsv.seatNo + '번 좌석' + rsv.startDate + ' - ' + rsv.endDate + ' 예약되었습니다.',
-													icon : 'success',
-													closeOnClickOutside : false,
-													closeOnEsc : false,
-													buttons : {
-														doLogin : {
-															text : '확인',
-															value : true,
-															className : 'btn'
-														}
-													}
-												}).then((result) => { 
-													if(result){
-														location.href='seatView.st';
-													}
-												})
-                                               	
-                                               	var tdDivColor = '#' + rsv.seatNo + 'a';
-                                                   $(tdDivColor).css('background', 'deeppink').css('height', '70').text('♥너가 예약한 자리♥');
-                                                   
-                                                   $('#myModal').modal('hide');
-                                        	}
-                                        	else{
-                                        		swal({
-                                       				title : '예약 실패',
-                                       				text : '하루에 한 번만 예약이 가능합니다',
-                                       				icon : 'error',
-                                       				closeOnClickOutside : false, //알럿창 제외하고 클릭시 창 닫히지 않도록
-                                       				closeOnEsc : false,
-                                       			})
-                                        	}
-                                        }, error : function(){
-                                            swal('안됨', '외않되...', 'error');
-                                        }
-                                    })
-                                }
-                            }
+                                    
+                                   $.ajax({
+   	                            	url: 'seatView.st',
+   	                            	data: {
+   	                            		seatNo : seatNo,
+   	                            		startTime : $('#timepickerStartTime').val().substr(0,2), // 04
+                                   		endTime : $('#timepickerEndTime').val().substr(0,2) // 05
+   	                            	},
+   	                            	type: 'post',
+   									dataType: 'json',
+   	                            	success: function(list){
+   	                            		
+   	                            		var reservedTime = 0;
+   	                            		for(var i = 0; i < list.length; i++){
+   	                            			
+                            				if(list[i].startDate <= startTime && startTime <= list[i].endDate &&
+    	                            			   list[i].startDate <= endTime && endTime <= list[i].endDate){ 
+    	                            				reservedTime = 1; // 이미 예약된 시간을 선택했을 경우
+    	                            			}else{
+    	                            				reservedTime = 0;
+    	                            			}
+   	                            			
+   	                            		}
+   	                            		
+   	                            		if((hours > startTime)         || // 지금시간 > 선택한 시간
+                                           (startTime > endTime)       || // 시작시간 > 종료시간
+                                           ((endTime - startTime) > 3) || // 3시간이상 예약 불가
+                                           (startTime == endTime)      || // 시작시간 == 종료시간
+                                           (reservedTime == 1)
+                                        ){ 
+                                          	swal('시간 선택이 잘못되었습니다','지나간 시간은 선택이 불가합니다.','warning');
+                                          	$('#timepickerStartTime').val(''); // input값 초기화
+                                          	$('#timepickerEndTime').val('');
+                                            	
+                                        }else{
+                                        	$.ajax({
+                                                url : 'reserveSeat.st',
+                                                data : {
+                                                	startTime : $('#timepickerStartTime').val().substr(0,2), // 04
+                                            		endTime : $('#timepickerEndTime').val().substr(0,2), // 05
+                                            		seatNo : $('#seatNo').text().substr(0,3), //"110 번 좌석을 선택하셨습니다."에서 앞에 3개만 읽기
+                                            		userNo : ${loginUser.userNo}
+                                                },
+                                                success : function(rsv){
+                                                	
+                                                	if(rsv != null){
+                                               			swal({
+        													title : rsv.createDate,
+        													text : rsv.seatNo + '번 좌석' + rsv.startDate + ' - ' + rsv.endDate + ' 예약되었습니다.',
+        													icon : 'success',
+        													closeOnClickOutside : false,
+        													closeOnEsc : false,
+        													buttons : {
+        														doLogin : {
+        															text : '확인',
+        															value : true,
+        															className : 'btn'
+        														}
+        													}
+        												}).then((result) => { 
+        													if(result){
+        														location.href='seatView.st';
+        													}
+        												})
+                                                       	
+                                                       	var tdDivColor = '#' + rsv.seatNo + 'a';
+                                                           $(tdDivColor).css('background', 'deeppink').css('height', '70').text('♥너가 예약한 자리♥');
+                                                           
+                                                           $('#myModal').modal('hide');
+                                                	}
+                                                	else{
+                                                		swal({
+                                               				title : '예약 실패',
+                                               				text : '동시에 예약이 불가합니다. 이용시간 끝나고 다시 예약해 주세요.',
+                                               				icon : 'error',
+                                               				closeOnClickOutside : false, //알럿창 제외하고 클릭시 창 닫히지 않도록
+                                               				closeOnEsc : false,
+                                               			})
+                                                	}
+                                                }, error : function(){
+                                                    swal('안됨', '외않되...', 'error');
+                                                }
+                                            })
+                                            
+                                            
+                                            
+                                            
+                                        }//if
+   	                            		
+   	                            	}, error: function(){
+   	                            		console.log('안됩니다요');
+   	                            	}
+   	                            })
+                            }// submit()
                         </script>
                     </div><!-- modal-content -->
                 </div><!-- modal-dialog -->
@@ -614,6 +659,7 @@
 	    var year = date.getFullYear();
 	    var month = date.getMonth() + 1;
 	    var day = date.getDate();
+	    var hours = date.getHours();
 	   
 	    if(month < 10){
         	var today = year+'-'+'0'+month+'-'+ day;
@@ -625,7 +671,8 @@
 	    $.ajax({
 	    	url: 'updateStatus.st',
 	    	data: {
-	    		today: today
+	    		today: today,
+	    		hour: hours
 	    	},
 	    	success: function(data){
 	    		//console.log(today);
