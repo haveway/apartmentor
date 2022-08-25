@@ -25,6 +25,19 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
     <style>
+    
+        	@font-face {
+		    font-family: 'InfinitySans-RegularA1';
+		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+    
+    	div{
+            /*  border: 1px solid red;  */
+            font-family: 'InfinitySans-RegularA1';
+            
+        }
         .loginWrap{
             display: flex;
             flex-direction: column;

@@ -313,7 +313,7 @@
 	      			</div>
 	      			<h4 style="margin-left: 70px; width: 100%; margin-bottom: 30px;">해당 회원을 정지 하시겠습니까?</h4>
 	      			<form action="suspension.me" method="post">
-		      			<input type="hidden" id="userNo2" name="userNo">
+		      			<input type="hidden" id="userNo2" name="userNo"> 
 				        <button type="submit" class="btn btn-danger">정지</button>
 	    		    </form>
 	      		</div>
