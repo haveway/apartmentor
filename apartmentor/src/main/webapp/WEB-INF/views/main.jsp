@@ -338,9 +338,8 @@
         	let dateString = year +  month  + day;
 
         	let hours = ('0' + today.getHours()).slice(-2); 
-        	let minutes = ('0' + today.getMinutes()).slice(-2);
 
-        	let timeString = hours +  minutes ;
+        	let timeString = hours +  "00" ;
 
         	$.ajax({
         		type:"get",
@@ -354,10 +353,8 @@
         			/* console.log(data); */
         			const itemArr = data.response.body.items.item;
         			let date1 = itemArr[1].baseDate;
-        			let time1 = itemArr[1].baseTime;
         			let date2 = date1.substr(4, 2);
         			let date3 = date1.substr(6, 2);
-        			let time2 = time1.substr(0, 2);
         			
         			let REH = itemArr[1].obsrValue;
         			let RN1 = itemArr[2].obsrValue;
@@ -365,7 +362,7 @@
         			let WSD = itemArr[7].obsrValue;
 					let value = "";
         			value += '<div id="weather0" class="a1">'
-        					  	+ date2 + "월" + date3 + "일 " + time2 + ":00 기준 "
+        					  	+ date2 + "월" + date3 + "일 " + hours + ":00 기준 "
         				   + '</div>'
            				   + '<div id="weather1">'
            				   		+ T1H + "℃" + '<img class="weatherImg1" src="./resources/img/main/high_Temperature.png">'
