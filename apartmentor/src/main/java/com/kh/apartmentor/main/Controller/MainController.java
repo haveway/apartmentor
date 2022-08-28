@@ -51,7 +51,7 @@ public class MainController {
 		// 달력 관련
 		ArrayList<Visit> visitList = mainService.visitReserveList(userNo);
 		ArrayList<Reserve> reserveList = mainService.reserveReserveList(userNo);
-		ArrayList<Notice> noticeList = mainService.noticeReserveList(userNo);
+		ArrayList<Notice> noticeList = mainService.noticeReserveList();
 		
 		m.addAttribute("visitList", visitList);
 		m.addAttribute("reserveList", reserveList);

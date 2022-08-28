@@ -40,8 +40,8 @@ public class MainServiceImpl implements MainService{
 		return mainDao.reserveReserveList(sqlSession, userNo);
 	}
 	@Override
-	public ArrayList<Notice> noticeReserveList(int userNo) {
-		return mainDao.noticeReserveList(sqlSession, userNo);
+	public ArrayList<Notice> noticeReserveList() {
+		return mainDao.noticeReserveList(sqlSession);
 	}
 	
 

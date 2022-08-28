@@ -228,6 +228,11 @@
 		}
 		
 		/* 일정 관련 */
+		.title {
+			width: 500px;
+			text-align: left;
+		}
+		
 		.done {
 			background-color : #f0eee9;
 			border-radius : 50%;
@@ -255,6 +260,13 @@
 			height : 35px;
 			width : 35px;
 			margin : 0 auto;
+		}
+		
+		.scrollBar {
+			height: 300px; 
+			overflow: auto; 
+			overflow-x:hidden; 
+			margin-top: 100px;"
 		}
 		
 		#scheduleTable td {
@@ -606,8 +618,8 @@
 			
 			</script>
         
-            <div id="content6" class="scrollBar" style="height: 300px; overflow: auto; overflow-x:hidden; margin-top: 100px;">
-				<div class="title" style="width: 500px; text-align: left;">
+            <div id="content6" class="scrollBar">
+				<div class="title">
 					${loginUser.aptNo}의 이번 달 일정 안내
 				</div>
 				
