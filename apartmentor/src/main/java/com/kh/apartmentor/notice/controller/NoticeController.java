@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,7 +41,7 @@ public class NoticeController {
 			String changeName = saveFile(upfile, session);
 			
 			n.setOriginName(upfile.getOriginalFilename());
-			n.setChangeName("resources/noticeImg/" + changeName);
+			n.setChangeName("/apartmentor/resources/noticeImg/" + changeName);
 			
 		}
 		
@@ -194,7 +195,7 @@ public class NoticeController {
 						
 			// 새로운 정보(원본명, 저장경로) 담기
 			n.setOriginName(reupfile.getOriginalFilename());
-			n.setChangeName("resources/noticeImg/" + changeName);
+			n.setChangeName("/apartmentor/resources/noticeImg/" + changeName);
 			}
 		
 		int result = noticeService.updateNotice(n);
@@ -230,5 +231,11 @@ public class NoticeController {
 			model.addAttribute("alertMsg1", "공지사항 삭제 실패");
 			return "detail.notice?nno" + nno;
 		}
+	}
+	
+	@Scheduled(cron="0 0 19 L * ?")
+	public void setNoticeStatus() {
+		int result = noticeService.setNoticeStatus();
+		System.out.println(result + "개의 상태를 업데이트 하였습니다.");
 	}
 }

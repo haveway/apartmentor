@@ -123,7 +123,7 @@ h1 {
 		</tbody>
 	</table>
 
-		<c:if test="${not empty category}">
+	<c:if test="${not empty category}">
 		<script>
 			$(function(){
 				$("#noticeList option[value=${category}]").attr("selected", true);  
@@ -204,7 +204,7 @@ h1 {
     	</ul>	
 	</div>
 	
-	 <div id="search-area" align= "center">
+	<div id="search-area" align= "center">
      	<form action="search.notice" method="get">
         	<input type="hidden" name="currentPage" value="1">
                 <select name="condition">

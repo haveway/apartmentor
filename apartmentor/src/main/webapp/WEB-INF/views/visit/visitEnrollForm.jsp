@@ -29,6 +29,14 @@ h1 {
 	width: 100px;
 	text-align: center;
 }
+
+.p	{
+	font-weight:bolder;
+	font-size:18px;
+	margin-top:5px;
+	margin-bottom:5px;
+	color:#00589b
+}
 </style>
 
 </head>
@@ -210,35 +218,35 @@ h1 {
 					success : function(reserve){
 							let list = '';
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">가스 예약 현황</p>';
+							list += '<p class="p">가스 예약 현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == 1 && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 1) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								} 
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">난방 예약 현황</p>';
+							list += '<p class="p">난방 예약 현황</p>';
 							for(let i in reserve) {
-								if(reserve[i].visitCategory == 2 && reserve[i].visitDate != null) {
+								if(reserve[i].visitCategory == 2) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								}
 							}
 		
-							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">소독 예약 현황</p>';
+							list += '<p class="p">소독 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 3 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								} 
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">수도 예약 현황</p>';
+							list += '<p class="p">수도 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 4 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
 								}
 							}
 							
-							list += '<p style="font-weight:bolder; font-size:18px; margin-top:5px; margin-bottom:5px; color:#00589b">전기 예약 현황</p>';
+							list += '<p class="p">전기 예약 현황</p>';
 							for(let i in reserve) {
 								if(reserve[i].visitCategory == 5 && reserve[i].visitDate != null) {
 									list += reserve[i].visitDate + '&nbsp;' + reserve[i].visitTime + '<br>';
@@ -266,7 +274,6 @@ h1 {
 					})
 				}
 				else{
-	               
 					$.ajax({
 						url : 'check.visit',
 						data : {
@@ -298,7 +305,6 @@ h1 {
 						}
 					});	
 				}
-				
 			}
 			
 				

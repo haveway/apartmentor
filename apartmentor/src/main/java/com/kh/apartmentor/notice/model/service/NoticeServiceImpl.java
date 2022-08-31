@@ -70,4 +70,9 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.deleteNotice(sqlSession, noticeNo);
 	}
 
+	@Override
+	public int setNoticeStatus() {
+		return noticeDao.setNoticeStatus(sqlSession);
+	}
+
 }

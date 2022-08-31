@@ -68,4 +68,8 @@ public class NoticeDao {
 		return sqlSession.update("noticeMapper.deleteNotice", noticeNo);
 	}
 
+	public int setNoticeStatus(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("noticeMapper.setNoticeStatus");
+	}
+
 }

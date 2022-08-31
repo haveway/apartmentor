@@ -101,6 +101,11 @@ public class VisitServiceImpl implements VisitService {
 		return visitDao.cancelReserveStatus(sqlSession, visitNo);
 	}
 
+	@Override
+	public int setVisitStatus() {
+		return visitDao.setVisitStatus(sqlSession);
+	}
+
 
 	
 	

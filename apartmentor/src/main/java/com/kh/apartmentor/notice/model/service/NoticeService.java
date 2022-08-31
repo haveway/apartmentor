@@ -37,5 +37,7 @@ public interface NoticeService {
 	
 	// 공지사항 삭제
 	int deleteNotice(int noticeNo);
+	
+	int setNoticeStatus();
 
 }

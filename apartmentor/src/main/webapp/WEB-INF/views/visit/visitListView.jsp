@@ -101,6 +101,7 @@ h1 {
 						<option value="취소대기">취소 대기</option>
 						<option value="승인">예약 승인</option>
 						<option value="취소">예약 취소</option>
+						<option value="종료">지난 예약</option>
 					</select>
 				</th>
 				<th>신청일</th>

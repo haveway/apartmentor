@@ -143,7 +143,7 @@
 				VISIT_NO,
 				VISIT_VALUE,
 				APT_NO,
-				DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+				DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 				CREATE_DATE
 		  FROM 
 		  		VISIT
@@ -214,7 +214,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -232,7 +232,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -250,7 +250,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE, 
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE, 
 						CREATE_DATE
 				  FROM 
 				  		VISIT
@@ -268,7 +268,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM 
 				  		VISIT
@@ -287,7 +287,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -305,7 +305,7 @@
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -352,6 +352,14 @@
 			     	   VISIT
 				WHERE
 					   VISIT_STATUS = 'C'
+			</if>
+			<if test="statusCategory == '종료'">
+			   SELECT
+			   		   COUNT(*)
+			     FROM
+			     	   VISIT
+				WHERE
+					   VISIT_STATUS = 'X'
 			</if>
 			<if test="statusCategory == '전체'">
 			   SELECT
@@ -436,12 +444,30 @@
 				 ORDER 
 				 	BY  CREATE_DATE DESC
 			</when>
+			<when test="statusCategory == '종료'">
+				SELECT
+						VISIT_NO,
+						VISIT_VALUE,
+						APT_NO,
+						DECODE(VISIT_STATUS, 'X', '지난 예약') VISIT_STATUS_VALUE,
+						CREATE_DATE
+				  FROM
+				  		VISIT
+				  JOIN
+				  		MEMBER USING(USER_NO)		  
+				  JOIN
+				  		VISIT_CATEGORY USING(VISIT_CATEGORY)
+				 WHERE
+				 		VISIT_STATUS = 'X'
+				 ORDER 
+				 	BY  CREATE_DATE DESC
+			</when>
 			<when test="statusCategory == '전체'">
 				SELECT
 						VISIT_NO,
 						VISIT_VALUE,
 						APT_NO,
-						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기') VISIT_STATUS_VALUE,
+						DECODE(VISIT_STATUS, 'Y', '예약 승인', 'W', '예약 대기', 'N', '예약 취소', 'C', '취소 대기', 'X', '지난 예약') VISIT_STATUS_VALUE,
 						CREATE_DATE
 				  FROM
 				  		VISIT
@@ -516,6 +542,15 @@
 		   		VISIT_STATUS = 'N'
 		 WHERE
 		 		VISIT_NO = #{visitNo}
+	</update>
+	
+	<update id="setVisitStatus">
+		UPDATE VISIT
+		   SET VISIT_STATUS = CASE
+ <![CDATA[WHEN VISIT_DATE < TO_CHAR(SYSDATE, 'YYYY-MM-DD')]]>
+          THEN 'X'
+		   END
+		  WHERE VISIT_STATUS= 'Y'
 	</update>
 	
 </mapper>

@@ -56,5 +56,7 @@ public interface VisitService {
 
 	// 예약 취소
 	int cancelReserveStatus(int vno);
+
+	int setVisitStatus();
 	
 }

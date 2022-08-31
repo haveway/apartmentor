@@ -66,6 +66,8 @@
 		       NOTICE
 		 WHERE      	   
 			   STATUS = 'Y'
+		   AND
+		       STATUS = 'N'
 		 ORDER 
 		    BY	NOTICE_NO DESC	
 	</select>

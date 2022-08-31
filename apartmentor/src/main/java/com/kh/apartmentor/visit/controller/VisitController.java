@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -267,5 +268,15 @@ public class VisitController {
 		}
 		
 	}
+	
+	/**
+	 * 매월 마지막 날 19시에 예약 상태 업데이트
+	 */
+	@Scheduled(cron="0 0 19 L * ?")
+	public void setVisitStatus() {
+		int result = visitService.setVisitStatus();
+		System.out.println(result + "개의 상태를 업데이트 하였습니다.");
+	}
+	
 	
 }

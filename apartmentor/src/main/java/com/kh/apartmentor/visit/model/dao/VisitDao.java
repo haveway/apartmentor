@@ -91,6 +91,10 @@ public class VisitDao {
 	public int cancelReserveStatus(SqlSessionTemplate sqlSession, int visitNo) {
 		return sqlSession.update("visitMapper.cancelReserveStatus", visitNo);
 	}
+
+	public int setVisitStatus(SqlSessionTemplate sqlSession) {
+		return sqlSession.update("visitMapper.setVisitStatus");
+	}
 	
 	
 

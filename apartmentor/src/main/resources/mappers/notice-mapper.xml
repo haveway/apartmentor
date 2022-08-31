@@ -59,6 +59,8 @@
 		  		NOTICE
 		 WHERE
 		 		STATUS = 'Y'
+		   AND 
+		        STATUS = 'X'
 	</select>
 	
 	<!-- 공지사항 총 게시글 조회 SQL문 -->
@@ -74,7 +76,9 @@
 		  JOIN 
 		  		MEMBER USING(USER_NO)
 		 WHERE 
-		 		N.STATUS = 'Y'		  
+		 		N.STATUS = 'Y'		
+		   AND 
+		        STATUS = 'X'		   
          ORDER
          	BY  NOTICE_NO DESC  
 	</select>
@@ -86,23 +90,27 @@
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '공지'
 				  AND STATUS = 'Y'
+		   		  AND STATUS = 'X'				  
 		</if>
 		<if test="category == '알림'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '알림'
 			   	  AND STATUS = 'Y'
+			   	  AND STATUS = 'X'
 		</if>
 		<if test="category == '행사'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '행사'
 				  AND STATUS = 'Y'
+				  AND STATUS = 'X'
 		</if>
 		<if test="category == '전체'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 			    WHERE STATUS = 'Y'
+			      AND STATUS = 'X'
 		</if>
 	</select>
 	
@@ -124,6 +132,8 @@
 				 		NOTICE_CATEGORY = '공지'
 				   AND 
 				   		N.STATUS = 'Y'
+				   AND 
+				        N.STATUS = 'X'
 		         ORDER 
 		         	BY  NOTICE_NO DESC  
 			</when>
@@ -142,6 +152,8 @@
 				 		NOTICE_CATEGORY = '알림'
 				   AND 
 				   		N.STATUS = 'Y'
+				   AND 
+				        N.STATUS = 'X'
 		         ORDER 
 		            BY  NOTICE_NO DESC  
 			</when>
@@ -160,6 +172,8 @@
 				 		NOTICE_CATEGORY = '행사'
 				   AND 
 				   		N.STATUS = 'Y'
+				   AND 
+				        N.STATUS = 'X'
 		         ORDER 
 		         	BY  NOTICE_NO DESC 
 			</when>
@@ -176,6 +190,8 @@
 				  		MEMBER USING(USER_NO)
 				 WHERE 
 				 		N.STATUS = 'Y'
+				   AND 
+				        N.STATUS = 'X'
 		         ORDER 
 		         	BY  NOTICE_NO DESC
 			</when>
@@ -187,6 +203,7 @@
 		SELECT COUNT(*)
 		  FROM NOTICE
 		 WHERE STATUS = 'Y'
+		   AND STATUS = 'X'
 		<if test="condition == 'title'">
 		  		AND NOTICE_TITLE 
 		 </if>
@@ -210,6 +227,8 @@
 		  		MEMBER USING(USER_NO)
 		 WHERE 
 		 		N.STATUS = 'Y'
+		   AND 
+			    N.STATUS = 'X'
 		 <if test="condition == 'title'">
 		  		AND NOTICE_TITLE 
 		 </if>
@@ -241,6 +260,8 @@
 	    	    NOTICE_NO = #{noticeNo}
 	      AND
 	      	    STATUS = 'Y'
+	      AND 
+			    STATUS = 'X'
 	</select>
 	
 	<!-- 공지사항 수정시 입력 SQL문 -->
@@ -268,6 +289,16 @@
 		   		STATUS = 'N'
 		 WHERE
 		 		NOTICE_NO = #{noticeNo}
+	</update>
+	
+    <update id="setNoticeStatus">
+		UPDATE NOTICE
+		   SET STATUS = CASE
+ <![CDATA[WHEN NOTICE_END_DATE < TO_CHAR(SYSDATE, 'YY/MM/DD')]]>
+          THEN 'X'
+		   END
+		 WHERE NOTICE_END_DATE IS NOT NULL
+		   AND STATUS = 'Y'
 	</update>
 	
 </mapper>
