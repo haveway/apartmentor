@@ -58,9 +58,7 @@
 		  FROM 
 		  		NOTICE
 		 WHERE
-		 		STATUS = 'Y'
-		   AND 
-		        STATUS = 'X'
+		 		STATUS = 'Y' OR STATUS = 'X'
 	</select>
 	
 	<!-- 공지사항 총 게시글 조회 SQL문 -->
@@ -76,9 +74,7 @@
 		  JOIN 
 		  		MEMBER USING(USER_NO)
 		 WHERE 
-		 		N.STATUS = 'Y'		
-		   AND 
-		        STATUS = 'X'		   
+		 		N.STATUS = 'Y' OR N.STATUS = 'X'		   
          ORDER
          	BY  NOTICE_NO DESC  
 	</select>
@@ -90,27 +86,26 @@
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '공지'
 				  AND STATUS = 'Y'
-		   		  AND STATUS = 'X'				  
+				   OR NOTICE_CATEGORY = '공지' AND STATUS = 'X'				  
 		</if>
 		<if test="category == '알림'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '알림'
 			   	  AND STATUS = 'Y'
-			   	  AND STATUS = 'X'
+			   	   OR NOTICE_CATEGORY = '알림' AND STATUS = 'X'	
 		</if>
 		<if test="category == '행사'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
 				WHERE NOTICE_CATEGORY = '행사'
 				  AND STATUS = 'Y'
-				  AND STATUS = 'X'
+				   OR NOTICE_CATEGORY = '행사' AND STATUS = 'X'	
 		</if>
 		<if test="category == '전체'">
 			   SELECT COUNT(*)
 			     FROM NOTICE
-			    WHERE STATUS = 'Y'
-			      AND STATUS = 'X'
+			    WHERE STATUS = 'Y' OR STATUS = 'X'
 		</if>
 	</select>
 	
@@ -132,8 +127,7 @@
 				 		NOTICE_CATEGORY = '공지'
 				   AND 
 				   		N.STATUS = 'Y'
-				   AND 
-				        N.STATUS = 'X'
+				    OR  NOTICE_CATEGORY = '공지' AND N.STATUS = 'X'
 		         ORDER 
 		         	BY  NOTICE_NO DESC  
 			</when>
@@ -152,8 +146,7 @@
 				 		NOTICE_CATEGORY = '알림'
 				   AND 
 				   		N.STATUS = 'Y'
-				   AND 
-				        N.STATUS = 'X'
+					OR  NOTICE_CATEGORY = '알림' AND N.STATUS = 'X'
 		         ORDER 
 		            BY  NOTICE_NO DESC  
 			</when>
@@ -172,8 +165,7 @@
 				 		NOTICE_CATEGORY = '행사'
 				   AND 
 				   		N.STATUS = 'Y'
-				   AND 
-				        N.STATUS = 'X'
+				    OR  NOTICE_CATEGORY = '행사' AND N.STATUS = 'X'
 		         ORDER 
 		         	BY  NOTICE_NO DESC 
 			</when>
@@ -189,9 +181,7 @@
 				  JOIN 
 				  		MEMBER USING(USER_NO)
 				 WHERE 
-				 		N.STATUS = 'Y'
-				   AND 
-				        N.STATUS = 'X'
+				 		N.STATUS = 'Y' OR N.STATUS = 'X'
 		         ORDER 
 		         	BY  NOTICE_NO DESC
 			</when>
@@ -202,8 +192,7 @@
 	<select id="searchListCount" resultType="_int" parameterType="hashmap">
 		SELECT COUNT(*)
 		  FROM NOTICE
-		 WHERE STATUS = 'Y'
-		   AND STATUS = 'X'
+		 WHERE STATUS != 'N'
 		<if test="condition == 'title'">
 		  		AND NOTICE_TITLE 
 		 </if>
@@ -226,9 +215,7 @@
 		  JOIN 
 		  		MEMBER USING(USER_NO)
 		 WHERE 
-		 		N.STATUS = 'Y'
-		   AND 
-			    N.STATUS = 'X'
+		 		N.STATUS != 'N'
 		 <if test="condition == 'title'">
 		  		AND NOTICE_TITLE 
 		 </if>
@@ -259,9 +246,7 @@
 	    WHERE
 	    	    NOTICE_NO = #{noticeNo}
 	      AND
-	      	    STATUS = 'Y'
-	      AND 
-			    STATUS = 'X'
+	      	    STATUS = 'Y' OR STATUS = 'X'
 	</select>
 	
 	<!-- 공지사항 수정시 입력 SQL문 -->

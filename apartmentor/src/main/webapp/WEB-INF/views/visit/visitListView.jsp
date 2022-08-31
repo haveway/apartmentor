@@ -64,6 +64,10 @@ h1 {
 	width: fit-content;
 	margin: auto;
 }
+
+h1{
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -75,7 +79,7 @@ h1 {
 
 <div class="visitContent">
 
-	<h1>방문 예약 확인</h1>
+	<h1 onclick="location.href='list.visit'">방문 예약 확인</h1>
 	
 	<br>
 	<br>

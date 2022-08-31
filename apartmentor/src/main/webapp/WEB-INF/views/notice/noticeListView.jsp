@@ -64,6 +64,10 @@ h1 {
 	width: fit-content;
 	margin: auto;
 }
+
+h1 {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -74,7 +78,7 @@ h1 {
 
 <div class="noticeContent">
 
-	<h1>공지사항</h1>
+	<h1 onclick="location.href='list.notice'">공지사항</h1>
 	
 	<br>
 	<br>
