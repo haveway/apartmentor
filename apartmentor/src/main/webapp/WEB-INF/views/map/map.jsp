@@ -28,7 +28,7 @@
 	</div>
 
 		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7a0d8fb50d86ba5e9d0d3d346e697ce">
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=637ebd10239b211c43a742cf9493ec15">
 		</script>
 		<script>
 			var container = document.getElementById('map');
@@ -173,8 +173,8 @@
 
 			
 			$(function(){
-				pharm();
 				bike();
+				pharm();
 				loadBus();
 				setInterval(loadBus, 5000);
 			})
@@ -419,8 +419,6 @@
 				}	// minutes가 0분 ~ 9분까지일경우 앞에 0을붙여준다(01~09의 형태로 변환)
 
 				var currTime = hours + minutes;	// 현재시간 hhmm 형식의 String으로 담긴다.
-				//  currTime = '2200';
-				// console.log(currTime);
 				var yoil = today.getDay();	// 현재 요일
 				
 				
@@ -518,10 +516,10 @@
 								for(var i = 1; i < 9; i++){
 									if(yoil == i){
 										if(eval('dutyTime' + i + 's') < currTime && currTime < eval('dutyTime' + i + 'c')){
-											var imageSrc = 'http://drive.google.com/uc?export=view&id=1zzt3UCNDqkjVbE2JggHTj9qk4Y6MPGn6', // 열려있는 약국 이미지
+											var imageSrc = 'http://drive.google.com/uc?export=view&id=1zzt3UCNDqkjVbE2JggHTj9qk4Y6MPGn6', // 열려있는 약국이미지
 											imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 										} else {
-											var imageSrc = 'http://drive.google.com/uc?export=view&id=1Ppck2GSKy6W8wHI3psyN46GDoEzigrot', // 닫혀있는 약국 이미지
+											var imageSrc = 'http://drive.google.com/uc?export=view&id=1Ppck2GSKy6W8wHI3psyN46GDoEzigrot', // 닫혀있는 약국이미지
 											imageSize = new kakao.maps.Size(30, 30) // 마커이미지의 크기입니다
 										}
 									}	

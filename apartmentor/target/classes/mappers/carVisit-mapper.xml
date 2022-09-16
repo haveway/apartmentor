@@ -80,7 +80,6 @@
 	    				  FROM MEMBER
 	    				 WHERE USER_NO = #{userNo})
 	      AND TRUNC(VISITCAR_DATE, 'MM') = TRUNC(SYSDATE, 'MM')
-			                   		 
    </select>
    
    
