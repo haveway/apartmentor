@@ -786,7 +786,7 @@
     						  + '<p id="p10">' + '비밀번호를 일치하게 입력해주세요.' + '</p>'
     						  + '</div>'
     						  + '<div class="modal-footer" id="pwdFooter">'
-    						  + '<button type="submit" class="btn submit" id="btn1">' + '변경' + '</button>'
+    						  + '<button type="submit" class="btn submit" id="btnUpPwd" disabled>' + '변경' + '</button>'    						  
     					      + '</div>'
     					      + '</form>'
     				$('#updatePwd').html(yPwd);
@@ -801,17 +801,23 @@
 	}
  	
 	/* 비밀번호변경 유효성 검사 */
+	let upPwd1;
+	let upPwd2;
 	function checkPwd2() {
 		let p9 = $('#p9');
 		let updatePwd = $('#updatePwd1').val();
 		let regExpPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$])[a-zA-Z0-9!@#$]{6,10}$/;
 		if(!regExpPwd.test(updatePwd)){
 			 p9.attr('style','color:red;');
-			 p9.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.')
+			 p9.text('6~10자 영문 대 소문자, 숫자, 특수문자(!,@,#,$)를 사용하세요.');
+			 upPwd1 = 'N';
+			 upPwd();
 		}
 		else {
 			p9.attr('style','color:#32CD32;');
-			p9.text('사용가능한 비밀번호 입니다.')
+			p9.text('사용가능한 비밀번호 입니다.');
+			upPwd1 = 'Y';
+			upPwd();
 		}
 	}
  	/* 비밀번호변경 중복 체크 */
@@ -821,13 +827,25 @@
 		let p10 = $('#p10');
 		if(updatePwd != reUpdatePwd){
 			p10.attr('style','color:red;');
-			p10.text('비밀번호를 일치하게 입력해주세요.')
+			p10.text('비밀번호를 일치하게 입력해주세요.');
+			upPwd2 = 'N';
+			upPwd();
 		}
 		else {
 			p10.attr('style','color:#32CD32;');
-			p10.text('비밀번호가 일치합니다.')
+			p10.text('비밀번호가 일치합니다.');
+			upPwd2 = 'Y';
+			upPwd();
 		} 
 	}
+ 	function upPwd() {
+ 		if(upPwd1 == 'Y' && upPwd2 == 'Y'){
+ 			$('#btnUpPwd').attr('disabled',false);
+ 		}else {
+ 			$('#btnUpPwd').attr('disabled',true);
+ 		}
+	}
+ 	
 
  	
  	

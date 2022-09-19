@@ -37,12 +37,11 @@
     	div{
             /*  border: 1px solid red;  */
             font-family: 'InfinitySans-RegularA1';
-            
         }
         
         #header{  
             background-color: rgb(0,88,155);
-            width: 100%;
+            width: 1200px;
             height: 50px;
             display: flex;
             flex-direction: row;
@@ -170,7 +169,7 @@
     input[id="menuicon"]:checked + label span:nth-child(1) {top: 50%; transform:translateY(-50%) rotate(45deg);}
     input[id="menuicon"]:checked + label span:nth-child(2) {opacity: 0;}
     input[id="menuicon"]:checked + label span:nth-child(3) {bottom: 50%; transform:translateY(50%) rotate(-45deg);}
-    div[class="sidebar"] {width:13%; height: 100%; background: #f0eee9; position: fixed; top: 0; left: -13%; z-index: 1; transition:all .35s;}
+    div[class="sidebar"] {width:18.5%; height: 100%; background: #f0eee9; position: fixed; top: 0; left: -18.5%; z-index: 1; transition:all .35s;}
     input[id="menuicon"]:checked + label + div {left:0;}
     .accordion-body{padding: 0;}
     .accordion-content{width: 100%; height: 50px; border-bottom: 1px solid gray; background: #f0eee9}
@@ -372,7 +371,6 @@
                     
                     <!-- Footer -->
                     <div class="modal-footer">
-                       <p style="font-size:12px">잘못된 정보 입력시 회원가입에 불이익이 발생할 수 있습니다.</p>
                         <button type="submit" id="updateMember" class="btn submit" disabled>정보수정</button>
                     </div>
                 </form>
@@ -401,6 +399,7 @@
 				p2.text('사용가능한 비밀번호 입니다.')
 				up2 = "Y";
 				checkBtn2();
+				console.log(today.getHours().slice(-2));
 			}
 		}
 		
