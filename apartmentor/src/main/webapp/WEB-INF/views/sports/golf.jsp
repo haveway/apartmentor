@@ -117,7 +117,7 @@
     <script>
     		// 버튼 속성 값 줘서 좌석 예약하게 하는 쿼리
   	    	function addReserveGolf(click_value){
-    			//0onsole.log(click_value);
+    			//console.log(click_value);
 	  			$.ajax({
 	    				url : "reserveGolfSeat.sp",
 	    				data : {

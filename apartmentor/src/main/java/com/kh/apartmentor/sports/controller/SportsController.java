@@ -41,6 +41,7 @@ public class SportsController {
 		//System.out.println(r);
 		//System.out.println(r.getStartDay());
 		
+		// 먼저 searchTimeAndDate(r) => 날짜와 시간을 검색 ->를 확인하고, 그 같은 시간및 날짜가 있으면 fail을 줘서 ajax로 보내 fail로 받아 예약실패를하게 해준다.
 		ArrayList<Reserve> list = sportsService.searchTimeAndDate(r);
 		if(!list.isEmpty()) {
 			return "fail";
